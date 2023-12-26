@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="main">#FFF09636</color>
+    <color name="Sub">#FFF6D08A</color>
+    <color name="Alert">#FFB24739</color>
+    <color name="Submit">#FF576AAD</color>
 </resources>
