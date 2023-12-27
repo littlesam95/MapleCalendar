@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.bodan.maplecalendar.presentation.MainViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="320dp"
+            android:layout_height="276dp"
+            android:background="@color/main"
+            tools:context=".presentation.setting.ChangeCharacterNameFragment">
+
+            <TextView
+                android:id="@+id/tv_title_change_character_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/text_nickname_change"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@id/et_change_character_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_change_character_name"
+                android:layout_width="0dp"
+                android:layout_height="76dp"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:autofillHints="@null"
+                android:background="@drawable/shape_edittext"
+                android:ems="10"
+                android:gravity="center_horizontal|center_vertical"
+                android:inputType="text"
+                android:maxLength="6"
+                android:onTextChanged="@{(characterName, s, b, c) -> vm.validateCharacterName(characterName)}"
+                android:text="@={vm.newCharacterName}"
+                app:layout_constraintBottom_toTopOf="@id/btn_change_character_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_change_character_name" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_change_character_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="96dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="96dp"
+                android:layout_marginBottom="16dp"
+                android:background="@{(vm.settingUiState.isSubmitBtnEnable == true) ? @color/submit : @color/gray}"
+                android:enabled="@{vm.settingUiState.isSubmitBtnEnable}"
+                android:onClick="@{() -> vm.submitChangeCharacterName()}"
+                android:text="@string/text_change"
+                android:textColor="@{(vm.settingUiState.isSubmitBtnEnable == true) ? @color/white : @color/black}"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/et_change_character_name" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</layout>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "756039933062",
+    "project_id": "maplecalendar-11ad4",
+    "storage_bucket": "maplecalendar-11ad4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756039933062:android:69b17803a0ebb10fed0507",
+        "android_client_info": {
+          "package_name": "com.bodan.maplecalendar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUl9V7SFG2lG5GyPZlhC81YoMKz8acw-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

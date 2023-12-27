@@ -2,5 +2,22 @@ package com.bodan.maplecalendar.presentation.setting
 
 sealed class SettingUiEvent {
 
-    data class NetworkErrorEvent(val message: String = "네트워크에 문제가 있습니다.") : SettingUiEvent()
+
+    data object BadRequest : SettingUiEvent()
+
+    data object UnauthorizedStatus : SettingUiEvent()
+
+    data object Forbidden : SettingUiEvent()
+
+    data object TooManyRequests : SettingUiEvent()
+
+    data object InternalServerError : SettingUiEvent()
+
+    data object ChangeCharacterName : SettingUiEvent()
+
+    data object CloseChangeCharacterName : SettingUiEvent()
+
+    data object SetPushNotification : SettingUiEvent()
+
+    data object CloseSetPushNotification : SettingUiEvent()
 }

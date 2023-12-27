@@ -5,6 +5,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -63,6 +64,10 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-database-ktx")
+
     implementation("io.coil-kt:coil:2.0.0-rc03")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
@@ -73,6 +78,7 @@ dependencies {
     implementation("com.squareup.moshi:moshi-kotlin:1.9.0")
 
     implementation("com.google.dagger:hilt-android:2.48")
+    implementation("com.google.firebase:firebase-firestore:24.10.0")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
 
     implementation("com.jakewharton.timber:timber:5.0.1")
