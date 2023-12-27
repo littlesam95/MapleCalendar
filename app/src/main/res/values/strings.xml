@@ -1,10 +1,41 @@
 <resources>
     <string name="app_name">메이플 캘린더</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="name_menu_home">Home</string>
+    <string name="name_menu_calendar">Calendar</string>
+    <string name="name_menu_setting">Setting</string>
+    <string name="name_menu_change_character_name">Change Character Name</string>
+    <string name="name_menu_set_push_notification">Set Push Notification</string>
+
+    <string name="text_nothing">-</string>
+    <string name="text_sunday">일</string>
+    <string name="text_monday">월</string>
+    <string name="text_tuesday">화</string>
+    <string name="text_wednesday">수</string>
+    <string name="text_thursday">목</string>
+    <string name="text_friday">금</string>
+    <string name="text_saturday">토</string>
+    <string name="text_today_event">오늘 진행중인 이벤트는…</string>
+    <string name="text_character_info">에 대한 정보</string>
+    <string name="text_event_example">이벤트</string>
+    <string name="text_level">레벨</string>
+    <string name="text_class">직업</string>
+    <string name="text_world">월드</string>
+    <string name="text_guild">길드</string>
+    <string name="text_power">전투력</string>
+    <string name="text_nickname_change">닉네임 변경</string>
+    <string name="text_change">변경</string>
+    <string name="text_push_notification">푸시 알림 설정</string>
+    <string name="text_ask_push_notification">푸시 알림을 허용하시겠습니까?</string>
+    <string name="text_allow">허용</string>
+    <string name="text_not_allow">취소</string>
 
     <string name="message_network_error">네트워크에 오류가 있어요!</string>
     <string name="message_bad_request">잘못된 요청이에요!</string>
     <string name="message_forbidden">접근이 거부되었어요!</string>
     <string name="message_too_many_requests">요청이 너무 많아요!</string>
+
+    <string name="description_character_profile">캐릭터 프로필 이미지</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
