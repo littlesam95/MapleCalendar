@@ -11,12 +11,26 @@ import com.bodan.maplecalendar.presentation.MainViewModel
 class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby) {
 
     private val viewModel: MainViewModel by activityViewModels()
+    private lateinit var eventListAdapter: EventListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initListAdapter()
+        initRecyclerView()
+
         binding.vm = viewModel
+        binding.listAdapter = eventListAdapter
 
         collectLatestFlow(viewModel.lobbyUiEvent) { handleUiEvent(it) }
+    }
+
+    private fun initListAdapter() {
+        eventListAdapter = EventListAdapter()
+    }
+
+    private fun initRecyclerView() {
+        binding.rvLobby.setHasFixedSize(false)
     }
 
     private fun handleUiEvent(event: LobbyUiEvent) = when (event) {
