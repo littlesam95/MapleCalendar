@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_main"
+    app:startDestination="@id/fragment_lobby">
+
+    <fragment
+        android:id="@+id/fragment_lobby"
+        android:name="com.bodan.maplecalendar.presentation.lobby.LobbyFragment"
+        android:label="@string/name_menu_home"
+        tools:layout="@layout/fragment_lobby">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_calendar"
+        android:name="com.bodan.maplecalendar.presentation.calendar.CalendarFragment"
+        android:label="@string/name_menu_calendar"
+        tools:layout="@layout/fragment_calendar">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_setting"
+        android:name="com.bodan.maplecalendar.presentation.setting.SettingFragment"
+        android:label="@string/name_menu_setting"
+        tools:layout="@layout/fragment_setting">
+
+        <action
+            android:id="@+id/action_setting_to_change_character_name"
+            app:destination="@id/fragment_change_character_name" />
+
+    </fragment>
+
+    <dialog
+        android:id="@+id/fragment_change_character_name"
+        android:name="com.bodan.maplecalendar.presentation.setting.ChangeCharacterNameFragment"
+        android:label="@string/name_menu_change_character_name" />
+
+</navigation>

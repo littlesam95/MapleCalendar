@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fragment_lobby"
+        android:enabled="true"
+        android:icon="@drawable/ic_bnv_main"
+        android:title="@string/name_menu_home" />
+
+    <item
+        android:id="@+id/fragment_calendar"
+        android:enabled="true"
+        android:icon="@drawable/ic_bnv_calendar"
+        android:title="@string/name_menu_calendar" />
+
+    <item
+        android:id="@+id/fragment_setting"
+        android:enabled="true"
+        android:icon="@drawable/ic_bnv_setting"
+        android:title="@string/name_menu_setting" />
+
+</menu>
