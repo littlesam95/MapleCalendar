@@ -2,6 +2,7 @@ package com.bodan.maplecalendar.app
 
 import android.app.Application
 import android.content.Context
+import timber.log.Timber
 
 class MainApplication : Application() {
 
@@ -12,6 +13,8 @@ class MainApplication : Application() {
     override fun onCreate() {
         mySharedPreferences = MySharedPreferences()
         super.onCreate()
+
+        Timber.plant(Timber.DebugTree())
     }
 
     companion object {
