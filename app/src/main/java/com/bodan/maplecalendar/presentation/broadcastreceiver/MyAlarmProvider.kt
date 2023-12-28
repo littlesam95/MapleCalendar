@@ -1,4 +1,4 @@
-package com.bodan.maplecalendar.data.broadcastreceiver
+package com.bodan.maplecalendar.presentation.broadcastreceiver
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager

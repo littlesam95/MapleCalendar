@@ -8,8 +8,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.bodan.maplecalendar.R
-import com.bodan.maplecalendar.data.broadcastreceiver.MyAlarmProvider.callAlarm
-import com.bodan.maplecalendar.data.broadcastreceiver.MyAlarmProvider.cancelAlarm
+import com.bodan.maplecalendar.presentation.broadcastreceiver.MyAlarmProvider.callAlarm
+import com.bodan.maplecalendar.presentation.broadcastreceiver.MyAlarmProvider.cancelAlarm
 import com.bodan.maplecalendar.databinding.FragmentPushNotificationBinding
 import com.bodan.maplecalendar.presentation.BaseDialogFragment
 import com.bodan.maplecalendar.presentation.MainViewModel
