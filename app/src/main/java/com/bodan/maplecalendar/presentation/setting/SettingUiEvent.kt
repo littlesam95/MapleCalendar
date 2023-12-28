@@ -19,5 +19,7 @@ sealed class SettingUiEvent {
 
     data object SetPushNotification : SettingUiEvent()
 
-    data object CloseSetPushNotification : SettingUiEvent()
+    data object AllowPushNotification : SettingUiEvent()
+
+    data object CancelPushNotification : SettingUiEvent()
 }

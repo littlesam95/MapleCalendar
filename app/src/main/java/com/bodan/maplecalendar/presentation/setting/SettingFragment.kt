@@ -46,7 +46,7 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         }
 
         is SettingUiEvent.SetPushNotification -> {
-
+            findNavController().navigate(R.id.action_setting_to_push_notification)
         }
 
         else -> {}
