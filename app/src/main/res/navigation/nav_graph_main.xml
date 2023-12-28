@@ -31,11 +31,20 @@
             android:id="@+id/action_setting_to_change_character_name"
             app:destination="@id/fragment_change_character_name" />
 
+        <action
+            android:id="@+id/action_setting_to_push_notification"
+            app:destination="@id/fragment_push_notification" />
+
     </fragment>
 
     <dialog
         android:id="@+id/fragment_change_character_name"
         android:name="com.bodan.maplecalendar.presentation.setting.ChangeCharacterNameFragment"
         android:label="@string/name_menu_change_character_name" />
+
+    <dialog
+        android:id="@+id/fragment_push_notification"
+        android:name="com.bodan.maplecalendar.presentation.setting.PushNotificationFragment"
+        android:label="@string/name_menu_set_push_notification" />
 
 </navigation>

@@ -40,10 +40,19 @@ class MainViewModel : ViewModel() {
     private val _today = MutableStateFlow<String>("")
     val today = _today.asStateFlow()
 
-    private val todayFormatted = MutableStateFlow<String>("")
+    private val _todayFormatted = MutableStateFlow<String>("")
+    val todayFormatted = _todayFormatted.asStateFlow()
+
+    private val yesterdayFormatted = MutableStateFlow<String>("")
 
     private val _eventItems = MutableStateFlow<List<EventItem>>(listOf())
     val eventItems = _eventItems.asStateFlow()
+
+    private val _eventEnd = MutableStateFlow<Int>(0)
+    val eventEnd = _eventEnd.asStateFlow()
+
+    private val _alarmContent = MutableStateFlow<String>("")
+    val alarmContent = _alarmContent.asStateFlow()
 
     private val _characterName = MutableStateFlow<String>("")
     val characterName = _characterName.asStateFlow()
@@ -92,11 +101,13 @@ class MainViewModel : ViewModel() {
         setEventList()
     }
 
-    private fun setToday(): Deferred<Unit> {
+    fun setToday(): Deferred<Unit> {
         val deferred = viewModelScope.async {
             val yesterdayTime = LocalDateTime.now().plusDays(-1)
+            val todayTime = LocalDateTime.now()
             val formatter = DateTimeFormatter.ISO_LOCAL_DATE
-            todayFormatted.value = yesterdayTime.format(formatter)
+            yesterdayFormatted.value = yesterdayTime.format(formatter)
+            _todayFormatted.value = todayTime.format(formatter)
 
             val otherFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
             _today.value = "${yesterdayTime.format(otherFormatter)} ${getDayOfWeek()}요일"
@@ -154,7 +165,7 @@ class MainViewModel : ViewModel() {
     }
 
     private fun getCharacterOcid() {
-        Timber.d("Today: ${todayFormatted.value}")
+        Timber.d("Today: ${yesterdayFormatted.value}")
         viewModelScope.launch {
             val characterOcidResponse =
                 maplestoryRepository.getCharacterOcid(characterName = _characterName.value)
@@ -196,7 +207,7 @@ class MainViewModel : ViewModel() {
                 characterOcid.value?.let {
                     maplestoryRepository.getCharacterBasic(
                         ocid = it,
-                        date = todayFormatted.value
+                        date = yesterdayFormatted.value
                     )
                 } ?: return@launch
 
@@ -240,7 +251,7 @@ class MainViewModel : ViewModel() {
                 characterOcid.value?.let {
                     maplestoryRepository.getCharacterPower(
                         ocid = it,
-                        date = todayFormatted.value
+                        date = yesterdayFormatted.value
                     )
                 } ?: return@launch
 
@@ -278,7 +289,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    private fun setEventList() {
+    fun setEventList() {
         val newEvents = mutableListOf<EventItem>()
         db.collection("EventList")
             .get()
@@ -327,16 +338,23 @@ class MainViewModel : ViewModel() {
                         }
                     )
                     newEvents.add(newEvent)
+                    if (newEvent.eventExp == _todayFormatted.value) {
+                        _eventEnd.value += 1
+                    }
                 }
                 _eventItems.value = newEvents.sortedBy { eventItem ->
                     eventItem.eventExp
                 }
+                _alarmContent.value = "${_eventEnd.value}${
+                    MainApplication.myContext().getString(R.string.message_alarm_event_end)
+                }"
             }
             .addOnFailureListener {
                 viewModelScope.launch {
                     _lobbyUiEvent.emit(LobbyUiEvent.InternalServerError)
                 }
             }
+        Timber.d("Set Events")
     }
 
     fun changeCharacterName() {
@@ -370,6 +388,24 @@ class MainViewModel : ViewModel() {
             setCharacterName()
             getCharacterOcid()
             setEventList()
+        }
+    }
+
+    fun setPushNotification() {
+        viewModelScope.launch {
+            _settingUiEvent.emit(SettingUiEvent.SetPushNotification)
+        }
+    }
+
+    fun setCallAlarm() {
+        viewModelScope.launch {
+            _settingUiEvent.emit(SettingUiEvent.AllowPushNotification)
+        }
+    }
+
+    fun setCancelAlarm() {
+        viewModelScope.launch {
+            _settingUiEvent.emit(SettingUiEvent.CancelPushNotification)
         }
     }
 }
