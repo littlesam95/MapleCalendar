@@ -13,38 +13,21 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.bodan.maplecalendar.R
+import com.bodan.maplecalendar.data.EventListReader
 import com.bodan.maplecalendar.data.service.MyAlarmService
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class MyAlarmReceiver : BroadcastReceiver() {
 
     private lateinit var notificationManager: NotificationManager
     private lateinit var notificationCompatBuilder: NotificationCompat.Builder
-    private val db = Firebase.firestore
-
-    private suspend fun getEndEvents(today: String): Int {
-        var cnt = 0
-        db.collection("EventList")
-            .get()
-            .addOnSuccessListener { result ->
-                for (element in result) {
-                    if (element.data["eventExp"].toString() == today) {
-                        cnt++
-                    }
-                }
-            }
-        delay(3000L)
-
-        return cnt
-    }
+    private val eventListReader = EventListReader()
 
     override fun onReceive(context: Context?, intent: Intent?) {
         notificationManager =
@@ -62,10 +45,13 @@ class MyAlarmReceiver : BroadcastReceiver() {
 
         val alarmServiceIntent = Intent(context, MyAlarmService::class.java)
         val requestCode = intent?.extras?.getInt("alarm_code") ?: 1
-        val today = intent?.extras?.getString("today") ?: "2000-00-00"
 
         CoroutineScope(Dispatchers.Main).launch {
-            val countEndEvents = async(Dispatchers.IO) { getEndEvents(today) }.await()
+            val countEndEvents = async(Dispatchers.Main) {
+                eventListReader.getPendingEvents(
+                    LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
+                )
+            }.await()
 
             Timber.d("이벤트: $countEndEvents")
 
@@ -102,12 +88,12 @@ class MyAlarmReceiver : BroadcastReceiver() {
                 if ((ContextCompat.checkSelfPermission(
                         context,
                         Manifest.permission.POST_NOTIFICATIONS
-                    ) == PackageManager.PERMISSION_GRANTED) && (countEndEvents >= 0)
+                    ) == PackageManager.PERMISSION_GRANTED) && (countEndEvents > 0)
                 ) {
                     notificationManager.notify(1, eventNotification)
                 }
             } else {
-                if (countEndEvents >= 0) {
+                if (countEndEvents > 0) {
                     notificationManager.notify(1, eventNotification)
                 }
             }
