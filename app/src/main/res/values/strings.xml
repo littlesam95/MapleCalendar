@@ -6,8 +6,10 @@
     <string name="name_menu_setting">Setting</string>
     <string name="name_menu_change_character_name">Change Character Name</string>
     <string name="name_menu_set_push_notification">Set Push Notification</string>
+    <string name="name_menu_day_event">Events of Date</string>
 
     <string name="text_nothing">-</string>
+    <string name="text_year">년</string>
     <string name="text_sunday">일</string>
     <string name="text_monday">월</string>
     <string name="text_tuesday">화</string>
@@ -16,6 +18,7 @@
     <string name="text_friday">금</string>
     <string name="text_saturday">토</string>
     <string name="text_today_event">오늘 진행중인 이벤트는…</string>
+    <string name="text_specific_date_event">에 진행중인 이벤트는…</string>
     <string name="text_character_info">에 대한 정보</string>
     <string name="text_event_example">이벤트</string>
     <string name="text_level">레벨</string>
@@ -29,6 +32,7 @@
     <string name="text_ask_push_notification">푸시 알림을 허용하시겠습니까?</string>
     <string name="text_allow">허용</string>
     <string name="text_not_allow">취소</string>
+    <string name="text_close">닫기</string>
 
     <string name="message_network_error">네트워크에 오류가 있어요!</string>
     <string name="message_bad_request">잘못된 요청이에요!</string>
