@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.vm = viewModel
         binding.lifecycleOwner = this
+        binding.bnvMain.itemIconTintList = null
 
         setBottomNavigationBar()
     }

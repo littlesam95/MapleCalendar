@@ -8,7 +8,6 @@ import android.content.Intent
 import android.os.Build
 import com.bodan.maplecalendar.app.MainApplication
 import com.bodan.maplecalendar.presentation.MainViewModel
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import java.util.Calendar
 
@@ -52,6 +51,8 @@ object MyAlarmProvider {
         val calendar = Calendar.getInstance().apply {
             timeInMillis = System.currentTimeMillis()
             set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 10)
         }
 
         alarmManager.setExactAndAllowWhileIdle(

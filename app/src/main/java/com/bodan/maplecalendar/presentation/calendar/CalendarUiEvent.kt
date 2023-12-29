@@ -2,5 +2,17 @@ package com.bodan.maplecalendar.presentation.calendar
 
 sealed class CalendarUiEvent {
 
-    data class NetworkErrorEvent(val message: String = "네트워크에 문제가 있습니다.") : CalendarUiEvent()
+    data object BadRequest : CalendarUiEvent()
+
+    data object UnauthorizedStatus : CalendarUiEvent()
+
+    data object Forbidden : CalendarUiEvent()
+
+    data object TooManyRequests : CalendarUiEvent()
+
+    data object InternalServerError : CalendarUiEvent()
+
+    data object GetEventsOfDate : CalendarUiEvent()
+
+    data object CloseEventsOfDate : CalendarUiEvent()
 }

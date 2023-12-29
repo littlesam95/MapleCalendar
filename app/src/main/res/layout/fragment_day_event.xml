@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="listAdapter"
+            type="com.bodan.maplecalendar.presentation.lobby.EventListAdapter" />
+
+        <variable
+            name="vm"
+            type="com.bodan.maplecalendar.presentation.MainViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_dialog"
+            android:elevation="2dp"
+            tools:context=".presentation.calendar.DayEventFragment">
+
+            <TextView
+                android:id="@+id/tv_date_day_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/pretendardregular"
+                android:text="@{vm.specificDate}"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toTopOf="@id/rv_day_event"
+                app:layout_constraintEnd_toStartOf="@id/tv_title_day_event"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_title_day_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendardregular"
+                android:text="@string/text_specific_date_event"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_date_day_event"
+                app:layout_constraintStart_toEndOf="@id/tv_date_day_event"
+                app:layout_constraintTop_toTopOf="@id/tv_date_day_event" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_day_event"
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_margin="16dp"
+                android:adapter="@{listAdapter}"
+                android:background="@drawable/shape_background"
+                android:paddingStart="16dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="16dp"
+                android:paddingBottom="8dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/btn_day_event"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_date_day_event"
+                app:submitData="@{vm.eventItemsOfDate}"
+                tools:listitem="@layout/item_recycler_view_lobby" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_day_event"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="72dp"
+                android:layout_marginEnd="72dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/alert"
+                android:fontFamily="@font/pretendardregular"
+                android:onClick="@{() -> vm.closeEventsOfDate()}"
+                android:text="@string/text_close"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_day_event" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</layout>

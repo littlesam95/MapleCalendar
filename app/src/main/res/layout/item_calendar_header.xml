@@ -5,29 +5,30 @@
     <data>
 
         <variable
-            name="eventItem"
-            type="com.bodan.maplecalendar.presentation.lobby.EventItem" />
+            name="header"
+            type="com.bodan.maplecalendar.presentation.calendar.CalendarUiState.CalendarHeader" />
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/item_recycler_view_lobby"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/shape_edittext"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:id="@+id/item_calendar_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_calendar_header"
+        android:paddingStart="16dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
+        app:calendar_background="@{header.backgroundResId}">
 
         <TextView
-            android:id="@+id/tv_event_rv_lobby"
+            android:id="@+id/tv_calendar_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendardregular"
-            android:text="@{eventItem.eventName}"
-            android:textColor="@color/black"
+            android:text="@{header.name}"
             android:textSize="24sp"
+            app:day_color="@{header.type}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

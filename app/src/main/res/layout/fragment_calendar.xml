@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_calendar">
 
@@ -9,6 +10,10 @@
             name="vm"
             type="com.bodan.maplecalendar.presentation.MainViewModel" />
 
+        <variable
+            name="listAdapter"
+            type="com.bodan.maplecalendar.presentation.calendar.CalendarListAdapter" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +21,99 @@
         android:layout_height="match_parent"
         tools:context=".presentation.calendar.CalendarFragment">
 
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_prev_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_prev"
+            android:onClick="@{() -> vm.setPrevMonth()}"
+            android:padding="24dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="@id/tv_year_calendar"
+            app:layout_constraintEnd_toStartOf="@id/tv_year_calendar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_year_calendar" />
 
+        <TextView
+            android:id="@+id/tv_year_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/pretendardregular"
+            android:text="@{vm.currentYear.toString()}"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toTopOf="@id/rv_calendar"
+            app:layout_constraintEnd_toStartOf="@id/tv_title_year_calendar"
+            app:layout_constraintStart_toEndOf="@id/btn_prev_calendar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title_year_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/pretendardregular"
+            android:text="@string/text_year"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_year_calendar"
+            app:layout_constraintEnd_toStartOf="@id/tv_month_calendar"
+            app:layout_constraintStart_toEndOf="@id/tv_year_calendar"
+            app:layout_constraintTop_toTopOf="@id/tv_year_calendar" />
+
+        <TextView
+            android:id="@+id/tv_month_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="2dp"
+            android:fontFamily="@font/pretendardregular"
+            android:text="@{vm.currentMonth.toString()}"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_year_calendar"
+            app:layout_constraintEnd_toStartOf="@id/tv_title_month_calendar"
+            app:layout_constraintStart_toEndOf="@id/tv_title_year_calendar"
+            app:layout_constraintTop_toTopOf="@id/tv_year_calendar" />
+
+        <TextView
+            android:id="@+id/tv_title_month_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendardregular"
+            android:text="@string/text_monday"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_year_calendar"
+            app:layout_constraintEnd_toStartOf="@id/btn_next_calendar"
+            app:layout_constraintStart_toEndOf="@id/tv_month_calendar"
+            app:layout_constraintTop_toTopOf="@id/tv_year_calendar" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_next_calendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_next"
+            android:onClick="@{() -> vm.setNextMonth()}"
+            android:padding="24dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="@id/tv_year_calendar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_title_month_calendar"
+            app:layout_constraintTop_toTopOf="@id/tv_year_calendar" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_calendar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:adapter="@{listAdapter}"
+            android:elevation="10dp"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_year_calendar"
+            app:spanCount="7"
+            app:submitData="@{vm.calendarData}"
+            tools:listitem="@layout/item_calendar_date" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

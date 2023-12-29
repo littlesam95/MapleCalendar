@@ -17,8 +17,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="320dp"
-            android:layout_height="276dp"
-            android:background="@color/main"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_dialog"
+            android:elevation="2dp"
             tools:context=".presentation.setting.ChangeCharacterNameFragment">
 
             <TextView
@@ -27,6 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:fontFamily="@font/pretendardregular"
                 android:text="@string/text_nickname_change"
                 android:textColor="@color/white"
                 android:textSize="24sp"
@@ -44,6 +46,7 @@
                 android:autofillHints="@null"
                 android:background="@drawable/shape_edittext"
                 android:ems="10"
+                android:fontFamily="@font/pretendardregular"
                 android:gravity="center_horizontal|center_vertical"
                 android:inputType="text"
                 android:maxLength="6"
@@ -65,6 +68,8 @@
                 android:background="@{(vm.settingUiState.isSubmitBtnEnable == true) ? @color/submit : @color/gray}"
                 android:enabled="@{vm.settingUiState.isSubmitBtnEnable}"
                 android:onClick="@{() -> vm.submitChangeCharacterName()}"
+                android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:text="@string/text_change"
                 android:textColor="@{(vm.settingUiState.isSubmitBtnEnable == true) ? @color/white : @color/black}"
                 android:textSize="24sp"

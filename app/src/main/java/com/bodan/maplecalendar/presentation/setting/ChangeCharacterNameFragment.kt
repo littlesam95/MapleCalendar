@@ -20,8 +20,6 @@ class ChangeCharacterNameFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModel
 
-        isCancelable = false
-
         lifecycleScope.launch {
             viewModel.settingUiEvent.collectLatest { uiEvent ->
                 if (uiEvent == SettingUiEvent.CloseChangeCharacterName) dismiss()

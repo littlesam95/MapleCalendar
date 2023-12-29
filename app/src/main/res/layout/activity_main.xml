@@ -14,6 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".presentation.MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
@@ -33,9 +34,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/white"
-            app:itemIconTint="@drawable/item_selector"
-            app:labelVisibilityMode="labeled"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded"
+            app:elevation="0dp"
+            app:itemActiveIndicatorStyle="@null"
+            app:itemBackground="@android:color/transparent"
+            app:itemRippleColor="@android:color/transparent"
+            app:itemTextColor="@drawable/selector_text"
+            app:labelVisibilityMode="selected"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

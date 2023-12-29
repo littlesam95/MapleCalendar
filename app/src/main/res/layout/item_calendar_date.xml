@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="date"
+            type="com.bodan.maplecalendar.presentation.calendar.CalendarUiState.CalendarDate" />
+
+        <variable
+            name="clickListener"
+            type="com.bodan.maplecalendar.presentation.calendar.OnDateClickListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_calendar_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> clickListener.onClicked(date)}"
+        android:paddingStart="16dp"
+        android:paddingTop="24dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="24dp"
+        app:calendar_background="@{date.backgroundResId}">
+
+        <TextView
+            android:id="@+id/tv_calendar_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendardregular"
+            android:text="@{date.name}"
+            android:textSize="16sp"
+            app:day_color="@{date.type}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

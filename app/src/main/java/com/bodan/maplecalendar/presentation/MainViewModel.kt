@@ -4,19 +4,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.app.MainApplication
+import com.bodan.maplecalendar.data.EventListReader
 import com.bodan.maplecalendar.data.ResponseStatus
 import com.bodan.maplecalendar.data.repository.MaplestoryRepository
 import com.bodan.maplecalendar.data.repository.MaplestoryRepositoryImpl
 import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertPowerFormat
 import com.bodan.maplecalendar.presentation.calendar.CalendarUiEvent
+import com.bodan.maplecalendar.presentation.calendar.CalendarUiState
+import com.bodan.maplecalendar.presentation.calendar.DayType
+import com.bodan.maplecalendar.presentation.calendar.OnDateClickListener
 import com.bodan.maplecalendar.presentation.lobby.EventItem
-import com.bodan.maplecalendar.presentation.lobby.EventType
 import com.bodan.maplecalendar.presentation.lobby.LobbyUiEvent
 import com.bodan.maplecalendar.presentation.setting.CharacterNameValidState
 import com.bodan.maplecalendar.presentation.setting.SettingUiEvent
 import com.bodan.maplecalendar.presentation.setting.SettingUiState
-import com.google.firebase.Firebase
-import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -31,11 +32,19 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
-class MainViewModel : ViewModel() {
+class MainViewModel : ViewModel(), OnDateClickListener {
 
     private val maplestoryRepository: MaplestoryRepository = MaplestoryRepositoryImpl()
 
-    private val db = Firebase.firestore
+    private val eventListReader = EventListReader()
+
+    private val days = listOf<String>("일", "월", "화", "수", "목", "금", "토")
+
+    private val _currentYear = MutableStateFlow<Int>(0)
+    val currentYear = _currentYear.asStateFlow()
+
+    private val _currentMonth = MutableStateFlow<Int>(0)
+    val currentMonth = _currentMonth.asStateFlow()
 
     private val _today = MutableStateFlow<String>("")
     val today = _today.asStateFlow()
@@ -48,11 +57,11 @@ class MainViewModel : ViewModel() {
     private val _eventItems = MutableStateFlow<List<EventItem>>(listOf())
     val eventItems = _eventItems.asStateFlow()
 
-    private val _eventEnd = MutableStateFlow<Int>(0)
-    val eventEnd = _eventEnd.asStateFlow()
+    private val _specificDate = MutableStateFlow<String>("")
+    val specificDate = _specificDate.asStateFlow()
 
-    private val _alarmContent = MutableStateFlow<String>("")
-    val alarmContent = _alarmContent.asStateFlow()
+    private val _eventItemsOfDate = MutableStateFlow<List<EventItem>>(listOf())
+    val eventItemsOfDate = _eventItemsOfDate.asStateFlow()
 
     private val _characterName = MutableStateFlow<String>("")
     val characterName = _characterName.asStateFlow()
@@ -80,6 +89,9 @@ class MainViewModel : ViewModel() {
     private val _characterPower = MutableStateFlow<String?>(null)
     val characterPower = _characterPower.asStateFlow()
 
+    private val _calendarData = MutableStateFlow<List<CalendarUiState>>(listOf())
+    val calendarData = _calendarData.asStateFlow()
+
     private val _lobbyUiEvent = MutableSharedFlow<LobbyUiEvent>()
     val lobbyUiEvent = _lobbyUiEvent.asSharedFlow()
 
@@ -99,21 +111,28 @@ class MainViewModel : ViewModel() {
         setCharacterName()
         getCharacterOcid()
         setEventList()
+        setCalendarDate()
     }
 
-    fun setToday(): Deferred<Unit> {
-        val deferred = viewModelScope.async {
-            val yesterdayTime = LocalDateTime.now().plusDays(-1)
-            val todayTime = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ISO_LOCAL_DATE
-            yesterdayFormatted.value = yesterdayTime.format(formatter)
-            _todayFormatted.value = todayTime.format(formatter)
+    override fun onClicked(calendarDate: CalendarUiState.CalendarDate) {
+        val date = calendarDate.name
+        _specificDate.value = "${_currentYear.value}년 ${_currentMonth.value}월 ${date}일"
+        val specificDay =
+            _currentYear.value.toString().padStart(4, '0') + "-" + _currentMonth.value.toString()
+                .padStart(2, '0') + "-" + date.padStart(2, '0')
 
-            val otherFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
-            _today.value = "${yesterdayTime.format(otherFormatter)} ${getDayOfWeek()}요일"
+        viewModelScope.launch {
+            _calendarUiEvent.emit(CalendarUiEvent.GetEventsOfDate)
+            val eventListOfDate = async { eventListReader.getEventListOfDate(specificDay) }.await()
+            if (eventListOfDate != null) {
+                _eventItemsOfDate.value = eventListOfDate.sortedBy { eventItem ->
+                    eventItem.eventExp
+                }
+                Timber.d("${_eventItemsOfDate.value}")
+            } else {
+                _calendarUiEvent.emit(CalendarUiEvent.InternalServerError)
+            }
         }
-
-        return deferred
     }
 
     private fun getDayOfWeek(): String {
@@ -165,7 +184,6 @@ class MainViewModel : ViewModel() {
     }
 
     private fun getCharacterOcid() {
-        Timber.d("Today: ${yesterdayFormatted.value}")
         viewModelScope.launch {
             val characterOcidResponse =
                 maplestoryRepository.getCharacterOcid(characterName = _characterName.value)
@@ -289,77 +307,136 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun setEventList() {
-        val newEvents = mutableListOf<EventItem>()
-        db.collection("EventList")
-            .get()
-            .addOnSuccessListener { result ->
-                for (element in result) {
-                    val newEvent = EventItem(
-                        eventName = element.data["eventName"].toString(),
-                        eventIat = element.data["eventIat"].toString(),
-                        eventExp = element.data["eventExp"].toString(),
-                        eventType = when (element.data["eventType"].toString()) {
-                            "BURNING" -> {
-                                EventType.BURNING
-                            }
-
-                            "COORDINATE" -> {
-                                EventType.COORDINATE
-                            }
-
-                            "PCROOM" -> {
-                                EventType.PCROOM
-                            }
-
-                            "COINSHOP" -> {
-                                EventType.COINSHOP
-                            }
-
-                            "CASH" -> {
-                                EventType.CASH
-                            }
-
-                            "WORLDLEAP" -> {
-                                EventType.WORLDLEAP
-                            }
-
-                            "EVENTWORLD" -> {
-                                EventType.EVENTWORLD
-                            }
-
-                            "HUNTING" -> {
-                                EventType.HUNTING
-                            }
-
-                            else -> {
-                                EventType.DEFAULT
-                            }
-                        }
-                    )
-                    newEvents.add(newEvent)
-                    if (newEvent.eventExp == _todayFormatted.value) {
-                        _eventEnd.value += 1
-                    }
-                }
-                _eventItems.value = newEvents.sortedBy { eventItem ->
+    private fun setEventList() {
+        viewModelScope.launch {
+            val eventList = async { eventListReader.getEventList() }.await()
+            if (eventList != null) {
+                _eventItems.value = eventList.sortedBy { eventItem ->
                     eventItem.eventExp
                 }
-                _alarmContent.value = "${_eventEnd.value}${
-                    MainApplication.myContext().getString(R.string.message_alarm_event_end)
-                }"
-            }
-            .addOnFailureListener {
+            } else {
                 viewModelScope.launch {
                     _lobbyUiEvent.emit(LobbyUiEvent.InternalServerError)
                 }
             }
-        Timber.d("Set Events")
+        }
+    }
+
+    private fun setCalendarDate() {
+        val newCalendar = Calendar.getInstance()
+        val newCalendarData: MutableList<CalendarUiState> =
+            MutableList(7 * 7) { CalendarUiState.CalendarHeader(DayType.DEFAULT, "") }
+
+        for (index in days.indices) {
+            when (index) {
+                0 -> {
+                    newCalendarData[0] = CalendarUiState.CalendarHeader(DayType.SUNDAY, days[0])
+                }
+
+                6 -> {
+                    newCalendarData[6] = CalendarUiState.CalendarHeader(DayType.SATURDAY, days[6])
+                }
+
+                else -> {
+                    newCalendarData[index] =
+                        CalendarUiState.CalendarHeader(DayType.DEFAULT, days[index])
+                }
+            }
+        }
+
+        var nowDate = 1
+        newCalendar.set(_currentYear.value, _currentMonth.value - 1, nowDate)
+        while (true) {
+            Timber.d(
+                "${newCalendar.get(Calendar.YEAR)}년 ${newCalendar.get(Calendar.MONTH) + 1}월 ${
+                    newCalendar.get(
+                        Calendar.DATE
+                    )
+                }일"
+            )
+            val nowWeek = newCalendar.get(Calendar.WEEK_OF_MONTH)
+            Timber.d("Now Week: $nowWeek")
+            when (val nowDay = newCalendar.get(Calendar.DAY_OF_WEEK)) {
+                1 -> {
+                    newCalendarData[(nowWeek * 7) + nowDay - 1] = CalendarUiState.CalendarDate(
+                        DayType.SUNDAY,
+                        newCalendar.get(Calendar.DATE).toString()
+                    )
+                }
+
+                7 -> {
+                    newCalendarData[(nowWeek * 7) + nowDay - 1] = CalendarUiState.CalendarDate(
+                        DayType.SATURDAY,
+                        newCalendar.get(Calendar.DATE).toString()
+                    )
+                }
+
+                else -> {
+                    newCalendarData[(nowWeek * 7) + nowDay - 1] = CalendarUiState.CalendarDate(
+                        DayType.DEFAULT,
+                        newCalendar.get(Calendar.DATE).toString()
+                    )
+                }
+            }
+
+            nowDate++
+            if (nowDate > newCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+                break
+            }
+
+            newCalendar.set(_currentYear.value, _currentMonth.value - 1, nowDate)
+        }
+
+        _calendarData.value = newCalendarData
+        Timber.d("${_calendarData.value}")
+    }
+
+    fun setToday(): Deferred<Unit> {
+        val deferred = viewModelScope.async {
+            val yesterdayTime = LocalDateTime.now().plusDays(-1)
+            val todayTime = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ISO_LOCAL_DATE
+            yesterdayFormatted.value = yesterdayTime.format(formatter)
+            _todayFormatted.value = todayTime.format(formatter)
+            _currentYear.value = todayTime.year
+            _currentMonth.value = todayTime.monthValue
+
+            val otherFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
+            _today.value = "${todayTime.format(otherFormatter)} ${getDayOfWeek()}요일"
+        }
+
+        return deferred
+    }
+
+    fun setPrevMonth() {
+        _currentMonth.value -= 1
+        if (_currentMonth.value == 0) {
+            _currentYear.value -= 1
+            _currentMonth.value = 12
+        }
+        setCalendarDate()
+    }
+
+    fun setNextMonth() {
+        _currentMonth.value += 1
+        if (_currentMonth.value == 13) {
+            _currentYear.value += 1
+            _currentMonth.value = 1
+        }
+        setCalendarDate()
+    }
+
+    fun closeEventsOfDate() {
+        viewModelScope.launch {
+            _calendarUiEvent.emit(CalendarUiEvent.CloseEventsOfDate)
+            _eventItemsOfDate.value = listOf()
+        }
     }
 
     fun changeCharacterName() {
         viewModelScope.launch {
             _settingUiEvent.emit(SettingUiEvent.ChangeCharacterName)
+            _newCharacterName.value = ""
         }
     }
 
