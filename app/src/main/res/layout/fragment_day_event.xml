@@ -56,10 +56,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_day_event"
                 android:layout_width="0dp"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:adapter="@{listAdapter}"
                 android:background="@drawable/shape_background"
+                android:orientation="horizontal"
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="16dp"
