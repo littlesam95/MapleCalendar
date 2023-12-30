@@ -2,8 +2,11 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.MapleCalendar" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="colorPrimary">@color/main</item>
+
     </style>
 
     <style name="Theme.MapleCalendar" parent="Base.Theme.MapleCalendar" />
+
 </resources>
