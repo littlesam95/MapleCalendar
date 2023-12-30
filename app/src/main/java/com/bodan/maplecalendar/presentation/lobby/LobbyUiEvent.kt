@@ -11,4 +11,8 @@ sealed class LobbyUiEvent {
     data object TooManyRequests : LobbyUiEvent()
 
     data object InternalServerError : LobbyUiEvent()
+
+    data object StartEventUrl : LobbyUiEvent()
+
+    data object SetDarkMode : LobbyUiEvent()
 }
