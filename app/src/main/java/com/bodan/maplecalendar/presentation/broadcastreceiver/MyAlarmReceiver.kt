@@ -1,6 +1,7 @@
 package com.bodan.maplecalendar.presentation.broadcastreceiver
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -14,7 +15,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.data.EventListReader
-import com.bodan.maplecalendar.data.service.MyAlarmService
+import com.bodan.maplecalendar.presentation.MainActivity
+import com.google.android.material.internal.ManufacturerUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -43,8 +45,12 @@ class MyAlarmReceiver : BroadcastReceiver() {
 
         notificationCompatBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
 
-        val alarmServiceIntent = Intent(context, MyAlarmService::class.java)
+        val alarmServiceIntent = Intent(context, MainActivity::class.java)
         val requestCode = intent?.extras?.getInt("alarm_code") ?: 1
+        val fullscreenIntent = Intent(context, MainActivity::class.java).apply {
+            action = "fullscreen_activity"
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
 
         CoroutineScope(Dispatchers.Main).launch {
             val countEndEvents = async(Dispatchers.Main) {
@@ -55,12 +61,12 @@ class MyAlarmReceiver : BroadcastReceiver() {
 
             Timber.d("이벤트: $countEndEvents")
 
-            val pendingIntent = when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val fullscreenPendingIntent = when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 true -> {
                     PendingIntent.getActivity(
                         context,
                         requestCode,
-                        alarmServiceIntent,
+                        fullscreenIntent,
                         PendingIntent.FLAG_IMMUTABLE
                     )
                 }
@@ -75,28 +81,66 @@ class MyAlarmReceiver : BroadcastReceiver() {
                 }
             }
 
-            val eventNotification = notificationCompatBuilder
-                .setContentTitle("${countEndEvents}${context.getString(R.string.message_alarm_event_end)}")
+            notificationCompatBuilder
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setSmallIcon(R.drawable.ic_bnv_main)
+                .setSmallIcon(getIcon())
+                .setColorized(true)
                 .setAutoCancel(true)
-                .setContentIntent(pendingIntent)
+                .setContentIntent(fullscreenPendingIntent)
                 .setDefaults(Notification.DEFAULT_SOUND)
-                .build()
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setLocalOnly(true)
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                if ((ContextCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.POST_NOTIFICATIONS
-                    ) == PackageManager.PERMISSION_GRANTED) && (countEndEvents > 0)
-                ) {
-                    notificationManager.notify(1, eventNotification)
+            when (Build.VERSION.SDK_INT) {
+                !in Build.VERSION_CODES.BASE until Build.VERSION_CODES.TIRAMISU -> {
+                    if (ContextCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.POST_NOTIFICATIONS
+                        ) == PackageManager.PERMISSION_GRANTED
+                    ) {
+                        if (countEndEvents == 0) {
+                            val eventNotification = notificationCompatBuilder
+                                .setContentTitle(context.getString(R.string.message_alarm_no_event_end))
+                                .setContentText(context.getString(R.string.message_alarm_no_event_end_check))
+                                .build()
+                            notificationManager.notify(1, eventNotification)
+                        } else {
+                            val eventNotification = notificationCompatBuilder
+                                .setContentTitle("${countEndEvents}${context.getString(R.string.message_alarm_event_end)}")
+                                .setContentText(context.getString(R.string.message_alarm_event_end_check))
+                                .build()
+                            notificationManager.notify(1, eventNotification)
+                        }
+                    }
                 }
-            } else {
-                if (countEndEvents > 0) {
-                    notificationManager.notify(1, eventNotification)
+
+                else -> {
+                    if (countEndEvents == 0) {
+                        val eventNotification = notificationCompatBuilder
+                            .setContentTitle(context.getString(R.string.message_alarm_no_event_end))
+                            .setContentText(context.getString(R.string.message_alarm_no_event_end_check))
+                            .build()
+                        notificationManager.notify(1, eventNotification)
+                    } else {
+                        val eventNotification = notificationCompatBuilder
+                            .setContentTitle("${countEndEvents}${context.getString(R.string.message_alarm_event_end)}")
+                            .setContentText(context.getString(R.string.message_alarm_event_end_check))
+                            .build()
+                        notificationManager.notify(1, eventNotification)
+                    }
                 }
             }
+
+            Timber.d("Alarm")
+        }
+    }
+
+    @SuppressLint("RestrictedApi")
+    private fun getIcon(): Int {
+        return if (ManufacturerUtils.isSamsungDevice()) {
+            R.drawable.ic_bnv_main
+        } else {
+            R.drawable.ic_event_notification
         }
     }
 

@@ -15,4 +15,8 @@ sealed class CalendarUiEvent {
     data object GetEventsOfDate : CalendarUiEvent()
 
     data object CloseEventsOfDate : CalendarUiEvent()
+
+    data object StartEventUrl : CalendarUiEvent()
+
+    data object SetDarkMode : CalendarUiEvent()
 }

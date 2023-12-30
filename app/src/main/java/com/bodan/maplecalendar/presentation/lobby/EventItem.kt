@@ -7,7 +7,9 @@ data class EventItem(
     val eventName: String,
     val eventIat: String,
     val eventExp: String,
-    val eventType: EventType
+    val eventType: EventType,
+    val eventUrl: String,
+    val eventImage: String
 )
 
 enum class EventType {

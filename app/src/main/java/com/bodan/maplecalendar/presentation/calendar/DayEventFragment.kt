@@ -1,5 +1,7 @@
 package com.bodan.maplecalendar.presentation.calendar
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -30,12 +32,15 @@ class DayEventFragment : BaseDialogFragment<FragmentDayEventBinding>(R.layout.fr
         lifecycleScope.launch {
             viewModel.calendarUiEvent.collectLatest { uiEvent ->
                 if (uiEvent == CalendarUiEvent.CloseEventsOfDate) dismiss()
+                if (uiEvent == CalendarUiEvent.StartEventUrl) {
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(viewModel.eventUrl.value)))
+                }
             }
         }
     }
 
     private fun initListAdapter() {
-        eventListAdapter = EventListAdapter()
+        eventListAdapter = EventListAdapter(viewModel)
     }
 
     private fun initRecyclerView() {

@@ -22,4 +22,6 @@ sealed class SettingUiEvent {
     data object AllowPushNotification : SettingUiEvent()
 
     data object CancelPushNotification : SettingUiEvent()
+
+    data object SetDarkMode : SettingUiEvent()
 }

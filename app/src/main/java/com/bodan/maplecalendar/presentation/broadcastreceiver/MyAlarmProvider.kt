@@ -52,7 +52,11 @@ object MyAlarmProvider {
             timeInMillis = System.currentTimeMillis()
             set(Calendar.HOUR_OF_DAY, 0)
             set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 10)
+            set(Calendar.SECOND, 15)
+
+            if (before(Calendar.getInstance())) {
+                add(Calendar.DATE, 1)
+            }
         }
 
         alarmManager.setExactAndAllowWhileIdle(

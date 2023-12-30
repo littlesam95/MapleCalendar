@@ -52,6 +52,7 @@ class PushNotificationFragment :
                         requestPermissions.launch(
                             arrayOf(
                                 Manifest.permission.POST_NOTIFICATIONS,
+                                Manifest.permission.SCHEDULE_EXACT_ALARM,
                                 Manifest.permission.USE_FULL_SCREEN_INTENT
                             )
                         )

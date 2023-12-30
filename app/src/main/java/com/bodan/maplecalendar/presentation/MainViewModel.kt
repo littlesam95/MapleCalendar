@@ -15,6 +15,7 @@ import com.bodan.maplecalendar.presentation.calendar.DayType
 import com.bodan.maplecalendar.presentation.calendar.OnDateClickListener
 import com.bodan.maplecalendar.presentation.lobby.EventItem
 import com.bodan.maplecalendar.presentation.lobby.LobbyUiEvent
+import com.bodan.maplecalendar.presentation.lobby.OnEventClickListener
 import com.bodan.maplecalendar.presentation.setting.CharacterNameValidState
 import com.bodan.maplecalendar.presentation.setting.SettingUiEvent
 import com.bodan.maplecalendar.presentation.setting.SettingUiState
@@ -32,7 +33,7 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
-class MainViewModel : ViewModel(), OnDateClickListener {
+class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
 
     private val maplestoryRepository: MaplestoryRepository = MaplestoryRepositoryImpl()
 
@@ -56,6 +57,9 @@ class MainViewModel : ViewModel(), OnDateClickListener {
 
     private val _eventItems = MutableStateFlow<List<EventItem>>(listOf())
     val eventItems = _eventItems.asStateFlow()
+
+    private val _eventUrl = MutableStateFlow<String>("")
+    val eventUrl = _eventUrl.asStateFlow()
 
     private val _specificDate = MutableStateFlow<String>("")
     val specificDate = _specificDate.asStateFlow()
@@ -132,6 +136,14 @@ class MainViewModel : ViewModel(), OnDateClickListener {
             } else {
                 _calendarUiEvent.emit(CalendarUiEvent.InternalServerError)
             }
+        }
+    }
+
+    override fun onEventClicked(eventUrl: String) {
+        _eventUrl.value = eventUrl
+        viewModelScope.launch {
+            _lobbyUiEvent.emit(LobbyUiEvent.StartEventUrl)
+            _calendarUiEvent.emit(CalendarUiEvent.StartEventUrl)
         }
     }
 
@@ -325,7 +337,7 @@ class MainViewModel : ViewModel(), OnDateClickListener {
     private fun setCalendarDate() {
         val newCalendar = Calendar.getInstance()
         val newCalendarData: MutableList<CalendarUiState> =
-            MutableList(7 * 7) { CalendarUiState.CalendarHeader(DayType.DEFAULT, "") }
+            MutableList(7 * 7) { CalendarUiState.CalendarDate(DayType.DEFAULT, "") }
 
         for (index in days.indices) {
             when (index) {
@@ -389,6 +401,14 @@ class MainViewModel : ViewModel(), OnDateClickListener {
 
         _calendarData.value = newCalendarData
         Timber.d("${_calendarData.value}")
+    }
+
+    fun setDarkMode() {
+        viewModelScope.launch {
+            _lobbyUiEvent.emit(LobbyUiEvent.SetDarkMode)
+            _calendarUiEvent.emit(CalendarUiEvent.SetDarkMode)
+            _settingUiEvent.emit(SettingUiEvent.SetDarkMode)
+        }
     }
 
     fun setToday(): Deferred<Unit> {
