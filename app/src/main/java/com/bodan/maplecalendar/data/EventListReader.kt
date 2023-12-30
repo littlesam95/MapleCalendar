@@ -63,7 +63,9 @@ class EventListReader {
                             else -> {
                                 EventType.DEFAULT
                             }
-                        }
+                        },
+                        eventUrl = element.data["eventUrl"].toString(),
+                        eventImage = element.data["eventImage"].toString()
                     )
                     newEvents.add(newEvent)
                 }
@@ -129,7 +131,9 @@ class EventListReader {
                                     else -> {
                                         EventType.DEFAULT
                                     }
-                                }
+                                },
+                                eventUrl = element.data["eventUrl"].toString(),
+                                eventImage = element.data["eventImage"].toString()
                             )
                             newEvents.add(newEvent)
                             Timber.d("Event: $newEvent")

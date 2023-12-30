@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bodan.maplecalendar.databinding.ItemRecyclerViewLobbyBinding
 
-class EventListAdapter : ListAdapter<EventItem, RecyclerView.ViewHolder>(eventItemDiffUtil) {
+class EventListAdapter(private val onEventClickListener: OnEventClickListener) :
+    ListAdapter<EventItem, RecyclerView.ViewHolder>(eventItemDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return DefaultViewHolder(
@@ -20,7 +21,7 @@ class EventListAdapter : ListAdapter<EventItem, RecyclerView.ViewHolder>(eventIt
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        (holder as DefaultViewHolder).bind(currentList[position])
+        (holder as DefaultViewHolder).bind(currentList[position], onEventClickListener)
     }
 
     companion object {
@@ -37,8 +38,9 @@ class EventListAdapter : ListAdapter<EventItem, RecyclerView.ViewHolder>(eventIt
     class DefaultViewHolder(private val binding: ItemRecyclerViewLobbyBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: EventItem) {
+        fun bind(item: EventItem, clickListener: OnEventClickListener) {
             binding.eventItem = item
+            binding.clickListener = clickListener
         }
     }
 }
