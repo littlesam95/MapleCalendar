@@ -108,16 +108,6 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
     private val _settingUiState = MutableStateFlow<SettingUiState>(SettingUiState())
     val settingUiState = _settingUiState.asStateFlow()
 
-    init {
-        runBlocking {
-            setToday().await()
-        }
-        setCharacterName()
-        getCharacterOcid()
-        setEventList()
-        setCalendarDate()
-    }
-
     override fun onClicked(calendarDate: CalendarUiState.CalendarDate) {
         val date = calendarDate.name
         _specificDate.value = "${_currentYear.value}년 ${_currentMonth.value}월 ${date}일"
@@ -401,6 +391,16 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
 
         _calendarData.value = newCalendarData
         Timber.d("${_calendarData.value}")
+    }
+
+    fun initState() {
+        viewModelScope.launch {
+            setToday().await()
+            setCharacterName()
+            getCharacterOcid()
+            setEventList()
+            setCalendarDate()
+        }
     }
 
     fun setDarkMode() {
