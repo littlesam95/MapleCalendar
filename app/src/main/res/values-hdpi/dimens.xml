@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Floating Action Button -->
+    <dimen name="fab_bottom">16dp</dimen>
+    <dimen name="fab_end">16dp</dimen>
+
+    <!-- Bottom Navigation Bar -->
+    <dimen name="bnv_start">16dp</dimen>
+    <dimen name="bnv_end">16dp</dimen>
+
+    <!-- RecyclerView -->
+    <dimen name="rv_start">6dp</dimen>
+    <dimen name="rv_end">6dp</dimen>
+    <dimen name="rv_top">12dp</dimen>
+    <dimen name="rv_pd_top">6dp</dimen>
+    <dimen name="rv_pd_bottom">6dp</dimen>
+
+    <!-- RecyclerView Event Item -->
+    <dimen name="rv_item_event_start">6dp</dimen>
+    <dimen name="rv_item_event_end">6dp</dimen>
+    <dimen name="rv_item_event_top">6dp</dimen>
+    <dimen name="rv_item_event_bottom">6dp</dimen>
+    <dimen name="rv_item_event_pd_start">6dp</dimen>
+    <dimen name="rv_item_event_pd_end">6dp</dimen>
+    <dimen name="rv_item_event_pd_top">6dp</dimen>
+    <dimen name="rv_item_event_pd_bottom">6dp</dimen>
+    <dimen name="rv_item_event_width">80dp</dimen>
+    <dimen name="rv_item_event_height">40dp</dimen>
+
+    <!-- RecyclerView Calendar Header Item -->
+    <dimen name="rv_item_calendar_header_pd_start">12dp</dimen>
+    <dimen name="rv_item_calendar_header_pd_end">12dp</dimen>
+    <dimen name="rv_item_calendar_header_pd_top">6dp</dimen>
+    <dimen name="rv_item_calendar_header_pd_bottom">6dp</dimen>
+
+    <!-- RecyclerView Calendar Date Item -->
+    <dimen name="rv_item_calendar_date_pd_start">6dp</dimen>
+    <dimen name="rv_item_calendar_date_pd_end">6dp</dimen>
+    <dimen name="rv_item_calendar_date_pd_top">9dp</dimen>
+    <dimen name="rv_item_calendar_date_pd_bottom">9dp</dimen>
+
+    <!-- Title -->
+    <dimen name="title_start">12dp</dimen>
+    <dimen name="title_end">12dp</dimen>
+    <dimen name="title_top">16dp</dimen>
+    <dimen name="title_bottom">36dp</dimen>
+    <dimen name="title_font_size_mini">12sp</dimen>
+    <dimen name="title_font_size_small">14sp</dimen>
+    <dimen name="title_font_size_medium">16sp</dimen>
+    <dimen name="title_font_size_big">20sp</dimen>
+    <dimen name="title_font_size_large">22sp</dimen>
+
+    <!-- Image -->
+    <dimen name="image_start">12dp</dimen>
+    <dimen name="image_top">12dp</dimen>
+    <dimen name="image_end">12dp</dimen>
+    <dimen name="image_bottom">12dp</dimen>
+    <dimen name="image_width">105dp</dimen>
+    <dimen name="image_height">150dp</dimen>
+
+    <!-- Calendar -->
+    <dimen name="tv_calendar_top">24dp</dimen>
+    <dimen name="tv_calendar_end">12dp</dimen>
+    <dimen name="btn_prev_calendar_start">24dp</dimen>
+    <dimen name="btn_prev_calendar_end">12dp</dimen>
+    <dimen name="btn_next_calendar_start">12dp</dimen>
+    <dimen name="btn_next_calendar_end">24dp</dimen>
+    <dimen name="rv_calendar_start">12dp</dimen>
+    <dimen name="rv_calendar_end">12dp</dimen>
+    <dimen name="rv_calendar_top">24dp</dimen>
+    <dimen name="rv_calendar_bottom">24dp</dimen>
+
+    <!-- Setting Buttons -->
+    <dimen name="btn_setting_top">64dp</dimen>
+    <dimen name="btn_setting_start">32dp</dimen>
+    <dimen name="btn_setting_end">32dp</dimen>
+    <dimen name="btn_setting_bottom">64dp</dimen>
+    <dimen name="btn_setting_height">100dp</dimen>
+
+    <!-- Calendar Landscape -->
+    <dimen name="tv_calendar_top_landscape">24dp</dimen>
+    <dimen name="tv_calendar_end_landscape">12dp</dimen>
+    <dimen name="btn_prev_calendar_start_landscape">96dp</dimen>
+    <dimen name="btn_prev_calendar_end_landscape">36dp</dimen>
+    <dimen name="btn_next_calendar_start_landscape">36dp</dimen>
+    <dimen name="btn_next_calendar_end_landscape">96dp</dimen>
+    <dimen name="rv_calendar_start_landscape">108dp</dimen>
+    <dimen name="rv_calendar_end_landscape">108dp</dimen>
+    <dimen name="rv_calendar_top_landscape">32dp</dimen>
+    <dimen name="rv_calendar_bottom_landscape">32dp</dimen>
+
+    <!-- Setting Buttons Landscape -->
+    <dimen name="btn_setting_top_landscape">48dp</dimen>
+    <dimen name="btn_setting_start_landscape">64dp</dimen>
+    <dimen name="btn_setting_end_landscape">64dp</dimen>
+    <dimen name="btn_setting_bottom_landscape">48dp</dimen>
+
+</resources>

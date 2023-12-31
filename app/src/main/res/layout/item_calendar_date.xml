@@ -19,10 +19,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="@{() -> clickListener.onClicked(date)}"
-        android:paddingStart="16dp"
-        android:paddingTop="24dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="24dp"
+        android:paddingStart="@dimen/rv_item_calendar_date_pd_start"
+        android:paddingTop="@dimen/rv_item_calendar_date_pd_top"
+        android:paddingEnd="@dimen/rv_item_calendar_date_pd_end"
+        android:paddingBottom="@dimen/rv_item_calendar_date_pd_bottom"
         app:calendar_background="@{date.backgroundResId}">
 
         <TextView
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendardregular"
             android:text="@{date.name}"
-            android:textSize="16sp"
+            android:textSize="@dimen/title_font_size_small"
             app:day_color="@{date.type}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

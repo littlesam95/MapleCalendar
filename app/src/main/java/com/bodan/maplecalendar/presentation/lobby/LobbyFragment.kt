@@ -27,6 +27,8 @@ class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby
         binding.vm = viewModel
         binding.listAdapter = eventListAdapter
 
+        setSwipeRefresh()
+
         collectLatestFlow(viewModel.lobbyUiEvent) { handleUiEvent(it) }
     }
 
@@ -36,6 +38,16 @@ class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby
 
     private fun initRecyclerView() {
         binding.rvLobby.setHasFixedSize(false)
+    }
+
+    private fun setSwipeRefresh() {
+        with (binding.fragmentLobby) {
+            setOnRefreshListener {
+                viewModel.initState()
+                binding.fragmentLobby.isRefreshing = false
+            }
+            setColorSchemeColors(resources.getColor(R.color.main, context.theme))
+        }
     }
 
     private fun handleUiEvent(event: LobbyUiEvent) = when (event) {

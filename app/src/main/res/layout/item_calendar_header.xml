@@ -15,10 +15,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/shape_calendar_header"
-        android:paddingStart="16dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="16dp"
-        android:paddingBottom="8dp"
+        android:paddingStart="@dimen/rv_item_calendar_header_pd_start"
+        android:paddingTop="@dimen/rv_item_calendar_header_pd_top"
+        android:paddingEnd="@dimen/rv_item_calendar_header_pd_end"
+        android:paddingBottom="@dimen/rv_item_calendar_header_pd_bottom"
         app:calendar_background="@{header.backgroundResId}">
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendardregular"
             android:text="@{header.name}"
-            android:textSize="24sp"
+            android:textSize="@dimen/title_font_size_large"
             app:day_color="@{header.type}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
