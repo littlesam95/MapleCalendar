@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Floating Action Button -->
+    <dimen name="fab_bottom">32dp</dimen>
+    <dimen name="fab_end">32dp</dimen>
+
+    <!-- Bottom Navigation Bar -->
+    <dimen name="bnv_start">16dp</dimen>
+    <dimen name="bnv_end">16dp</dimen>
+
+    <!-- RecyclerView -->
+    <dimen name="rv_start">8dp</dimen>
+    <dimen name="rv_end">8dp</dimen>
+    <dimen name="rv_top">16dp</dimen>
+    <dimen name="rv_pd_top">8dp</dimen>
+    <dimen name="rv_pd_bottom">8dp</dimen>
+
+    <!-- RecyclerView Event Item -->
+    <dimen name="rv_item_event_start">8dp</dimen>
+    <dimen name="rv_item_event_end">8dp</dimen>
+    <dimen name="rv_item_event_top">8dp</dimen>
+    <dimen name="rv_item_event_bottom">8dp</dimen>
+    <dimen name="rv_item_event_pd_start">8dp</dimen>
+    <dimen name="rv_item_event_pd_end">8dp</dimen>
+    <dimen name="rv_item_event_pd_top">8dp</dimen>
+    <dimen name="rv_item_event_pd_bottom">8dp</dimen>
+    <dimen name="rv_item_event_width">200dp</dimen>
+    <dimen name="rv_item_event_height">100dp</dimen>
+
+    <!-- RecyclerView Calendar Header Item -->
+    <dimen name="rv_item_calendar_header_pd_start">16dp</dimen>
+    <dimen name="rv_item_calendar_header_pd_end">16dp</dimen>
+    <dimen name="rv_item_calendar_header_pd_top">8dp</dimen>
+    <dimen name="rv_item_calendar_header_pd_bottom">8dp</dimen>
+
+    <!-- RecyclerView Calendar Date Item -->
+    <dimen name="rv_item_calendar_date_pd_start">16dp</dimen>
+    <dimen name="rv_item_calendar_date_pd_end">16dp</dimen>
+    <dimen name="rv_item_calendar_date_pd_top">24dp</dimen>
+    <dimen name="rv_item_calendar_date_pd_bottom">24dp</dimen>
+
+    <!-- Title -->
+    <dimen name="title_start">16dp</dimen>
+    <dimen name="title_end">16dp</dimen>
+    <dimen name="title_top">32dp</dimen>
+    <dimen name="title_bottom">32dp</dimen>
+    <dimen name="title_font_size_mini">12sp</dimen>
+    <dimen name="title_font_size_small">16sp</dimen>
+    <dimen name="title_font_size_medium">18sp</dimen>
+    <dimen name="title_font_size_big">20sp</dimen>
+    <dimen name="title_font_size_large">24sp</dimen>
+
+    <!-- Image -->
+    <dimen name="image_start">16dp</dimen>
+    <dimen name="image_top">16dp</dimen>
+    <dimen name="image_end">16dp</dimen>
+    <dimen name="image_bottom">32dp</dimen>
+    <dimen name="image_width">140dp</dimen>
+    <dimen name="image_height">200dp</dimen>
+
+    <!-- Calendar -->
+    <dimen name="tv_calendar_top">64dp</dimen>
+    <dimen name="tv_calendar_end">8dp</dimen>
+    <dimen name="btn_prev_calendar_start">80dp</dimen>
+    <dimen name="btn_prev_calendar_end">20dp</dimen>
+    <dimen name="btn_next_calendar_start">20dp</dimen>
+    <dimen name="btn_next_calendar_end">80dp</dimen>
+    <dimen name="rv_calendar_start">24dp</dimen>
+    <dimen name="rv_calendar_end">24dp</dimen>
+    <dimen name="rv_calendar_top">16dp</dimen>
+    <dimen name="rv_calendar_bottom">16dp</dimen>
+
+    <!-- Setting Buttons -->
+    <dimen name="btn_setting_top">192dp</dimen>
+    <dimen name="btn_setting_start">32dp</dimen>
+    <dimen name="btn_setting_end">32dp</dimen>
+    <dimen name="btn_setting_bottom">48dp</dimen>
+    <dimen name="btn_setting_height">100dp</dimen>
+
+    <!-- Calendar Landscape -->
+    <dimen name="tv_calendar_top_landscape">64dp</dimen>
+    <dimen name="tv_calendar_end_landscape">8dp</dimen>
+    <dimen name="btn_prev_calendar_start_landscape">304dp</dimen>
+    <dimen name="btn_prev_calendar_end_landscape">20dp</dimen>
+    <dimen name="btn_next_calendar_start_landscape">20dp</dimen>
+    <dimen name="btn_next_calendar_end_landscape">304dp</dimen>
+    <dimen name="rv_calendar_start_landscape">208dp</dimen>
+    <dimen name="rv_calendar_end_landscape">208dp</dimen>
+    <dimen name="rv_calendar_top_landscape">32dp</dimen>
+    <dimen name="rv_calendar_bottom_landscape">32dp</dimen>
+
+    <!-- Setting Buttons Landscape -->
+    <dimen name="btn_setting_top_landscape">96dp</dimen>
+    <dimen name="btn_setting_start_landscape">192dp</dimen>
+    <dimen name="btn_setting_end_landscape">192dp</dimen>
+    <dimen name="btn_setting_bottom_landscape">48dp</dimen>
+
+    <!-- Calendar Foldable -->
+    <dimen name="tv_calendar_top_foldable">64dp</dimen>
+    <dimen name="tv_calendar_end_foldable">8dp</dimen>
+    <dimen name="btn_prev_calendar_start_foldable">292dp</dimen>
+    <dimen name="btn_prev_calendar_end_foldable">20dp</dimen>
+    <dimen name="btn_next_calendar_start_foldable">20dp</dimen>
+    <dimen name="btn_next_calendar_end_foldable">292dp</dimen>
+    <dimen name="rv_calendar_start_foldable">232dp</dimen>
+    <dimen name="rv_calendar_end_foldable">232dp</dimen>
+    <dimen name="rv_calendar_top_foldable">32dp</dimen>
+    <dimen name="rv_calendar_bottom_foldable">32dp</dimen>
+
+    <!-- Calendar Foldable Landscape -->
+    <dimen name="tv_calendar_top_foldable_landscape">64dp</dimen>
+    <dimen name="tv_calendar_end_foldable_landscape">8dp</dimen>
+    <dimen name="btn_prev_calendar_start_foldable_landscape">304dp</dimen>
+    <dimen name="btn_prev_calendar_end_foldable_landscape">20dp</dimen>
+    <dimen name="btn_next_calendar_start_foldable_landscape">20dp</dimen>
+    <dimen name="btn_next_calendar_end_foldable_landscape">304dp</dimen>
+    <dimen name="rv_calendar_start_foldable_landscape">280dp</dimen>
+    <dimen name="rv_calendar_end_foldable_landscape">280dp</dimen>
+    <dimen name="rv_calendar_top_foldable_landscape">32dp</dimen>
+    <dimen name="rv_calendar_bottom_foldable_landscape">32dp</dimen>
+
+</resources>
