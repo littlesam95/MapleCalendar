@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         binding.bnvMain.itemIconTintList = null
 
         setBottomNavigationBar()
+        viewModel.initState()
     }
 
     override fun dispatchTouchEvent(event: MotionEvent?): Boolean {

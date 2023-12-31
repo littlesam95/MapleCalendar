@@ -9,4 +9,11 @@
 
     <style name="Theme.MapleCalendar" parent="Base.Theme.MapleCalendar" />
 
+    <style name="SplashTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!--        <item name="android:windowLightStatusBar">true</item> -->
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
 </resources>
