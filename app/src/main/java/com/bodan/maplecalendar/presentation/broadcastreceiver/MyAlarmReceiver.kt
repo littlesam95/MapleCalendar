@@ -31,9 +31,9 @@ class MyAlarmReceiver : BroadcastReceiver() {
     private lateinit var notificationCompatBuilder: NotificationCompat.Builder
     private val eventListReader = EventListReader()
 
-    override fun onReceive(context: Context?, intent: Intent?) {
+    override fun onReceive(context: Context, intent: Intent) {
         notificationManager =
-            context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         notificationManager.createNotificationChannel(
             NotificationChannel(
@@ -46,7 +46,7 @@ class MyAlarmReceiver : BroadcastReceiver() {
         notificationCompatBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
 
         val alarmServiceIntent = Intent(context, MainActivity::class.java)
-        val requestCode = intent?.extras?.getInt("alarm_code") ?: 1
+        val requestCode = intent.extras?.getInt("alarm_code") ?: 1
         val fullscreenIntent = Intent(context, MainActivity::class.java).apply {
             action = "fullscreen_activity"
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -133,6 +133,8 @@ class MyAlarmReceiver : BroadcastReceiver() {
 
             Timber.d("Alarm")
         }
+
+        MyAlarmProvider.callAlarm()
     }
 
     @SuppressLint("RestrictedApi")

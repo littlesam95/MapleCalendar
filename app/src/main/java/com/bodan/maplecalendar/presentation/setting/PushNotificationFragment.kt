@@ -1,6 +1,7 @@
 package com.bodan.maplecalendar.presentation.setting
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -8,18 +9,20 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.bodan.maplecalendar.R
-import com.bodan.maplecalendar.presentation.broadcastreceiver.MyAlarmProvider.callAlarm
-import com.bodan.maplecalendar.presentation.broadcastreceiver.MyAlarmProvider.cancelAlarm
 import com.bodan.maplecalendar.databinding.FragmentPushNotificationBinding
 import com.bodan.maplecalendar.presentation.BaseDialogFragment
 import com.bodan.maplecalendar.presentation.MainViewModel
+import com.bodan.maplecalendar.presentation.broadcastreceiver.MyAlarmManagerRestarter
+import com.bodan.maplecalendar.presentation.broadcastreceiver.MyAlarmProvider
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@SuppressLint("UnspecifiedRegisterReceiverFlag")
 class PushNotificationFragment :
     BaseDialogFragment<FragmentPushNotificationBinding>(R.layout.fragment_push_notification) {
 
     private val viewModel: MainViewModel by activityViewModels()
+    private lateinit var myAlarmManagerRestarter: MyAlarmManagerRestarter
     private val requestPermissions =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
             var flag = true
@@ -27,14 +30,7 @@ class PushNotificationFragment :
                 flag = entry.value
             }
             if (flag) {
-                callAlarm(alarmCode = 1, viewModel = viewModel)
-                dismiss()
-            }
-        }
-    private val requestPermission =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (it) {
-                callAlarm(alarmCode = 1, viewModel = viewModel)
+                MyAlarmProvider.callAlarm()
                 dismiss()
             }
         }
@@ -43,7 +39,7 @@ class PushNotificationFragment :
         super.onViewCreated(view, savedInstanceState)
         binding.vm = viewModel
 
-        isCancelable = false
+        myAlarmManagerRestarter = MyAlarmManagerRestarter()
 
         lifecycleScope.launch {
             viewModel.settingUiEvent.collectLatest { uiEvent ->
@@ -53,17 +49,23 @@ class PushNotificationFragment :
                             arrayOf(
                                 Manifest.permission.POST_NOTIFICATIONS,
                                 Manifest.permission.SCHEDULE_EXACT_ALARM,
-                                Manifest.permission.USE_FULL_SCREEN_INTENT
+                                Manifest.permission.USE_FULL_SCREEN_INTENT,
+                                Manifest.permission.RECEIVE_BOOT_COMPLETED
                             )
                         )
                     } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        requestPermission.launch(Manifest.permission.USE_FULL_SCREEN_INTENT)
+                        requestPermissions.launch(
+                            arrayOf(
+                                Manifest.permission.USE_FULL_SCREEN_INTENT,
+                                Manifest.permission.RECEIVE_BOOT_COMPLETED
+                            )
+                        )
                     } else {
-                        callAlarm(alarmCode = 1, viewModel = viewModel)
+                        MyAlarmProvider.callAlarm()
                         dismiss()
                     }
                 } else if (uiEvent == SettingUiEvent.CancelPushNotification) {
-                    cancelAlarm(alarmCode = 1)
+                    MyAlarmProvider.cancelAlarm()
                     dismiss()
                 }
             }

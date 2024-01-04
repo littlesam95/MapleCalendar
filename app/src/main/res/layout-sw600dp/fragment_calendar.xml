@@ -105,11 +105,9 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_calendar"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/rv_calendar_start_foldable"
                 android:layout_marginTop="@dimen/rv_calendar_top_foldable"
-                android:layout_marginEnd="@dimen/rv_calendar_end_foldable"
                 android:layout_marginBottom="@dimen/rv_calendar_bottom_foldable"
                 android:adapter="@{listAdapter}"
                 android:elevation="10dp"

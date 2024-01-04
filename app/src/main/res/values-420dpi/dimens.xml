@@ -107,6 +107,7 @@
     <dimen name="rv_calendar_end_foldable">232dp</dimen>
     <dimen name="rv_calendar_top_foldable">32dp</dimen>
     <dimen name="rv_calendar_bottom_foldable">32dp</dimen>
+    <dimen name="rv_calendar_width">360dp</dimen>
 
     <!-- Calendar Foldable Landscape -->
     <dimen name="tv_calendar_top_foldable_landscape">64dp</dimen>
