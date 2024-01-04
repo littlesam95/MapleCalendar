@@ -7,32 +7,24 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.bodan.maplecalendar.app.MainApplication
-import com.bodan.maplecalendar.presentation.MainViewModel
-import kotlinx.coroutines.runBlocking
 import java.util.Calendar
 
+@SuppressLint("SimpleDateFormat", "ScheduleExactAlarm")
 object MyAlarmProvider {
 
     private lateinit var pendingIntent: PendingIntent
 
-    @SuppressLint("SimpleDateFormat", "ScheduleExactAlarm")
-    fun callAlarm(alarmCode: Int, viewModel: MainViewModel) {
-        runBlocking {
-            viewModel.setToday().await()
-        }
+    fun callAlarm() {
         val alarmManager =
             MainApplication.myContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val receiverIntent =
-            Intent(MainApplication.myContext(), MyAlarmReceiver::class.java).apply {
-                putExtra("alarm_code", alarmCode)
-                putExtra("today", viewModel.todayFormatted.value)
-            }
+            Intent(MainApplication.myContext(), MyAlarmReceiver::class.java)
 
         pendingIntent = when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             true -> {
                 PendingIntent.getBroadcast(
                     MainApplication.myContext(),
-                    alarmCode,
+                    1,
                     receiverIntent,
                     PendingIntent.FLAG_IMMUTABLE
                 )
@@ -41,7 +33,7 @@ object MyAlarmProvider {
             false -> {
                 PendingIntent.getBroadcast(
                     MainApplication.myContext(),
-                    alarmCode,
+                    1,
                     receiverIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
@@ -52,21 +44,19 @@ object MyAlarmProvider {
             timeInMillis = System.currentTimeMillis()
             set(Calendar.HOUR_OF_DAY, 0)
             set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 15)
-
-            if (before(Calendar.getInstance())) {
-                add(Calendar.DATE, 1)
-            }
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
         }
 
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            pendingIntent
-        )
+        if (calendar.before(Calendar.getInstance())) {
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        val alarmClock = AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent)
+        alarmManager.setAlarmClock(alarmClock, pendingIntent)
     }
 
-    fun cancelAlarm(alarmCode: Int) {
+    fun cancelAlarm() {
         val alarmManager =
             MainApplication.myContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val receiverIntent =
@@ -76,7 +66,7 @@ object MyAlarmProvider {
             true -> {
                 PendingIntent.getBroadcast(
                     MainApplication.myContext(),
-                    alarmCode,
+                    1,
                     receiverIntent,
                     PendingIntent.FLAG_IMMUTABLE
                 )
@@ -85,12 +75,14 @@ object MyAlarmProvider {
             false -> {
                 PendingIntent.getBroadcast(
                     MainApplication.myContext(),
-                    alarmCode,
+                    1,
                     receiverIntent,
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )
             }
         }
+
+        MainApplication.mySharedPreferences.setAlarm("event_alarm", "")
 
         alarmManager.cancel(pendingIntent)
     }
