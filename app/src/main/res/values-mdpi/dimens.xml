@@ -69,6 +69,7 @@
     <dimen name="rv_calendar_start">24dp</dimen>
     <dimen name="rv_calendar_end">24dp</dimen>
     <dimen name="rv_calendar_top">48dp</dimen>
+    <dimen name="rv_calendar_width">420dp</dimen>
 
     <!-- Setting Buttons -->
     <dimen name="btn_setting_top">192dp</dimen>
