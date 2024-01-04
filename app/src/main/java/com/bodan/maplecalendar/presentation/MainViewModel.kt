@@ -2,7 +2,6 @@ package com.bodan.maplecalendar.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.app.MainApplication
 import com.bodan.maplecalendar.data.EventListReader
 import com.bodan.maplecalendar.data.ResponseStatus
@@ -29,13 +28,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import timber.log.Timber
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
 
     private val maplestoryRepository: MaplestoryRepository = MaplestoryRepositoryImpl()
+
+    private val dateFormatConverter = DateFormatConverter()
 
     private val eventListReader = EventListReader()
 
@@ -50,10 +49,13 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
     private val _today = MutableStateFlow<String>("")
     val today = _today.asStateFlow()
 
-    private val _todayFormatted = MutableStateFlow<String>("")
-    val todayFormatted = _todayFormatted.asStateFlow()
+    private val todayFormatted = MutableStateFlow<String>("")
 
     private val yesterdayFormatted = MutableStateFlow<String>("")
+
+    private val twoDaysAgoFormatted = MutableStateFlow<String>("")
+
+    private val currentMinute = MutableStateFlow<Int>(-1)
 
     private val _eventItems = MutableStateFlow<List<EventItem>>(listOf())
     val eventItems = _eventItems.asStateFlow()
@@ -137,34 +139,18 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
         }
     }
 
-    private fun getDayOfWeek(): String {
-        when (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
-            1 -> {
-                return MainApplication.myContext().getString(R.string.text_sunday)
-            }
-
-            2 -> {
-                return MainApplication.myContext().getString(R.string.text_monday)
-            }
-
-            3 -> {
-                return MainApplication.myContext().getString(R.string.text_tuesday)
-            }
-
-            4 -> {
-                return MainApplication.myContext().getString(R.string.text_wednesday)
-            }
-
-            5 -> {
-                return MainApplication.myContext().getString(R.string.text_thursday)
-            }
-
-            6 -> {
-                return MainApplication.myContext().getString(R.string.text_friday)
-            }
+    private fun setToday(): Deferred<Unit> {
+        val deferred = viewModelScope.async {
+            twoDaysAgoFormatted.value = dateFormatConverter.twoDaysAgoFormatted()
+            yesterdayFormatted.value = dateFormatConverter.yesterdayFormatted()
+            todayFormatted.value = dateFormatConverter.todayFormatted()
+            _currentYear.value = dateFormatConverter.todayYear()
+            _currentMonth.value = dateFormatConverter.todayMonth()
+            _today.value = dateFormatConverter.todayOtherFormatted()
+            currentMinute.value = ((dateFormatConverter.todayHour()) * 60 + dateFormatConverter.todayMinute())
         }
 
-        return MainApplication.myContext().getString(R.string.text_saturday)
+        return deferred
     }
 
     private fun initCharacterInfo() {
@@ -227,7 +213,11 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
                 characterOcid.value?.let {
                     maplestoryRepository.getCharacterBasic(
                         ocid = it,
-                        date = yesterdayFormatted.value
+                        date = when (currentMinute.value) {
+                            in 0..60 -> twoDaysAgoFormatted.value
+
+                            else -> yesterdayFormatted.value
+                        }
                     )
                 } ?: return@launch
 
@@ -271,7 +261,11 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
                 characterOcid.value?.let {
                     maplestoryRepository.getCharacterPower(
                         ocid = it,
-                        date = yesterdayFormatted.value
+                        date = when (currentMinute.value) {
+                            in 0..60 -> twoDaysAgoFormatted.value
+
+                            else -> yesterdayFormatted.value
+                        }
                     )
                 } ?: return@launch
 
@@ -409,23 +403,6 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
             _calendarUiEvent.emit(CalendarUiEvent.SetDarkMode)
             _settingUiEvent.emit(SettingUiEvent.SetDarkMode)
         }
-    }
-
-    fun setToday(): Deferred<Unit> {
-        val deferred = viewModelScope.async {
-            val yesterdayTime = LocalDateTime.now().plusDays(-1)
-            val todayTime = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ISO_LOCAL_DATE
-            yesterdayFormatted.value = yesterdayTime.format(formatter)
-            _todayFormatted.value = todayTime.format(formatter)
-            _currentYear.value = todayTime.year
-            _currentMonth.value = todayTime.monthValue
-
-            val otherFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
-            _today.value = "${todayTime.format(otherFormatter)} ${getDayOfWeek()}요일"
-        }
-
-        return deferred
     }
 
     fun setPrevMonth() {
