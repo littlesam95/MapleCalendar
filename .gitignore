@@ -1,6 +1,8 @@
 *.iml
 .gradle
 .idea
+key.jks
+/release
 /local.properties
 /.idea/caches
 /.idea/libraries
