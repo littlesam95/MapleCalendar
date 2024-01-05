@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -31,6 +32,7 @@ class PushNotificationFragment :
             }
             if (flag) {
                 MyAlarmProvider.callAlarm()
+                Toast.makeText(requireContext(), getString(R.string.message_alarm_call), Toast.LENGTH_LONG).show()
                 dismiss()
             }
         }
@@ -62,10 +64,12 @@ class PushNotificationFragment :
                         )
                     } else {
                         MyAlarmProvider.callAlarm()
+                        Toast.makeText(requireContext(), getString(R.string.message_alarm_call), Toast.LENGTH_LONG).show()
                         dismiss()
                     }
                 } else if (uiEvent == SettingUiEvent.CancelPushNotification) {
                     MyAlarmProvider.cancelAlarm()
+                    Toast.makeText(requireContext(), getString(R.string.message_alarm_cancel), Toast.LENGTH_LONG).show()
                     dismiss()
                 }
             }

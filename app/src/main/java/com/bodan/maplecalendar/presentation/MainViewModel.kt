@@ -119,7 +119,7 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
 
         viewModelScope.launch {
             _calendarUiEvent.emit(CalendarUiEvent.GetEventsOfDate)
-            val eventListOfDate = async { eventListReader.getEventListOfDate(specificDay) }.await()
+            val eventListOfDate = async { eventListReader.getEventList(specificDay) }.await()
             if (eventListOfDate != null) {
                 _eventItemsOfDate.value = eventListOfDate.sortedBy { eventItem ->
                     eventItem.eventExp
@@ -305,7 +305,7 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
 
     private fun setEventList() {
         viewModelScope.launch {
-            val eventList = async { eventListReader.getEventList() }.await()
+            val eventList = async { eventListReader.getEventList(todayFormatted.value) }.await()
             if (eventList != null) {
                 _eventItems.value = eventList.sortedBy { eventItem ->
                     eventItem.eventExp

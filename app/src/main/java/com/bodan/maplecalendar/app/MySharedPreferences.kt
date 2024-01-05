@@ -30,4 +30,12 @@ class MySharedPreferences {
     fun setThemeMode(key: String, defValue: String) {
         preferences.edit().putString(key, defValue).apply()
     }
+
+    fun getAlarm(key: String, defValue: String): String {
+        return preferences.getString(key, defValue).toString()
+    }
+
+    fun setAlarm(key: String, defValue: String) {
+        preferences.edit().putString(key, defValue).apply()
+    }
 }

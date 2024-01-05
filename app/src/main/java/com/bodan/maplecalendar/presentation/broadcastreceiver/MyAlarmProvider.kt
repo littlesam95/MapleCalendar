@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.bodan.maplecalendar.app.MainApplication
+import timber.log.Timber
 import java.util.Calendar
 
 @SuppressLint("SimpleDateFormat", "ScheduleExactAlarm")
@@ -15,6 +16,9 @@ object MyAlarmProvider {
     private lateinit var pendingIntent: PendingIntent
 
     fun callAlarm() {
+        MainApplication.mySharedPreferences.setAlarm("eventAlarm", "alarm")
+        Timber.d("Alarm: ${MainApplication.mySharedPreferences.getAlarm("eventAlarm", "")}")
+
         val alarmManager =
             MainApplication.myContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val receiverIntent =
@@ -46,10 +50,7 @@ object MyAlarmProvider {
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
-        }
-
-        if (calendar.before(Calendar.getInstance())) {
-            calendar.add(Calendar.DAY_OF_MONTH, 1)
+            add(Calendar.DAY_OF_MONTH, 1)
         }
 
         val alarmClock = AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent)
@@ -57,6 +58,9 @@ object MyAlarmProvider {
     }
 
     fun cancelAlarm() {
+        MainApplication.mySharedPreferences.setAlarm("eventAlarm", "")
+        Timber.d("Alarm: ${MainApplication.mySharedPreferences.getAlarm("eventAlarm", "")}")
+
         val alarmManager =
             MainApplication.myContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val receiverIntent =
@@ -81,8 +85,6 @@ object MyAlarmProvider {
                 )
             }
         }
-
-        MainApplication.mySharedPreferences.setAlarm("event_alarm", "")
 
         alarmManager.cancel(pendingIntent)
     }

@@ -28,8 +28,8 @@
     <string name="text_power">전투력</string>
     <string name="text_nickname_change">닉네임 변경</string>
     <string name="text_change">변경</string>
-    <string name="text_push_notification">푸시 알림 설정</string>
-    <string name="text_ask_push_notification">푸시 알림을 허용하시겠습니까?</string>
+    <string name="text_push_notification">이벤트 알리미 설정</string>
+    <string name="text_ask_push_notification">이벤트 알림을 받으시겠어요?</string>
     <string name="text_allow">허용</string>
     <string name="text_not_allow">취소</string>
     <string name="text_close">닫기</string>
@@ -44,9 +44,12 @@
     <string name="message_alarm_event_end_check">종료되는 이벤트를 확인해보세요!</string>
     <string name="message_alarm_no_event_end">오늘은 종료되는 이벤트가 없어요!</string>
     <string name="message_alarm_no_event_end_check">일퀘 익몬할 시간이에요!</string>
+    <string name="message_alarm_call">매일 0시에 이벤트 종료 현황을 알려드려요!</string>
+    <string name="message_alarm_cancel">이벤트 알리미를 취소했어요!</string>
 
     <string name="description_character_profile">캐릭터 프로필 이미지</string>
     <string name="description_fab_dark_mode">다크 모드 전환 버튼</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
