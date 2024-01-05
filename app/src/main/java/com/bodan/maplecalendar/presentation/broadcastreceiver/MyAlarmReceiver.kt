@@ -23,7 +23,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -62,8 +61,6 @@ class MyAlarmReceiver : BroadcastReceiver() {
                     LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE)
                 )
             }.await()
-
-            Timber.d("이벤트: $countEndEvents")
 
             val fullscreenPendingIntent = when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 true -> {
@@ -120,8 +117,6 @@ class MyAlarmReceiver : BroadcastReceiver() {
                     notificationManager.notify(REQUEST_CODE, eventNotification)
                 }
             }
-
-            Timber.d("Alarm")
 
             val alarmManager = context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
 

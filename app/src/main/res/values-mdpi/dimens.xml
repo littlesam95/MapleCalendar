@@ -55,7 +55,7 @@
     <dimen name="image_start">24dp</dimen>
     <dimen name="image_top">24dp</dimen>
     <dimen name="image_end">24dp</dimen>
-    <dimen name="image_bottom">24dp</dimen>
+    <dimen name="image_bottom">96dp</dimen>
     <dimen name="image_width">175dp</dimen>
     <dimen name="image_height">250dp</dimen>
 

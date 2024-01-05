@@ -39,7 +39,7 @@
     <string name="message_network_error">네트워크에 오류가 있어요!</string>
     <string name="message_bad_request">잘못된 요청이에요!</string>
     <string name="message_forbidden">접근이 거부되었어요!</string>
-    <string name="message_too_many_requests">요청이 너무 많아요!</string>
+    <string name="message_too_many_requests">오늘은 API 조회 횟수를 모두 소모했어요!</string>
     <string name="message_alarm_event_end">개의 이벤트가 오늘 종료돼요!</string>
     <string name="message_alarm_event_end_check">종료되는 이벤트를 확인해보세요!</string>
     <string name="message_alarm_no_event_end">오늘은 종료되는 이벤트가 없어요!</string>

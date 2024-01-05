@@ -2,13 +2,10 @@ package com.bodan.maplecalendar.presentation.lobby
 
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.activityViewModels
 import com.bodan.maplecalendar.R
-import com.bodan.maplecalendar.app.MainApplication
 import com.bodan.maplecalendar.databinding.FragmentLobbyBinding
 import com.bodan.maplecalendar.presentation.BaseFragment
 import com.bodan.maplecalendar.presentation.MainViewModel
@@ -76,25 +73,7 @@ class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby
         }
 
         is LobbyUiEvent.SetDarkMode -> {
-            when (MainApplication.mySharedPreferences.getThemeMode("theme", "")) {
-                getString(R.string.text_light_mode) -> {
-                    MainApplication.mySharedPreferences.setThemeMode("theme", getString(R.string.text_dark_mode))
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                }
-
-                getString(R.string.text_dark_mode) -> {
-                    MainApplication.mySharedPreferences.setThemeMode("theme", getString(R.string.text_light_mode))
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                }
-
-                else -> {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-                    } else {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
-                    }
-                }
-            }
+            setDarkMode()
         }
     }
 }

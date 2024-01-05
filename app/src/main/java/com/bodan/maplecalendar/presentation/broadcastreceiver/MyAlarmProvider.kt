@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import com.bodan.maplecalendar.app.MainApplication
-import timber.log.Timber
 import java.util.Calendar
 
 @SuppressLint("SimpleDateFormat", "ScheduleExactAlarm")
@@ -17,7 +16,6 @@ object MyAlarmProvider {
 
     fun callAlarm() {
         MainApplication.mySharedPreferences.setAlarm("eventAlarm", "alarm")
-        Timber.d("Alarm: ${MainApplication.mySharedPreferences.getAlarm("eventAlarm", "")}")
 
         val alarmManager =
             MainApplication.myContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -59,7 +57,6 @@ object MyAlarmProvider {
 
     fun cancelAlarm() {
         MainApplication.mySharedPreferences.setAlarm("eventAlarm", "")
-        Timber.d("Alarm: ${MainApplication.mySharedPreferences.getAlarm("eventAlarm", "")}")
 
         val alarmManager =
             MainApplication.myContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
