@@ -2,6 +2,7 @@ package com.bodan.maplecalendar.presentation.broadcastreceiver
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.AlarmManager
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -11,11 +12,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.data.EventListReader
-import com.bodan.maplecalendar.presentation.MainActivity
+import com.bodan.maplecalendar.presentation.SplashActivity
 import com.google.android.material.internal.ManufacturerUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,9 +26,12 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
+@SuppressLint("ScheduleExactAlarm")
 class MyAlarmReceiver : BroadcastReceiver() {
 
+    private lateinit var pendingIntent: PendingIntent
     private lateinit var notificationManager: NotificationManager
     private lateinit var notificationCompatBuilder: NotificationCompat.Builder
     private val eventListReader = EventListReader()
@@ -45,9 +50,8 @@ class MyAlarmReceiver : BroadcastReceiver() {
 
         notificationCompatBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
 
-        val alarmServiceIntent = Intent(context, MainActivity::class.java)
-        val requestCode = intent.extras?.getInt("alarm_code") ?: 1
-        val fullscreenIntent = Intent(context, MainActivity::class.java).apply {
+        val alarmServiceIntent = Intent(context, SplashActivity::class.java)
+        val fullscreenIntent = Intent(context, SplashActivity::class.java).apply {
             action = "fullscreen_activity"
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
@@ -65,7 +69,7 @@ class MyAlarmReceiver : BroadcastReceiver() {
                 true -> {
                     PendingIntent.getActivity(
                         context,
-                        requestCode,
+                        REQUEST_CODE,
                         fullscreenIntent,
                         PendingIntent.FLAG_IMMUTABLE
                     )
@@ -74,14 +78,14 @@ class MyAlarmReceiver : BroadcastReceiver() {
                 false -> {
                     PendingIntent.getActivity(
                         context,
-                        requestCode,
+                        REQUEST_CODE,
                         alarmServiceIntent,
                         PendingIntent.FLAG_UPDATE_CURRENT
                     )
                 }
             }
 
-            notificationCompatBuilder
+            val eventNotification = notificationCompatBuilder
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setSmallIcon(getIcon())
                 .setColorized(true)
@@ -89,52 +93,70 @@ class MyAlarmReceiver : BroadcastReceiver() {
                 .setContentIntent(fullscreenPendingIntent)
                 .setDefaults(Notification.DEFAULT_SOUND)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setLocalOnly(true)
+                .setLocalOnly(true).apply {
+                    when (countEndEvents) {
+                        0 -> {
+                            setContentTitle(context.getString(R.string.message_alarm_no_event_end))
+                            setContentText(context.getString(R.string.message_alarm_no_event_end_check))
+                        }
+
+                        else -> {
+                            setContentTitle("${countEndEvents}${context.getString(R.string.message_alarm_event_end)}")
+                            setContentText(context.getString(R.string.message_alarm_event_end_check))
+                        }
+                    }
+                }
+                .build()
 
             when (Build.VERSION.SDK_INT) {
                 !in Build.VERSION_CODES.BASE until Build.VERSION_CODES.TIRAMISU -> {
-                    if (ContextCompat.checkSelfPermission(
-                            context,
-                            Manifest.permission.POST_NOTIFICATIONS
-                        ) == PackageManager.PERMISSION_GRANTED
-                    ) {
-                        if (countEndEvents == 0) {
-                            val eventNotification = notificationCompatBuilder
-                                .setContentTitle(context.getString(R.string.message_alarm_no_event_end))
-                                .setContentText(context.getString(R.string.message_alarm_no_event_end_check))
-                                .build()
-                            notificationManager.notify(1, eventNotification)
-                        } else {
-                            val eventNotification = notificationCompatBuilder
-                                .setContentTitle("${countEndEvents}${context.getString(R.string.message_alarm_event_end)}")
-                                .setContentText(context.getString(R.string.message_alarm_event_end_check))
-                                .build()
-                            notificationManager.notify(1, eventNotification)
-                        }
+                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
+                        == PackageManager.PERMISSION_GRANTED) {
+                        notificationManager.notify(REQUEST_CODE, eventNotification)
                     }
                 }
 
                 else -> {
-                    if (countEndEvents == 0) {
-                        val eventNotification = notificationCompatBuilder
-                            .setContentTitle(context.getString(R.string.message_alarm_no_event_end))
-                            .setContentText(context.getString(R.string.message_alarm_no_event_end_check))
-                            .build()
-                        notificationManager.notify(1, eventNotification)
-                    } else {
-                        val eventNotification = notificationCompatBuilder
-                            .setContentTitle("${countEndEvents}${context.getString(R.string.message_alarm_event_end)}")
-                            .setContentText(context.getString(R.string.message_alarm_event_end_check))
-                            .build()
-                        notificationManager.notify(1, eventNotification)
-                    }
+                    notificationManager.notify(REQUEST_CODE, eventNotification)
                 }
             }
 
             Timber.d("Alarm")
-        }
 
-        MyAlarmProvider.callAlarm()
+            val alarmManager = context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
+
+            pendingIntent = when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                true -> {
+                    PendingIntent.getBroadcast(
+                        context,
+                        REQUEST_CODE,
+                        intent,
+                        PendingIntent.FLAG_IMMUTABLE
+                    )
+                }
+
+                false -> {
+                    PendingIntent.getBroadcast(
+                        context,
+                        REQUEST_CODE,
+                        intent,
+                        PendingIntent.FLAG_UPDATE_CURRENT
+                    )
+                }
+            }
+
+            val calendar = Calendar.getInstance().apply {
+                timeInMillis = System.currentTimeMillis()
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+                add(Calendar.DAY_OF_MONTH, 1)
+            }
+
+            val alarmClock = AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent)
+            alarmManager.setAlarmClock(alarmClock, pendingIntent)
+        }
     }
 
     @SuppressLint("RestrictedApi")
@@ -149,5 +171,6 @@ class MyAlarmReceiver : BroadcastReceiver() {
     companion object {
         const val CHANNEL_ID = "channel"
         const val CHANNEL_NAME = "eventAlarmChannel"
+        const val REQUEST_CODE = 1
     }
 }
