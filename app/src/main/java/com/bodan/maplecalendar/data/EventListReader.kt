@@ -6,7 +6,6 @@ import com.bodan.maplecalendar.presentation.lobby.EventType
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
-import timber.log.Timber
 import java.text.SimpleDateFormat
 
 @SuppressLint("SimpleDateFormat")
@@ -74,7 +73,6 @@ class EventListReader {
                                 eventImage = element.data["eventImage"].toString()
                             )
                             newEvents.add(newEvent)
-                            Timber.d("Event: $newEvent")
                         }
                     }
                 }
@@ -96,15 +94,12 @@ class EventListReader {
                 for (element in result) {
                     if (element.data["eventExp"].toString() == today) {
                         countPendingEvents++
-                        Timber.d(element.data["eventName"].toString())
                     }
                 }
             }
             .addOnFailureListener {
                 flag = false
             }.await()
-        Timber.d(today)
-        Timber.d("$countPendingEvents")
 
         return if (flag) countPendingEvents else 0
     }

@@ -9,39 +9,30 @@ import java.util.Calendar
 class DateFormatConverter {
 
     private val twoDaysAgo = LocalDateTime.now().plusDays(-2)
-    private val todayTime = LocalDateTime.now()
     private val yesterdayTime = LocalDateTime.now().plusDays(-1)
+    private val todayTime = LocalDateTime.now()
     private val formatter = DateTimeFormatter.ISO_LOCAL_DATE
-    private val otherFormatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
 
     private fun getDayOfWeek(): String {
         when (Calendar.getInstance().get(Calendar.DAY_OF_WEEK)) {
-            1 -> {
-                return MainApplication.myContext().getString(R.string.text_sunday)
-            }
+            1 -> return MainApplication.myContext().getString(R.string.text_sunday)
 
-            2 -> {
-                return MainApplication.myContext().getString(R.string.text_monday)
-            }
+            2 -> return MainApplication.myContext().getString(R.string.text_monday)
 
-            3 -> {
-                return MainApplication.myContext().getString(R.string.text_tuesday)
-            }
+            3 -> return MainApplication.myContext().getString(R.string.text_tuesday)
 
-            4 -> {
-                return MainApplication.myContext().getString(R.string.text_wednesday)
-            }
+            4 -> return MainApplication.myContext().getString(R.string.text_wednesday)
 
-            5 -> {
-                return MainApplication.myContext().getString(R.string.text_thursday)
-            }
+            5 -> return MainApplication.myContext().getString(R.string.text_thursday)
 
-            6 -> {
-                return MainApplication.myContext().getString(R.string.text_friday)
-            }
+            6 -> return MainApplication.myContext().getString(R.string.text_friday)
         }
 
         return MainApplication.myContext().getString(R.string.text_saturday)
+    }
+
+    private fun todayDay(): Int {
+        return todayTime.dayOfMonth
     }
 
     fun twoDaysAgoFormatted(): String {
@@ -73,6 +64,6 @@ class DateFormatConverter {
     }
 
     fun todayOtherFormatted(): String {
-        return "${todayTime.format(otherFormatter)} ${getDayOfWeek()}요일"
+        return "${todayYear()}년 ${todayMonth()}월 ${todayDay()}일 ${getDayOfWeek()}요일"
     }
 }

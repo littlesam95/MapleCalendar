@@ -16,12 +16,12 @@ import com.bodan.maplecalendar.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
     private val navHostFragment: NavHostFragment by lazy {
         supportFragmentManager.findFragmentById(R.id.fcv_main) as NavHostFragment
     }
-    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
