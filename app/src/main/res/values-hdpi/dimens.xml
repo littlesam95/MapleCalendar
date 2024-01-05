@@ -55,7 +55,7 @@
     <dimen name="image_start">12dp</dimen>
     <dimen name="image_top">12dp</dimen>
     <dimen name="image_end">12dp</dimen>
-    <dimen name="image_bottom">12dp</dimen>
+    <dimen name="image_bottom">64dp</dimen>
     <dimen name="image_width">105dp</dimen>
     <dimen name="image_height">150dp</dimen>
 
