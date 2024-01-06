@@ -46,10 +46,10 @@
     <dimen name="title_top">32dp</dimen>
     <dimen name="title_bottom">32dp</dimen>
     <dimen name="title_font_size_mini">12sp</dimen>
-    <dimen name="title_font_size_small">16sp</dimen>
-    <dimen name="title_font_size_medium">18sp</dimen>
-    <dimen name="title_font_size_big">20sp</dimen>
-    <dimen name="title_font_size_large">24sp</dimen>
+    <dimen name="title_font_size_small">14sp</dimen>
+    <dimen name="title_font_size_medium">16sp</dimen>
+    <dimen name="title_font_size_big">18sp</dimen>
+    <dimen name="title_font_size_large">20sp</dimen>
 
     <!-- Image -->
     <dimen name="image_start">16dp</dimen>
