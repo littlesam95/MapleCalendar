@@ -7,7 +7,6 @@ import com.bodan.maplecalendar.data.EventListReader
 import com.bodan.maplecalendar.data.ResponseStatus
 import com.bodan.maplecalendar.data.repository.MaplestoryRepository
 import com.bodan.maplecalendar.data.repository.MaplestoryRepositoryImpl
-import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertPowerFormat
 import com.bodan.maplecalendar.presentation.calendar.CalendarUiEvent
 import com.bodan.maplecalendar.presentation.calendar.CalendarUiState
 import com.bodan.maplecalendar.presentation.calendar.DayType
@@ -92,8 +91,8 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
     private val _characterImage = MutableStateFlow<String?>(null)
     val characterImage = _characterImage.asStateFlow()
 
-    private val _characterPower = MutableStateFlow<String?>(null)
-    val characterPower = _characterPower.asStateFlow()
+    private val _characterGender = MutableStateFlow<String?>(null)
+    val characterGender = _characterGender.asStateFlow()
 
     private val _calendarData = MutableStateFlow<List<CalendarUiState>>(listOf())
     val calendarData = _calendarData.asStateFlow()
@@ -161,7 +160,7 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
         _characterWorld.value = null
         _characterGuild.value = null
         _characterImage.value = null
-        _characterPower.value = null
+        _characterGender.value = null
     }
 
     private fun setCharacterName() {
@@ -181,7 +180,7 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
                         this@MainViewModel.characterOcid.value = characterOcid.ocid
                     }
                     getCharacterBasic()
-                    getCharacterPower()
+                    // getCharacterPower()
                 }
 
                 ResponseStatus.BAD_REQUEST -> {
@@ -229,6 +228,7 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
                         _characterWorld.value = characterBasic.worldName
                         _characterGuild.value = characterBasic.characterGuildName
                         _characterImage.value = characterBasic.characterImage
+                        _characterGender.value = characterBasic.characterGender
                     }
                 }
 
@@ -255,6 +255,8 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
         }
     }
 
+    /*
+    캐릭터 스탯
     private fun getCharacterPower() {
         viewModelScope.launch {
             val characterStatResponse =
@@ -274,7 +276,7 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
                     characterStatResponse.characterStat?.let { characterStat ->
                         characterStat.finalStats.forEach { finalStat ->
                             if (finalStat.statName == "전투력") {
-                                _characterPower.value = convertPowerFormat(finalStat.statValue)
+                                _characterGender.value = convertPowerFormat(finalStat.statValue)
                             }
                         }
                     }
@@ -302,6 +304,7 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
             }
         }
     }
+    */
 
     private fun setEventList() {
         viewModelScope.launch {

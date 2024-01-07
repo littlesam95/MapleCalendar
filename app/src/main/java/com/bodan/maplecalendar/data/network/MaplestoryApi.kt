@@ -20,9 +20,11 @@ interface MaplestoryApi {
         @Query("date") date: String
     ): Response<CharacterBasic>
 
+    /*
     @GET("v1/character/stat")
     suspend fun fetchCharacterStat(
         @Query("ocid") ocid: String,
         @Query("date") date: String
     ): Response<CharacterStat>
+    */
 }

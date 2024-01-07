@@ -25,7 +25,7 @@
     <string name="text_class">직업</string>
     <string name="text_world">월드</string>
     <string name="text_guild">길드</string>
-    <string name="text_power">전투력</string>
+    <string name="text_gender">성별</string>
     <string name="text_nickname_change">닉네임 변경</string>
     <string name="text_change">변경</string>
     <string name="text_push_notification">이벤트 알리미 설정</string>
