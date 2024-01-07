@@ -10,5 +10,5 @@ interface MaplestoryRepository {
 
     suspend fun getCharacterBasic(ocid: String, date: String): CharacterBasicResponse
 
-    suspend fun getCharacterPower(ocid: String, date: String): CharacterStatResponse
+    // suspend fun getCharacterPower(ocid: String, date: String): CharacterStatResponse
 }

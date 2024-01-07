@@ -160,34 +160,34 @@
                     android:fontFamily="@font/pretendardregular"
                     android:text="@string/text_guild"
                     android:textSize="@dimen/title_font_size_small"
-                    app:layout_constraintBottom_toTopOf="@id/tv_power_lobby"
+                    app:layout_constraintBottom_toTopOf="@id/tv_gender_lobby"
                     app:layout_constraintEnd_toEndOf="@id/tv_level_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_level_lobby"
                     app:layout_constraintTop_toBottomOf="@id/tv_world_lobby" />
 
                 <TextView
-                    android:id="@+id/tv_power_lobby"
+                    android:id="@+id/tv_gender_lobby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
-                    android:text="@string/text_power"
+                    android:text="@string/text_gender"
                     android:textSize="@dimen/title_font_size_small"
                     app:layout_constraintBottom_toBottomOf="@id/iv_character_lobby"
-                    app:layout_constraintEnd_toStartOf="@id/tv_character_power_lobby"
+                    app:layout_constraintEnd_toStartOf="@id/tv_character_gender_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_level_lobby"
                     app:layout_constraintTop_toBottomOf="@id/tv_guild_lobby" />
 
                 <TextView
-                    android:id="@+id/tv_character_power_lobby"
+                    android:id="@+id/tv_character_gender_lobby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/title_start"
                     android:fontFamily="@font/pretendardregular"
-                    android:text="@{(vm.characterPower == null) ? @string/text_nothing : vm.characterPower}"
+                    android:text="@{(vm.characterGender == null) ? @string/text_nothing : vm.characterGender}"
                     android:textSize="@dimen/title_font_size_small"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_power_lobby"
-                    app:layout_constraintStart_toEndOf="@id/tv_power_lobby"
-                    app:layout_constraintTop_toTopOf="@id/tv_power_lobby" />
+                    app:layout_constraintBottom_toBottomOf="@id/tv_gender_lobby"
+                    app:layout_constraintStart_toEndOf="@id/tv_gender_lobby"
+                    app:layout_constraintTop_toTopOf="@id/tv_gender_lobby" />
 
                 <TextView
                     android:id="@+id/tv_character_guild_lobby"
@@ -197,7 +197,7 @@
                     android:text="@{(vm.characterGuild == null) ? @string/text_nothing : vm.characterGuild}"
                     android:textSize="@dimen/title_font_size_small"
                     app:layout_constraintBottom_toBottomOf="@id/tv_guild_lobby"
-                    app:layout_constraintStart_toStartOf="@id/tv_character_power_lobby"
+                    app:layout_constraintStart_toStartOf="@id/tv_character_gender_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_guild_lobby" />
 
                 <TextView
@@ -208,7 +208,7 @@
                     android:text="@{(vm.characterWorld == null) ? @string/text_nothing : vm.characterWorld}"
                     android:textSize="@dimen/title_font_size_small"
                     app:layout_constraintBottom_toBottomOf="@id/tv_world_lobby"
-                    app:layout_constraintStart_toStartOf="@id/tv_character_power_lobby"
+                    app:layout_constraintStart_toStartOf="@id/tv_character_gender_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_world_lobby" />
 
                 <TextView
@@ -219,7 +219,7 @@
                     android:text="@{(vm.characterClass == null) ? @string/text_nothing : vm.characterClass}"
                     android:textSize="@dimen/title_font_size_small"
                     app:layout_constraintBottom_toBottomOf="@id/tv_class_lobby"
-                    app:layout_constraintStart_toStartOf="@id/tv_character_power_lobby"
+                    app:layout_constraintStart_toStartOf="@id/tv_character_gender_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_class_lobby" />
 
                 <TextView
@@ -230,7 +230,7 @@
                     android:text="@{(vm.characterLevel == null) ? @string/text_nothing : vm.characterLevel.toString()}"
                     android:textSize="@dimen/title_font_size_small"
                     app:layout_constraintBottom_toBottomOf="@id/tv_level_lobby"
-                    app:layout_constraintStart_toStartOf="@id/tv_character_power_lobby"
+                    app:layout_constraintStart_toStartOf="@id/tv_character_gender_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_level_lobby" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

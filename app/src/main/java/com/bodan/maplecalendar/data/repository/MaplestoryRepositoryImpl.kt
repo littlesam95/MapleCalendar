@@ -131,6 +131,7 @@ class MaplestoryRepositoryImpl : MaplestoryRepository {
         )
     }
 
+    /*
     override suspend fun getCharacterPower(ocid: String, date: String): CharacterStatResponse {
         val response = maplestoryApi.fetchCharacterStat(ocid = ocid, date = date)
 
@@ -185,6 +186,7 @@ class MaplestoryRepositoryImpl : MaplestoryRepository {
             characterStat = null
         )
     }
+    */
 
     companion object {
         private const val BAD_REQUEST: Int = 400
