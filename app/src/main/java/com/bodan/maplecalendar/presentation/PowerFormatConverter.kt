@@ -7,8 +7,7 @@ object PowerFormatConverter {
         for (index in power.reversed().indices) {
             if (index == 4) {
                 result += " 만"
-            }
-            else if (index == 8) {
+            } else if (index == 8) {
                 result += " 억"
             }
             result += power.reversed()[index]

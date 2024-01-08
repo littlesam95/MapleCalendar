@@ -2,7 +2,6 @@ package com.bodan.maplecalendar.data.repository
 
 import com.bodan.maplecalendar.data.dto.CharacterBasicResponse
 import com.bodan.maplecalendar.data.dto.CharacterOcidResponse
-import com.bodan.maplecalendar.data.dto.CharacterStatResponse
 
 interface MaplestoryRepository {
 

@@ -27,13 +27,13 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
-@SuppressLint("ScheduleExactAlarm")
+@SuppressLint("ScheduleExactAlarm", "RestrictedApi")
 class MyAlarmReceiver : BroadcastReceiver() {
 
+    private val eventListReader = EventListReader()
     private lateinit var pendingIntent: PendingIntent
     private lateinit var notificationManager: NotificationManager
     private lateinit var notificationCompatBuilder: NotificationCompat.Builder
-    private val eventListReader = EventListReader()
 
     override fun onReceive(context: Context, intent: Intent) {
         notificationManager =
@@ -107,8 +107,12 @@ class MyAlarmReceiver : BroadcastReceiver() {
 
             when (Build.VERSION.SDK_INT) {
                 !in Build.VERSION_CODES.BASE until Build.VERSION_CODES.TIRAMISU -> {
-                    if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS)
-                        == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(
+                            context,
+                            Manifest.permission.POST_NOTIFICATIONS
+                        )
+                        == PackageManager.PERMISSION_GRANTED
+                    ) {
                         notificationManager.notify(REQUEST_CODE, eventNotification)
                     }
                 }
@@ -118,7 +122,8 @@ class MyAlarmReceiver : BroadcastReceiver() {
                 }
             }
 
-            val alarmManager = context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
+            val alarmManager =
+                context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
 
             pendingIntent = when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                 true -> {
@@ -154,7 +159,6 @@ class MyAlarmReceiver : BroadcastReceiver() {
         }
     }
 
-    @SuppressLint("RestrictedApi")
     private fun getIcon(): Int {
         return if (ManufacturerUtils.isSamsungDevice()) {
             R.drawable.ic_bnv_main
