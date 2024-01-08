@@ -44,6 +44,8 @@
     <string name="message_alarm_event_end_check">종료되는 이벤트를 확인해보세요!</string>
     <string name="message_alarm_no_event_end">오늘은 종료되는 이벤트가 없어요!</string>
     <string name="message_alarm_no_event_end_check">일퀘 익몬할 시간이에요!</string>
+    <string name="message_alarm_need_to_allow_permission_title">권한 허용이 필요해요!</string>
+    <string name="message_alarm_need_to_allow_permission">이벤트 알리미를 사용하려면 알림 권한 허용이 필요해요!</string>
     <string name="message_alarm_call">매일 0시에 이벤트 종료 현황을 알려드려요!</string>
     <string name="message_alarm_cancel">이벤트 알리미를 취소했어요!</string>
 
