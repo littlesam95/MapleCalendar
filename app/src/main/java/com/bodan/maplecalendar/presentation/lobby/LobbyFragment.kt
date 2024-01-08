@@ -38,7 +38,7 @@ class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby
     }
 
     private fun setSwipeRefresh() {
-        with (binding.fragmentLobby) {
+        with(binding.fragmentLobby) {
             setOnRefreshListener {
                 viewModel.initState()
                 binding.fragmentLobby.isRefreshing = false

@@ -2,7 +2,6 @@ package com.bodan.maplecalendar.data.network
 
 import com.bodan.maplecalendar.data.dto.CharacterBasic
 import com.bodan.maplecalendar.data.dto.CharacterOcid
-import com.bodan.maplecalendar.data.dto.CharacterStat
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

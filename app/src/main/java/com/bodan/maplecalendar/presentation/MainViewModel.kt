@@ -146,7 +146,8 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
             _currentYear.value = dateFormatConverter.todayYear()
             _currentMonth.value = dateFormatConverter.todayMonth()
             _today.value = dateFormatConverter.todayOtherFormatted()
-            currentMinute.value = ((dateFormatConverter.todayHour()) * 60 + dateFormatConverter.todayMinute())
+            currentMinute.value =
+                ((dateFormatConverter.todayHour()) * 60 + dateFormatConverter.todayMinute())
         }
 
         return deferred

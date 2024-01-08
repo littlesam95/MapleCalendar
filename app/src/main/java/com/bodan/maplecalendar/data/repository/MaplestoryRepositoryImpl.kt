@@ -4,7 +4,6 @@ import com.bodan.maplecalendar.data.ResponseStatus
 import com.bodan.maplecalendar.data.NetworkModule
 import com.bodan.maplecalendar.data.dto.CharacterBasicResponse
 import com.bodan.maplecalendar.data.dto.CharacterOcidResponse
-import com.bodan.maplecalendar.data.dto.CharacterStatResponse
 import com.bodan.maplecalendar.data.network.MaplestoryApi
 import timber.log.Timber
 

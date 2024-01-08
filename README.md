@@ -15,6 +15,12 @@
      <img style="width: 200px; margin: 10px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/d9f54460-12a7-45f5-9904-0e0a881e0ccc">
   </p>
 
+### 구글 플레이스토어에서 내부 테스트 가능
+ - 내부 테스트 접속 링크
+   <p>
+      <img width=150 src="https://github.com/littlesam95/MapleCalendar/assets/55424662/169944e3-eb32-4182-a2b2-70102d1a8735">
+   </p>
+
 ### 📒 주요 기능
 #### 오늘 진행중인 이벤트 확인
  - 이벤트를 클릭하면 공식 홈페이지로 이동된다.
@@ -54,3 +60,10 @@
 | Logging      | Timber                                                                   | 
 
 ### 💬 기술적 고민과 선택
+#### 1. AlarmManager with BroadcastReceiver
+
+
+### References
+<a href="https://www.notion.so/MapleCalendar-93f45dc10b384d749e5ab00950324035?pvs=4">
+  <img alt="Static Badge" src="https://img.shields.io/badge/Notion-%2523000000.svg?style=for-the-badge&logo=notion&logoColor=white&labelColor=black&color=black">
+</a>

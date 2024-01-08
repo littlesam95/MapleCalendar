@@ -1,12 +1,16 @@
 package com.bodan.maplecalendar.presentation.setting
 
 import android.Manifest
-import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.bodan.maplecalendar.R
@@ -15,27 +19,27 @@ import com.bodan.maplecalendar.presentation.BaseDialogFragment
 import com.bodan.maplecalendar.presentation.MainViewModel
 import com.bodan.maplecalendar.presentation.broadcastreceiver.MyAlarmManagerRestarter
 import com.bodan.maplecalendar.presentation.broadcastreceiver.MyAlarmProvider
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
-@SuppressLint("UnspecifiedRegisterReceiverFlag")
 class PushNotificationFragment :
     BaseDialogFragment<FragmentPushNotificationBinding>(R.layout.fragment_push_notification) {
 
     private val viewModel: MainViewModel by activityViewModels()
-    private lateinit var myAlarmManagerRestarter: MyAlarmManagerRestarter
-    private val requestPermissions =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-            var flag = true
-            it.entries.forEach { entry ->
-                flag = entry.value
-            }
-            if (flag) {
-                MyAlarmProvider.callAlarm()
-                Toast.makeText(requireContext(), getString(R.string.message_alarm_call), Toast.LENGTH_LONG).show()
-                dismiss()
+    private val settingActionRequestLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                setEventAlarm()
             }
         }
+    private lateinit var myAlarmManagerRestarter: MyAlarmManagerRestarter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -47,32 +51,54 @@ class PushNotificationFragment :
             viewModel.settingUiEvent.collectLatest { uiEvent ->
                 if (uiEvent == SettingUiEvent.AllowPushNotification) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        requestPermissions.launch(
-                            arrayOf(
-                                Manifest.permission.POST_NOTIFICATIONS,
-                                Manifest.permission.SCHEDULE_EXACT_ALARM,
-                                Manifest.permission.USE_FULL_SCREEN_INTENT,
-                                Manifest.permission.RECEIVE_BOOT_COMPLETED
-                            )
-                        )
-                    } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        requestPermissions.launch(
-                            arrayOf(
-                                Manifest.permission.USE_FULL_SCREEN_INTENT,
-                                Manifest.permission.RECEIVE_BOOT_COMPLETED
-                            )
-                        )
+                        TedPermission.create()
+                            .setPermissionListener(object : PermissionListener {
+                                override fun onPermissionGranted() {
+                                    setEventAlarm()
+                                }
+
+                                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                                    Timber.d("$deniedPermissions 거절함")
+                                    goSettingActivityAlertDialog()
+                                }
+                            })
+                            .setPermissions(Manifest.permission.POST_NOTIFICATIONS)
+                            .check()
                     } else {
-                        MyAlarmProvider.callAlarm()
-                        Toast.makeText(requireContext(), getString(R.string.message_alarm_call), Toast.LENGTH_LONG).show()
-                        dismiss()
+                        setEventAlarm()
                     }
                 } else if (uiEvent == SettingUiEvent.CancelPushNotification) {
-                    MyAlarmProvider.cancelAlarm()
-                    Toast.makeText(requireContext(), getString(R.string.message_alarm_cancel), Toast.LENGTH_LONG).show()
-                    dismiss()
+                    cancelEventAlarm()
                 }
             }
         }
+    }
+
+    private fun goSettingActivityAlertDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.message_alarm_need_to_allow_permission_title))
+            .setMessage(getString(R.string.message_alarm_need_to_allow_permission))
+            .setPositiveButton(getString(R.string.text_allow)) { _, _ ->
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                requireActivity().packageName.also { name ->
+                    intent.data = Uri.fromParts("package", name, null)
+                }
+                settingActionRequestLauncher.launch(intent)
+            }
+            .setNegativeButton(getString(R.string.text_not_allow)) { _, _ -> }
+            .create()
+            .show()
+    }
+
+    private fun setEventAlarm() {
+        MyAlarmProvider.callAlarm()
+        showToastMessage(getString(R.string.message_alarm_call))
+        dismiss()
+    }
+
+    private fun cancelEventAlarm() {
+        MyAlarmProvider.cancelAlarm()
+        showToastMessage(getString(R.string.message_alarm_cancel))
+        dismiss()
     }
 }

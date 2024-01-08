@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.bodan.maplecalendar.presentation.lobby.EventItem
 import com.bodan.maplecalendar.presentation.lobby.EventType
 import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
@@ -11,8 +12,8 @@ import java.text.SimpleDateFormat
 @SuppressLint("SimpleDateFormat")
 class EventListReader {
 
-    private val db = Firebase.firestore
-    private val formatter = SimpleDateFormat("yyyy-MM-dd")
+    private val db: FirebaseFirestore = Firebase.firestore
+    private val formatter: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd")
 
     suspend fun getEventList(specificDay: String): List<EventItem>? {
         val newEvents = mutableListOf<EventItem>()
@@ -26,6 +27,7 @@ class EventListReader {
                     val exp = formatter.parse(element.data["eventExp"].toString())
                     val compareToIat = iat?.compareTo(formatter.parse(specificDay))
                     val compareToExp = exp?.compareTo(formatter.parse(specificDay))
+
                     if ((compareToIat != null) && (compareToExp != null)) {
                         if ((compareToIat <= 0) && (compareToExp >= 0)) {
                             val newEvent = EventItem(
@@ -92,7 +94,7 @@ class EventListReader {
             .get()
             .addOnSuccessListener { result ->
                 for (element in result) {
-                    if (element.data["eventExp"].toString() == today) {
+                    if (today == element.data["eventExp"].toString()) {
                         countPendingEvents++
                     }
                 }

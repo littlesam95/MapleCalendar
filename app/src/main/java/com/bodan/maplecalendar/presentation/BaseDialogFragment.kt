@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 
-abstract class BaseDialogFragment<T : ViewDataBinding>(private val layoutId: Int) : DialogFragment() {
+abstract class BaseDialogFragment<T : ViewDataBinding>(private val layoutId: Int) :
+    DialogFragment() {
 
     private var _binding: T? = null
     protected val binding
@@ -35,5 +37,9 @@ abstract class BaseDialogFragment<T : ViewDataBinding>(private val layoutId: Int
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    protected fun showToastMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 }

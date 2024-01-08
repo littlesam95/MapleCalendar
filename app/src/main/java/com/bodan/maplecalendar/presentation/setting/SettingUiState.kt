@@ -5,6 +5,7 @@ data class SettingUiState(
 ) {
     val isSubmitBtnEnable: Boolean = (characterNameValidState == CharacterNameValidState.VALID)
 }
+
 enum class CharacterNameValidState {
     NONE, VALID
 }
