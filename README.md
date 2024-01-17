@@ -61,6 +61,9 @@
 
 ### 💬 기술적 고민과 선택
 #### 1. AlarmManager with BroadcastReceiver
+ - Service와 BroadcastReceiver로 앱이 켜져 있을 때뿐만 아니라 백그라운드 상태에서도, 앱이 꺼진 상태에서도, 심지어 기기가 잠금인 상태에서도 매일 00시에 거의 정확하게 알림을 받을 수 있도록 하였음.
+ - AlarmManager의 setAlarmClock()과 PendingIntent를 정의해서 매일 00시에 BroadcastReceiver를 호출하고, BroadcastReceiver에서 NotificationManager를 정의하고 notify()로 알림을 보낼 수 있도록 하였음.
+ - 하지만 setAlarmClock()은 반복이 불가능했고, 반복 알람을 구현하기 위해 onReceive()에서 다시 다음 날 00시에 알림을 예약하는 방식을 사용하였음.
 
 
 ### References
