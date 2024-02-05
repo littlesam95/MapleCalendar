@@ -1,7 +1,9 @@
 package com.bodan.maplecalendar.data.repository
 
 import com.bodan.maplecalendar.data.dto.CharacterBasicResponse
+import com.bodan.maplecalendar.data.dto.CharacterItemEquipmentResponse
 import com.bodan.maplecalendar.data.dto.CharacterOcidResponse
+import com.bodan.maplecalendar.data.dto.CharacterStatResponse
 
 interface MaplestoryRepository {
 
@@ -9,5 +11,7 @@ interface MaplestoryRepository {
 
     suspend fun getCharacterBasic(ocid: String, date: String): CharacterBasicResponse
 
-    // suspend fun getCharacterPower(ocid: String, date: String): CharacterStatResponse
+    suspend fun getCharacterPower(ocid: String, date: String): CharacterStatResponse
+
+    suspend fun getCharacterItemEquipment(ocid: String, date: String): CharacterItemEquipmentResponse
 }
