@@ -16,7 +16,7 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="320dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_dialog"
             android:elevation="2dp"
@@ -31,7 +31,7 @@
                 android:fontFamily="@font/pretendardregular"
                 android:text="@string/text_push_notification"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="@dimen/title_font_size_large"
                 app:layout_constraintBottom_toTopOf="@id/tv_ask_push_notification"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +46,7 @@
                 android:fontFamily="@font/pretendardregular"
                 android:text="@string/text_ask_push_notification"
                 android:textColor="@color/white"
-                android:textSize="20sp"
+                android:textSize="@dimen/title_font_size_medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_push_notification" />
@@ -64,7 +64,7 @@
                 android:onClick="@{() -> vm.setCallAlarm()}"
                 android:text="@string/text_allow"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="@dimen/title_font_size_big"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_not_allow_push_notification"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +81,7 @@
                 android:onClick="@{() -> vm.setCancelAlarm()}"
                 android:text="@string/text_not_allow"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="@dimen/title_font_size_big"
                 app:layout_constraintBottom_toBottomOf="@id/btn_allow_push_notification"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/btn_allow_push_notification"

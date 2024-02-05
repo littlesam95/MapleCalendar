@@ -78,6 +78,14 @@
 
         </activity>
 
+        <activity
+            android:name=".presentation.CharacterActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|keyboardHidden|orientation|colorMode"
+            android:exported="false"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

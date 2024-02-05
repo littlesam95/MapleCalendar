@@ -68,7 +68,7 @@
     <dimen name="btn_next_calendar_end">40dp</dimen>
     <dimen name="rv_calendar_start">8dp</dimen>
     <dimen name="rv_calendar_end">8dp</dimen>
-    <dimen name="rv_calendar_top">16dp</dimen>
+    <dimen name="rv_calendar_top">32dp</dimen>
     <dimen name="rv_calendar_bottom">16dp</dimen>
     <dimen name="rv_calendar_width">340dp</dimen>
 

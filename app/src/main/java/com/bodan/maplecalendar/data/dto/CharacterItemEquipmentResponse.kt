@@ -2,7 +2,7 @@ package com.bodan.maplecalendar.data.dto
 
 import com.bodan.maplecalendar.data.ResponseStatus
 
-data class CharacterStatResponse(
+data class CharacterItemEquipmentResponse(
     val status: ResponseStatus,
-    val characterStat: CharacterStat?
+    val characterItemEquipment: CharacterItemEquipment?
 )

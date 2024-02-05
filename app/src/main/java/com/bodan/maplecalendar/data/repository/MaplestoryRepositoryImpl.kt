@@ -3,7 +3,9 @@ package com.bodan.maplecalendar.data.repository
 import com.bodan.maplecalendar.data.ResponseStatus
 import com.bodan.maplecalendar.data.NetworkModule
 import com.bodan.maplecalendar.data.dto.CharacterBasicResponse
+import com.bodan.maplecalendar.data.dto.CharacterItemEquipmentResponse
 import com.bodan.maplecalendar.data.dto.CharacterOcidResponse
+import com.bodan.maplecalendar.data.dto.CharacterStatResponse
 import com.bodan.maplecalendar.data.network.MaplestoryApi
 import timber.log.Timber
 
@@ -130,7 +132,6 @@ class MaplestoryRepositoryImpl : MaplestoryRepository {
         )
     }
 
-    /*
     override suspend fun getCharacterPower(ocid: String, date: String): CharacterStatResponse {
         val response = maplestoryApi.fetchCharacterStat(ocid = ocid, date = date)
 
@@ -185,7 +186,61 @@ class MaplestoryRepositoryImpl : MaplestoryRepository {
             characterStat = null
         )
     }
-    */
+
+    override suspend fun getCharacterItemEquipment(ocid: String, date: String): CharacterItemEquipmentResponse {
+        val response = maplestoryApi.fetchCharacterItemEquipment(ocid = ocid, date = date)
+
+        when (response.code()) {
+            in successStatusCodeRange -> {
+                response.body()?.let { characterItemEquipment ->
+                    return CharacterItemEquipmentResponse(
+                        status = ResponseStatus.SUCCESS,
+                        characterItemEquipment = characterItemEquipment
+                    )
+                }
+            }
+
+            BAD_REQUEST -> {
+                return CharacterItemEquipmentResponse(
+                    status = ResponseStatus.BAD_REQUEST,
+                    characterItemEquipment = null
+                )
+            }
+
+            UNAUTHORIZED_STATUS -> {
+                return CharacterItemEquipmentResponse(
+                    status = ResponseStatus.UNAUTHORIZED_STATUS,
+                    characterItemEquipment = null
+                )
+            }
+
+            FORBIDDEN -> {
+                return CharacterItemEquipmentResponse(
+                    status = ResponseStatus.FORBIDDEN,
+                    characterItemEquipment = null
+                )
+            }
+
+            TOO_MANY_REQUESTS -> {
+                return CharacterItemEquipmentResponse(
+                    status = ResponseStatus.TOO_MANY_REQUESTS,
+                    characterItemEquipment = null
+                )
+            }
+
+            in internalServerErrorStatusCodeRange -> {
+                return CharacterItemEquipmentResponse(
+                    status = ResponseStatus.INTERNAL_SERVER_ERROR,
+                    characterItemEquipment = null
+                )
+            }
+        }
+
+        return CharacterItemEquipmentResponse(
+            status = ResponseStatus.INTERNAL_SERVER_ERROR,
+            characterItemEquipment = null
+        )
+    }
 
     companion object {
         private const val BAD_REQUEST: Int = 400
