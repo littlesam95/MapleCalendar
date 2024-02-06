@@ -8,6 +8,7 @@ import androidx.fragment.app.activityViewModels
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentLobbyBinding
 import com.bodan.maplecalendar.presentation.BaseFragment
+import com.bodan.maplecalendar.presentation.CharacterActivity
 import com.bodan.maplecalendar.presentation.MainViewModel
 
 class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby) {
@@ -48,6 +49,11 @@ class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby
     }
 
     private fun handleUiEvent(event: LobbyUiEvent) = when (event) {
+        is LobbyUiEvent.GoToCharacter -> {
+            val intent = Intent(requireContext(), CharacterActivity::class.java)
+            startActivity(intent)
+        }
+
         is LobbyUiEvent.BadRequest -> {
             showSnackBar(R.string.message_bad_request)
         }

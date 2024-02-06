@@ -2,6 +2,8 @@ package com.bodan.maplecalendar.presentation.lobby
 
 sealed class LobbyUiEvent {
 
+    data object GoToCharacter : LobbyUiEvent()
+
     data object BadRequest : LobbyUiEvent()
 
     data object UnauthorizedStatus : LobbyUiEvent()
