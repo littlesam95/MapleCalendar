@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_character"
+    app:startDestination="@id/fragment_character">
+
+    <fragment
+        android:id="@+id/fragment_character"
+        android:name="com.bodan.maplecalendar.presentation.character.CharacterFragment"
+        android:label="@string/name_menu_character"
+        tools:layout="@layout/fragment_character">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_equipment"
+        android:name="com.bodan.maplecalendar.presentation.equipment.EquipmentFragment"
+        android:label="@string/name_menu_equipment"
+        tools:layout="@layout/fragment_equipment">
+
+    </fragment>
+
+</navigation>

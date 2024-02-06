@@ -17,6 +17,38 @@
         android:background="@color/white"
         tools:context=".presentation.CharacterActivity">
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fcv_character"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/bnv_character"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navGraph="@navigation/nav_graph_character" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bnv_character"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/bnv_start"
+            android:layout_marginEnd="@dimen/bnv_end"
+            android:background="@drawable/rounded"
+            app:elevation="0dp"
+            app:itemActiveIndicatorStyle="@null"
+            app:itemBackground="@android:color/transparent"
+            app:itemRippleColor="@android:color/transparent"
+            app:itemTextColor="@drawable/selector_text"
+            app:labelVisibilityMode="selected"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fcv_character"
+            app:menu="@menu/bottom_nav_menu_character" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
