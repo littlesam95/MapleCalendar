@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="com.bodan.maplecalendar.presentation.MainViewModel" />
+            type="com.bodan.maplecalendar.presentation.CharacterViewModel" />
 
     </data>
 
@@ -14,6 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presentation.equipment.EquipmentFragment">
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

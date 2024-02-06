@@ -6,11 +6,11 @@ import androidx.fragment.app.activityViewModels
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentEquipmentBinding
 import com.bodan.maplecalendar.presentation.BaseFragment
-import com.bodan.maplecalendar.presentation.MainViewModel
+import com.bodan.maplecalendar.presentation.CharacterViewModel
 
 class EquipmentFragment : BaseFragment<FragmentEquipmentBinding>(R.layout.fragment_equipment) {
 
-    private val viewModel: MainViewModel by activityViewModels()
+    private val viewModel: CharacterViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
