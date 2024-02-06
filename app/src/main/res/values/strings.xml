@@ -4,6 +4,8 @@
     <string name="name_menu_home">Home</string>
     <string name="name_menu_calendar">Calendar</string>
     <string name="name_menu_setting">Setting</string>
+    <string name="name_menu_character">Character</string>
+    <string name="name_menu_equipment">Equipment</string>
     <string name="name_menu_change_character_name">Change Character Name</string>
     <string name="name_menu_set_push_notification">Set Push Notification</string>
     <string name="name_menu_day_event">Events of Date</string>
