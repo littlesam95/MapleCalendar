@@ -11,6 +11,7 @@ import com.bodan.maplecalendar.presentation.calendar.CalendarUiEvent
 import com.bodan.maplecalendar.presentation.calendar.CalendarUiState
 import com.bodan.maplecalendar.presentation.calendar.DayType
 import com.bodan.maplecalendar.presentation.calendar.OnDateClickListener
+import com.bodan.maplecalendar.presentation.equipment.EquipmentUiEvent
 import com.bodan.maplecalendar.presentation.lobby.EventItem
 import com.bodan.maplecalendar.presentation.lobby.LobbyUiEvent
 import com.bodan.maplecalendar.presentation.lobby.OnEventClickListener
@@ -50,9 +51,8 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
 
     private val todayFormatted = MutableStateFlow<String>("")
 
-    private val yesterdayFormatted = MutableStateFlow<String>("")
-
-    private val twoDaysAgoFormatted = MutableStateFlow<String>("")
+    private val _searchDate = MutableStateFlow<String>("")
+    val searchDate = _searchDate.asStateFlow()
 
     private val currentMinute = MutableStateFlow<Int>(-1)
 
@@ -109,6 +109,9 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
     private val _settingUiState = MutableStateFlow<SettingUiState>(SettingUiState())
     val settingUiState = _settingUiState.asStateFlow()
 
+    private val _equipmentUiEvent = MutableSharedFlow<EquipmentUiEvent>()
+    val equipmentUiEvent = _equipmentUiEvent.asSharedFlow()
+
     override fun onClicked(calendarDate: CalendarUiState.CalendarDate) {
         val date = calendarDate.name
         _specificDate.value = "${_currentYear.value}년 ${_currentMonth.value}월 ${date}일"
@@ -140,14 +143,17 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
 
     private fun setToday(): Deferred<Unit> {
         val deferred = viewModelScope.async {
-            twoDaysAgoFormatted.value = dateFormatConverter.twoDaysAgoFormatted()
-            yesterdayFormatted.value = dateFormatConverter.yesterdayFormatted()
             todayFormatted.value = dateFormatConverter.todayFormatted()
             _currentYear.value = dateFormatConverter.todayYear()
             _currentMonth.value = dateFormatConverter.todayMonth()
             _today.value = dateFormatConverter.todayOtherFormatted()
             currentMinute.value =
                 ((dateFormatConverter.todayHour()) * 60 + dateFormatConverter.todayMinute())
+            _searchDate.value = when (currentMinute.value) {
+                in 0..60 -> dateFormatConverter.twoDaysAgoFormatted()
+
+                else -> dateFormatConverter.yesterdayFormatted()
+            }
         }
 
         return deferred
@@ -181,7 +187,6 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
                         this@MainViewModel.characterOcid.value = characterOcid.ocid
                     }
                     getCharacterBasic()
-                    // getCharacterPower()
                 }
 
                 ResponseStatus.BAD_REQUEST -> {
@@ -213,11 +218,7 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
                 characterOcid.value?.let {
                     maplestoryRepository.getCharacterBasic(
                         ocid = it,
-                        date = when (currentMinute.value) {
-                            in 0..60 -> twoDaysAgoFormatted.value
-
-                            else -> yesterdayFormatted.value
-                        }
+                        date = _searchDate.value
                     )
                 } ?: return@launch
 
@@ -255,57 +256,6 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
             }
         }
     }
-
-    /*
-    캐릭터 스탯
-    private fun getCharacterPower() {
-        viewModelScope.launch {
-            val characterStatResponse =
-                characterOcid.value?.let {
-                    maplestoryRepository.getCharacterPower(
-                        ocid = it,
-                        date = when (currentMinute.value) {
-                            in 0..60 -> twoDaysAgoFormatted.value
-
-                            else -> yesterdayFormatted.value
-                        }
-                    )
-                } ?: return@launch
-
-            when (characterStatResponse.status) {
-                ResponseStatus.SUCCESS -> {
-                    characterStatResponse.characterStat?.let { characterStat ->
-                        characterStat.finalStats.forEach { finalStat ->
-                            if (finalStat.statName == "전투력") {
-                                _characterGender.value = convertPowerFormat(finalStat.statValue)
-                            }
-                        }
-                    }
-                }
-
-                ResponseStatus.BAD_REQUEST -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.BadRequest)
-                }
-
-                ResponseStatus.UNAUTHORIZED_STATUS -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.UnauthorizedStatus)
-                }
-
-                ResponseStatus.FORBIDDEN -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.Forbidden)
-                }
-
-                ResponseStatus.TOO_MANY_REQUESTS -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.TooManyRequests)
-                }
-
-                ResponseStatus.INTERNAL_SERVER_ERROR -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.InternalServerError)
-                }
-            }
-        }
-    }
-    */
 
     private fun setEventList() {
         viewModelScope.launch {
@@ -398,6 +348,12 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
             getCharacterOcid()
             setEventList()
             setCalendarDate()
+        }
+    }
+
+    fun goToCharacter() {
+        viewModelScope.launch {
+            _lobbyUiEvent.emit(LobbyUiEvent.GoToCharacter)
         }
     }
 

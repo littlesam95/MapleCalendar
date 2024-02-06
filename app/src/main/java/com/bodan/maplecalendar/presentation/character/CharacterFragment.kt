@@ -1,14 +1,14 @@
-package com.bodan.maplecalendar.presentation.equipment
+package com.bodan.maplecalendar.presentation.character
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import com.bodan.maplecalendar.R
-import com.bodan.maplecalendar.databinding.FragmentEquipmentBinding
+import com.bodan.maplecalendar.databinding.FragmentCharacterBinding
 import com.bodan.maplecalendar.presentation.BaseFragment
 import com.bodan.maplecalendar.presentation.CharacterViewModel
 
-class EquipmentFragment : BaseFragment<FragmentEquipmentBinding>(R.layout.fragment_equipment) {
+class CharacterFragment : BaseFragment<FragmentCharacterBinding>(R.layout.fragment_character) {
 
     private val viewModel: CharacterViewModel by activityViewModels()
 
@@ -17,31 +17,31 @@ class EquipmentFragment : BaseFragment<FragmentEquipmentBinding>(R.layout.fragme
 
         binding.vm = viewModel
 
-        collectLatestFlow(viewModel.equipmentUiEvent) { handleUiEvent(it) }
+        collectLatestFlow(viewModel.characterUiEvent) { handleUiEvent(it) }
     }
 
-    private fun handleUiEvent(event: EquipmentUiEvent) = when (event) {
-        is EquipmentUiEvent.BadRequest -> {
+    private fun handleUiEvent(event: CharacterUiEvent) = when (event) {
+        is CharacterUiEvent.BadRequest -> {
             showSnackBar(R.string.message_bad_request)
         }
 
-        is EquipmentUiEvent.UnauthorizedStatus -> {
+        is CharacterUiEvent.UnauthorizedStatus -> {
             showSnackBar(R.string.message_network_error)
         }
 
-        is EquipmentUiEvent.Forbidden -> {
+        is CharacterUiEvent.Forbidden -> {
             showSnackBar(R.string.message_forbidden)
         }
 
-        is EquipmentUiEvent.TooManyRequests -> {
+        is CharacterUiEvent.TooManyRequests -> {
             showSnackBar(R.string.message_too_many_requests)
         }
 
-        is EquipmentUiEvent.InternalServerError -> {
+        is CharacterUiEvent.InternalServerError -> {
             showSnackBar(R.string.message_network_error)
         }
 
-        is EquipmentUiEvent.SetDarkMode -> {
+        is CharacterUiEvent.SetDarkMode -> {
             setDarkMode()
         }
     }

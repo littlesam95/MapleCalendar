@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fragment_character"
+        android:enabled="true"
+        android:icon="@drawable/selector_character"
+        android:title="@string/name_menu_character" />
+
+    <item
+        android:id="@+id/fragment_equipment"
+        android:enabled="true"
+        android:icon="@drawable/selector_equipment"
+        android:title="@string/name_menu_equipment" />
+
+</menu>
