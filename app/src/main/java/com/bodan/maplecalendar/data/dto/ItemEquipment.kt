@@ -8,7 +8,7 @@ data class ItemEquipment(
     @Json(name = "item_equipment_part")
     val itemEquipmentPart: String,
 
-    @Json(name = "equipment_slot")
+    @Json(name = "item_equipment_slot")
     val equipmentSlot: String,
 
     @Json(name = "item_name")
@@ -36,28 +36,28 @@ data class ItemEquipment(
     val itemBaseOption: ItemBaseOption,
 
     @Json(name = "potential_option_grade")
-    val potentialOptionGrade: String,
+    val potentialOptionGrade: String?,
 
     @Json(name = "additional_potential_option_grade")
-    val additionalPotentialOptionGrade: String,
+    val additionalPotentialOptionGrade: String?,
 
     @Json(name = "potential_option_1")
-    val potentialOptionFirst: String,
+    val potentialOptionFirst: String?,
 
     @Json(name = "potential_option_2")
-    val potentialOptionSecond: String,
+    val potentialOptionSecond: String?,
 
     @Json(name = "potential_option_3")
-    val potentialOptionThird: String,
+    val potentialOptionThird: String?,
 
     @Json(name = "additional_potential_option_1")
-    val additionalPotentialOptionFirst: String,
+    val additionalPotentialOptionFirst: String?,
 
     @Json(name = "additional_potential_option_2")
-    val additionalPotentialOptionSecond: String,
+    val additionalPotentialOptionSecond: String?,
 
     @Json(name = "additional_potential_option_3")
-    val additionalPotentialOptionThird: String,
+    val additionalPotentialOptionThird: String?,
 
     @Json(name = "equipment_level_increase")
     val equipmentLevelIncrease: String,
@@ -86,7 +86,7 @@ data class ItemEquipment(
     @Json(name = "scroll_resilience_count")
     val itemScrollResilienceCount: String,
 
-    @Json(name = "scroll_upgradable_count")
+    @Json(name = "scroll_upgradeable_count")
     val itemScrollUpgradableCount: String,
 
     @Json(name = "soul_name")

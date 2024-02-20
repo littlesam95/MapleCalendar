@@ -57,8 +57,5 @@ data class ItemTotalOption(
     val itemTotalMaxHpRate: String,
 
     @Json(name = "max_mp_rate")
-    val itemTotalMaxMpRate: String,
-
-    @Json(name = "base_equipment_level")
-    val itemTotalBaseEquipmentLevel: String
+    val itemTotalMaxMpRate: String
 )
