@@ -7,8 +7,10 @@ import com.bodan.maplecalendar.data.ResponseStatus
 import com.bodan.maplecalendar.data.dto.CharacterBasic
 import com.bodan.maplecalendar.data.dto.CharacterItemEquipment
 import com.bodan.maplecalendar.data.dto.CharacterStat
+import com.bodan.maplecalendar.data.dto.CharacterStatInfo
 import com.bodan.maplecalendar.data.repository.MaplestoryRepository
 import com.bodan.maplecalendar.data.repository.MaplestoryRepositoryImpl
+import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertPowerFormat
 import com.bodan.maplecalendar.presentation.character.CharacterUiEvent
 import com.bodan.maplecalendar.presentation.equipment.EquipmentUiEvent
 import kotlinx.coroutines.Deferred
@@ -17,7 +19,9 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class CharacterViewModel : ViewModel() {
 
@@ -49,8 +53,14 @@ class CharacterViewModel : ViewModel() {
     private val _characterBasic = MutableStateFlow<CharacterBasic?>(null)
     val characterBasic = _characterBasic.asStateFlow()
 
+    private val _characterLevel = MutableStateFlow<String>("")
+    val characterLevel = _characterLevel.asStateFlow()
+
     private val _characterStat = MutableStateFlow<CharacterStat?>(null)
     val characterStat = _characterStat.asStateFlow()
+
+    private val _characterStatInfo = MutableStateFlow<CharacterStatInfo>(CharacterStatInfo())
+    val characterStatInfo = _characterStatInfo.asStateFlow()
 
     private val _characterItemEquipment = MutableStateFlow<CharacterItemEquipment?>(null)
     val characterItemEquipment = _characterItemEquipment.asStateFlow()
@@ -93,6 +103,8 @@ class CharacterViewModel : ViewModel() {
                         this@CharacterViewModel.characterOcid.value = characterOcid.ocid
                     }
                     getCharacterBasic()
+                    getCharacterStat()
+                    getCharacterEquipment()
                 }
 
                 ResponseStatus.BAD_REQUEST -> {
@@ -139,8 +151,8 @@ class CharacterViewModel : ViewModel() {
                             characterImage = characterBasic.characterImage,
                             characterGender = characterBasic.characterGender
                         )
+                        _characterLevel.value = characterBasic.characterLevel.toString()
                     }
-                    getCharacterStat()
                 }
 
                 ResponseStatus.BAD_REQUEST -> {
@@ -179,9 +191,165 @@ class CharacterViewModel : ViewModel() {
             when (characterStatResponse.status) {
                 ResponseStatus.SUCCESS -> {
                     characterStatResponse.characterStat?.let { characterStat ->
-                        _characterStat.value = characterStat
+                        characterStat.finalStats.forEach { finalStat ->
+                            when (finalStat.statName) {
+                                "전투력" -> {
+                                    _characterStatInfo.update {
+                                        it.copy(characterPower = convertPowerFormat(finalStat.statValue))
+                                    }
+                                    Timber.d(_characterStatInfo.value.characterPower)
+                                }
+
+                                "STR" -> {
+                                    _characterStatInfo.value.characterStr = finalStat.statValue
+                                }
+
+                                "DEX" -> {
+                                    _characterStatInfo.value.characterDex = finalStat.statValue
+                                }
+
+                                "INT" -> {
+                                    _characterStatInfo.value.characterInt = finalStat.statValue
+                                }
+
+                                "LUK" -> {
+                                    _characterStatInfo.value.characterLuk = finalStat.statValue
+                                }
+
+                                "HP" -> {
+                                    _characterStatInfo.value.characterHp = finalStat.statValue
+                                }
+
+                                "MP" -> {
+                                    _characterStatInfo.value.characterMp = finalStat.statValue
+                                }
+
+                                "최대 스탯공격력" -> {
+                                    _characterStatInfo.value.characterStatPower =
+                                        convertPowerFormat(finalStat.statValue)
+                                }
+
+                                "데미지" -> {
+                                    _characterStatInfo.value.characterDamage = finalStat.statValue
+                                }
+
+                                "최종 데미지" -> {
+                                    _characterStatInfo.value.characterFinalDamage = finalStat.statValue
+                                }
+
+                                "보스 몬스터 데미지" -> {
+                                    _characterStatInfo.value.characterBossDamage = finalStat.statValue
+                                }
+
+                                "방어율 무시" -> {
+                                    _characterStatInfo.value.characterIgnoreMonsterArmor =
+                                        finalStat.statValue
+                                }
+
+                                "일반 몬스터 데미지" -> {
+                                    _characterStatInfo.value.characterNormalDamage = finalStat.statValue
+                                }
+
+                                "공격력" -> {
+                                    _characterStatInfo.value.characterAttackPower = finalStat.statValue
+                                }
+
+                                "크리티컬 확률" -> {
+                                    _characterStatInfo.value.characterCriticalRate = finalStat.statValue
+                                }
+
+                                "마력" -> {
+                                    _characterStatInfo.value.characterMagicPower = finalStat.statValue
+                                }
+
+                                "크리티컬 데미지" -> {
+                                    _characterStatInfo.value.characterCriticalDamage = finalStat.statValue
+                                }
+
+                                "재사용 대기시간 감소 (초)" -> {
+                                    _characterStatInfo.value.characterCooltimeReduceSec =
+                                        finalStat.statValue
+                                }
+
+                                "재사용 대기시간 감소 (%)" -> {
+                                    _characterStatInfo.value.characterCooltimeReducePercent =
+                                        finalStat.statValue
+                                }
+
+                                "버프 지속시간" -> {
+                                    _characterStatInfo.value.characterBuffPersistTime = finalStat.statValue
+                                }
+
+                                "재사용 대기시간 미적용" -> {
+                                    _characterStatInfo.value.characterCooltimeCancel = finalStat.statValue
+                                }
+
+                                "속성 내성 무시" -> {
+                                    _characterStatInfo.value.characterIgnoreElementResist =
+                                        finalStat.statValue
+                                }
+
+                                "상태이상 추가 데미지" -> {
+                                    _characterStatInfo.value.characterCrowdControlDamage =
+                                        finalStat.statValue
+                                }
+
+                                "소환수 지속시간 증가" -> {
+                                    _characterStatInfo.value.characterSummonTimeIncrease =
+                                        finalStat.statValue
+                                }
+
+                                "메소 획득량" -> {
+                                    _characterStatInfo.value.characterMesoDrop = finalStat.statValue
+                                }
+
+                                "스타포스" -> {
+                                    _characterStatInfo.value.characterStarforce = finalStat.statValue
+                                }
+
+                                "아이템 드롭률" -> {
+                                    _characterStatInfo.value.characterItemDrop = finalStat.statValue
+                                }
+
+                                "아케인포스" -> {
+                                    _characterStatInfo.value.characterArcaneForce = finalStat.statValue
+                                }
+
+                                "추가 경험치 획득" -> {
+                                    _characterStatInfo.value.characterExpUp = finalStat.statValue
+                                }
+
+                                "어센틱포스" -> {
+                                    _characterStatInfo.value.characterAuthenticForce = finalStat.statValue
+                                }
+
+                                "방어력" -> {
+                                    _characterStatInfo.value.characterArmor = finalStat.statValue
+                                }
+
+                                "상태이상 내성" -> {
+                                    _characterStatInfo.value.characterIgnoreElementResist =
+                                        finalStat.statValue
+                                }
+
+                                "이동속도" -> {
+                                    _characterStatInfo.value.characterSpeed = finalStat.statValue
+                                }
+
+                                "점프력" -> {
+                                    _characterStatInfo.value.characterJump = finalStat.statValue
+                                }
+
+                                "스탠스" -> {
+                                    _characterStatInfo.value.characterStance = finalStat.statValue
+                                }
+
+                                "공격 속도" -> {
+                                    _characterStatInfo.value.characterAttackSpeed = finalStat.statValue
+                                }
+                            }
+                        }
                     }
-                    getCharacterEquipment()
                 }
 
                 ResponseStatus.BAD_REQUEST -> {
