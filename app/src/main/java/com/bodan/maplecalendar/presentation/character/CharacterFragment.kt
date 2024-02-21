@@ -11,13 +11,34 @@ import com.bodan.maplecalendar.presentation.CharacterViewModel
 class CharacterFragment : BaseFragment<FragmentCharacterBinding>(R.layout.fragment_character) {
 
     private val viewModel: CharacterViewModel by activityViewModels()
+    private lateinit var characterDefaultStatListAdapter: CharacterDefaultStatListAdapter
+    private lateinit var characterMainStatListAdapter: CharacterMainStatListAdapter
+    private lateinit var characterEtcStatListAdapter: CharacterEtcStatListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initListAdapter()
+        initRecyclerView()
+
         binding.vm = viewModel
+        binding.defaultStatListAdapter = characterDefaultStatListAdapter
+        binding.mainStatListAdapter = characterMainStatListAdapter
+        binding.etcStatListAdapter = characterEtcStatListAdapter
 
         collectLatestFlow(viewModel.characterUiEvent) { handleUiEvent(it) }
+    }
+
+    private fun initListAdapter() {
+        characterDefaultStatListAdapter = CharacterDefaultStatListAdapter()
+        characterMainStatListAdapter = CharacterMainStatListAdapter()
+        characterEtcStatListAdapter = CharacterEtcStatListAdapter()
+    }
+
+    private fun initRecyclerView() {
+        binding.rvDefaultStatCharacter.setHasFixedSize(false)
+        binding.rvMainStatCharacter.setHasFixedSize(false)
+        binding.rvEtcStatCharacter.setHasFixedSize(false)
     }
 
     private fun handleUiEvent(event: CharacterUiEvent) = when (event) {
