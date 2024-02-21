@@ -7,11 +7,14 @@ import com.bodan.maplecalendar.data.ResponseStatus
 import com.bodan.maplecalendar.data.dto.CharacterBasic
 import com.bodan.maplecalendar.data.dto.CharacterItemEquipment
 import com.bodan.maplecalendar.data.dto.CharacterStat
-import com.bodan.maplecalendar.data.dto.CharacterStatInfo
 import com.bodan.maplecalendar.data.repository.MaplestoryRepository
 import com.bodan.maplecalendar.data.repository.MaplestoryRepositoryImpl
+import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertAttackSpeedFormat
+import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertCommaFormat
+import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertPercentFormat
 import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertPowerFormat
 import com.bodan.maplecalendar.presentation.character.CharacterUiEvent
+import com.bodan.maplecalendar.presentation.character.CharacterUiState
 import com.bodan.maplecalendar.presentation.equipment.EquipmentUiEvent
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -19,7 +22,6 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -56,11 +58,23 @@ class CharacterViewModel : ViewModel() {
     private val _characterLevel = MutableStateFlow<String>("")
     val characterLevel = _characterLevel.asStateFlow()
 
-    private val _characterStat = MutableStateFlow<CharacterStat?>(null)
-    val characterStat = _characterStat.asStateFlow()
+    private val characterStat = MutableStateFlow<CharacterStat?>(null)
 
-    private val _characterStatInfo = MutableStateFlow<CharacterStatInfo>(CharacterStatInfo())
-    val characterStatInfo = _characterStatInfo.asStateFlow()
+    private val _characterPower = MutableStateFlow<String>("")
+    val characterPower = _characterPower.asStateFlow()
+
+    private val _characterDefaultStatData = MutableStateFlow<List<CharacterUiState.CharacterDefaultStat>>(listOf(CharacterUiState.CharacterDefaultStat("", "")))
+    val characterDefaultStatData = _characterDefaultStatData.asStateFlow()
+
+    private val _characterMainStatData = MutableStateFlow<List<CharacterUiState.CharacterMainStat>>(listOf(CharacterUiState.CharacterMainStat("", "")))
+    val characterMainStatData = _characterMainStatData.asStateFlow()
+
+    private val characterCooltimeReduceSec = MutableStateFlow<String>("")
+
+    private val characterCooltimeReducePercent = MutableStateFlow<String>("")
+
+    private val _characterEtcStatData = MutableStateFlow<List<CharacterUiState.CharacterEtcStat>>(listOf(CharacterUiState.CharacterEtcStat("", "")))
+    val characterEtcStatData = _characterEtcStatData.asStateFlow()
 
     private val _characterItemEquipment = MutableStateFlow<CharacterItemEquipment?>(null)
     val characterItemEquipment = _characterItemEquipment.asStateFlow()
@@ -151,7 +165,7 @@ class CharacterViewModel : ViewModel() {
                             characterImage = characterBasic.characterImage,
                             characterGender = characterBasic.characterGender
                         )
-                        _characterLevel.value = characterBasic.characterLevel.toString()
+                        _characterLevel.value = "Lv.${characterBasic.characterLevel}"
                     }
                 }
 
@@ -191,164 +205,287 @@ class CharacterViewModel : ViewModel() {
             when (characterStatResponse.status) {
                 ResponseStatus.SUCCESS -> {
                     characterStatResponse.characterStat?.let { characterStat ->
+                        val newCharacterDefaultStatData =
+                            MutableList(3 * 2) { CharacterUiState.CharacterDefaultStat("", "") }
+                        val newCharacterMainStatData =
+                            MutableList(8 * 2) { CharacterUiState.CharacterMainStat("", "") }
+                        val newCharacterEtcStatData =
+                            MutableList(6 * 2) { CharacterUiState.CharacterEtcStat("", "") }
+
                         characterStat.finalStats.forEach { finalStat ->
                             when (finalStat.statName) {
                                 "전투력" -> {
-                                    _characterStatInfo.update {
-                                        it.copy(characterPower = convertPowerFormat(finalStat.statValue))
-                                    }
-                                    Timber.d(_characterStatInfo.value.characterPower)
+                                    _characterPower.value = convertPowerFormat(finalStat.statValue)
                                 }
 
                                 "STR" -> {
-                                    _characterStatInfo.value.characterStr = finalStat.statValue
+                                    newCharacterDefaultStatData[2] =
+                                        CharacterUiState.CharacterDefaultStat(
+                                            "STR",
+                                            convertCommaFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "DEX" -> {
-                                    _characterStatInfo.value.characterDex = finalStat.statValue
+                                    newCharacterDefaultStatData[3] =
+                                        CharacterUiState.CharacterDefaultStat(
+                                            "DEX",
+                                            convertCommaFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "INT" -> {
-                                    _characterStatInfo.value.characterInt = finalStat.statValue
+                                    newCharacterDefaultStatData[4] =
+                                        CharacterUiState.CharacterDefaultStat(
+                                            "INT",
+                                            convertCommaFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "LUK" -> {
-                                    _characterStatInfo.value.characterLuk = finalStat.statValue
+                                    newCharacterDefaultStatData[5] =
+                                        CharacterUiState.CharacterDefaultStat(
+                                            "LUK",
+                                            convertCommaFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "HP" -> {
-                                    _characterStatInfo.value.characterHp = finalStat.statValue
+                                    newCharacterDefaultStatData[0] =
+                                        CharacterUiState.CharacterDefaultStat(
+                                            "HP",
+                                            convertCommaFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "MP" -> {
-                                    _characterStatInfo.value.characterMp = finalStat.statValue
+                                    newCharacterDefaultStatData[1] =
+                                        CharacterUiState.CharacterDefaultStat(
+                                            "MP",
+                                            convertCommaFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "최대 스탯공격력" -> {
-                                    _characterStatInfo.value.characterStatPower =
-                                        convertPowerFormat(finalStat.statValue)
+                                    newCharacterMainStatData[0] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "스탯 공격력",
+                                            convertPowerFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "데미지" -> {
-                                    _characterStatInfo.value.characterDamage = finalStat.statValue
+                                    newCharacterMainStatData[1] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "데미지",
+                                            convertPercentFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "최종 데미지" -> {
-                                    _characterStatInfo.value.characterFinalDamage = finalStat.statValue
+                                    newCharacterMainStatData[2] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "최종 데미지",
+                                            convertPercentFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "보스 몬스터 데미지" -> {
-                                    _characterStatInfo.value.characterBossDamage = finalStat.statValue
+                                    newCharacterMainStatData[3] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "보스 몬스터 데미지",
+                                            convertPercentFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "방어율 무시" -> {
-                                    _characterStatInfo.value.characterIgnoreMonsterArmor =
-                                        finalStat.statValue
+                                    newCharacterMainStatData[4] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "방어율 무시",
+                                            convertPercentFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "일반 몬스터 데미지" -> {
-                                    _characterStatInfo.value.characterNormalDamage = finalStat.statValue
+                                    newCharacterMainStatData[5] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "일반 몬스터 데미지",
+                                            convertPercentFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "공격력" -> {
-                                    _characterStatInfo.value.characterAttackPower = finalStat.statValue
+                                    newCharacterMainStatData[6] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "공격력",
+                                            convertCommaFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "크리티컬 확률" -> {
-                                    _characterStatInfo.value.characterCriticalRate = finalStat.statValue
+                                    newCharacterMainStatData[7] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "크리티컬 확률",
+                                            convertPercentFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "마력" -> {
-                                    _characterStatInfo.value.characterMagicPower = finalStat.statValue
+                                    newCharacterMainStatData[8] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "마력",
+                                            convertCommaFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "크리티컬 데미지" -> {
-                                    _characterStatInfo.value.characterCriticalDamage = finalStat.statValue
+                                    newCharacterMainStatData[9] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "크리티컬 데미지",
+                                            convertPercentFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "재사용 대기시간 감소 (초)" -> {
-                                    _characterStatInfo.value.characterCooltimeReduceSec =
-                                        finalStat.statValue
+                                    characterCooltimeReduceSec.value = "${finalStat.statValue}초"
                                 }
 
                                 "재사용 대기시간 감소 (%)" -> {
-                                    _characterStatInfo.value.characterCooltimeReducePercent =
-                                        finalStat.statValue
+                                    characterCooltimeReducePercent.value = convertPercentFormat(finalStat.statValue)
                                 }
 
                                 "버프 지속시간" -> {
-                                    _characterStatInfo.value.characterBuffPersistTime = finalStat.statValue
+                                    newCharacterMainStatData[11] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "버프 지속시간",
+                                            convertPercentFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "재사용 대기시간 미적용" -> {
-                                    _characterStatInfo.value.characterCooltimeCancel = finalStat.statValue
+                                    newCharacterMainStatData[12] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "재사용 대기시간 미적용",
+                                            convertPercentFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "속성 내성 무시" -> {
-                                    _characterStatInfo.value.characterIgnoreElementResist =
-                                        finalStat.statValue
+                                    newCharacterMainStatData[13] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "속성 내성 무시",
+                                            convertPercentFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "상태이상 추가 데미지" -> {
-                                    _characterStatInfo.value.characterCrowdControlDamage =
-                                        finalStat.statValue
+                                    newCharacterMainStatData[14] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "상태이상 추가 데미지",
+                                            convertPercentFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "소환수 지속시간 증가" -> {
-                                    _characterStatInfo.value.characterSummonTimeIncrease =
-                                        finalStat.statValue
+                                    newCharacterMainStatData[15] =
+                                        CharacterUiState.CharacterMainStat(
+                                            "소환수 지속시간 증가",
+                                            convertPercentFormat(finalStat.statValue)
+                                        )
                                 }
 
                                 "메소 획득량" -> {
-                                    _characterStatInfo.value.characterMesoDrop = finalStat.statValue
+                                    newCharacterEtcStatData[0] = CharacterUiState.CharacterEtcStat(
+                                        "메소 획득량",
+                                        convertPercentFormat(finalStat.statValue)
+                                    )
                                 }
 
                                 "스타포스" -> {
-                                    _characterStatInfo.value.characterStarforce = finalStat.statValue
+                                    newCharacterEtcStatData[1] = CharacterUiState.CharacterEtcStat(
+                                        "스타포스",
+                                        convertCommaFormat(finalStat.statValue)
+                                    )
                                 }
 
                                 "아이템 드롭률" -> {
-                                    _characterStatInfo.value.characterItemDrop = finalStat.statValue
+                                    newCharacterEtcStatData[2] = CharacterUiState.CharacterEtcStat(
+                                        "아이템 드롭률",
+                                        convertPercentFormat(finalStat.statValue)
+                                    )
                                 }
 
                                 "아케인포스" -> {
-                                    _characterStatInfo.value.characterArcaneForce = finalStat.statValue
+                                    newCharacterEtcStatData[3] = CharacterUiState.CharacterEtcStat(
+                                        "아케인포스",
+                                        convertCommaFormat(finalStat.statValue)
+                                    )
                                 }
 
                                 "추가 경험치 획득" -> {
-                                    _characterStatInfo.value.characterExpUp = finalStat.statValue
+                                    newCharacterEtcStatData[4] = CharacterUiState.CharacterEtcStat(
+                                        "추가 경험치 획득",
+                                        convertPercentFormat(finalStat.statValue)
+                                    )
                                 }
 
                                 "어센틱포스" -> {
-                                    _characterStatInfo.value.characterAuthenticForce = finalStat.statValue
+                                    newCharacterEtcStatData[5] = CharacterUiState.CharacterEtcStat(
+                                        "어센틱포스",
+                                        convertCommaFormat(finalStat.statValue)
+                                    )
                                 }
 
                                 "방어력" -> {
-                                    _characterStatInfo.value.characterArmor = finalStat.statValue
+                                    newCharacterEtcStatData[6] = CharacterUiState.CharacterEtcStat(
+                                        "방어력",
+                                        convertCommaFormat(finalStat.statValue)
+                                    )
                                 }
 
                                 "상태이상 내성" -> {
-                                    _characterStatInfo.value.characterIgnoreElementResist =
-                                        finalStat.statValue
+                                    newCharacterEtcStatData[7] = CharacterUiState.CharacterEtcStat(
+                                        "상태이상 내성",
+                                        convertPercentFormat(finalStat.statValue)
+                                    )
                                 }
 
                                 "이동속도" -> {
-                                    _characterStatInfo.value.characterSpeed = finalStat.statValue
+                                    newCharacterEtcStatData[8] = CharacterUiState.CharacterEtcStat(
+                                        "이동속도",
+                                        convertPercentFormat(finalStat.statValue)
+                                    )
                                 }
 
                                 "점프력" -> {
-                                    _characterStatInfo.value.characterJump = finalStat.statValue
+                                    newCharacterEtcStatData[9] = CharacterUiState.CharacterEtcStat(
+                                        "점프력",
+                                        convertPercentFormat(finalStat.statValue)
+                                    )
                                 }
 
                                 "스탠스" -> {
-                                    _characterStatInfo.value.characterStance = finalStat.statValue
+                                    newCharacterEtcStatData[10] = CharacterUiState.CharacterEtcStat(
+                                        "스탠스",
+                                        convertPercentFormat(finalStat.statValue)
+                                    )
                                 }
 
                                 "공격 속도" -> {
-                                    _characterStatInfo.value.characterAttackSpeed = finalStat.statValue
+                                    newCharacterEtcStatData[11] = CharacterUiState.CharacterEtcStat(
+                                        "공격 속도",
+                                        convertAttackSpeedFormat(finalStat.statValue)
+                                    )
                                 }
                             }
                         }
+                        newCharacterMainStatData[10] = CharacterUiState.CharacterMainStat(
+                            "재사용 대기시간 감소",
+                            "${characterCooltimeReduceSec.value} / ${characterCooltimeReducePercent.value}"
+                        )
+                        async { _characterDefaultStatData.value = newCharacterDefaultStatData }.await()
+                        async { _characterMainStatData.value = newCharacterMainStatData }.await()
+                        async { _characterEtcStatData.value = newCharacterEtcStatData }.await()
                     }
                 }
 
