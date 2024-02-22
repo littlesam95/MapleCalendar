@@ -6,26 +6,26 @@ import com.squareup.moshi.Json
 @Keep
 data class ItemExceptionalOption(
     @Json(name = "str")
-    val itemExceptionalStr: String,
+    val itemExceptionalStr: String = "",
 
     @Json(name = "dex")
-    val itemExceptionalDex: String,
+    val itemExceptionalDex: String = "",
 
     @Json(name = "int")
-    val itemExceptionalInt: String,
+    val itemExceptionalInt: String = "",
 
     @Json(name = "luk")
-    val itemExceptionalLuk: String,
+    val itemExceptionalLuk: String = "",
 
     @Json(name = "max_hp")
-    val itemExceptionalMaxHp: String,
+    val itemExceptionalMaxHp: String = "",
 
     @Json(name = "max_mp")
-    val itemExceptionalMaxMp: String,
+    val itemExceptionalMaxMp: String = "",
 
     @Json(name = "attack_power")
-    val itemExceptionalAttackPower: String,
+    val itemExceptionalAttackPower: String = "",
 
     @Json(name = "magic_power")
-    val itemExceptionalMagicPower: String,
+    val itemExceptionalMagicPower: String = "",
 )

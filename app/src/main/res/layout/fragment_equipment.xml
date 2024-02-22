@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment_equipment">
 
@@ -9,15 +10,57 @@
             name="vm"
             type="com.bodan.maplecalendar.presentation.CharacterViewModel" />
 
+        <variable
+            name="listAdapter"
+            type="com.bodan.maplecalendar.presentation.equipment.EquipmentListAdapter" />
+
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.equipment.EquipmentFragment">
+        android:layout_marginTop="12dp">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/title_start"
+            android:layout_marginEnd="@dimen/title_end"
+            android:background="@drawable/shape_equipment"
+            tools:context=".presentation.equipment.EquipmentFragment">
 
+            <TextView
+                android:id="@+id/tv_title_equipment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/pretendardlight"
+                android:text="@string/text_title_equipment"
+                android:textColor="@color/equipment_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_equipment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:adapter="@{listAdapter}"
+                android:background="@color/equipment_background"
+                android:elevation="10dp"
+                android:padding="12dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_equipment"
+                app:spanCount="5"
+                app:submitData="@{vm.characterItemEquipmentData}"
+                tools:listitem="@layout/item_equipment_default" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
 
 </layout>

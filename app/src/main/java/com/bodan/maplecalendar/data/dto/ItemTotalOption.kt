@@ -6,56 +6,56 @@ import com.squareup.moshi.Json
 @Keep
 data class ItemTotalOption(
     @Json(name = "str")
-    val itemTotalStr: String,
+    val itemTotalStr: String = "",
 
     @Json(name = "dex")
-    val itemTotalDex: String,
+    val itemTotalDex: String = "",
 
     @Json(name = "int")
-    val itemTotalInt: String,
+    val itemTotalInt: String = "",
 
     @Json(name = "luk")
-    val itemTotalLuk: String,
+    val itemTotalLuk: String = "",
 
     @Json(name = "max_hp")
-    val itemTotalMaxHp: String,
+    val itemTotalMaxHp: String = "",
 
     @Json(name = "max_mp")
-    val itemTotalMaxMp: String,
+    val itemTotalMaxMp: String = "",
 
     @Json(name = "attack_power")
-    val itemTotalAttackPower: String,
+    val itemTotalAttackPower: String = "",
 
     @Json(name = "magic_power")
-    val itemTotalMagicPower: String,
+    val itemTotalMagicPower: String = "",
 
     @Json(name = "armor")
-    val itemTotalArmor: String,
+    val itemTotalArmor: String = "",
 
     @Json(name = "speed")
-    val itemTotalSpeed: String,
+    val itemTotalSpeed: String = "",
 
     @Json(name = "jump")
-    val itemTotalJump: String,
+    val itemTotalJump: String = "",
 
     @Json(name = "boss_damage")
-    val itemTotalBossDamage: String,
+    val itemTotalBossDamage: String = "",
 
     @Json(name = "ignore_monster_armor")
-    val itemTotalIgnoreMonsterArmor: String,
+    val itemTotalIgnoreMonsterArmor: String = "",
 
     @Json(name = "all_stat")
-    val itemTotalAllStat: String,
+    val itemTotalAllStat: String = "",
 
     @Json(name = "damage")
-    val itemTotalDamage: String,
+    val itemTotalDamage: String = "",
 
     @Json(name = "equipment_level_decrease")
-    val itemTotalEquipmentLevelDecrease: String,
+    val itemTotalEquipmentLevelDecrease: String = "",
 
     @Json(name = "max_hp_rate")
-    val itemTotalMaxHpRate: String,
+    val itemTotalMaxHpRate: String = "",
 
     @Json(name = "max_mp_rate")
-    val itemTotalMaxMpRate: String
+    val itemTotalMaxMpRate: String = ""
 )
