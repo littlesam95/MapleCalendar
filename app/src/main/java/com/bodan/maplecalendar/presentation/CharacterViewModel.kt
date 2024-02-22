@@ -95,15 +95,73 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
     private val _characterItemEquipmentData = MutableStateFlow<List<EquipmentUiState>>(listOf())
     val characterItemEquipmentData = _characterItemEquipmentData.asStateFlow()
 
+    private val _characterLastItemEquipmentDefault = MutableStateFlow<EquipmentUiState.EquipmentDefault?>(null)
+    val characterLastItemEquipmentDefault = _characterLastItemEquipmentDefault.asStateFlow()
+
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
     val characterUiEvent = _characterUiEvent.asSharedFlow()
 
     private val _equipmentUiEvent = MutableSharedFlow<EquipmentUiEvent>()
     val equipmentUiEvent = _equipmentUiEvent.asSharedFlow()
 
-    override fun onItemEquipmentClicked(equipmentUiState: EquipmentUiState) {
+    override fun onItemEquipmentDefaultClicked(equipmentUiState: EquipmentUiState.EquipmentDefault) {
         viewModelScope.launch {
+            _characterLastItemEquipmentDefault.value = equipmentUiState
+            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentDefault)
+        }
+    }
 
+    override fun onItemEquipmentAndroidClicked(equipmentUiState: EquipmentUiState.EquipmentAndroid) {
+        viewModelScope.launch {
+            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentAndroid)
+        }
+    }
+
+    override fun onItemEquipmentBadgeClicked(equipmentUiState: EquipmentUiState.EquipmentBadge) {
+        viewModelScope.launch {
+            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentBadge)
+        }
+    }
+
+    override fun onItemEquipmentEmblemClicked(equipmentUiState: EquipmentUiState.EquipmentEmblem) {
+        viewModelScope.launch {
+            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentEmblem)
+        }
+    }
+
+    override fun onItemEquipmentHeartClicked(equipmentUiState: EquipmentUiState.EquipmentHeart) {
+        viewModelScope.launch {
+            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentHeart)
+        }
+    }
+
+    override fun onItemEquipmentPocketClicked(equipmentUiState: EquipmentUiState.EquipmentPocket) {
+        viewModelScope.launch {
+            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentPocket)
+        }
+    }
+
+    override fun onItemEquipmentSeedringClicked(equipmentUiState: EquipmentUiState.EquipmentSeedring) {
+        viewModelScope.launch {
+            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentSeedring)
+        }
+    }
+
+    override fun onItemEquipmentShieldClicked(equipmentUiState: EquipmentUiState.EquipmentShield) {
+        viewModelScope.launch {
+            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentShield)
+        }
+    }
+
+    override fun onItemEquipmentSubweaponClicked(equipmentUiState: EquipmentUiState.EquipmentSubweapon) {
+        viewModelScope.launch {
+            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentSubweapon)
+        }
+    }
+
+    override fun onItemEquipmentWeaponClicked(equipmentUiState: EquipmentUiState.EquipmentWeapon) {
+        viewModelScope.launch {
+            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentWeapon)
         }
     }
 
