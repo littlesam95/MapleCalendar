@@ -6,53 +6,53 @@ import com.squareup.moshi.Json
 @Keep
 data class ItemBaseOption(
     @Json(name = "str")
-    val itemBaseStr: String,
+    val itemBaseStr: String = "",
 
     @Json(name = "dex")
-    val itemBaseDex: String,
+    val itemBaseDex: String = "",
 
     @Json(name = "int")
-    val itemBaseInt: String,
+    val itemBaseInt: String = "",
 
     @Json(name = "luk")
-    val itemBaseLuk: String,
+    val itemBaseLuk: String = "",
 
     @Json(name = "max_hp")
-    val itemBaseMaxHp: String,
+    val itemBaseMaxHp: String = "",
 
     @Json(name = "max_mp")
-    val itemBaseMaxMp: String,
+    val itemBaseMaxMp: String = "",
 
     @Json(name = "attack_power")
-    val itemBaseAttackPower: String,
+    val itemBaseAttackPower: String = "",
 
     @Json(name = "magic_power")
-    val itemBaseMagicPower: String,
+    val itemBaseMagicPower: String = "",
 
     @Json(name = "armor")
-    val itemBaseArmor: String,
+    val itemBaseArmor: String = "",
 
     @Json(name = "speed")
-    val itemBaseSpeed: String,
+    val itemBaseSpeed: String = "",
 
     @Json(name = "jump")
-    val itemBaseJump: String,
+    val itemBaseJump: String = "",
 
     @Json(name = "boss_damage")
-    val itemBaseBossDamage: String,
+    val itemBaseBossDamage: String = "",
 
     @Json(name = "ignore_monster_armor")
-    val itemBaseIgnoreMonsterArmor: String,
+    val itemBaseIgnoreMonsterArmor: String = "",
 
     @Json(name = "all_stat")
-    val itemBaseAllStat: String,
+    val itemBaseAllStat: String = "",
 
     @Json(name = "max_hp_rate")
-    val itemBaseMaxHpRate: String,
+    val itemBaseMaxHpRate: String = "",
 
     @Json(name = "max_mp_rate")
-    val itemBaseMaxMpRate: String,
+    val itemBaseMaxMpRate: String = "",
 
     @Json(name = "base_equipment_level")
-    val itemBaseBaseEquipmentLevel: String,
+    val itemBaseBaseEquipmentLevel: String = "",
 )

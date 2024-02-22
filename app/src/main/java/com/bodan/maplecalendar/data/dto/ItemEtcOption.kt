@@ -6,35 +6,35 @@ import com.squareup.moshi.Json
 @Keep
 data class ItemEtcOption(
     @Json(name = "str")
-    val itemEtcStr: String,
+    val itemEtcStr: String = "",
 
     @Json(name = "dex")
-    val itemEtcDex: String,
+    val itemEtcDex: String = "",
 
     @Json(name = "int")
-    val itemEtcInt: String,
+    val itemEtcInt: String = "",
 
     @Json(name = "luk")
-    val itemEtcLuk: String,
+    val itemEtcLuk: String = "",
 
     @Json(name = "max_hp")
-    val itemEtcMaxHp: String,
+    val itemEtcMaxHp: String = "",
 
     @Json(name = "max_mp")
-    val itemEtcMaxMp: String,
+    val itemEtcMaxMp: String = "",
 
     @Json(name = "attack_power")
-    val itemEtcAttackPower: String,
+    val itemEtcAttackPower: String = "",
 
     @Json(name = "magic_power")
-    val itemEtcMagicPower: String,
+    val itemEtcMagicPower: String = "",
 
     @Json(name = "armor")
-    val itemEtcArmor: String,
+    val itemEtcArmor: String = "",
 
     @Json(name = "speed")
-    val itemEtcSpeed: String,
+    val itemEtcSpeed: String = "",
 
     @Json(name = "jump")
-    val itemEtcJump: String
+    val itemEtcJump: String = ""
 )
