@@ -29,4 +29,8 @@ object PowerFormatConverter {
     fun convertAttackSpeedFormat(stat: String): String {
         return "${stat}단계"
     }
+
+    fun convertDojangFormat(stat: Int): String {
+        return "${stat}층"
+    }
 }
