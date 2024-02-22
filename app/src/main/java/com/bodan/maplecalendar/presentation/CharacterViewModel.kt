@@ -5,17 +5,23 @@ import androidx.lifecycle.viewModelScope
 import com.bodan.maplecalendar.app.MainApplication
 import com.bodan.maplecalendar.data.ResponseStatus
 import com.bodan.maplecalendar.data.dto.CharacterBasic
+import com.bodan.maplecalendar.data.dto.CharacterDojang
 import com.bodan.maplecalendar.data.dto.CharacterItemEquipment
-import com.bodan.maplecalendar.data.dto.CharacterStat
+import com.bodan.maplecalendar.data.dto.CharacterPopularity
+import com.bodan.maplecalendar.data.dto.CharacterUnion
 import com.bodan.maplecalendar.data.repository.MaplestoryRepository
 import com.bodan.maplecalendar.data.repository.MaplestoryRepositoryImpl
+import com.bodan.maplecalendar.presentation.ItemEquipmentDataGenerator.itemEquipmentDataSet
 import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertAttackSpeedFormat
 import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertCommaFormat
+import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertDojangFormat
 import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertPercentFormat
 import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertPowerFormat
 import com.bodan.maplecalendar.presentation.character.CharacterUiEvent
 import com.bodan.maplecalendar.presentation.character.CharacterUiState
 import com.bodan.maplecalendar.presentation.equipment.EquipmentUiEvent
+import com.bodan.maplecalendar.presentation.equipment.EquipmentUiState
+import com.bodan.maplecalendar.presentation.equipment.OnItemEquipmentClickListener
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -23,9 +29,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
-class CharacterViewModel : ViewModel() {
+class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
 
     private val maplestoryRepository: MaplestoryRepository = MaplestoryRepositoryImpl()
 
@@ -33,19 +38,15 @@ class CharacterViewModel : ViewModel() {
 
     private val todayFormatted = MutableStateFlow<String>("")
 
-    private val _currentYear = MutableStateFlow<Int>(0)
-    val currentYear = _currentYear.asStateFlow()
+    private val currentYear = MutableStateFlow<Int>(0)
 
-    private val _currentMonth = MutableStateFlow<Int>(0)
-    val currentMonth = _currentMonth.asStateFlow()
+    private val currentMonth = MutableStateFlow<Int>(0)
 
-    private val _today = MutableStateFlow<String>("")
-    val today = _today.asStateFlow()
+    private val today = MutableStateFlow<String>("")
 
     private val currentMinute = MutableStateFlow<Int>(-1)
 
-    private val _searchDate = MutableStateFlow<String>("")
-    val searchDate = _searchDate.asStateFlow()
+    private val searchDate = MutableStateFlow<String>("")
 
     private val _characterName = MutableStateFlow<String>("")
     val characterName = _characterName.asStateFlow()
@@ -58,26 +59,41 @@ class CharacterViewModel : ViewModel() {
     private val _characterLevel = MutableStateFlow<String>("")
     val characterLevel = _characterLevel.asStateFlow()
 
-    private val characterStat = MutableStateFlow<CharacterStat?>(null)
-
     private val _characterPower = MutableStateFlow<String>("")
     val characterPower = _characterPower.asStateFlow()
 
-    private val _characterDefaultStatData = MutableStateFlow<List<CharacterUiState.CharacterDefaultStat>>(listOf(CharacterUiState.CharacterDefaultStat("", "")))
+    private val _characterDefaultStatData = MutableStateFlow<List<CharacterUiState.CharacterDefaultStat>>(listOf())
     val characterDefaultStatData = _characterDefaultStatData.asStateFlow()
 
-    private val _characterMainStatData = MutableStateFlow<List<CharacterUiState.CharacterMainStat>>(listOf(CharacterUiState.CharacterMainStat("", "")))
+    private val _characterMainStatData = MutableStateFlow<List<CharacterUiState.CharacterMainStat>>(listOf())
     val characterMainStatData = _characterMainStatData.asStateFlow()
 
     private val characterCooltimeReduceSec = MutableStateFlow<String>("")
 
     private val characterCooltimeReducePercent = MutableStateFlow<String>("")
 
-    private val _characterEtcStatData = MutableStateFlow<List<CharacterUiState.CharacterEtcStat>>(listOf(CharacterUiState.CharacterEtcStat("", "")))
+    private val _characterEtcStatData = MutableStateFlow<List<CharacterUiState.CharacterEtcStat>>(listOf())
     val characterEtcStatData = _characterEtcStatData.asStateFlow()
 
-    private val _characterItemEquipment = MutableStateFlow<CharacterItemEquipment?>(null)
-    val characterItemEquipment = _characterItemEquipment.asStateFlow()
+    private val characterUnion = MutableStateFlow<CharacterUnion?>(null)
+
+    private val _characterUnionLevel = MutableStateFlow<String>("")
+    val characterUnionLevel = _characterUnionLevel.asStateFlow()
+
+    private val characterPopularity = MutableStateFlow<CharacterPopularity?>(null)
+
+    private val _characterPopularityPoint = MutableStateFlow<String>("")
+    val characterPopularityPoint = _characterPopularityPoint.asStateFlow()
+
+    private val characterDojang = MutableStateFlow<CharacterDojang?>(null)
+
+    private val _characterDojangBestFloor = MutableStateFlow<String>("")
+    val characterDojangBestFloor = _characterDojangBestFloor.asStateFlow()
+
+    private val characterItemEquipment = MutableStateFlow<CharacterItemEquipment?>(null)
+
+    private val _characterItemEquipmentData = MutableStateFlow<List<EquipmentUiState>>(listOf())
+    val characterItemEquipmentData = _characterItemEquipmentData.asStateFlow()
 
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
     val characterUiEvent = _characterUiEvent.asSharedFlow()
@@ -85,15 +101,21 @@ class CharacterViewModel : ViewModel() {
     private val _equipmentUiEvent = MutableSharedFlow<EquipmentUiEvent>()
     val equipmentUiEvent = _equipmentUiEvent.asSharedFlow()
 
+    override fun onItemEquipmentClicked(equipmentUiState: EquipmentUiState) {
+        viewModelScope.launch {
+
+        }
+    }
+
     private fun setToday(): Deferred<Unit> {
         val deferred = viewModelScope.async {
             todayFormatted.value = dateFormatConverter.todayFormatted()
-            _currentYear.value = dateFormatConverter.todayYear()
-            _currentMonth.value = dateFormatConverter.todayMonth()
-            _today.value = dateFormatConverter.todayOtherFormatted()
+            currentYear.value = dateFormatConverter.todayYear()
+            currentMonth.value = dateFormatConverter.todayMonth()
+            today.value = dateFormatConverter.todayOtherFormatted()
             currentMinute.value =
                 ((dateFormatConverter.todayHour()) * 60 + dateFormatConverter.todayMinute())
-            _searchDate.value = when (currentMinute.value) {
+            searchDate.value = when (currentMinute.value) {
                 in 0..60 -> dateFormatConverter.twoDaysAgoFormatted()
 
                 else -> dateFormatConverter.yesterdayFormatted()
@@ -119,6 +141,9 @@ class CharacterViewModel : ViewModel() {
                     getCharacterBasic()
                     getCharacterStat()
                     getCharacterEquipment()
+                    getCharacterUnion()
+                    getCharacterPopularity()
+                    getCharacterDojang()
                 }
 
                 ResponseStatus.BAD_REQUEST -> {
@@ -150,7 +175,7 @@ class CharacterViewModel : ViewModel() {
                 characterOcid.value?.let {
                     maplestoryRepository.getCharacterBasic(
                         ocid = it,
-                        date = _searchDate.value
+                        date = searchDate.value
                     )
                 } ?: return@launch
 
@@ -165,7 +190,7 @@ class CharacterViewModel : ViewModel() {
                             characterImage = characterBasic.characterImage,
                             characterGender = characterBasic.characterGender
                         )
-                        _characterLevel.value = "Lv.${characterBasic.characterLevel}"
+                        _characterLevel.value = characterBasic.characterLevel.toString()
                     }
                 }
 
@@ -198,7 +223,7 @@ class CharacterViewModel : ViewModel() {
                 characterOcid.value?.let {
                     maplestoryRepository.getCharacterPower(
                         ocid = it,
-                        date = _searchDate.value
+                        date = searchDate.value
                     )
                 } ?: return@launch
 
@@ -351,7 +376,8 @@ class CharacterViewModel : ViewModel() {
                                 }
 
                                 "재사용 대기시간 감소 (%)" -> {
-                                    characterCooltimeReducePercent.value = convertPercentFormat(finalStat.statValue)
+                                    characterCooltimeReducePercent.value =
+                                        convertPercentFormat(finalStat.statValue)
                                 }
 
                                 "버프 지속시간" -> {
@@ -483,9 +509,9 @@ class CharacterViewModel : ViewModel() {
                             "재사용 대기시간 감소",
                             "${characterCooltimeReduceSec.value} / ${characterCooltimeReducePercent.value}"
                         )
-                        async { _characterDefaultStatData.value = newCharacterDefaultStatData }.await()
-                        async { _characterMainStatData.value = newCharacterMainStatData }.await()
-                        async { _characterEtcStatData.value = newCharacterEtcStatData }.await()
+                        _characterDefaultStatData.value = newCharacterDefaultStatData
+                        _characterMainStatData.value = newCharacterMainStatData
+                        _characterEtcStatData.value = newCharacterEtcStatData
                     }
                 }
 
@@ -517,14 +543,137 @@ class CharacterViewModel : ViewModel() {
             val characterItemEquipmentResponse = characterOcid.value?.let {
                 maplestoryRepository.getCharacterItemEquipment(
                     ocid = it,
-                    date = _searchDate.value
+                    date = searchDate.value
                 )
             } ?: return@launch
 
             when (characterItemEquipmentResponse.status) {
                 ResponseStatus.SUCCESS -> {
                     characterItemEquipmentResponse.characterItemEquipment?.let { characterItemEquipment ->
-                        _characterItemEquipment.value = characterItemEquipment
+                        this@CharacterViewModel.characterItemEquipment.value = characterItemEquipment
+                        _characterItemEquipmentData.value = itemEquipmentDataSet(characterItemEquipment.itemEquipments)
+                    }
+                }
+
+                ResponseStatus.BAD_REQUEST -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.BadRequest)
+                }
+
+                ResponseStatus.UNAUTHORIZED_STATUS -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.UnauthorizedStatus)
+                }
+
+                ResponseStatus.FORBIDDEN -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.Forbidden)
+                }
+
+                ResponseStatus.TOO_MANY_REQUESTS -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.TooManyRequests)
+                }
+
+                ResponseStatus.INTERNAL_SERVER_ERROR -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.InternalServerError)
+                }
+            }
+        }
+    }
+
+    private fun getCharacterUnion() {
+        viewModelScope.launch {
+            val characterUnionResponse = characterOcid.value?.let {
+                maplestoryRepository.getCharacterUnion(
+                    ocid = it,
+                    date = searchDate.value
+                )
+            } ?: return@launch
+
+            when (characterUnionResponse.status) {
+                ResponseStatus.SUCCESS -> {
+                    characterUnionResponse.characterUnion?.let { characterUnion ->
+                        this@CharacterViewModel.characterUnion.value = characterUnion
+                        _characterUnionLevel.value = characterUnion.characterUnionLevel.toString()
+                    }
+                }
+
+                ResponseStatus.BAD_REQUEST -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.BadRequest)
+                }
+
+                ResponseStatus.UNAUTHORIZED_STATUS -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.UnauthorizedStatus)
+                }
+
+                ResponseStatus.FORBIDDEN -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.Forbidden)
+                }
+
+                ResponseStatus.TOO_MANY_REQUESTS -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.TooManyRequests)
+                }
+
+                ResponseStatus.INTERNAL_SERVER_ERROR -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.InternalServerError)
+                }
+            }
+        }
+    }
+
+    private fun getCharacterPopularity() {
+        viewModelScope.launch {
+            val characterPopularityResponse = characterOcid.value?.let {
+                maplestoryRepository.getCharacterPopularity(
+                    ocid = it,
+                    date = searchDate.value
+                )
+            } ?: return@launch
+
+            when (characterPopularityResponse.status) {
+                ResponseStatus.SUCCESS -> {
+                    characterPopularityResponse.characterPopularity?.let { characterPopularity ->
+                        this@CharacterViewModel.characterPopularity.value = characterPopularity
+                        _characterPopularityPoint.value =
+                            characterPopularity.characterPopularity.toString()
+                    }
+                }
+
+                ResponseStatus.BAD_REQUEST -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.BadRequest)
+                }
+
+                ResponseStatus.UNAUTHORIZED_STATUS -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.UnauthorizedStatus)
+                }
+
+                ResponseStatus.FORBIDDEN -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.Forbidden)
+                }
+
+                ResponseStatus.TOO_MANY_REQUESTS -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.TooManyRequests)
+                }
+
+                ResponseStatus.INTERNAL_SERVER_ERROR -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.InternalServerError)
+                }
+            }
+        }
+    }
+
+    private fun getCharacterDojang() {
+        viewModelScope.launch {
+            val characterDojangResponse = characterOcid.value?.let {
+                maplestoryRepository.getCharacterDojang(
+                    ocid = it,
+                    date = searchDate.value
+                )
+            } ?: return@launch
+
+            when (characterDojangResponse.status) {
+                ResponseStatus.SUCCESS -> {
+                    characterDojangResponse.characterDojang?.let { characterDojang ->
+                        this@CharacterViewModel.characterDojang.value = characterDojang
+                        _characterDojangBestFloor.value =
+                            convertDojangFormat(characterDojang.characterDojangBestFloor)
                     }
                 }
 
