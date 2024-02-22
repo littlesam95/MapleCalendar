@@ -14,15 +14,19 @@
         android:id="@+id/item_character_main_stat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/title_start"
-        android:paddingEnd="@dimen/title_end">
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp">
 
         <TextView
             android:id="@+id/tv_title_main_stat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="@font/pretendardregular"
             android:text="@{stat.statTitle}"
-            android:textSize="@dimen/title_font_size_small"
+            android:textColor="@color/white"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,8 +35,12 @@
             android:id="@+id/tv_value_main_stat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="@font/pretendardregular"
             android:text="@{stat.statValue}"
-            android:textSize="@dimen/title_font_size_small"
+            android:textColor="@color/white"
+            android:textSize="11sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

@@ -31,135 +31,409 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/title_start"
+            android:layout_marginEnd="@dimen/title_end"
+            android:background="@drawable/shape_character"
             tools:context=".presentation.character.CharacterFragment">
 
             <TextView
-                android:id="@+id/tv_character_level_character"
+                android:id="@+id/tv_title_character_info_character"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/title_top"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:text="@{vm.characterLevel}"
-                android:textSize="@dimen/title_font_size_small"
-                app:layout_constraintBottom_toTopOf="@id/iv_character_character"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/pretendardbold"
+                android:text="@string/text_title_character_info"
+                android:textColor="@color/character_info"
+                android:textSize="@dimen/title_font_size_big"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_character_character"
-                android:layout_width="@dimen/image_width"
-                android:layout_height="@dimen/image_height"
-                android:layout_marginTop="@dimen/image_top"
-                android:layout_marginBottom="24dp"
-                android:background="@drawable/shape_dialog"
-                android:contentDescription="@string/description_character_profile"
-                android:elevation="10dp"
-                app:layout_constraintBottom_toTopOf="@id/tv_character_name_character"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_info_character"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_character_level_character"
-                app:profileImage="@{vm.characterBasic.characterImage}" />
+                app:layout_constraintTop_toBottomOf="@id/tv_title_character_info_character"
+                app:strokeWidth="0dp">
 
-            <TextView
-                android:id="@+id/tv_character_class_character"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/title_start"
-                android:layout_marginTop="@dimen/title_top"
-                android:layout_marginEnd="@dimen/title_end"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:text="@{vm.characterBasic.characterClass}"
-                android:textSize="@dimen/title_font_size_small"
-                app:layout_constraintEnd_toStartOf="@id/iv_character_character"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/iv_character_character" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_character_info">
 
-            <TextView
-                android:id="@+id/tv_guild_character"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/title_start"
-                android:text="@string/text_guild"
-                android:textSize="@dimen/title_font_size_small"
-                app:layout_constraintBottom_toBottomOf="@id/tv_character_guild_character"
-                app:layout_constraintStart_toEndOf="@id/iv_character_character"
-                app:layout_constraintTop_toTopOf="@id/tv_character_guild_character" />
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/mcv_level_character"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:cardCornerRadius="0dp"
+                        app:layout_constraintBottom_toTopOf="@id/iv_character_character"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:strokeWidth="0dp">
 
-            <TextView
-                android:id="@+id/tv_character_guild_character"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/title_end"
-                android:text="@{vm.characterBasic.characterGuildName}"
-                android:textSize="@dimen/title_font_size_small"
-                app:layout_constraintBottom_toBottomOf="@id/iv_character_character"
-                app:layout_constraintEnd_toEndOf="parent" />
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/shape_level"
+                            android:paddingStart="24dp"
+                            android:paddingEnd="24dp">
 
-            <TextView
-                android:id="@+id/tv_character_name_character"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/title_top"
-                android:fontFamily="@font/pretendardregular"
-                android:paddingStart="24dp"
-                android:paddingEnd="24dp"
-                android:text="@{vm.characterName}"
-                android:textSize="@dimen/title_font_size_large"
-                app:layout_constraintBottom_toTopOf="@id/tv_stat_character"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_character_character" />
+                            <TextView
+                                android:id="@+id/tv_level_character"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:fontFamily="@font/pretendardsemibold"
+                                android:text="@string/text_lv"
+                                android:textAlignment="center"
+                                android:textColor="@color/guild"
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/tv_character_level_character"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_character_level_character"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="12dp"
+                                android:fontFamily="@font/pretendardsemibold"
+                                android:text="@{vm.characterLevel}"
+                                android:textAlignment="center"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toEndOf="@id/tv_level_character"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_character_character"
+                        android:layout_width="105dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="@dimen/image_top"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/shape_dialog"
+                        android:contentDescription="@string/description_character_profile"
+                        android:elevation="10dp"
+                        app:layout_constraintBottom_toTopOf="@id/tv_character_name_character"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/mcv_level_character"
+                        app:profileImage="@{vm.characterBasic.characterImage}" />
+
+                    <TextView
+                        android:id="@+id/tv_character_class_character"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/shape_class"
+                        android:ellipsize="marquee"
+                        android:fontFamily="@font/pretendardregular"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:singleLine="true"
+                        android:text="@{vm.characterBasic.characterClass}"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        app:layout_constraintEnd_toStartOf="@id/iv_character_character"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/mcv_level_character" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/mcv_guild_character"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_character_name_character"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_character_name_character"
+                        app:strokeWidth="0dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/shape_guild">
+
+                            <TextView
+                                android:id="@+id/tv_guild_character"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:fontFamily="@font/pretendardregular"
+                                android:text="@string/text_guild"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_character_guild_character"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="12dp"
+                                android:fontFamily="@font/pretendardregular"
+                                android:text="@{vm.characterBasic.characterGuildName}"
+                                android:textSize="11sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <TextView
+                        android:id="@+id/tv_character_name_character"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/shape_nickname"
+                        android:fontFamily="@font/pretendardregular"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:text="@{vm.characterName}"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/iv_character_character"
+                        app:layout_constraintStart_toStartOf="@id/iv_character_character"
+                        app:layout_constraintTop_toBottomOf="@id/iv_character_character" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/mcv_union_character"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toTopOf="@id/mcv_dojang_character"
+                        app:layout_constraintEnd_toEndOf="@id/mcv_popularity_character"
+                        app:layout_constraintStart_toStartOf="@id/mcv_popularity_character"
+                        app:strokeWidth="0dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/shape_guild">
+
+                            <TextView
+                                android:id="@+id/tv_union_character"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:fontFamily="@font/pretendardregular"
+                                android:text="@string/text_union"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_character_union_character"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="12dp"
+                                android:fontFamily="@font/pretendardregular"
+                                android:text="@{vm.characterUnionLevel}"
+                                android:textSize="11sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/mcv_dojang_character"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toTopOf="@id/mcv_popularity_character"
+                        app:layout_constraintEnd_toEndOf="@id/mcv_popularity_character"
+                        app:layout_constraintStart_toStartOf="@id/mcv_popularity_character"
+                        app:strokeWidth="0dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/shape_guild">
+
+                            <TextView
+                                android:id="@+id/tv_dojang_character"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:fontFamily="@font/pretendardregular"
+                                android:text="@string/text_dojang"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_character_dojang_character"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="12dp"
+                                android:fontFamily="@font/pretendardregular"
+                                android:text="@{vm.characterDojangBestFloor}"
+                                android:textSize="11sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/mcv_popularity_character"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_character_name_character"
+                        app:layout_constraintEnd_toStartOf="@id/tv_character_name_character"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:strokeWidth="0dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/shape_guild">
+
+                            <TextView
+                                android:id="@+id/tv_popularity_character"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:fontFamily="@font/pretendardregular"
+                                android:text="@string/text_popularity"
+                                android:textColor="@color/white"
+                                android:textSize="11sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_character_popularity_character"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="12dp"
+                                android:fontFamily="@font/pretendardregular"
+                                android:text="@{vm.characterPopularityPoint}"
+                                android:textSize="11sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <TextView
                 android:id="@+id/tv_stat_character"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/title_top"
-                android:text="@string/text_character_stat"
-                android:textSize="@dimen/title_font_size_large"
-                app:layout_constraintBottom_toTopOf="@id/tv_power_character"
+                android:layout_margin="12dp"
+                android:background="@drawable/shape_stat_title"
+                android:text="@string/text_title_character_stat"
+                android:textAlignment="center"
+                android:textColor="@color/stat"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toTopOf="@id/mcv_power_character"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_character_name_character" />
+                app:layout_constraintTop_toBottomOf="@id/mcv_info_character" />
 
-            <TextView
-                android:id="@+id/tv_power_character"
-                android:layout_width="wrap_content"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_power_character"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/title_start"
-                android:layout_marginTop="@dimen/title_top"
-                android:text="@string/text_character_power"
-                android:textSize="@dimen/title_font_size_big"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
                 app:layout_constraintBottom_toTopOf="@id/rv_default_stat_character"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_stat_character" />
-
-            <TextView
-                android:id="@+id/tv_character_power_character"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{vm.characterPower}"
-                android:textSize="@dimen/title_font_size_big"
-                app:layout_constraintBottom_toBottomOf="@id/tv_power_character"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_power_character" />
+                app:layout_constraintTop_toBottomOf="@id/tv_stat_character"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_power">
+
+                    <TextView
+                        android:id="@+id/tv_power_character"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:fontFamily="@font/pretendardbold"
+                        android:text="@string/text_character_power"
+                        android:textColor="@color/power_title"
+                        android:textSize="@dimen/title_font_size_big"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_character_power_character"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendardbold"
+                        android:text="@{vm.characterPower}"
+                        android:textColor="@color/power_color"
+                        android:textSize="@dimen/title_font_size_big"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_power_character"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/tv_power_character" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_default_stat_character"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/title_top"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
                 android:adapter="@{defaultStatListAdapter}"
+                android:background="@drawable/shape_default_stat"
                 android:elevation="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toTopOf="@id/rv_main_stat_character"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_power_character"
+                app:layout_constraintTop_toBottomOf="@id/mcv_power_character"
                 app:spanCount="2"
                 app:submitData="@{vm.characterDefaultStatData}"
                 tools:listitem="@layout/item_character_default_stat" />
@@ -168,9 +442,14 @@
                 android:id="@+id/rv_main_stat_character"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/title_top"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
                 android:adapter="@{mainStatListAdapter}"
+                android:background="@drawable/shape_main_etc_stat"
                 android:elevation="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toTopOf="@id/rv_etc_stat_character"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -184,10 +463,15 @@
                 android:id="@+id/rv_etc_stat_character"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/title_top"
-                android:layout_marginBottom="@dimen/title_bottom"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
                 android:adapter="@{etcStatListAdapter}"
+                android:background="@drawable/shape_main_etc_stat"
                 android:elevation="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
