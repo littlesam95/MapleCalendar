@@ -16,4 +16,25 @@
     <color name="black4">#55000000</color>
     <color name="black5">#44000000</color>
 
+    <color name="character">#FF313740</color>
+    <color name="character_info">#FFD6EE5F</color>
+    <color name="level">#FF9DA2AB</color>
+    <color name="stat_title">#FF6E7785</color>
+    <color name="stat">#FFA0A7B2</color>
+    <color name="nickname">#FF67BED1</color>
+    <color name="guild">#FFCBCED1</color>
+    <color name="power_background">#FF455F74</color>
+    <color name="power_color">#FFEBEAD9</color>
+    <color name="power_title">#FFC2D0D8</color>
+    <color name="stat_background1">#FF88929D</color>
+    <color name="stat_background2">#FF6D7784</color>
+
+    <color name="equipment_background">#FFEBEBEB</color>
+    <color name="equipment_title">#FFD1A841</color>
+    <color name="equipment_slot1">#FFC0BCB5</color>
+    <color name="equipment_slot2">#FFB9C3C7</color>
+    <color name="equipment_slot3">#FFADADAD</color>
+    <color name="equipment_slot4">#FFC3C3C3</color>
+    <color name="equipment_slot5">#FFB1B6BB</color>
+
 </resources>

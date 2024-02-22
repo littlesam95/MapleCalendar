@@ -3,9 +3,12 @@ package com.bodan.maplecalendar.data.repository
 import com.bodan.maplecalendar.data.ResponseStatus
 import com.bodan.maplecalendar.data.NetworkModule
 import com.bodan.maplecalendar.data.dto.CharacterBasicResponse
+import com.bodan.maplecalendar.data.dto.CharacterDojangResponse
 import com.bodan.maplecalendar.data.dto.CharacterItemEquipmentResponse
 import com.bodan.maplecalendar.data.dto.CharacterOcidResponse
+import com.bodan.maplecalendar.data.dto.CharacterPopularityResponse
 import com.bodan.maplecalendar.data.dto.CharacterStatResponse
+import com.bodan.maplecalendar.data.dto.CharacterUnionResponse
 import com.bodan.maplecalendar.data.network.MaplestoryApi
 import timber.log.Timber
 
@@ -239,6 +242,171 @@ class MaplestoryRepositoryImpl : MaplestoryRepository {
         return CharacterItemEquipmentResponse(
             status = ResponseStatus.INTERNAL_SERVER_ERROR,
             characterItemEquipment = null
+        )
+    }
+
+    override suspend fun getCharacterUnion(ocid: String, date: String): CharacterUnionResponse {
+        val response = maplestoryApi.fetchCharacterUnion(ocid = ocid, date = date)
+
+        when (response.code()) {
+            in successStatusCodeRange -> {
+                response.body()?.let { characterUnion ->
+                    return CharacterUnionResponse(
+                        status = ResponseStatus.SUCCESS,
+                        characterUnion = characterUnion
+                    )
+                }
+            }
+
+            BAD_REQUEST -> {
+                return CharacterUnionResponse(
+                    status = ResponseStatus.BAD_REQUEST,
+                    characterUnion = null
+                )
+            }
+
+            UNAUTHORIZED_STATUS -> {
+                return CharacterUnionResponse(
+                    status = ResponseStatus.UNAUTHORIZED_STATUS,
+                    characterUnion = null
+                )
+            }
+
+            FORBIDDEN -> {
+                return CharacterUnionResponse(
+                    status = ResponseStatus.FORBIDDEN,
+                    characterUnion = null
+                )
+            }
+
+            TOO_MANY_REQUESTS -> {
+                return CharacterUnionResponse(
+                    status = ResponseStatus.TOO_MANY_REQUESTS,
+                    characterUnion = null
+                )
+            }
+
+            in internalServerErrorStatusCodeRange -> {
+                return CharacterUnionResponse(
+                    status = ResponseStatus.INTERNAL_SERVER_ERROR,
+                    characterUnion = null
+                )
+            }
+        }
+
+        return CharacterUnionResponse(
+            status = ResponseStatus.INTERNAL_SERVER_ERROR,
+            characterUnion = null
+        )
+    }
+
+    override suspend fun getCharacterPopularity(ocid: String, date: String): CharacterPopularityResponse {
+        val response = maplestoryApi.fetchCharacterPopularity(ocid = ocid, date = date)
+
+        when (response.code()) {
+            in successStatusCodeRange -> {
+                response.body()?.let { characterPopularity ->
+                    return CharacterPopularityResponse(
+                        status = ResponseStatus.SUCCESS,
+                        characterPopularity = characterPopularity
+                    )
+                }
+            }
+
+            BAD_REQUEST -> {
+                return CharacterPopularityResponse(
+                    status = ResponseStatus.BAD_REQUEST,
+                    characterPopularity = null
+                )
+            }
+
+            UNAUTHORIZED_STATUS -> {
+                return CharacterPopularityResponse(
+                    status = ResponseStatus.UNAUTHORIZED_STATUS,
+                    characterPopularity = null
+                )
+            }
+
+            FORBIDDEN -> {
+                return CharacterPopularityResponse(
+                    status = ResponseStatus.FORBIDDEN,
+                    characterPopularity = null
+                )
+            }
+
+            TOO_MANY_REQUESTS -> {
+                return CharacterPopularityResponse(
+                    status = ResponseStatus.TOO_MANY_REQUESTS,
+                    characterPopularity = null
+                )
+            }
+
+            in internalServerErrorStatusCodeRange -> {
+                return CharacterPopularityResponse(
+                    status = ResponseStatus.INTERNAL_SERVER_ERROR,
+                    characterPopularity = null
+                )
+            }
+        }
+
+        return CharacterPopularityResponse(
+            status = ResponseStatus.INTERNAL_SERVER_ERROR,
+            characterPopularity = null
+        )
+    }
+
+    override suspend fun getCharacterDojang(ocid: String, date: String): CharacterDojangResponse {
+        val response = maplestoryApi.fetchCharacterDojang(ocid = ocid, date = date)
+
+        when (response.code()) {
+            in successStatusCodeRange -> {
+                response.body()?.let { characterDojang ->
+                    return CharacterDojangResponse(
+                        status = ResponseStatus.SUCCESS,
+                        characterDojang = characterDojang
+                    )
+                }
+            }
+
+            BAD_REQUEST -> {
+                return CharacterDojangResponse(
+                    status = ResponseStatus.BAD_REQUEST,
+                    characterDojang = null
+                )
+            }
+
+            UNAUTHORIZED_STATUS -> {
+                return CharacterDojangResponse(
+                    status = ResponseStatus.UNAUTHORIZED_STATUS,
+                    characterDojang = null
+                )
+            }
+
+            FORBIDDEN -> {
+                return CharacterDojangResponse(
+                    status = ResponseStatus.FORBIDDEN,
+                    characterDojang = null
+                )
+            }
+
+            TOO_MANY_REQUESTS -> {
+                return CharacterDojangResponse(
+                    status = ResponseStatus.TOO_MANY_REQUESTS,
+                    characterDojang = null
+                )
+            }
+
+            in internalServerErrorStatusCodeRange -> {
+                return CharacterDojangResponse(
+                    status = ResponseStatus.INTERNAL_SERVER_ERROR,
+                    characterDojang = null
+                )
+            }
+        }
+
+        return CharacterDojangResponse(
+            status = ResponseStatus.INTERNAL_SERVER_ERROR,
+            characterDojang = null
         )
     }
 

@@ -27,6 +27,9 @@
     <string name="text_event_example">이벤트</string>
     <string name="text_level">레벨</string>
     <string name="text_lv">Lv.</string>
+    <string name="text_union">유니온</string>
+    <string name="text_dojang">무릉도장</string>
+    <string name="text_popularity">인기도</string>
     <string name="text_class">직업</string>
     <string name="text_world">월드</string>
     <string name="text_guild">길드</string>
@@ -42,6 +45,8 @@
     <string name="text_today_todo_list_finish">완료한 메할일</string>
     <string name="text_light_mode">Light Mode</string>
     <string name="text_dark_mode">Dark Mode</string>
+    <string name="text_title_character_info">CHARACTER INFO</string>
+    <string name="text_title_character_stat">STAT</string>
     <string name="text_character_stat">스탯</string>
     <string name="text_character_power">전투력</string>
     <string name="text_character_str">STR</string>
@@ -78,6 +83,7 @@
     <string name="text_character_jump">점프력</string>
     <string name="text_character_stance">스탠스</string>
     <string name="text_character_attack_speed">공격 속도</string>
+    <string name="text_title_equipment">EQUIPMENT INVENTORY</string>
 
     <string name="message_network_error">네트워크에 오류가 있어요!</string>
     <string name="message_bad_request">잘못된 요청이에요!</string>
