@@ -25,6 +25,7 @@ class CharacterFragment : BaseFragment<FragmentCharacterBinding>(R.layout.fragme
         binding.defaultStatListAdapter = characterDefaultStatListAdapter
         binding.mainStatListAdapter = characterMainStatListAdapter
         binding.etcStatListAdapter = characterEtcStatListAdapter
+        binding.tvCharacterClassCharacter.isSelected = true
 
         collectLatestFlow(viewModel.characterUiEvent) { handleUiEvent(it) }
     }
