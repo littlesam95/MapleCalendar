@@ -25,25 +25,26 @@
 #### 오늘 진행중인 이벤트 확인
  - 이벤트를 클릭하면 공식 홈페이지로 이동된다.
   <p>
-     <img width=150 src="https://github.com/littlesam95/MapleCalendar/assets/55424662/22d951b7-1c25-435d-a578-8c6fce326291">
+     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/22d951b7-1c25-435d-a578-8c6fce326291">
   </p>
 
 #### 특정 날짜에 진행할 이벤트 확인
  - 달력의 특정 날짜를 클릭해 진행하는 이벤트를 확인하자.
   <p>
-     <img width=150 src="https://github.com/littlesam95/MapleCalendar/assets/55424662/6eff9a08-95e7-44a6-ae18-9c3a14aa6946">
+     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/6eff9a08-95e7-44a6-ae18-9c3a14aa6946">
   </p>
 
 #### 이벤트 알리미로 당일 종료되는 이벤트 확인
  - 매일 00시마다 당일 종료되는 이벤트의 개수를 알림받자.
   <p>
-     <img width=150 src="https://github.com/littlesam95/MapleCalendar/assets/55424662/95702161-c9c1-4845-b2b7-d9d216f4cf47">
+     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/95702161-c9c1-4845-b2b7-d9d216f4cf47">
   </p>
 
-#### 특정 캐릭터의 간단한 정보 확인
- - 이건 화면이 허전한 것 같아서 그냥 넣어봤다.
+#### 특정 캐릭터의 상세 정보(종합 능력치 및 장비) 확인
+ - 정보가 궁금한 캐릭터의 종합 능력치와 장비를 확인해보자.
   <p>
-     <img width=150 src="https://github.com/littlesam95/MapleCalendar/assets/55424662/634f896a-ac54-4ad9-baf4-829b984a9bf5">
+     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/634f896a-ac54-4ad9-baf4-829b984a9bf5">
+     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/130258a6-979f-4079-8492-7e1b8c10c805">
   </p>
 
 
