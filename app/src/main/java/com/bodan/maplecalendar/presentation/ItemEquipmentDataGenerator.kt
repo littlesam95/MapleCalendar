@@ -5,8 +5,11 @@ import com.bodan.maplecalendar.presentation.equipment.EquipmentUiState
 
 object ItemEquipmentDataGenerator {
 
-    private fun itemEquipmentDefault(itemEquipment: ItemEquipment, title: String): EquipmentUiState.EquipmentDefault {
-        return EquipmentUiState.EquipmentDefault(
+    private fun itemEquipmentOptionSet(
+        itemEquipment: ItemEquipment,
+        title: String
+    ): EquipmentUiState.EquipmentOption {
+        return EquipmentUiState.EquipmentOption(
             itemTitle = title,
             itemEquipmentPart = itemEquipment.itemEquipmentPart,
             equipmentSlot = itemEquipment.equipmentSlot,
@@ -21,48 +24,10 @@ object ItemEquipmentDataGenerator {
             additionalPotentialOptionGrade = itemEquipment.additionalPotentialOptionGrade,
             potentialOptionFirst = itemEquipment.potentialOptionFirst,
             potentialOptionSecond = itemEquipment.potentialOptionSecond,
-            potentialOptionThird = itemEquipment.additionalPotentialOptionThird,
+            potentialOptionThird = itemEquipment.potentialOptionThird,
             additionalPotentialOptionFirst = itemEquipment.additionalPotentialOptionFirst,
             additionalPotentialOptionSecond = itemEquipment.additionalPotentialOptionSecond,
-            additionalPotentialOptionThird = itemEquipment.potentialOptionThird,
-            equipmentLevelIncrease = itemEquipment.equipmentLevelIncrease,
-            itemExceptionalOption = itemEquipment.itemExceptionalOption,
-            itemAddOption = itemEquipment.itemAddOption,
-            itemGrowthExp = itemEquipment.itemGrowthExp.toString(),
-            itemGrowthLevel = itemEquipment.itemGrowthLevel.toString(),
-            itemScrollUpgrade = itemEquipment.itemScrollUpgrade,
-            itemCuttableCount = itemEquipment.itemCuttableCount,
-            itemGoldenHammerFlag = itemEquipment.itemGoldenHammerFlag,
-            itemScrollResilienceCount = itemEquipment.itemScrollResilienceCount,
-            itemScrollUpgradableCount = itemEquipment.itemScrollUpgradableCount,
-            itemEtcOption = itemEquipment.itemEtcOption,
-            itemStarforce = itemEquipment.itemStarforce,
-            itemStarforceScrollFlag = itemEquipment.itemStarforceScrollFlag,
-            itemStarforceOption = itemEquipment.itemStarforceOption,
-            itemDateExpire = itemEquipment.itemDateExpire
-        )
-    }
-
-    private fun itemEquipmentWeapon(itemEquipment: ItemEquipment): EquipmentUiState.EquipmentWeapon {
-        return EquipmentUiState.EquipmentWeapon(
-            itemTitle = "WEAPON",
-            itemEquipmentPart = itemEquipment.itemEquipmentPart,
-            equipmentSlot = itemEquipment.equipmentSlot,
-            itemName = itemEquipment.itemName,
-            itemDescription = itemEquipment.itemDescription,
-            itemShapeName = itemEquipment.itemShapeName,
-            itemShapeIcon = itemEquipment.itemShapeIcon,
-            itemGender = itemEquipment.itemGender,
-            itemTotalOption = itemEquipment.itemTotalOption,
-            itemBaseOption = itemEquipment.itemBaseOption,
-            potentialOptionGrade = itemEquipment.potentialOptionGrade,
-            additionalPotentialOptionGrade = itemEquipment.additionalPotentialOptionGrade,
-            potentialOptionFirst = itemEquipment.potentialOptionFirst,
-            potentialOptionSecond = itemEquipment.potentialOptionSecond,
-            potentialOptionThird = itemEquipment.additionalPotentialOptionThird,
-            additionalPotentialOptionFirst = itemEquipment.additionalPotentialOptionFirst,
-            additionalPotentialOptionSecond = itemEquipment.additionalPotentialOptionSecond,
-            additionalPotentialOptionThird = itemEquipment.potentialOptionThird,
+            additionalPotentialOptionThird = itemEquipment.additionalPotentialOptionThird,
             equipmentLevelIncrease = itemEquipment.equipmentLevelIncrease,
             itemExceptionalOption = itemEquipment.itemExceptionalOption,
             itemAddOption = itemEquipment.itemAddOption,
@@ -79,345 +44,190 @@ object ItemEquipmentDataGenerator {
             itemStarforce = itemEquipment.itemStarforce,
             itemStarforceScrollFlag = itemEquipment.itemStarforceScrollFlag,
             itemStarforceOption = itemEquipment.itemStarforceOption,
-            itemDateExpire = itemEquipment.itemDateExpire
-        )
-    }
-
-    private fun itemEquipmentSubweapon(itemEquipment: ItemEquipment): EquipmentUiState.EquipmentSubweapon {
-        return EquipmentUiState.EquipmentSubweapon(
-            itemTitle = "SUB\nWEAPON",
-            itemEquipmentPart = itemEquipment.itemEquipmentPart,
-            equipmentSlot = itemEquipment.equipmentSlot,
-            itemName = itemEquipment.itemName,
-            itemDescription = itemEquipment.itemDescription,
-            itemShapeName = itemEquipment.itemShapeName,
-            itemShapeIcon = itemEquipment.itemShapeIcon,
-            itemGender = itemEquipment.itemGender,
-            itemTotalOption = itemEquipment.itemTotalOption,
-            potentialOptionGrade = itemEquipment.potentialOptionGrade,
-            additionalPotentialOptionGrade = itemEquipment.additionalPotentialOptionGrade,
-            potentialOptionFirst = itemEquipment.potentialOptionFirst,
-            potentialOptionSecond = itemEquipment.potentialOptionSecond,
-            potentialOptionThird = itemEquipment.additionalPotentialOptionThird,
-            additionalPotentialOptionFirst = itemEquipment.additionalPotentialOptionFirst,
-            additionalPotentialOptionSecond = itemEquipment.additionalPotentialOptionSecond,
-            additionalPotentialOptionThird = itemEquipment.potentialOptionThird,
-            equipmentLevelIncrease = itemEquipment.equipmentLevelIncrease,
-            itemGrowthExp = itemEquipment.itemGrowthExp.toString(),
-            itemGrowthLevel = itemEquipment.itemGrowthLevel.toString(),
-            itemScrollUpgrade = itemEquipment.itemScrollUpgrade,
-            itemCuttableCount = itemEquipment.itemCuttableCount,
-            itemGoldenHammerFlag = itemEquipment.itemGoldenHammerFlag,
-            itemScrollResilienceCount = itemEquipment.itemScrollResilienceCount,
-            itemScrollUpgradableCount = itemEquipment.itemScrollUpgradableCount,
-            itemDateExpire = itemEquipment.itemDateExpire
-        )
-    }
-
-    private fun itemEquipmentShield(itemEquipment: ItemEquipment): EquipmentUiState.EquipmentShield {
-        return EquipmentUiState.EquipmentShield(
-            itemTitle = "SUB\nWEAPON",
-            itemEquipmentPart = itemEquipment.itemEquipmentPart,
-            equipmentSlot = itemEquipment.equipmentSlot,
-            itemName = itemEquipment.itemName,
-            itemDescription = itemEquipment.itemDescription,
-            itemShapeName = itemEquipment.itemShapeName,
-            itemShapeIcon = itemEquipment.itemShapeIcon,
-            itemGender = itemEquipment.itemGender,
-            itemTotalOption = itemEquipment.itemTotalOption,
-            itemBaseOption = itemEquipment.itemBaseOption,
-            potentialOptionGrade = itemEquipment.potentialOptionGrade,
-            additionalPotentialOptionGrade = itemEquipment.additionalPotentialOptionGrade,
-            potentialOptionFirst = itemEquipment.potentialOptionFirst,
-            potentialOptionSecond = itemEquipment.potentialOptionSecond,
-            potentialOptionThird = itemEquipment.additionalPotentialOptionThird,
-            additionalPotentialOptionFirst = itemEquipment.additionalPotentialOptionFirst,
-            additionalPotentialOptionSecond = itemEquipment.additionalPotentialOptionSecond,
-            additionalPotentialOptionThird = itemEquipment.potentialOptionThird,
-            equipmentLevelIncrease = itemEquipment.equipmentLevelIncrease,
-            itemGrowthExp = itemEquipment.itemGrowthExp.toString(),
-            itemGrowthLevel = itemEquipment.itemGrowthLevel.toString(),
-            itemScrollUpgrade = itemEquipment.itemScrollUpgrade,
-            itemCuttableCount = itemEquipment.itemCuttableCount,
-            itemGoldenHammerFlag = itemEquipment.itemGoldenHammerFlag,
-            itemScrollResilienceCount = itemEquipment.itemScrollResilienceCount,
-            itemScrollUpgradableCount = itemEquipment.itemScrollUpgradableCount,
-            itemEtcOption = itemEquipment.itemEtcOption,
-            itemStarforce = itemEquipment.itemStarforce,
-            itemStarforceScrollFlag = itemEquipment.itemStarforceScrollFlag,
-            itemStarforceOption = itemEquipment.itemStarforceOption,
-            itemDateExpire = itemEquipment.itemDateExpire
-        )
-    }
-
-    private fun itemEquipmentSeedring(itemEquipment: ItemEquipment): EquipmentUiState.EquipmentSeedring {
-        return EquipmentUiState.EquipmentSeedring(
-            itemTitle = "RING",
-            itemEquipmentPart = itemEquipment.itemEquipmentPart,
-            equipmentSlot = itemEquipment.equipmentSlot,
-            itemName = itemEquipment.itemName,
-            itemDescription = itemEquipment.itemDescription,
-            itemShapeName = itemEquipment.itemShapeName,
-            itemShapeIcon = itemEquipment.itemShapeIcon,
-            itemTotalOption = itemEquipment.itemTotalOption,
             itemSpecialRingLevel = itemEquipment.itemSpecialRingLevel.toString(),
             itemDateExpire = itemEquipment.itemDateExpire
         )
     }
 
-    private fun itemEquipmentPocket(itemEquipment: ItemEquipment): EquipmentUiState.EquipmentPocket {
-        return EquipmentUiState.EquipmentPocket(
-            itemTitle = "POCKET",
-            itemEquipmentPart = itemEquipment.itemEquipmentPart,
-            equipmentSlot = itemEquipment.equipmentSlot,
-            itemName = itemEquipment.itemName,
-            itemDescription = itemEquipment.itemDescription,
-            itemShapeName = itemEquipment.itemShapeName,
-            itemShapeIcon = itemEquipment.itemShapeIcon,
-            itemGender = itemEquipment.itemGender,
-            itemTotalOption = itemEquipment.itemTotalOption,
-            itemBaseOption = itemEquipment.itemBaseOption,
-            equipmentLevelIncrease = itemEquipment.equipmentLevelIncrease,
-            itemAddOption = itemEquipment.itemAddOption,
-            itemGrowthExp = itemEquipment.itemGrowthExp.toString(),
-            itemGrowthLevel = itemEquipment.itemGrowthLevel.toString(),
-            itemCuttableCount = itemEquipment.itemCuttableCount,
-            itemGoldenHammerFlag = itemEquipment.itemGoldenHammerFlag,
-            itemEtcOption = itemEquipment.itemEtcOption,
-            itemDateExpire = itemEquipment.itemDateExpire
-        )
-    }
-
-    private fun itemEquipmentHeart(itemEquipment: ItemEquipment): EquipmentUiState.EquipmentHeart {
-        return EquipmentUiState.EquipmentHeart(
-            itemTitle = "HEART",
-            itemEquipmentPart = itemEquipment.itemEquipmentPart,
-            equipmentSlot = itemEquipment.equipmentSlot,
-            itemName = itemEquipment.itemName,
-            itemDescription = itemEquipment.itemDescription,
-            itemShapeName = itemEquipment.itemShapeName,
-            itemShapeIcon = itemEquipment.itemShapeIcon,
-            itemGender = itemEquipment.itemGender,
-            itemTotalOption = itemEquipment.itemTotalOption,
-            itemBaseOption = itemEquipment.itemBaseOption,
-            potentialOptionGrade = itemEquipment.potentialOptionGrade,
-            additionalPotentialOptionGrade = itemEquipment.additionalPotentialOptionGrade,
-            potentialOptionFirst = itemEquipment.potentialOptionFirst,
-            potentialOptionSecond = itemEquipment.potentialOptionSecond,
-            potentialOptionThird = itemEquipment.additionalPotentialOptionThird,
-            additionalPotentialOptionFirst = itemEquipment.additionalPotentialOptionFirst,
-            additionalPotentialOptionSecond = itemEquipment.additionalPotentialOptionSecond,
-            additionalPotentialOptionThird = itemEquipment.potentialOptionThird,
-            equipmentLevelIncrease = itemEquipment.equipmentLevelIncrease,
-            itemExceptionalOption = itemEquipment.itemExceptionalOption,
-            itemGrowthExp = itemEquipment.itemGrowthExp.toString(),
-            itemGrowthLevel = itemEquipment.itemGrowthLevel.toString(),
-            itemScrollUpgrade = itemEquipment.itemScrollUpgrade,
-            itemCuttableCount = itemEquipment.itemCuttableCount,
-            itemGoldenHammerFlag = itemEquipment.itemGoldenHammerFlag,
-            itemScrollResilienceCount = itemEquipment.itemScrollResilienceCount,
-            itemScrollUpgradableCount = itemEquipment.itemScrollUpgradableCount,
-            itemEtcOption = itemEquipment.itemEtcOption,
-            itemStarforce = itemEquipment.itemStarforce,
-            itemStarforceScrollFlag = itemEquipment.itemStarforceScrollFlag,
-            itemStarforceOption = itemEquipment.itemStarforceOption,
-            itemDateExpire = itemEquipment.itemDateExpire
-        )
-    }
-
-    private fun itemEquipmentEmblem(itemEquipment: ItemEquipment): EquipmentUiState.EquipmentEmblem {
-        return EquipmentUiState.EquipmentEmblem(
-            itemTitle = "EMBLEM",
-            itemEquipmentPart = itemEquipment.itemEquipmentPart,
-            equipmentSlot = itemEquipment.equipmentSlot,
-            itemName = itemEquipment.itemName,
-            itemDescription = itemEquipment.itemDescription,
-            itemShapeName = itemEquipment.itemShapeName,
-            itemShapeIcon = itemEquipment.itemShapeIcon,
-            itemGender = itemEquipment.itemGender,
-            itemTotalOption = itemEquipment.itemTotalOption,
-            potentialOptionGrade = itemEquipment.potentialOptionGrade,
-            additionalPotentialOptionGrade = itemEquipment.additionalPotentialOptionGrade,
-            potentialOptionFirst = itemEquipment.potentialOptionFirst,
-            potentialOptionSecond = itemEquipment.potentialOptionSecond,
-            potentialOptionThird = itemEquipment.additionalPotentialOptionThird,
-            additionalPotentialOptionFirst = itemEquipment.additionalPotentialOptionFirst,
-            additionalPotentialOptionSecond = itemEquipment.additionalPotentialOptionSecond,
-            additionalPotentialOptionThird = itemEquipment.potentialOptionThird,
-            equipmentLevelIncrease = itemEquipment.equipmentLevelIncrease,
-            itemGrowthExp = itemEquipment.itemGrowthExp.toString(),
-            itemGrowthLevel = itemEquipment.itemGrowthLevel.toString(),
-            itemScrollUpgrade = itemEquipment.itemScrollUpgrade,
-            itemCuttableCount = itemEquipment.itemCuttableCount,
-            itemGoldenHammerFlag = itemEquipment.itemGoldenHammerFlag,
-            itemScrollResilienceCount = itemEquipment.itemScrollResilienceCount,
-            itemScrollUpgradableCount = itemEquipment.itemScrollUpgradableCount,
-            itemDateExpire = itemEquipment.itemDateExpire
-        )
-    }
-
-    private fun itemEquipmentBadge(itemEquipment: ItemEquipment): EquipmentUiState.EquipmentBadge {
-        return EquipmentUiState.EquipmentBadge(
-            itemTitle = "BADGE",
-            itemEquipmentPart = itemEquipment.itemEquipmentPart,
-            equipmentSlot = itemEquipment.equipmentSlot,
-            itemName = itemEquipment.itemName,
-            itemDescription = itemEquipment.itemDescription,
-            itemShapeName = itemEquipment.itemShapeName,
-            itemShapeIcon = itemEquipment.itemShapeIcon,
-            itemGender = itemEquipment.itemGender,
-            itemTotalOption = itemEquipment.itemTotalOption,
-            itemBaseOption = itemEquipment.itemBaseOption,
-            equipmentLevelIncrease = itemEquipment.equipmentLevelIncrease,
-            itemGrowthExp = itemEquipment.itemGrowthExp.toString(),
-            itemGrowthLevel = itemEquipment.itemGrowthLevel.toString(),
-            itemCuttableCount = itemEquipment.itemCuttableCount,
-            itemGoldenHammerFlag = itemEquipment.itemGoldenHammerFlag,
-            itemEtcOption = itemEquipment.itemEtcOption,
-            itemDateExpire = itemEquipment.itemDateExpire
-        )
-    }
-
-    fun itemEquipmentDataSet(itemEquipments: List<ItemEquipment>): List<EquipmentUiState> {
-        val newItemEquipmentData = MutableList<EquipmentUiState>(6 * 5) {
-            EquipmentUiState.EquipmentDefault()
-        }
+    fun itemEquipmentDataSet(itemEquipments: List<ItemEquipment>): List<EquipmentUiState.EquipmentOption> {
+        val newItemEquipmentData = arrayListOf<EquipmentUiState.EquipmentOption>(
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "RING"
+            ),
+            EquipmentUiState.EquipmentOption(),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "CAP"
+            ),
+            EquipmentUiState.EquipmentOption(),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "EMBLEM"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "RING"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "PENDANT"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "FORE\nHEAD"
+            ),
+            EquipmentUiState.EquipmentOption(),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "BADGE"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "RING"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "PENDANT"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "EYE\nACC"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "EAR\nACC"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "MEDAL"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "RING"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "WEAPON"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "CLOTHES"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "SHOULDER"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "SUB\nWEAPON"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "POCKET"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "BELT"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "PANTS"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "GLOVES"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "CAPE"
+            ),
+            EquipmentUiState.EquipmentOption(),
+            EquipmentUiState.EquipmentOption(),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "SHOES"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "ANDROID"
+            ),
+            EquipmentUiState.EquipmentOption(
+                itemTitle = "HEART"
+            ),
+        ).toMutableList()
         itemEquipments.forEach { itemEquipment ->
             when (itemEquipment.equipmentSlot) {
                 "모자" -> {
-                    newItemEquipmentData[2] = itemEquipmentDefault(itemEquipment, "CAP")
+                    newItemEquipmentData[2] = itemEquipmentOptionSet(itemEquipment, "CAP")
                 }
 
                 "얼굴장식" -> {
-                    newItemEquipmentData[7] = itemEquipmentDefault(itemEquipment, "FORE\nHEAD")
+                    newItemEquipmentData[7] = itemEquipmentOptionSet(itemEquipment, "FORE\nHEAD")
                 }
 
                 "눈장식" -> {
-                    newItemEquipmentData[12] = itemEquipmentDefault(itemEquipment, "EYE\nACC")
+                    newItemEquipmentData[12] = itemEquipmentOptionSet(itemEquipment, "EYE\nACC")
                 }
 
                 "귀고리" -> {
-                    newItemEquipmentData[13] = itemEquipmentDefault(itemEquipment, "EAR\nACC")
+                    newItemEquipmentData[13] = itemEquipmentOptionSet(itemEquipment, "EAR\nACC")
                 }
 
                 "상의" -> {
-                    newItemEquipmentData[17] = itemEquipmentDefault(itemEquipment, "CLOTHES")
+                    newItemEquipmentData[17] = itemEquipmentOptionSet(itemEquipment, "CLOTHES")
                 }
 
                 "하의" -> {
-                    newItemEquipmentData[22] = itemEquipmentDefault(itemEquipment, "PANTS")
+                    newItemEquipmentData[22] = itemEquipmentOptionSet(itemEquipment, "PANTS")
                 }
 
                 "신발" -> {
-                    newItemEquipmentData[27] = itemEquipmentDefault(itemEquipment, "SHOES")
+                    newItemEquipmentData[27] = itemEquipmentOptionSet(itemEquipment, "SHOES")
                 }
 
                 "장갑" -> {
-                    newItemEquipmentData[23] = itemEquipmentDefault(itemEquipment, "GLOVES")
+                    newItemEquipmentData[23] = itemEquipmentOptionSet(itemEquipment, "GLOVES")
                 }
 
                 "망토" -> {
-                    newItemEquipmentData[24] = itemEquipmentDefault(itemEquipment, "CAPE")
+                    newItemEquipmentData[24] = itemEquipmentOptionSet(itemEquipment, "CAPE")
                 }
 
                 "보조무기" -> {
-                    when (itemEquipment.itemEquipmentPart) {
-                        "방패" -> {
-                            newItemEquipmentData[19] = itemEquipmentShield(itemEquipment)
-                        }
-
-                        else -> {
-                            newItemEquipmentData[19] = itemEquipmentSubweapon(itemEquipment)
-                        }
-                    }
+                    newItemEquipmentData[19] = itemEquipmentOptionSet(itemEquipment, "SUB\nWEAPON")
                 }
 
                 "무기" -> {
-                    newItemEquipmentData[16] = itemEquipmentWeapon(itemEquipment)
+                    newItemEquipmentData[16] = itemEquipmentOptionSet(itemEquipment, "WEAPON")
                 }
 
                 "반지1" -> {
-                    when (itemEquipment.itemSpecialRingLevel) {
-                        0 -> {
-                            newItemEquipmentData[15] = itemEquipmentDefault(itemEquipment, "RING")
-                        }
-
-                        else -> {
-                            newItemEquipmentData[15] = itemEquipmentSeedring(itemEquipment)
-                        }
-                    }
+                    newItemEquipmentData[15] = itemEquipmentOptionSet(itemEquipment, "RING")
                 }
 
                 "반지2" -> {
-                    when (itemEquipment.itemSpecialRingLevel) {
-                        0 -> {
-                            newItemEquipmentData[10] = itemEquipmentDefault(itemEquipment, "RING")
-                        }
-
-                        else -> {
-                            newItemEquipmentData[10] = itemEquipmentSeedring(itemEquipment)
-                        }
-                    }
+                    newItemEquipmentData[10] = itemEquipmentOptionSet(itemEquipment, "RING")
                 }
 
                 "반지3" -> {
-                    when (itemEquipment.itemSpecialRingLevel) {
-                        0 -> {
-                            newItemEquipmentData[5] = itemEquipmentDefault(itemEquipment, "RING")
-                        }
-
-                        else -> {
-                            newItemEquipmentData[5] = itemEquipmentSeedring(itemEquipment)
-                        }
-                    }
+                    newItemEquipmentData[5] = itemEquipmentOptionSet(itemEquipment, "RING")
                 }
 
                 "반지4" -> {
-                    when (itemEquipment.itemSpecialRingLevel) {
-                        0 -> {
-                            newItemEquipmentData[0] = itemEquipmentDefault(itemEquipment, "RING")
-                        }
-
-                        else -> {
-                            newItemEquipmentData[0] = itemEquipmentSeedring(itemEquipment)
-                        }
-                    }
+                    newItemEquipmentData[0] = itemEquipmentOptionSet(itemEquipment, "RING")
                 }
 
                 "펜던트" -> {
-                    newItemEquipmentData[11] = itemEquipmentDefault(itemEquipment, "PENDANT")
+                    newItemEquipmentData[11] = itemEquipmentOptionSet(itemEquipment, "PENDANT")
                 }
 
                 "훈장" -> {
-                    newItemEquipmentData[14] = itemEquipmentDefault(itemEquipment, "MEDAL")
+                    newItemEquipmentData[14] = itemEquipmentOptionSet(itemEquipment, "MEDAL")
                 }
 
                 "벨트" -> {
-                    newItemEquipmentData[21] = itemEquipmentDefault(itemEquipment, "BELT")
+                    newItemEquipmentData[21] = itemEquipmentOptionSet(itemEquipment, "BELT")
                 }
 
                 "어깨장식" -> {
-                    newItemEquipmentData[18] = itemEquipmentDefault(itemEquipment, "SHOULDER")
+                    newItemEquipmentData[18] = itemEquipmentOptionSet(itemEquipment, "SHOULDER")
                 }
 
                 "포켓 아이템" -> {
-                    newItemEquipmentData[20] = itemEquipmentPocket(itemEquipment)
+                    newItemEquipmentData[20] = itemEquipmentOptionSet(itemEquipment, "POCKET")
                 }
 
                 "기계 심장" -> {
-                    newItemEquipmentData[29] = itemEquipmentHeart(itemEquipment)
+                    newItemEquipmentData[29] = itemEquipmentOptionSet(itemEquipment, "HEART")
                 }
 
                 "뱃지" -> {
-                    newItemEquipmentData[9] = itemEquipmentBadge(itemEquipment)
+                    newItemEquipmentData[9] = itemEquipmentOptionSet(itemEquipment, "BADGE")
                 }
 
                 "엠블렘" -> {
-                    newItemEquipmentData[4] = itemEquipmentEmblem(itemEquipment)
+                    newItemEquipmentData[4] = itemEquipmentOptionSet(itemEquipment, "EMBLEM")
                 }
 
                 "펜던트2" -> {
-                    newItemEquipmentData[6] = itemEquipmentDefault(itemEquipment, "PENDANT")
+                    newItemEquipmentData[6] = itemEquipmentOptionSet(itemEquipment, "PENDANT")
                 }
             }
         }
