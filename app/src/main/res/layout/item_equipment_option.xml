@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="com.bodan.maplecalendar.presentation.equipment.EquipmentUiState.EquipmentAndroid" />
+            type="com.bodan.maplecalendar.presentation.equipment.EquipmentUiState.EquipmentOption" />
 
         <variable
             name="onItemEquipmentClickListener"
@@ -16,34 +16,33 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/item_equipment_android"
+        android:id="@+id/item_equipment_option"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
-        android:background="@{(item.itemShapeIcon == null) ? null : @drawable/shape_equipment_slot5}"
-        android:onClick="@{() -> onItemEquipmentClickListener.onItemEquipmentAndroidClicked(item)}">
+        android:onClick="@{() -> onItemEquipmentClickListener.onItemEquipmentClicked(item)}"
+        app:calendar_background="@{item.slotBackgroundDrawable}">
 
         <TextView
-            android:id="@+id/tv_title_equipment_android"
+            android:id="@+id/tv_title_equipment_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginTop="3dp"
             android:fontFamily="@font/pretendardregular"
             android:text="@{item.itemTitle}"
-            android:textColor="@color/white"
+            android:textColor="@color/white1"
             android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="SmallSp" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_equipment_android"
+            android:id="@+id/iv_equipment_option"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:padding="12dp"
             android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
