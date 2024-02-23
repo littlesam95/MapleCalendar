@@ -1,5 +1,7 @@
 package com.bodan.maplecalendar.presentation.equipment
 
+import com.bodan.maplecalendar.R
+import com.bodan.maplecalendar.app.MainApplication
 import com.bodan.maplecalendar.data.dto.ItemAddOption
 import com.bodan.maplecalendar.data.dto.ItemBaseOption
 import com.bodan.maplecalendar.data.dto.ItemEtcOption
@@ -10,8 +12,8 @@ import java.util.UUID
 
 sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
 
-    data class EquipmentDefault(
-        val itemTitle: String = "",
+    data class EquipmentOption(
+        val itemTitle: String? = null,
         val itemEquipmentPart: String = "",
         val equipmentSlot: String = "",
         val itemName: String = "",
@@ -45,276 +47,116 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
         val itemStarforce: String = "",
         val itemStarforceScrollFlag: String = "",
         val itemStarforceOption: ItemStarforceOption = ItemStarforceOption(),
+        val itemSpecialRingLevel: String? = null,
         val itemDateExpire: String? = null
-    ) : EquipmentUiState()
+    ) : EquipmentUiState() {
+        val itemSoul: String? = when (itemSoulName) {
+            null -> null
 
-    data class EquipmentWeapon(
-        val itemTitle: String,
-        val itemEquipmentPart: String,
-        val equipmentSlot: String,
-        val itemName: String,
-        val itemDescription: String?,
-        val itemShapeName: String,
-        val itemShapeIcon: String?,
-        val itemGender: String?,
-        val itemTotalOption: ItemTotalOption,
-        val itemBaseOption: ItemBaseOption,
-        val potentialOptionGrade: String?,
-        val additionalPotentialOptionGrade: String?,
-        val potentialOptionFirst: String?,
-        val potentialOptionSecond: String?,
-        val potentialOptionThird: String?,
-        val additionalPotentialOptionFirst: String?,
-        val additionalPotentialOptionSecond: String?,
-        val additionalPotentialOptionThird: String?,
-        val equipmentLevelIncrease: String?,
-        val itemExceptionalOption: ItemExceptionalOption,
-        val itemAddOption: ItemAddOption,
-        val itemGrowthExp: String,
-        val itemGrowthLevel: String,
-        val itemScrollUpgrade: String,
-        val itemCuttableCount: String,
-        val itemGoldenHammerFlag: String,
-        val itemScrollResilienceCount: String,
-        val itemScrollUpgradableCount: String,
-        val itemSoulName: String?,
-        val itemSoulOption: String?,
-        val itemEtcOption: ItemEtcOption,
-        val itemStarforce: String,
-        val itemStarforceScrollFlag: String,
-        val itemStarforceOption: ItemStarforceOption,
-        val itemDateExpire: String?
-    ) : EquipmentUiState()
+            else -> "${itemSoulName.split("의").first()}의"
+        }
+        val itemFinalName: String = when (itemScrollUpgrade) {
+            "0" -> itemName
 
-    data class EquipmentEmblem(
-        val itemTitle: String,
-        val itemEquipmentPart: String,
-        val equipmentSlot: String,
-        val itemName: String,
-        val itemDescription: String?,
-        val itemShapeName: String,
-        val itemShapeIcon: String?,
-        val itemGender: String?,
-        val itemTotalOption: ItemTotalOption,
-        val potentialOptionGrade: String?,
-        val additionalPotentialOptionGrade: String?,
-        val potentialOptionFirst: String?,
-        val potentialOptionSecond: String?,
-        val potentialOptionThird: String?,
-        val additionalPotentialOptionFirst: String?,
-        val additionalPotentialOptionSecond: String?,
-        val additionalPotentialOptionThird: String?,
-        val equipmentLevelIncrease: String,
-        val itemGrowthExp: String,
-        val itemGrowthLevel: String,
-        val itemScrollUpgrade: String,
-        val itemCuttableCount: String,
-        val itemGoldenHammerFlag: String,
-        val itemScrollResilienceCount: String,
-        val itemScrollUpgradableCount: String,
-        val itemDateExpire: String?
-    ) : EquipmentUiState()
+            else -> "$itemName (+${itemScrollUpgrade})"
+        }
+        val itemClassified: String =
+            "${MainApplication.myContext().resources.getString(R.string.text_equipment_classified)} $itemEquipmentPart"
+        val isAbleToUpgrade: Boolean = ((itemScrollUpgrade != "0") || (itemScrollUpgradableCount != "0"))
+        val itemUpgradeable: String =
+            "${MainApplication.myContext().resources.getString(R.string.text_equipment_scroll_upgradeable_count)} $itemScrollUpgradableCount"
+        val itemResilience: String =
+            "(${MainApplication.myContext().resources.getString(R.string.text_equipment_scroll_resilience_count)} ${itemScrollResilienceCount})"
+        val isGoldenHammerUsed: Boolean = (itemGoldenHammerFlag == "적용")
+        val itemCuttable: String =
+            "${MainApplication.myContext().resources.getString(R.string.text_cuttable_count)} ${itemCuttableCount}회"
+        val isItemCuttable: Boolean = (itemCuttableCount != "255")
+        val potentialOptionGradeColor: Int = when (potentialOptionGrade) {
+            "레어" -> R.color.equipment_rare
 
-    data class EquipmentShield(
-        val itemTitle: String,
-        val itemEquipmentPart: String,
-        val equipmentSlot: String,
-        val itemName: String,
-        val itemDescription: String?,
-        val itemShapeName: String,
-        val itemShapeIcon: String?,
-        val itemGender: String?,
-        val itemTotalOption: ItemTotalOption,
-        val itemBaseOption: ItemBaseOption,
-        val potentialOptionGrade: String?,
-        val additionalPotentialOptionGrade: String?,
-        val potentialOptionFirst: String?,
-        val potentialOptionSecond: String?,
-        val potentialOptionThird: String?,
-        val additionalPotentialOptionFirst: String?,
-        val additionalPotentialOptionSecond: String?,
-        val additionalPotentialOptionThird: String?,
-        val equipmentLevelIncrease: String,
-        val itemGrowthExp: String,
-        val itemGrowthLevel: String,
-        val itemScrollUpgrade: String,
-        val itemCuttableCount: String,
-        val itemGoldenHammerFlag: String,
-        val itemScrollResilienceCount: String,
-        val itemScrollUpgradableCount: String,
-        val itemEtcOption: ItemEtcOption,
-        val itemStarforce: String,
-        val itemStarforceScrollFlag: String,
-        val itemStarforceOption: ItemStarforceOption,
-        val itemDateExpire: String?
-    ) : EquipmentUiState()
+            "에픽" -> R.color.equipment_epic
 
-    data class EquipmentSubweapon(
-        val itemTitle: String,
-        val itemEquipmentPart: String,
-        val equipmentSlot: String,
-        val itemName: String,
-        val itemDescription: String?,
-        val itemShapeName: String,
-        val itemShapeIcon: String?,
-        val itemGender: String?,
-        val itemTotalOption: ItemTotalOption,
-        val potentialOptionGrade: String?,
-        val additionalPotentialOptionGrade: String?,
-        val potentialOptionFirst: String?,
-        val potentialOptionSecond: String?,
-        val potentialOptionThird: String?,
-        val additionalPotentialOptionFirst: String?,
-        val additionalPotentialOptionSecond: String?,
-        val additionalPotentialOptionThird: String?,
-        val equipmentLevelIncrease: String,
-        val itemGrowthExp: String,
-        val itemGrowthLevel: String,
-        val itemScrollUpgrade: String,
-        val itemCuttableCount: String,
-        val itemGoldenHammerFlag: String,
-        val itemScrollResilienceCount: String,
-        val itemScrollUpgradableCount: String,
-        val itemDateExpire: String?
-    ) : EquipmentUiState()
+            "유니크" -> R.color.equipment_unique
 
-    data class EquipmentBadge(
-        val itemTitle: String,
-        val itemEquipmentPart: String,
-        val equipmentSlot: String,
-        val itemName: String,
-        val itemDescription: String?,
-        val itemShapeName: String,
-        val itemShapeIcon: String?,
-        val itemGender: String?,
-        val itemTotalOption: ItemTotalOption,
-        val itemBaseOption: ItemBaseOption,
-        val equipmentLevelIncrease: String,
-        val itemGrowthExp: String,
-        val itemGrowthLevel: String,
-        val itemCuttableCount: String,
-        val itemGoldenHammerFlag: String,
-        val itemEtcOption: ItemEtcOption,
-        val itemDateExpire: String?
-    ) : EquipmentUiState()
+            "레전드리" -> R.color.equipment_legendary
 
-    data class EquipmentPocket(
-        val itemTitle: String,
-        val itemEquipmentPart: String,
-        val equipmentSlot: String,
-        val itemName: String,
-        val itemDescription: String?,
-        val itemShapeName: String,
-        val itemShapeIcon: String?,
-        val itemGender: String?,
-        val itemTotalOption: ItemTotalOption,
-        val itemBaseOption: ItemBaseOption,
-        val equipmentLevelIncrease: String,
-        val itemAddOption: ItemAddOption,
-        val itemGrowthExp: String,
-        val itemGrowthLevel: String,
-        val itemCuttableCount: String,
-        val itemGoldenHammerFlag: String,
-        val itemEtcOption: ItemEtcOption,
-        val itemDateExpire: String?
-    ) : EquipmentUiState()
+            else -> R.color.white
+        }
+        val additionalPotentialOptionGradeColor: Int = when (additionalPotentialOptionGrade) {
+            "레어" -> R.color.equipment_rare
 
-    data class EquipmentAndroid(
-        val itemTitle: String,
-        val itemEquipmentPart: String,
-        val equipmentSlot: String,
-        val itemName: String,
-        val itemDescription: String?,
-        val itemShapeName: String,
-        val itemShapeIcon: String?,
-        val itemGender: String?,
-        val itemTotalOption: ItemTotalOption,
-        val itemBaseOption: ItemBaseOption,
-        val potentialOptionGrade: String,
-        val additionalPotentialOptionGrade: String,
-        val potentialOptionFirst: String,
-        val potentialOptionSecond: String,
-        val potentialOptionThird: String,
-        val additionalPotentialOptionFirst: String,
-        val additionalPotentialOptionSecond: String,
-        val additionalPotentialOptionThird: String,
-        val equipmentLevelIncrease: String,
-        val itemExceptionalOption: ItemExceptionalOption,
-        val itemAddOption: ItemAddOption,
-        val itemGrowthExp: String,
-        val itemGrowthLevel: String,
-        val itemScrollUpgrade: String,
-        val itemCuttableCount: String,
-        val itemGoldenHammerFlag: String,
-        val itemScrollResilienceCount: String,
-        val itemScrollUpgradableCount: String,
-        val itemSoulName: String?,
-        val itemSoulOption: String?,
-        val itemEtcOption: ItemEtcOption,
-        val itemStarforce: String,
-        val itemStarforceScrollFlag: String,
-        val itemStarforceOption: ItemStarforceOption,
-        val itemDateExpire: String?
-    ) : EquipmentUiState()
+            "에픽" -> R.color.equipment_epic
 
-    data class EquipmentHeart(
-        val itemTitle: String,
-        val itemEquipmentPart: String,
-        val equipmentSlot: String,
-        val itemName: String,
-        val itemDescription: String?,
-        val itemShapeName: String,
-        val itemShapeIcon: String?,
-        val itemGender: String?,
-        val itemTotalOption: ItemTotalOption,
-        val itemBaseOption: ItemBaseOption,
-        val potentialOptionGrade: String?,
-        val additionalPotentialOptionGrade: String?,
-        val potentialOptionFirst: String?,
-        val potentialOptionSecond: String?,
-        val potentialOptionThird: String?,
-        val additionalPotentialOptionFirst: String?,
-        val additionalPotentialOptionSecond: String?,
-        val additionalPotentialOptionThird: String?,
-        val equipmentLevelIncrease: String,
-        val itemExceptionalOption: ItemExceptionalOption,
-        val itemGrowthExp: String,
-        val itemGrowthLevel: String,
-        val itemScrollUpgrade: String,
-        val itemCuttableCount: String,
-        val itemGoldenHammerFlag: String,
-        val itemScrollResilienceCount: String,
-        val itemScrollUpgradableCount: String,
-        val itemEtcOption: ItemEtcOption,
-        val itemStarforce: String,
-        val itemStarforceScrollFlag: String,
-        val itemStarforceOption: ItemStarforceOption,
-        val itemDateExpire: String?
-    ) : EquipmentUiState()
+            "유니크" -> R.color.equipment_unique
 
-    data class EquipmentSeedring(
-        val itemTitle: String,
-        val itemEquipmentPart: String,
-        val equipmentSlot: String,
-        val itemName: String,
-        val itemDescription: String?,
-        val itemShapeName: String,
-        val itemShapeIcon: String?,
-        val itemTotalOption: ItemTotalOption,
-        val itemSpecialRingLevel: String,
-        val itemDateExpire: String?
-    ) : EquipmentUiState()
+            "레전드리" -> R.color.equipment_legendary
 
-    companion object {
-        const val DEFAULT_VIEW_TYPE = 1
-        const val WEAPON_VIEW_TYPE = 2
-        const val EMBLEM_VIEW_TYPE = 3
-        const val SHIELD_VIEW_TYPE = 4
-        const val SUBWEAPON_VIEW_TYPE = 5
-        const val BADGE_VIEW_TYPE = 6
-        const val POCKET_VIEW_TYPE = 7
-        const val ANDROID_VIEW_TYPE = 8
-        const val HEART_VIEW_TYPE = 9
-        const val SEEDRING_VIEW_TYPE = 10
+            else -> R.color.white
+        }
+        val additionalFinalPotentialOptionFirst: String? = when (additionalPotentialOptionFirst) {
+            null -> null
+
+            else -> " + $additionalPotentialOptionFirst"
+        }
+        val additionalFinalPotentialOptionSecond: String? = when (additionalPotentialOptionSecond) {
+            null -> null
+
+            else -> " + $additionalPotentialOptionSecond"
+        }
+        val additionalFinalPotentialOptionThird: String? = when (additionalPotentialOptionThird) {
+            null -> null
+
+            else -> " + $additionalPotentialOptionThird"
+        }
+        val seedringDescription: String? = when (itemSpecialRingLevel) {
+            "0" -> null
+
+            else -> "$itemName ${itemSpecialRingLevel}레벨"
+        }
+        val slotBackgroundDrawable: Int = when (itemTitle) {
+            null -> {
+                R.drawable.shape_equipment_background
+            }
+
+            "RING" -> {
+                R.drawable.shape_equipment_slot1
+            }
+
+            "PENDANT" -> {
+                R.drawable.shape_equipment_slot2
+            }
+
+            "WEAPON" -> {
+                R.drawable.shape_equipment_slot3
+            }
+
+            "SUB\nWEAPON" -> {
+                R.drawable.shape_equipment_slot3
+            }
+
+            "EMBLEM" -> {
+                R.drawable.shape_equipment_slot2
+            }
+
+            "BADGE" -> {
+                R.drawable.shape_equipment_slot2
+            }
+
+            "MEDAL" -> {
+                R.drawable.shape_equipment_slot2
+            }
+
+            "ANDROID" -> {
+                R.drawable.shape_equipment_slot5
+            }
+
+            "HEART" -> {
+                R.drawable.shape_equipment_slot5
+            }
+
+            else -> {
+                R.drawable.shape_equipment_slot4
+            }
+        }
     }
 }

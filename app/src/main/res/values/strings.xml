@@ -9,6 +9,7 @@
     <string name="name_menu_change_character_name">Change Character Name</string>
     <string name="name_menu_set_push_notification">Set Push Notification</string>
     <string name="name_menu_day_event">Events of Date</string>
+    <string name="name_menu_item_equipment_detail">Item Equipment Detail</string>
 
     <string name="text_nothing">-</string>
     <string name="text_year">년</string>
@@ -84,6 +85,33 @@
     <string name="text_character_stance">스탠스</string>
     <string name="text_character_attack_speed">공격 속도</string>
     <string name="text_title_equipment">EQUIPMENT INVENTORY</string>
+    <string name="text_equipment_classified">장비분류 : </string>
+    <string name="text_left_bracket">(</string>
+    <string name="text_right_bracket">)</string>
+    <string name="text_equipment_str">STR : +</string>
+    <string name="text_equipment_dex">DEX : +</string>
+    <string name="text_equipment_int">INT : +</string>
+    <string name="text_equipment_luk">LUK : +</string>
+    <string name="text_equipment_maxhp">최대 HP : +</string>
+    <string name="text_equipment_maxmp">최대 MP : +</string>
+    <string name="text_equipment_maxhp_rate">최대 HP : +</string>
+    <string name="text_equipment_maxmp_rate">최대 MP : +</string>
+    <string name="text_equipment_attack_power">공격력 : +</string>
+    <string name="text_equipment_magic_power">마력 : +</string>
+    <string name="text_equipment_armor">방어력 : +</string>
+    <string name="text_equipment_speed">이동속도 : +</string>
+    <string name="text_equipment_jump">점프력 : +</string>
+    <string name="text_equipment_boss_damage">보스 몬스터 공격 시 데미지 +</string>
+    <string name="text_equipment_ignore_monster_armor">몬스터 방어율 무시 : +</string>
+    <string name="text_equipment_damage">데미지 : +</string>
+    <string name="text_equipment_all_stat">올스탯 : +</string>
+    <string name="text_equipment_equipment_level_decrease">착용 레벨 감소 : -</string>
+    <string name="text_equipment_scroll_upgradeable_count">업그레이드 가능 횟수 : </string>
+    <string name="text_equipment_scroll_resilience_count">복구 가능 횟수 : </string>
+    <string name="text_equipment_golden_hammer_flag">황금망치 제련 적용</string>
+    <string name="text_cuttable_count">가위 사용 가능 횟수 : </string>
+    <string name="text_potential">잠재옵션</string>
+    <string name="text_additional_potential">에디셔널 잠재옵션</string>
 
     <string name="message_network_error">네트워크에 오류가 있어요!</string>
     <string name="message_bad_request">잘못된 요청이에요!</string>

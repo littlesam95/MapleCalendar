@@ -12,6 +12,7 @@ import com.bodan.maplecalendar.data.dto.CharacterUnion
 import com.bodan.maplecalendar.data.repository.MaplestoryRepository
 import com.bodan.maplecalendar.data.repository.MaplestoryRepositoryImpl
 import com.bodan.maplecalendar.presentation.ItemEquipmentDataGenerator.itemEquipmentDataSet
+import com.bodan.maplecalendar.presentation.ItemEquipmentDetailOptionGenerator.itemEquipmentDetailOptionSet
 import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertAttackSpeedFormat
 import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertCommaFormat
 import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertDojangFormat
@@ -19,6 +20,7 @@ import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertPercentF
 import com.bodan.maplecalendar.presentation.PowerFormatConverter.convertPowerFormat
 import com.bodan.maplecalendar.presentation.character.CharacterUiEvent
 import com.bodan.maplecalendar.presentation.character.CharacterUiState
+import com.bodan.maplecalendar.presentation.equipment.EquipmentDetailUiState
 import com.bodan.maplecalendar.presentation.equipment.EquipmentUiEvent
 import com.bodan.maplecalendar.presentation.equipment.EquipmentUiState
 import com.bodan.maplecalendar.presentation.equipment.OnItemEquipmentClickListener
@@ -29,6 +31,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
 
@@ -62,17 +65,20 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
     private val _characterPower = MutableStateFlow<String>("")
     val characterPower = _characterPower.asStateFlow()
 
-    private val _characterDefaultStatData = MutableStateFlow<List<CharacterUiState.CharacterDefaultStat>>(listOf())
+    private val _characterDefaultStatData =
+        MutableStateFlow<List<CharacterUiState.CharacterDefaultStat>>(listOf())
     val characterDefaultStatData = _characterDefaultStatData.asStateFlow()
 
-    private val _characterMainStatData = MutableStateFlow<List<CharacterUiState.CharacterMainStat>>(listOf())
+    private val _characterMainStatData =
+        MutableStateFlow<List<CharacterUiState.CharacterMainStat>>(listOf())
     val characterMainStatData = _characterMainStatData.asStateFlow()
 
     private val characterCooltimeReduceSec = MutableStateFlow<String>("")
 
     private val characterCooltimeReducePercent = MutableStateFlow<String>("")
 
-    private val _characterEtcStatData = MutableStateFlow<List<CharacterUiState.CharacterEtcStat>>(listOf())
+    private val _characterEtcStatData =
+        MutableStateFlow<List<CharacterUiState.CharacterEtcStat>>(listOf())
     val characterEtcStatData = _characterEtcStatData.asStateFlow()
 
     private val characterUnion = MutableStateFlow<CharacterUnion?>(null)
@@ -92,11 +98,17 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
 
     private val characterItemEquipment = MutableStateFlow<CharacterItemEquipment?>(null)
 
-    private val _characterItemEquipmentData = MutableStateFlow<List<EquipmentUiState>>(listOf())
+    private val _characterItemEquipmentData =
+        MutableStateFlow<List<EquipmentUiState.EquipmentOption>>(listOf())
     val characterItemEquipmentData = _characterItemEquipmentData.asStateFlow()
 
-    private val _characterLastItemEquipmentDefault = MutableStateFlow<EquipmentUiState.EquipmentDefault?>(null)
-    val characterLastItemEquipmentDefault = _characterLastItemEquipmentDefault.asStateFlow()
+    private val _characterLastItemEquipment =
+        MutableStateFlow<EquipmentUiState.EquipmentOption?>(null)
+    val characterLastItemEquipment = _characterLastItemEquipment.asStateFlow()
+
+    private val _characterLastItemEquipmentOptions =
+        MutableStateFlow<List<EquipmentDetailUiState>>(listOf())
+    val characterListItemEquipmentOptions = _characterLastItemEquipmentOptions.asStateFlow()
 
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
     val characterUiEvent = _characterUiEvent.asSharedFlow()
@@ -104,64 +116,23 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
     private val _equipmentUiEvent = MutableSharedFlow<EquipmentUiEvent>()
     val equipmentUiEvent = _equipmentUiEvent.asSharedFlow()
 
-    override fun onItemEquipmentDefaultClicked(equipmentUiState: EquipmentUiState.EquipmentDefault) {
+    override fun onItemEquipmentClicked(item: EquipmentUiState.EquipmentOption) {
         viewModelScope.launch {
-            _characterLastItemEquipmentDefault.value = equipmentUiState
-            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentDefault)
-        }
-    }
-
-    override fun onItemEquipmentAndroidClicked(equipmentUiState: EquipmentUiState.EquipmentAndroid) {
-        viewModelScope.launch {
-            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentAndroid)
-        }
-    }
-
-    override fun onItemEquipmentBadgeClicked(equipmentUiState: EquipmentUiState.EquipmentBadge) {
-        viewModelScope.launch {
-            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentBadge)
-        }
-    }
-
-    override fun onItemEquipmentEmblemClicked(equipmentUiState: EquipmentUiState.EquipmentEmblem) {
-        viewModelScope.launch {
-            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentEmblem)
-        }
-    }
-
-    override fun onItemEquipmentHeartClicked(equipmentUiState: EquipmentUiState.EquipmentHeart) {
-        viewModelScope.launch {
-            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentHeart)
-        }
-    }
-
-    override fun onItemEquipmentPocketClicked(equipmentUiState: EquipmentUiState.EquipmentPocket) {
-        viewModelScope.launch {
-            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentPocket)
-        }
-    }
-
-    override fun onItemEquipmentSeedringClicked(equipmentUiState: EquipmentUiState.EquipmentSeedring) {
-        viewModelScope.launch {
-            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentSeedring)
-        }
-    }
-
-    override fun onItemEquipmentShieldClicked(equipmentUiState: EquipmentUiState.EquipmentShield) {
-        viewModelScope.launch {
-            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentShield)
-        }
-    }
-
-    override fun onItemEquipmentSubweaponClicked(equipmentUiState: EquipmentUiState.EquipmentSubweapon) {
-        viewModelScope.launch {
-            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentSubweapon)
-        }
-    }
-
-    override fun onItemEquipmentWeaponClicked(equipmentUiState: EquipmentUiState.EquipmentWeapon) {
-        viewModelScope.launch {
-            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentWeapon)
+            item.itemTitle?.let { title ->
+                if (title != "ANDROID") {
+                    _characterLastItemEquipment.value = item
+                    _characterLastItemEquipmentOptions.value = itemEquipmentDetailOptionSet(
+                        item.itemTotalOption,
+                        item.itemBaseOption,
+                        item.itemAddOption,
+                        item.itemEtcOption,
+                        item.itemStarforceOption,
+                        item.itemExceptionalOption
+                    )
+                    Timber.d("${_characterLastItemEquipment.value}")
+                    _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentOption)
+                }
+            }
         }
     }
 
@@ -608,8 +579,10 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
             when (characterItemEquipmentResponse.status) {
                 ResponseStatus.SUCCESS -> {
                     characterItemEquipmentResponse.characterItemEquipment?.let { characterItemEquipment ->
-                        this@CharacterViewModel.characterItemEquipment.value = characterItemEquipment
-                        _characterItemEquipmentData.value = itemEquipmentDataSet(characterItemEquipment.itemEquipments)
+                        this@CharacterViewModel.characterItemEquipment.value =
+                            characterItemEquipment
+                        _characterItemEquipmentData.value =
+                            itemEquipmentDataSet(characterItemEquipment.itemEquipments)
                     }
                 }
 

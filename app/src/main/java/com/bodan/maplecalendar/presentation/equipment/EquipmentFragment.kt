@@ -35,44 +35,8 @@ class EquipmentFragment : BaseFragment<FragmentEquipmentBinding>(R.layout.fragme
     }
 
     private fun handleUiEvent(event: EquipmentUiEvent) = when (event) {
-        is EquipmentUiEvent.GetItemEquipmentDefault -> {
-            findNavController().navigate(R.id.action_equipment_to_item_equipment_default)
-        }
-
-        is EquipmentUiEvent.GetItemEquipmentAndroid -> {
-
-        }
-
-        is EquipmentUiEvent.GetItemEquipmentBadge -> {
-
-        }
-
-        is EquipmentUiEvent.GetItemEquipmentEmblem -> {
-
-        }
-
-        is EquipmentUiEvent.GetItemEquipmentHeart -> {
-
-        }
-
-        is EquipmentUiEvent.GetItemEquipmentPocket -> {
-
-        }
-
-        is EquipmentUiEvent.GetItemEquipmentSeedring -> {
-
-        }
-
-        is EquipmentUiEvent.GetItemEquipmentShield -> {
-
-        }
-
-        is EquipmentUiEvent.GetItemEquipmentSubweapon -> {
-
-        }
-
-        is EquipmentUiEvent.GetItemEquipmentWeapon -> {
-
+        is EquipmentUiEvent.GetItemEquipmentOption -> {
+            findNavController().navigate(R.id.action_equipment_to_item_equipment_detail)
         }
 
         is EquipmentUiEvent.BadRequest -> {

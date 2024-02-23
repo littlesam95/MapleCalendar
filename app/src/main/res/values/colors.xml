@@ -3,6 +3,7 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white1">#FEFFFFFF</color>
     <color name="gray">#22000000</color>
 
     <color name="main">#FFF09636</color>
@@ -15,6 +16,7 @@
     <color name="black3">#66000000</color>
     <color name="black4">#55000000</color>
     <color name="black5">#44000000</color>
+    <color name="black6">#FE000000</color>
 
     <color name="character">#FF313740</color>
     <color name="character_info">#FFD6EE5F</color>
@@ -36,5 +38,17 @@
     <color name="equipment_slot3">#FFADADAD</color>
     <color name="equipment_slot4">#FFC3C3C3</color>
     <color name="equipment_slot5">#FFB1B6BB</color>
+    <color name="equipment_detail">#CC000000</color>
+    <color name="equipment_detail_dot">#1A000000</color>
+    <color name="equipment_rare">#FF6EB7BA</color>
+    <color name="equipment_epic">#FF8F67ED</color>
+    <color name="equipment_unique">#FFDCB83E</color>
+    <color name="equipment_legendary">#FF99EE49</color>
+    <color name="equipment_total_option">#FF8DEFF1</color>
+    <color name="equipment_add_option">#FFD3F950</color>
+    <color name="equipment_etc_option">#FF9A9ADF</color>
+    <color name="equipment_starforce_option">#FFF1C944</color>
+    <color name="equipment_soul">#FFE9FD52</color>
+    <color name="equipment_soul_description">#FFECEB62</color>
 
 </resources>

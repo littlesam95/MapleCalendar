@@ -2,8 +2,10 @@ package com.bodan.maplecalendar.data.dto
 
 import androidx.annotation.Keep
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 @Keep
+@JsonClass(generateAdapter = true)
 data class CharacterBasic(
     @Json(name = "character_name")
     val characterName: String = "",
@@ -21,7 +23,7 @@ data class CharacterBasic(
     val characterLevel: Int = 0,
 
     @Json(name = "character_guild_name")
-    val characterGuildName: String = "",
+    val characterGuildName: String? = null,
 
     @Json(name = "character_image")
     val characterImage: String = ""
