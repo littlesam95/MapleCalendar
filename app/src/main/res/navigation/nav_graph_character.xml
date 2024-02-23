@@ -20,14 +20,14 @@
         tools:layout="@layout/fragment_equipment">
 
         <action
-            android:id="@+id/action_equipment_to_item_equipment_default"
-            app:destination="@id/fragment_item_equipment_default" />
+            android:id="@+id/action_equipment_to_item_equipment_detail"
+            app:destination="@id/fragment_item_equipment_detail" />
 
     </fragment>
 
     <dialog
-        android:id="@+id/fragment_item_equipment_default"
-        android:name="com.bodan.maplecalendar.presentation.equipment.ItemEquipmentDefaultFragment"
-        android:label="" />
+        android:id="@+id/fragment_item_equipment_detail"
+        android:name="com.bodan.maplecalendar.presentation.equipment.ItemEquipmentDetailFragment"
+        android:label="@string/name_menu_item_equipment_detail" />
 
 </navigation>

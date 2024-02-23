@@ -57,7 +57,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_title_equipment"
                 app:spanCount="5"
                 app:submitData="@{vm.characterItemEquipmentData}"
-                tools:listitem="@layout/item_equipment_default" />
+                tools:listitem="@layout/item_equipment_option" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
