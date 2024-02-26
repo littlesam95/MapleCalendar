@@ -21,345 +21,365 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="330dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/shape_equipment_detail"
-            android:paddingStart="12dp"
-            android:paddingTop="@dimen/title_top"
-            android:paddingEnd="12dp"
-            android:paddingBottom="@dimen/title_top"
-            tools:context=".presentation.equipment.ItemEquipmentDetailFragment">
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_soul_item_equipment_detail"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="330dp"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
-                android:text="@{vm.characterLastItemEquipment.itemSoul}"
-                android:textColor="@color/equipment_soul"
-                android:textSize="16sp"
-                android:visibility="@{(vm.characterLastItemEquipment.itemSoul == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:background="@drawable/shape_equipment_detail"
+                android:paddingStart="12dp"
+                android:paddingTop="@dimen/title_top"
+                android:paddingEnd="12dp"
+                android:paddingBottom="@dimen/title_top"
+                android:visibility="@{(vm.characterLastItemEquipment == null) ? View.GONE : View.VISIBLE}"
+                tools:context=".presentation.equipment.ItemEquipmentDetailFragment">
 
-            <TextView
-                android:id="@+id/tv_name_item_equipment_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{vm.characterLastItemEquipment.itemFinalName}"
-                android:textColor="@color/white1"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_soul_item_equipment_detail" />
+                <TextView
+                    android:id="@+id/tv_soul_item_equipment_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="2dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.itemSoul}"
+                    android:textColor="@color/equipment_soul"
+                    android:textSize="16sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.itemSoul == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_dotted_first_item_equipment_default"
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layerType="software"
-                android:src="@drawable/shape_dotted_line"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_name_item_equipment_default" />
+                <TextView
+                    android:id="@+id/tv_name_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.itemFinalName}"
+                    android:textColor="@color/white1"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_soul_item_equipment_detail" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_icon_item_equipment_default"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/shape_equipment_slot5"
-                android:padding="12dp"
-                android:scaleType="fitCenter"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_dotted_first_item_equipment_default"
-                app:profileImage="@{vm.characterLastItemEquipment.itemShapeIcon}" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_dotted_first_item_equipment_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dotted_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_name_item_equipment_default" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_dotted_second_item_equipment_default"
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layerType="software"
-                android:src="@drawable/shape_dotted_line"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_icon_item_equipment_default" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_icon_item_equipment_default"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/shape_equipment_slot5"
+                    android:padding="12dp"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_first_item_equipment_default"
+                    app:profileImage="@{vm.characterLastItemEquipment.itemShapeIcon}" />
 
-            <TextView
-                android:id="@+id/tv_classified_item_equipment_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendardregular"
-                android:text="@{vm.characterLastItemEquipment.itemClassified}"
-                android:textColor="@color/white1"
-                android:textSize="12sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_dotted_second_item_equipment_default" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_dotted_second_item_equipment_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dotted_line"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_icon_item_equipment_default" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_option_item_equipment_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:adapter="@{listAdapter}"
-                android:elevation="10dp"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_classified_item_equipment_default"
-                app:submitData="@{vm.characterListItemEquipmentOptions}"
-                tools:listitem="@layout/item_equipment_detail_option" />
+                <TextView
+                    android:id="@+id/tv_classified_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.itemClassified}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_second_item_equipment_default" />
 
-            <TextView
-                android:id="@+id/tv_upgrade_count_item_equipment_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/pretendardregular"
-                android:text="@{vm.characterLastItemEquipment.itemUpgradeable}"
-                android:textColor="@color/white1"
-                android:textSize="12sp"
-                android:visibility="@{vm.characterLastItemEquipment.isAbleToUpgrade ? View.VISIBLE : View.GONE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_option_item_equipment_detail" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_option_item_equipment_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adapter="@{listAdapter}"
+                    android:elevation="10dp"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_classified_item_equipment_default"
+                    app:submitData="@{vm.characterListItemEquipmentOptions}"
+                    tools:listitem="@layout/item_equipment_detail_option" />
 
-            <TextView
-                android:id="@+id/tv_resilience_count_item_equipment_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:fontFamily="@font/pretendardregular"
-                android:text="@{vm.characterLastItemEquipment.itemResilience}"
-                android:textColor="@color/equipment_starforce_option"
-                android:textSize="12sp"
-                android:visibility="@{vm.characterLastItemEquipment.isAbleToUpgrade ? View.VISIBLE : View.GONE}"
-                app:layout_constraintStart_toEndOf="@id/tv_upgrade_count_item_equipment_detail"
-                app:layout_constraintTop_toTopOf="@id/tv_upgrade_count_item_equipment_detail" />
+                <TextView
+                    android:id="@+id/tv_upgrade_count_item_equipment_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.itemUpgradeable}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToUpgrade ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rv_option_item_equipment_detail" />
 
-            <TextView
-                android:id="@+id/tv_golden_hammer_item_equipment_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/pretendardregular"
-                android:text="@string/text_equipment_golden_hammer_flag"
-                android:textColor="@color/white1"
-                android:textSize="12sp"
-                android:visibility="@{vm.characterLastItemEquipment.isGoldenHammerUsed ? View.VISIBLE : View.GONE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_upgrade_count_item_equipment_detail" />
+                <TextView
+                    android:id="@+id/tv_resilience_count_item_equipment_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.itemResilience}"
+                    android:textColor="@color/equipment_starforce_option"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToUpgrade ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toEndOf="@id/tv_upgrade_count_item_equipment_detail"
+                    app:layout_constraintTop_toTopOf="@id/tv_upgrade_count_item_equipment_detail" />
 
-            <TextView
-                android:id="@+id/tv_cuttable_count_item_equipment_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:fontFamily="@font/pretendardregular"
-                android:text="@{vm.characterLastItemEquipment.itemCuttable}"
-                android:textColor="@color/equipment_starforce_option"
-                android:textSize="12sp"
-                android:visibility="@{vm.characterLastItemEquipment.isItemCuttable ? View.VISIBLE : View.GONE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_golden_hammer_item_equipment_detail" />
+                <TextView
+                    android:id="@+id/tv_golden_hammer_item_equipment_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@string/text_equipment_golden_hammer_flag"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isGoldenHammerUsed ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_upgrade_count_item_equipment_detail" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_dotted_third_item_equipment_default"
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layerType="software"
-                android:src="@drawable/shape_dotted_line"
-                android:visibility="@{(vm.characterLastItemEquipment.potentialOptionGrade == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_cuttable_count_item_equipment_detail" />
+                <TextView
+                    android:id="@+id/tv_cuttable_count_item_equipment_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.itemCuttable}"
+                    android:textColor="@color/equipment_starforce_option"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isItemCuttable ? View.VISIBLE : View.GONE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_golden_hammer_item_equipment_detail" />
 
-            <TextView
-                android:id="@+id/tv_potential_item_equipment_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendardregular"
-                android:text="@string/text_potential"
-                android:textSize="12sp"
-                android:visibility="@{(vm.characterLastItemEquipment.potentialOptionGrade == null) ? View.GONE : View.VISIBLE}"
-                app:grade_color="@{vm.characterLastItemEquipment.potentialOptionGradeColor}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_dotted_third_item_equipment_default" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_dotted_third_item_equipment_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dotted_line"
+                    android:visibility="@{(vm.characterLastItemEquipment.potentialOptionGrade == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_cuttable_count_item_equipment_detail" />
 
-            <TextView
-                android:id="@+id/tv_first_potential_item_equipment_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@{vm.characterLastItemEquipment.potentialOptionFirst}"
-                android:textColor="@color/white1"
-                android:textSize="12sp"
-                android:visibility="@{(vm.characterLastItemEquipment.potentialOptionFirst == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_potential_item_equipment_default" />
+                <TextView
+                    android:id="@+id/tv_potential_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@string/text_potential"
+                    android:textSize="12sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.potentialOptionGrade == null) ? View.GONE : View.VISIBLE}"
+                    app:grade_color="@{vm.characterLastItemEquipment.potentialOptionGradeColor}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_third_item_equipment_default" />
 
-            <TextView
-                android:id="@+id/tv_second_potential_item_equipment_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@{vm.characterLastItemEquipment.potentialOptionSecond}"
-                android:textColor="@color/white1"
-                android:textSize="12sp"
-                android:visibility="@{(vm.characterLastItemEquipment.potentialOptionSecond == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_first_potential_item_equipment_default" />
+                <TextView
+                    android:id="@+id/tv_first_potential_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.potentialOptionFirst}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.potentialOptionFirst == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_potential_item_equipment_default" />
 
-            <TextView
-                android:id="@+id/tv_third_potential_item_equipment_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@{vm.characterLastItemEquipment.potentialOptionThird}"
-                android:textColor="@color/white1"
-                android:textSize="12sp"
-                android:visibility="@{(vm.characterLastItemEquipment.potentialOptionThird == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_second_potential_item_equipment_default" />
+                <TextView
+                    android:id="@+id/tv_second_potential_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.potentialOptionSecond}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.potentialOptionSecond == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_first_potential_item_equipment_default" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_dotted_fourth_item_equipment_default"
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layerType="software"
-                android:src="@drawable/shape_dotted_line"
-                android:visibility="@{(vm.characterLastItemEquipment.additionalPotentialOptionGrade == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_third_potential_item_equipment_default" />
+                <TextView
+                    android:id="@+id/tv_third_potential_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.potentialOptionThird}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.potentialOptionThird == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_second_potential_item_equipment_default" />
 
-            <TextView
-                android:id="@+id/tv_additional_potential_item_equipment_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendardregular"
-                android:text="@string/text_additional_potential"
-                android:textSize="12sp"
-                android:visibility="@{(vm.characterLastItemEquipment.additionalPotentialOptionGrade == null) ? View.GONE : View.VISIBLE}"
-                app:grade_color="@{vm.characterLastItemEquipment.additionalPotentialOptionGradeColor}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_dotted_fourth_item_equipment_default" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_dotted_fourth_item_equipment_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dotted_line"
+                    android:visibility="@{(vm.characterLastItemEquipment.additionalPotentialOptionGrade == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_third_potential_item_equipment_default" />
 
-            <TextView
-                android:id="@+id/tv_first_additional_potential_item_equipment_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@{vm.characterLastItemEquipment.additionalFinalPotentialOptionFirst}"
-                android:textColor="@color/white1"
-                android:textSize="12sp"
-                android:visibility="@{(vm.characterLastItemEquipment.additionalPotentialOptionFirst == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_additional_potential_item_equipment_default" />
+                <TextView
+                    android:id="@+id/tv_additional_potential_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@string/text_additional_potential"
+                    android:textSize="12sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.additionalPotentialOptionGrade == null) ? View.GONE : View.VISIBLE}"
+                    app:grade_color="@{vm.characterLastItemEquipment.additionalPotentialOptionGradeColor}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_fourth_item_equipment_default" />
 
-            <TextView
-                android:id="@+id/tv_second_additional_potential_item_equipment_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@{vm.characterLastItemEquipment.additionalFinalPotentialOptionSecond}"
-                android:textColor="@color/white1"
-                android:textSize="12sp"
-                android:visibility="@{(vm.characterLastItemEquipment.additionalPotentialOptionSecond == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_first_additional_potential_item_equipment_default" />
+                <TextView
+                    android:id="@+id/tv_first_additional_potential_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.additionalFinalPotentialOptionFirst}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.additionalPotentialOptionFirst == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_additional_potential_item_equipment_default" />
 
-            <TextView
-                android:id="@+id/tv_third_additional_potential_item_equipment_default"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="@{vm.characterLastItemEquipment.additionalFinalPotentialOptionThird}"
-                android:textColor="@color/white1"
-                android:textSize="12sp"
-                android:visibility="@{(vm.characterLastItemEquipment.additionalPotentialOptionThird == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_second_additional_potential_item_equipment_default" />
+                <TextView
+                    android:id="@+id/tv_second_additional_potential_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.additionalFinalPotentialOptionSecond}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.additionalPotentialOptionSecond == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_first_additional_potential_item_equipment_default" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_dotted_fifth_item_equipment_default"
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layerType="software"
-                android:src="@drawable/shape_dotted_line"
-                android:visibility="@{(vm.characterLastItemEquipment.itemSoulName == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_third_additional_potential_item_equipment_default" />
+                <TextView
+                    android:id="@+id/tv_third_additional_potential_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.additionalFinalPotentialOptionThird}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.additionalPotentialOptionThird == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_second_additional_potential_item_equipment_default" />
 
-            <TextView
-                android:id="@+id/tv_soul_name_item_equipment_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{vm.characterLastItemEquipment.itemSoulName}"
-                android:textColor="@color/equipment_soul_description"
-                android:textSize="12sp"
-                android:visibility="@{(vm.characterLastItemEquipment.itemSoulName == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_dotted_fifth_item_equipment_default" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_dotted_fifth_item_equipment_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dotted_line"
+                    android:visibility="@{(vm.characterLastItemEquipment.itemSoulName == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_third_additional_potential_item_equipment_default" />
 
-            <TextView
-                android:id="@+id/tv_soul_option_description_item_equipment_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{vm.characterLastItemEquipment.itemSoulOption}"
-                android:textColor="@color/white1"
-                android:textSize="12sp"
-                android:visibility="@{(vm.characterLastItemEquipment.itemSoulOption == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_soul_name_item_equipment_detail" />
+                <TextView
+                    android:id="@+id/tv_soul_name_item_equipment_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.itemSoulName}"
+                    android:textColor="@color/equipment_soul_description"
+                    android:textSize="12sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.itemSoulName == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_fifth_item_equipment_default" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_dotted_sixth_item_equipment_default"
-                android:layout_width="match_parent"
-                android:layout_height="1.5dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:layerType="software"
-                android:src="@drawable/shape_dotted_line"
-                android:visibility="@{(vm.characterLastItemEquipment.itemDescription == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_soul_option_description_item_equipment_detail" />
+                <TextView
+                    android:id="@+id/tv_soul_option_description_item_equipment_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.itemSoulOption}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.itemSoulOption == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_soul_name_item_equipment_detail" />
 
-            <TextView
-                android:id="@+id/tv_description_item_equipment_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{vm.characterLastItemEquipment.itemDescription}"
-                android:textColor="@color/white1"
-                android:textSize="12sp"
-                android:visibility="@{(vm.characterLastItemEquipment.itemDescription == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_dotted_sixth_item_equipment_default" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_dotted_sixth_item_equipment_default"
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:layerType="software"
+                    android:src="@drawable/shape_dotted_line"
+                    android:visibility="@{(vm.characterLastItemEquipment.itemDescription == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_soul_option_description_item_equipment_detail" />
 
-            <TextView
-                android:id="@+id/tv_seedring_description_item_equipment_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{vm.characterLastItemEquipment.seedringDescription}"
-                android:textColor="@color/equipment_starforce_option"
-                android:textSize="12sp"
-                android:visibility="@{(vm.characterLastItemEquipment.seedringDescription == null) ? View.GONE : View.VISIBLE}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_description_item_equipment_detail" />
+                <TextView
+                    android:id="@+id/tv_description_item_equipment_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.itemDescription}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.itemDescription == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_sixth_item_equipment_default" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/tv_seedring_description_item_equipment_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.seedringDescription}"
+                    android:textColor="@color/equipment_starforce_option"
+                    android:textSize="12sp"
+                    android:visibility="@{(vm.characterLastItemEquipment.seedringDescription == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_description_item_equipment_detail" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 
