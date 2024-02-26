@@ -8,12 +8,17 @@ sealed class EquipmentDetailUiState(val id: String = UUID.randomUUID().toString(
         val optionType: String,
         val totalOption: String,
         val baseOption: String,
-        val addOption: String? = null,
-        val etcOption: String? = null,
-        val starforceOption: String? = null,
-        val exceptionalOption: String? = null
+        val addOption: String = "",
+        val etcOption: String = "",
+        val starforceOption: String = "",
+        val exceptionalOption: String = ""
     ) : EquipmentDetailUiState() {
-        val isZero: Boolean = if (totalOption.last() == '%') (totalOption == "0%") else (totalOption == "0")
+        val isMinus: Boolean = when (etcOption) {
+            "" -> false
+
+            else -> (etcOption.first() == '-')
+        }
+        val isZero: Boolean = (totalOption.first() == '0')
         val isForced: Boolean = (totalOption != baseOption)
     }
 }
