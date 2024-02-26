@@ -246,13 +246,13 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:textColor="@color/white1"
                                 android:id="@+id/tv_character_union_character"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="12dp"
                                 android:fontFamily="@font/pretendardregular"
                                 android:text="@{vm.characterUnionLevel}"
+                                android:textColor="@color/white1"
                                 android:textSize="11sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -291,13 +291,13 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:textColor="@color/white1"
                                 android:id="@+id/tv_character_dojang_character"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="12dp"
                                 android:fontFamily="@font/pretendardregular"
                                 android:text="@{vm.characterDojangBestFloor}"
+                                android:textColor="@color/white1"
                                 android:textSize="11sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -337,13 +337,13 @@
                                 app:layout_constraintTop_toTopOf="parent" />
 
                             <TextView
-                                android:textColor="@color/white1"
                                 android:id="@+id/tv_character_popularity_character"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="12dp"
                                 android:fontFamily="@font/pretendardregular"
                                 android:text="@{vm.characterPopularityPoint}"
+                                android:textColor="@color/white1"
                                 android:textSize="11sp"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
@@ -431,6 +431,7 @@
                 android:adapter="@{defaultStatListAdapter}"
                 android:background="@drawable/shape_default_stat"
                 android:elevation="10dp"
+                android:nestedScrollingEnabled="false"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -452,6 +453,7 @@
                 android:adapter="@{mainStatListAdapter}"
                 android:background="@drawable/shape_main_etc_stat"
                 android:elevation="10dp"
+                android:nestedScrollingEnabled="false"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -474,6 +476,7 @@
                 android:adapter="@{etcStatListAdapter}"
                 android:background="@drawable/shape_main_etc_stat"
                 android:elevation="10dp"
+                android:nestedScrollingEnabled="false"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
