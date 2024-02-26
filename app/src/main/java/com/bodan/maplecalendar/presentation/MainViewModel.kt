@@ -7,11 +7,11 @@ import com.bodan.maplecalendar.data.EventListReader
 import com.bodan.maplecalendar.data.ResponseStatus
 import com.bodan.maplecalendar.data.repository.MaplestoryRepository
 import com.bodan.maplecalendar.data.repository.MaplestoryRepositoryImpl
+import com.bodan.maplecalendar.presentation.NicknameValidator.validateNickname
 import com.bodan.maplecalendar.presentation.calendar.CalendarUiEvent
 import com.bodan.maplecalendar.presentation.calendar.CalendarUiState
 import com.bodan.maplecalendar.presentation.calendar.DayType
 import com.bodan.maplecalendar.presentation.calendar.OnDateClickListener
-import com.bodan.maplecalendar.presentation.equipment.EquipmentUiEvent
 import com.bodan.maplecalendar.presentation.lobby.EventItem
 import com.bodan.maplecalendar.presentation.lobby.LobbyUiEvent
 import com.bodan.maplecalendar.presentation.lobby.OnEventClickListener
@@ -27,7 +27,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import timber.log.Timber
 import java.util.Calendar
 
 class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
@@ -109,11 +108,9 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
     private val _settingUiState = MutableStateFlow<SettingUiState>(SettingUiState())
     val settingUiState = _settingUiState.asStateFlow()
 
-    private val _equipmentUiEvent = MutableSharedFlow<EquipmentUiEvent>()
-    val equipmentUiEvent = _equipmentUiEvent.asSharedFlow()
-
     override fun onClicked(calendarDate: CalendarUiState.CalendarDate) {
         val date = calendarDate.name
+        if (date == "") return
         _specificDate.value = "${_currentYear.value}년 ${_currentMonth.value}월 ${date}일"
         val specificDay =
             _currentYear.value.toString().padStart(4, '0') + "-" + _currentMonth.value.toString()
@@ -126,7 +123,6 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
                 _eventItemsOfDate.value = eventListOfDate.sortedBy { eventItem ->
                     eventItem.eventExp
                 }
-                Timber.d("${_eventItemsOfDate.value}")
             } else {
                 _calendarUiEvent.emit(CalendarUiEvent.InternalServerError)
             }
@@ -297,15 +293,7 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
         var nowDate = 1
         newCalendar.set(_currentYear.value, _currentMonth.value - 1, nowDate)
         while (true) {
-            Timber.d(
-                "${newCalendar.get(Calendar.YEAR)}년 ${newCalendar.get(Calendar.MONTH) + 1}월 ${
-                    newCalendar.get(
-                        Calendar.DATE
-                    )
-                }일"
-            )
             val nowWeek = newCalendar.get(Calendar.WEEK_OF_MONTH)
-            Timber.d("Now Week: $nowWeek")
             when (val nowDay = newCalendar.get(Calendar.DAY_OF_WEEK)) {
                 1 -> {
                     newCalendarData[(nowWeek * 7) + nowDay - 1] = CalendarUiState.CalendarDate(
@@ -338,7 +326,6 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
         }
 
         _calendarData.value = newCalendarData
-        Timber.d("${_calendarData.value}")
     }
 
     fun initState() {
@@ -394,17 +381,20 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
         viewModelScope.launch {
             _settingUiEvent.emit(SettingUiEvent.ChangeCharacterName)
             _newCharacterName.value = ""
+            _settingUiState.update { uiState ->
+                uiState.copy(characterNameValidState = CharacterNameValidState.NONE)
+            }
         }
     }
 
     fun validateCharacterName(characterName: CharSequence) {
-        if (characterName.isBlank()) {
+        if (validateNickname(characterName)) {
             _settingUiState.update { uiState ->
-                uiState.copy(characterNameValidState = CharacterNameValidState.NONE)
+                uiState.copy(characterNameValidState = CharacterNameValidState.VALID)
             }
         } else {
             _settingUiState.update { uiState ->
-                uiState.copy(characterNameValidState = CharacterNameValidState.VALID)
+                uiState.copy(characterNameValidState = CharacterNameValidState.NONE)
             }
         }
     }
