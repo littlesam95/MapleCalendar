@@ -49,6 +49,7 @@
                 android:adapter="@{listAdapter}"
                 android:background="@color/equipment_background"
                 android:elevation="10dp"
+                android:nestedScrollingEnabled="false"
                 android:padding="12dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
