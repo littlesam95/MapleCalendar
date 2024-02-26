@@ -16,7 +16,7 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
         val itemTitle: String? = null,
         val itemEquipmentPart: String = "",
         val equipmentSlot: String = "",
-        val itemName: String = "",
+        val itemName: String? = null,
         val itemDescription: String? = null,
         val itemShapeName: String = "",
         val itemShapeIcon: String? = null,
@@ -55,7 +55,7 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
 
             else -> "${itemSoulName.split("의").first()}의"
         }
-        val itemFinalName: String = when (itemScrollUpgrade) {
+        val itemFinalName: String? = when (itemScrollUpgrade) {
             "0" -> itemName
 
             else -> "$itemName (+${itemScrollUpgrade})"

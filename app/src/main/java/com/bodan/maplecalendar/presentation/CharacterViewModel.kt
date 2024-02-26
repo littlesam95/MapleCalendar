@@ -107,7 +107,7 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
     val characterLastItemEquipment = _characterLastItemEquipment.asStateFlow()
 
     private val _characterLastItemEquipmentOptions =
-        MutableStateFlow<List<EquipmentDetailUiState>>(listOf())
+        MutableStateFlow<List<EquipmentDetailUiState?>?>(null)
     val characterListItemEquipmentOptions = _characterLastItemEquipmentOptions.asStateFlow()
 
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
@@ -118,20 +118,20 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
 
     override fun onItemEquipmentClicked(item: EquipmentUiState.EquipmentOption) {
         viewModelScope.launch {
-            item.itemTitle?.let { title ->
-                if (title != "ANDROID") {
-                    _characterLastItemEquipment.value = item
-                    _characterLastItemEquipmentOptions.value = itemEquipmentDetailOptionSet(
-                        item.itemTotalOption,
-                        item.itemBaseOption,
-                        item.itemAddOption,
-                        item.itemEtcOption,
-                        item.itemStarforceOption,
-                        item.itemExceptionalOption
-                    )
-                    Timber.d("${_characterLastItemEquipment.value}")
-                    _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentOption)
-                }
+            item.itemName?.let {
+                _characterLastItemEquipment.value = null
+                _characterLastItemEquipmentOptions.value = null
+                _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentOption)
+                _characterLastItemEquipment.value = item
+                _characterLastItemEquipmentOptions.value = itemEquipmentDetailOptionSet(
+                    item.itemTotalOption,
+                    item.itemBaseOption,
+                    item.itemAddOption,
+                    item.itemEtcOption,
+                    item.itemStarforceOption,
+                    item.itemExceptionalOption
+                )
+                Timber.d("${_characterLastItemEquipmentOptions.value}")
             }
         }
     }
