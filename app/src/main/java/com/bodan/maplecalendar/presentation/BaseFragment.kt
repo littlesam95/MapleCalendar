@@ -1,10 +1,12 @@
 package com.bodan.maplecalendar.presentation
 
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -24,6 +26,13 @@ abstract class BaseFragment<T : ViewDataBinding>(private val layoutId: Int) : Fr
     private var _binding: T? = null
     protected val binding
         get() = requireNotNull(_binding)
+    private lateinit var onBackPressedCallback: OnBackPressedCallback
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        setBackPressedCallback()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,5 +82,15 @@ abstract class BaseFragment<T : ViewDataBinding>(private val layoutId: Int) : Fr
 
     protected fun showSnackBar(messageId: Int) {
         Snackbar.make(this.requireView(), messageId, Snackbar.LENGTH_LONG).show()
+    }
+
+    private fun setBackPressedCallback() {
+        onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().finish()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
     }
 }
