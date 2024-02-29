@@ -86,7 +86,7 @@
                     android:text="@{vm.characterName}"
                     android:textColor="@color/main"
                     android:textSize="@dimen/title_font_size_small"
-                    app:layout_constraintBottom_toTopOf="@id/iv_character_lobby"
+                    app:layout_constraintBottom_toTopOf="@id/mcv_information_lobby"
                     app:layout_constraintEnd_toStartOf="@id/tv_character_info_lobby"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rv_lobby" />
@@ -122,22 +122,76 @@
                     android:text="@{vm.searchDate}"
                     android:textSize="@dimen/title_font_size_mini"
                     app:layout_constraintBottom_toBottomOf="@id/tv_character_name_lobby"
-                    app:layout_constraintEnd_toStartOf="@id/btn_character_detail"
-                    app:layout_constraintTop_toTopOf="@id/tv_character_name_lobby" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_character_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="@dimen/title_end"
-                    android:background="@android:color/transparent"
-                    android:fontFamily="@font/pretendardregular"
-                    android:onClick="@{() -> vm.goToCharacter()}"
-                    android:text="@string/text_character_detail"
-                    android:textSize="@dimen/title_font_size_mini"
-                    app:layout_constraintBottom_toBottomOf="@id/tv_character_name_lobby"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_character_name_lobby" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/mcv_information_lobby"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintBottom_toTopOf="@id/iv_character_lobby"
+                    app:layout_constraintEnd_toEndOf="@id/tv_character_search_date"
+                    app:layout_constraintStart_toStartOf="@id/tv_character_name_lobby"
+                    app:layout_constraintTop_toBottomOf="@id/tv_character_name_lobby">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/shape_information"
+                        android:padding="12dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/iv_information_lobby"
+                            android:layout_width="50dp"
+                            android:layout_height="0dp"
+                            android:background="@drawable/shape_information_icon"
+                            android:padding="10dp"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/maple_calendar_logo"
+                            app:layout_constraintBottom_toBottomOf="@id/tv_information_profile_lobby"
+                            app:layout_constraintDimensionRatio="1:1"
+                            app:layout_constraintEnd_toStartOf="@id/tv_information_date_lobby"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/tv_information_date_lobby" />
+
+                        <TextView
+                            android:id="@+id/tv_information_date_lobby"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:fontFamily="@font/pretendardregular"
+                            android:text="@string/text_information_date"
+                            app:layout_constraintBottom_toTopOf="@id/tv_information_time_lobby"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/iv_information_lobby"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/tv_information_time_lobby"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pretendardregular"
+                            android:text="@string/text_information_time"
+                            app:layout_constraintBottom_toTopOf="@id/tv_information_profile_lobby"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tv_information_date_lobby"
+                            app:layout_constraintTop_toBottomOf="@id/tv_information_date_lobby" />
+
+                        <TextView
+                            android:id="@+id/tv_information_profile_lobby"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pretendardregular"
+                            android:text="@string/text_information_profile"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/tv_information_date_lobby"
+                            app:layout_constraintTop_toBottomOf="@id/tv_information_time_lobby" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.card.MaterialCardView>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_character_lobby"
@@ -149,9 +203,10 @@
                     android:background="@drawable/shape_dialog"
                     android:contentDescription="@string/description_character_profile"
                     android:elevation="10dp"
+                    android:onClick="@{() -> vm.goToCharacter()}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_character_name_lobby"
+                    app:layout_constraintTop_toBottomOf="@id/mcv_information_lobby"
                     app:profileImage="@{vm.characterImage}" />
 
                 <TextView
