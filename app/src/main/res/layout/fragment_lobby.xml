@@ -102,6 +102,18 @@
                     app:layout_constraintStart_toEndOf="@id/tv_character_name_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_character_name_lobby" />
 
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_lobby"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:checked="@{vm.isDateNow}"
+                    android:onCheckedChanged="@{(_, isChecked) -> vm.setDateNow(isChecked)}"
+                    android:padding="8dp"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_character_search_date"
+                    app:layout_constraintEnd_toStartOf="@id/tv_search_date"
+                    app:layout_constraintTop_toTopOf="@id/tv_character_search_date" />
+
                 <TextView
                     android:id="@+id/tv_search_date"
                     android:layout_width="wrap_content"
@@ -119,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/title_end"
                     android:fontFamily="@font/pretendardregular"
-                    android:text="@{vm.searchDate}"
+                    android:text="@{(vm.searchDate == null) ? @string/text_search_date_now : vm.searchDate}"
                     android:textSize="@dimen/title_font_size_mini"
                     app:layout_constraintBottom_toBottomOf="@id/tv_character_name_lobby"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -139,6 +151,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/shape_information"
+                        android:backgroundTint="@null"
                         android:padding="12dp">
 
                         <androidx.appcompat.widget.AppCompatImageView
