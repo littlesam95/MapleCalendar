@@ -50,8 +50,11 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
 
     private val todayFormatted = MutableStateFlow<String>("")
 
-    private val _searchDate = MutableStateFlow<String>("")
+    private val _searchDate = MutableStateFlow<String?>(null)
     val searchDate = _searchDate.asStateFlow()
+
+    private val _isDateNow = MutableStateFlow<Boolean>(false)
+    val isDateNow = _isDateNow.asStateFlow()
 
     private val currentMinute = MutableStateFlow<Int>(-1)
 
@@ -341,6 +344,22 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
     fun goToCharacter() {
         viewModelScope.launch {
             _lobbyUiEvent.emit(LobbyUiEvent.GoToCharacter)
+        }
+    }
+
+    fun setDateNow(isChecked: Boolean) {
+        viewModelScope.launch {
+            when (isChecked) {
+                true -> {
+                    _searchDate.value = null
+                }
+
+                false -> {
+                    setToday().await()
+                }
+            }
+            setCharacterName()
+            getCharacterOcid()
         }
     }
 
