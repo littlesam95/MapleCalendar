@@ -24,8 +24,9 @@
     <string name="text_specific_date_event">에 진행중인 이벤트는…</string>
     <string name="text_character_info">에 대한 정보</string>
     <string name="text_search_date">기준일 : &#160;</string>
+    <string name="text_search_date_now">실시간</string>
     <string name="text_character_detail">자세히 보기</string>
-    <string name="text_information_date">캐릭터의 상세 정보는 2023년 12월 21일 이후에 접속한 캐릭터만 가능해요.</string>
+    <string name="text_information_date">캐릭터의 상세 정보는 2023년 12월 21일 이후에 접속한 캐릭터만 확인 가능해요.</string>
     <string name="text_information_time">캐릭터의 정보는 매일 01시마다 갱신돼요.</string>
     <string name="text_information_profile">캐릭터 이미지를 클릭하면 캐릭터의 상세한 정보를 확인할 수 있어요.</string>
     <string name="text_event_example">이벤트</string>
