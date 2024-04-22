@@ -21,36 +21,36 @@ interface MaplestoryApi {
     @GET("v1/character/basic")
     suspend fun fetchCharacterBasic(
         @Query("ocid") ocid: String,
-        @Query("date") date: String
+        @Query("date") date: String?
     ): Response<CharacterBasic>
 
     @GET("v1/character/stat")
     suspend fun fetchCharacterStat(
         @Query("ocid") ocid: String,
-        @Query("date") date: String
+        @Query("date") date: String?
     ): Response<CharacterStat>
 
     @GET("v1/character/item-equipment")
     suspend fun fetchCharacterItemEquipment(
         @Query("ocid") ocid: String,
-        @Query("date") date: String
+        @Query("date") date: String?
     ): Response<CharacterItemEquipment>
 
     @GET("v1/user/union")
     suspend fun fetchCharacterUnion(
         @Query("ocid") ocid: String,
-        @Query("date") date: String
+        @Query("date") date: String?
     ): Response<CharacterUnion>
 
     @GET("v1/character/popularity")
     suspend fun fetchCharacterPopularity(
         @Query("ocid") ocid: String,
-        @Query("date") date: String
+        @Query("date") date: String?
     ): Response<CharacterPopularity>
 
     @GET("v1/character/dojang")
     suspend fun fetchCharacterDojang(
         @Query("ocid") ocid: String,
-        @Query("date") date: String
+        @Query("date") date: String?
     ): Response<CharacterDojang>
 }

@@ -80,7 +80,7 @@ class MaplestoryRepositoryImpl : MaplestoryRepository {
         )
     }
 
-    override suspend fun getCharacterBasic(ocid: String, date: String): CharacterBasicResponse {
+    override suspend fun getCharacterBasic(ocid: String, date: String?): CharacterBasicResponse {
         val response = maplestoryApi.fetchCharacterBasic(ocid = ocid, date = date)
 
         when (response.code()) {
@@ -135,7 +135,7 @@ class MaplestoryRepositoryImpl : MaplestoryRepository {
         )
     }
 
-    override suspend fun getCharacterPower(ocid: String, date: String): CharacterStatResponse {
+    override suspend fun getCharacterPower(ocid: String, date: String?): CharacterStatResponse {
         val response = maplestoryApi.fetchCharacterStat(ocid = ocid, date = date)
 
         when (response.code()) {
@@ -190,7 +190,7 @@ class MaplestoryRepositoryImpl : MaplestoryRepository {
         )
     }
 
-    override suspend fun getCharacterItemEquipment(ocid: String, date: String): CharacterItemEquipmentResponse {
+    override suspend fun getCharacterItemEquipment(ocid: String, date: String?): CharacterItemEquipmentResponse {
         val response = maplestoryApi.fetchCharacterItemEquipment(ocid = ocid, date = date)
 
         when (response.code()) {
@@ -245,7 +245,7 @@ class MaplestoryRepositoryImpl : MaplestoryRepository {
         )
     }
 
-    override suspend fun getCharacterUnion(ocid: String, date: String): CharacterUnionResponse {
+    override suspend fun getCharacterUnion(ocid: String, date: String?): CharacterUnionResponse {
         val response = maplestoryApi.fetchCharacterUnion(ocid = ocid, date = date)
 
         when (response.code()) {
@@ -300,7 +300,7 @@ class MaplestoryRepositoryImpl : MaplestoryRepository {
         )
     }
 
-    override suspend fun getCharacterPopularity(ocid: String, date: String): CharacterPopularityResponse {
+    override suspend fun getCharacterPopularity(ocid: String, date: String?): CharacterPopularityResponse {
         val response = maplestoryApi.fetchCharacterPopularity(ocid = ocid, date = date)
 
         when (response.code()) {
@@ -355,7 +355,7 @@ class MaplestoryRepositoryImpl : MaplestoryRepository {
         )
     }
 
-    override suspend fun getCharacterDojang(ocid: String, date: String): CharacterDojangResponse {
+    override suspend fun getCharacterDojang(ocid: String, date: String?): CharacterDojangResponse {
         val response = maplestoryApi.fetchCharacterDojang(ocid = ocid, date = date)
 
         when (response.code()) {
