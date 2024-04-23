@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentLobbyBinding
 import com.bodan.maplecalendar.presentation.BaseFragment
@@ -74,12 +75,18 @@ class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby
             showSnackBar(R.string.message_network_error)
         }
 
+        is LobbyUiEvent.SetDarkMode -> {
+            setDarkMode()
+        }
+
+        is LobbyUiEvent.SelectSearchDate -> {
+            findNavController().navigate(R.id.action_lobby_to_search_date)
+        }
+
         is LobbyUiEvent.StartEventUrl -> {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(viewModel.eventUrl.value)))
         }
 
-        is LobbyUiEvent.SetDarkMode -> {
-            setDarkMode()
-        }
+        else -> {}
     }
 }
