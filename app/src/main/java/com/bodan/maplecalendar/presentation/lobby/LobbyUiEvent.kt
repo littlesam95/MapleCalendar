@@ -14,6 +14,10 @@ sealed class LobbyUiEvent {
 
     data object InternalServerError : LobbyUiEvent()
 
+    data object SelectSearchDate : LobbyUiEvent()
+
+    data object CloseSearchDate : LobbyUiEvent()
+
     data object StartEventUrl : LobbyUiEvent()
 
     data object SetDarkMode : LobbyUiEvent()

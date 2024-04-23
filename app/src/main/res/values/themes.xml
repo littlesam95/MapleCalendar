@@ -16,4 +16,26 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
+    <style name="Calendar" />
+
+    <style name="Calendar.HeaderDateStyle">
+
+        <item name="android:textSize">20sp</item>
+        
+        <item name="android:textColor">@color/gray</item>
+
+    </style>
+
+    <style name="Calendar.CalendarViewStyle">
+
+        <item name="calendarItemHeight">44dp</item>
+
+    </style>
+
+    <style name="Calendar.CalendarItemViewStyle">
+
+        <item name="calendarItemTextSize">14sp</item>
+
+    </style>
+
 </resources>

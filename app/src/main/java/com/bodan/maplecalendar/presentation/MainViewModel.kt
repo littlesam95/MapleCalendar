@@ -3,6 +3,7 @@ package com.bodan.maplecalendar.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bodan.maplecalendar.app.MainApplication
+import com.bodan.maplecalendar.app.MySharedPreferences
 import com.bodan.maplecalendar.data.EventListReader
 import com.bodan.maplecalendar.data.ResponseStatus
 import com.bodan.maplecalendar.data.repository.MaplestoryRepository
@@ -53,7 +54,16 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
     private val _searchDate = MutableStateFlow<String?>(null)
     val searchDate = _searchDate.asStateFlow()
 
-    private val _isDateNow = MutableStateFlow<Boolean>(false)
+    private val _searchDateYear = MutableStateFlow<String>("")
+    val searchDateYear = _searchDateYear.asStateFlow()
+
+    private val _searchDateMonth = MutableStateFlow<String>("")
+    val searchDateMonth = _searchDateMonth.asStateFlow()
+
+    private val _searchDateDay = MutableStateFlow<String>("")
+    val searchDateDay = _searchDateDay.asStateFlow()
+
+    private val _isDateNow = MutableStateFlow<Boolean>(true)
     val isDateNow = _isDateNow.asStateFlow()
 
     private val currentMinute = MutableStateFlow<Int>(-1)
@@ -146,13 +156,15 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
             _currentYear.value = dateFormatConverter.todayYear()
             _currentMonth.value = dateFormatConverter.todayMonth()
             _today.value = dateFormatConverter.todayOtherFormatted()
-            currentMinute.value =
-                ((dateFormatConverter.todayHour()) * 60 + dateFormatConverter.todayMinute())
-            _searchDate.value = when (currentMinute.value) {
-                in 0..60 -> dateFormatConverter.twoDaysAgoFormatted()
+        }
 
-                else -> dateFormatConverter.yesterdayFormatted()
-            }
+        return deferred
+    }
+
+    private fun setSearchDate(): Deferred<Unit> {
+        val deferred = viewModelScope.async {
+            _searchDate.value =
+                MainApplication.mySharedPreferences.getSearchDate("searchDate", null)
         }
 
         return deferred
@@ -334,6 +346,7 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
     fun initState() {
         viewModelScope.launch {
             setToday().await()
+            setSearchDate().await()
             setCharacterName()
             getCharacterOcid()
             setEventList()
@@ -347,17 +360,33 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
         }
     }
 
+    fun goToSelectSearchDate() {
+        viewModelScope.launch {
+            _lobbyUiEvent.emit(LobbyUiEvent.SelectSearchDate)
+        }
+    }
+
+    fun selectSearchDate() {
+        viewModelScope.launch {
+            _lobbyUiEvent.emit(LobbyUiEvent.CloseSearchDate)
+        }
+    }
+
     fun setDateNow(isChecked: Boolean) {
         viewModelScope.launch {
             when (isChecked) {
                 true -> {
-                    _searchDate.value = null
+                    MainApplication.mySharedPreferences.setSearchDate("searchDate", null)
                 }
 
                 false -> {
-                    setToday().await()
+                    MainApplication.mySharedPreferences.setSearchDate(
+                        "searchDate",
+                        dateFormatConverter.yesterdayFormatted()
+                    )
                 }
             }
+            setSearchDate().await()
             setCharacterName()
             getCharacterOcid()
         }

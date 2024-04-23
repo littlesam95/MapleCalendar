@@ -10,6 +10,7 @@
     <string name="name_menu_set_push_notification">Set Push Notification</string>
     <string name="name_menu_day_event">Events of Date</string>
     <string name="name_menu_item_equipment_detail">Item Equipment Detail</string>
+    <string name="name_search_date">Search Date</string>
 
     <string name="text_nothing">-</string>
     <string name="text_year">년</string>

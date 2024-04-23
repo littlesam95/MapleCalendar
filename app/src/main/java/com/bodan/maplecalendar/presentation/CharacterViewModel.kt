@@ -49,7 +49,7 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
 
     private val currentMinute = MutableStateFlow<Int>(-1)
 
-    private val searchDate = MutableStateFlow<String>("")
+    private val searchDate = MutableStateFlow<String?>(null)
 
     private val _characterName = MutableStateFlow<String>("")
     val characterName = _characterName.asStateFlow()
@@ -144,11 +144,7 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
             today.value = dateFormatConverter.todayOtherFormatted()
             currentMinute.value =
                 ((dateFormatConverter.todayHour()) * 60 + dateFormatConverter.todayMinute())
-            searchDate.value = when (currentMinute.value) {
-                in 0..60 -> dateFormatConverter.twoDaysAgoFormatted()
-
-                else -> dateFormatConverter.yesterdayFormatted()
-            }
+            searchDate.value = MainApplication.mySharedPreferences.getSearchDate("searchDate", null)
         }
 
         return deferred

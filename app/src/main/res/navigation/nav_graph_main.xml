@@ -11,6 +11,10 @@
         android:label="@string/name_menu_home"
         tools:layout="@layout/fragment_lobby">
 
+        <action
+            android:id="@+id/action_lobby_to_search_date"
+            app:destination="@id/fragment_search_date" />
+
     </fragment>
 
     <fragment
@@ -40,6 +44,11 @@
             app:destination="@id/fragment_push_notification" />
 
     </fragment>
+
+    <dialog
+        android:id="@+id/fragment_search_date"
+        android:name="com.bodan.maplecalendar.presentation.lobby.SearchDateFragment"
+        android:label="@string/name_search_date" />
 
     <dialog
         android:id="@+id/fragment_day_event"
