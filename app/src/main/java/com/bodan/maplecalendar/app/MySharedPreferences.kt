@@ -15,6 +15,14 @@ class MySharedPreferences {
         }
     }
 
+    fun getSearchDate(key: String, defValue: String?): String? {
+        return preferences.getString(key, defValue)
+    }
+
+    fun setSearchDate(key: String, defValue: String?) {
+        preferences.edit().putString(key, defValue).apply()
+    }
+
     fun getNickname(key: String, defValue: String): String {
         return preferences.getString(key, defValue).toString()
     }
