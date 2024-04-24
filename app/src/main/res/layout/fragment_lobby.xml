@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="listAdapter"
             type="com.bodan.maplecalendar.presentation.lobby.EventListAdapter" />
@@ -78,6 +80,7 @@
                     android:clickable="true"
                     android:onClick="@{() -> vm.goToSelectSearchDate()}"
                     android:src="@drawable/ic_select_search_date"
+                    android:visibility="@{vm.isDateNow ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="@id/tv_character_search_date"
                     app:layout_constraintEnd_toStartOf="@id/tv_search_date"
                     app:layout_constraintTop_toTopOf="@id/tv_character_search_date" />
