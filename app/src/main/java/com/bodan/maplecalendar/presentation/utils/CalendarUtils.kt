@@ -1,53 +1,73 @@
 package com.bodan.maplecalendar.presentation.utils
 
 import androidx.annotation.ColorInt
-import androidx.annotation.IntRange
 import com.bodan.maplecalendar.R
-import org.joda.time.DateTime
-import org.joda.time.DateTimeConstants
+import com.bodan.maplecalendar.app.MainApplication
+import com.bodan.maplecalendar.presentation.DateFormatConverter
+import java.util.Calendar
 
 object CalendarUtils {
 
-    const val WEEKS_PER_MONTH = 6
+    const val DAYS_PER_WEEK = 7
+    const val WEEKS_PER_MONTH = 7
 
-    private fun getPrevMonth(dateTime: DateTime): Int {
-        var prevMonthTailOffset = dateTime.dayOfWeek
-        if (prevMonthTailOffset >= 7) prevMonthTailOffset %= 7
-        return prevMonthTailOffset
-    }
+    private val dateFormatConverter = DateFormatConverter()
 
-    fun getMonthList(dateTime: DateTime): List<DateTime> {
-        val result = mutableListOf<DateTime>()
+    fun getDaysOfMonth(year: Int, month: Int): List<Int> {
+        val result = MutableList(7 * 7) { -1 }
+        val newCalendar = Calendar.getInstance()
 
-        val date = dateTime.withDayOfMonth(1)
-        val prev = getPrevMonth(date)
-        val startValue = date.minusDays(prev)
-        val totalDay = DateTimeConstants.DAYS_PER_WEEK * WEEKS_PER_MONTH
+        var nowDate = 1
+        newCalendar.set(year, month - 1, nowDate)
+        while (true) {
+            val nowWeek = newCalendar.get(Calendar.WEEK_OF_MONTH)
+            val nowDay = newCalendar.get(Calendar.DAY_OF_WEEK)
+            result[(nowWeek * 7) + nowDay - 1] = newCalendar.get(Calendar.DATE)
 
-        for (index in 0 until totalDay) {
-            result.add(DateTime(startValue.plusDays(index)))
+            nowDate++
+            if (nowDate > newCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)) break
+
+            newCalendar.set(year, month - 1, nowDate)
         }
 
         return result
     }
 
-    fun isSameMonth(firstDateTime: DateTime, secondDateTime: DateTime): Boolean =
-        ((firstDateTime.year == secondDateTime.year) && (firstDateTime.monthOfYear == secondDateTime.monthOfYear))
+    fun isSearchDateRange(year: Int, month: Int, day: Int): Boolean {
+        if (day == -1) return false
 
+        val firstDate =
+            dateFormatConverter.selectedSearchDateFormatted(year = 2023, month = 12, day = 21)
+        val searchDate = dateFormatConverter.selectedSearchDateFormatted(year, month, day)
+        val yesterdayFormatted = dateFormatConverter.yesterdayFormatted()
+
+        return ((firstDate <= searchDate) && (searchDate <= yesterdayFormatted))
+    }
 
     @ColorInt
-    fun getDateColor(@IntRange(from = 1, to = 7) dayOfWeek: Int): Int {
-        return when (dayOfWeek) {
-            DateTimeConstants.SATURDAY -> {
-                R.color.submit
+    fun getDateColor(year: Int, month: Int, day: Int): Int {
+        val newCalendar = Calendar.getInstance()
+        newCalendar.set(year, month - 1, day)
+        return when (newCalendar.get(Calendar.DAY_OF_WEEK)) {
+            1 -> {
+                MainApplication.myContext().resources.getColor(
+                    R.color.alert,
+                    MainApplication.myContext().theme
+                )
             }
 
-            DateTimeConstants.SUNDAY -> {
-                R.color.alert
+            7 -> {
+                MainApplication.myContext().resources.getColor(
+                    R.color.submit,
+                    MainApplication.myContext().theme
+                )
             }
 
             else -> {
-                R.color.black
+                MainApplication.myContext().resources.getColor(
+                    R.color.black,
+                    MainApplication.myContext().theme
+                )
             }
         }
     }
