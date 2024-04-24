@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.children
 import com.bodan.maplecalendar.R
+import com.bodan.maplecalendar.presentation.MainViewModel
+import com.bodan.maplecalendar.presentation.utils.CalendarUtils.DAYS_PER_WEEK
 import com.bodan.maplecalendar.presentation.utils.CalendarUtils.WEEKS_PER_MONTH
-import org.joda.time.DateTime
-import org.joda.time.DateTimeConstants.DAYS_PER_WEEK
 import kotlin.math.max
 
 class CalendarView @JvmOverloads constructor(
@@ -55,13 +55,15 @@ class CalendarView @JvmOverloads constructor(
         }
     }
 
-    fun initCalendarView(firstDayOfMonth: DateTime, dateTimes: List<DateTime>) {
-        dateTimes.forEach { dateTime ->
+    fun initCalendarView(year: Int, month: Int, daysOfMonth: List<Int>, viewModel: MainViewModel) {
+        for (index in daysOfMonth.indices) {
             addView(
                 CalendarItemView(
                     context = context,
-                    date = dateTime,
-                    firstDayOfMonth = firstDayOfMonth
+                    year = year,
+                    month = month,
+                    day = daysOfMonth[index],
+                    viewModel = viewModel
                 )
             )
         }
