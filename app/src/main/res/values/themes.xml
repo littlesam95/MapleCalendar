@@ -36,6 +36,8 @@
 
         <item name="calendarItemTextSize">14sp</item>
 
+        <item name="calendarItemFontFamily">@font/pretendardregular</item>
+
     </style>
 
 </resources>

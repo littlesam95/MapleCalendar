@@ -3,7 +3,6 @@ package com.bodan.maplecalendar.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bodan.maplecalendar.app.MainApplication
-import com.bodan.maplecalendar.app.MySharedPreferences
 import com.bodan.maplecalendar.data.EventListReader
 import com.bodan.maplecalendar.data.ResponseStatus
 import com.bodan.maplecalendar.data.repository.MaplestoryRepository
@@ -65,8 +64,6 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
 
     private val _isDateNow = MutableStateFlow<Boolean>(true)
     val isDateNow = _isDateNow.asStateFlow()
-
-    private val currentMinute = MutableStateFlow<Int>(-1)
 
     private val _eventItems = MutableStateFlow<List<EventItem>>(listOf())
     val eventItems = _eventItems.asStateFlow()
@@ -366,8 +363,17 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
         }
     }
 
-    fun selectSearchDate() {
+    fun selectSearchDate(year: Int, month: Int, day: Int) {
         viewModelScope.launch {
+            val deferred = async {
+                val selectedSearchDate =
+                    dateFormatConverter.selectedSearchDateFormatted(year, month, day)
+                MainApplication.mySharedPreferences.setSearchDate("searchDate", selectedSearchDate)
+            }
+            deferred.await()
+            setSearchDate().await()
+            setCharacterName()
+            getCharacterOcid()
             _lobbyUiEvent.emit(LobbyUiEvent.CloseSearchDate)
         }
     }
@@ -386,6 +392,7 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
                     )
                 }
             }
+            _isDateNow.value = isChecked
             setSearchDate().await()
             setCharacterName()
             getCharacterOcid()

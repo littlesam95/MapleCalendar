@@ -3,13 +3,17 @@
 
     <declare-styleable name="CalendarView">
 
+        <attr name="android:fontFamily" />
+
         <attr name="calendarViewStyle" format="reference" />
 
         <attr name="calendarItemViewStyle" format="reference" />
 
-        <attr name="calendarItemHeight" format="dimension"/>
+        <attr name="calendarItemHeight" format="dimension" />
 
-        <attr name="calendarItemTextSize" format="dimension"/>
+        <attr name="calendarItemTextSize" format="dimension" />
+
+        <attr name="calendarItemFontFamily" format="reference|integer" />
 
     </declare-styleable>
 

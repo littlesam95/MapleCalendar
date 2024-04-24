@@ -2,13 +2,13 @@ package com.bodan.maplecalendar.presentation
 
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.app.MainApplication
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class DateFormatConverter {
 
-    private val twoDaysAgo = LocalDateTime.now().plusDays(-2)
     private val yesterdayTime = LocalDateTime.now().plusDays(-1)
     private val todayTime = LocalDateTime.now()
     private val formatter = DateTimeFormatter.ISO_LOCAL_DATE
@@ -35,8 +35,9 @@ class DateFormatConverter {
         return todayTime.dayOfMonth
     }
 
-    fun twoDaysAgoFormatted(): String {
-        return twoDaysAgo.format(formatter)
+    fun selectedSearchDateFormatted(year: Int, month: Int, day: Int): String {
+        val selectedSearchDate = LocalDate.of(year, month, day)
+        return formatter.format(selectedSearchDate)
     }
 
     fun yesterdayFormatted(): String {

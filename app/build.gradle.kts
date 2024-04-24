@@ -81,6 +81,9 @@ dependencies {
 
     implementation("io.coil-kt:coil:2.0.0-rc03")
 
+    // ViewPager2
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+
     // Retrofit2
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
