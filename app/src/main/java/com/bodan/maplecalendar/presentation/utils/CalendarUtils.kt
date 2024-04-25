@@ -9,7 +9,7 @@ import java.util.Calendar
 object CalendarUtils {
 
     const val DAYS_PER_WEEK = 7
-    const val WEEKS_PER_MONTH = 7
+    const val WEEKS_PER_MONTH = 6 + 1
 
     private val dateFormatConverter = DateFormatConverter()
 
