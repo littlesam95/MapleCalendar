@@ -18,6 +18,7 @@ class CalendarView @JvmOverloads constructor(
     defStyleRes: Int = R.style.Calendar_CalendarViewStyle
 ) : ViewGroup(context, attrs, defStyleAttr, defStyleRes) {
 
+    private val dayOfWeeks = listOf<String>("일", "월", "화", "수", "목", "금", "토")
     private var _calendarItemHeight: Float = 0F
 
     init {
@@ -56,6 +57,15 @@ class CalendarView @JvmOverloads constructor(
     }
 
     fun initCalendarView(year: Int, month: Int, daysOfMonth: List<Int>, viewModel: MainViewModel) {
+        for (dayOfWeek in dayOfWeeks) {
+            addView(
+                CalendarItemView(
+                    context = context,
+                    dayOfWeek = dayOfWeek,
+                    viewModel = viewModel
+                )
+            )
+        }
         for (index in daysOfMonth.indices) {
             addView(
                 CalendarItemView(

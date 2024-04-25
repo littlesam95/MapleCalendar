@@ -53,15 +53,6 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
     private val _searchDate = MutableStateFlow<String?>(null)
     val searchDate = _searchDate.asStateFlow()
 
-    private val _searchDateYear = MutableStateFlow<String>("")
-    val searchDateYear = _searchDateYear.asStateFlow()
-
-    private val _searchDateMonth = MutableStateFlow<String>("")
-    val searchDateMonth = _searchDateMonth.asStateFlow()
-
-    private val _searchDateDay = MutableStateFlow<String>("")
-    val searchDateDay = _searchDateDay.asStateFlow()
-
     private val _isDateNow = MutableStateFlow<Boolean>(true)
     val isDateNow = _isDateNow.asStateFlow()
 

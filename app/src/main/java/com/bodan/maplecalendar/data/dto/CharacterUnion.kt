@@ -14,11 +14,11 @@ data class CharacterUnion(
     val characterUnionGrade: String = "",
 
     @Json(name = "union_artifact_level")
-    val characterUnionArtifactLevel: Int = 0,
+    val characterUnionArtifactLevel: Int? = null,
 
     @Json(name = "union_artifact_exp")
-    val characterUnionArtifactExp: Int = 0,
+    val characterUnionArtifactExp: Int? = null,
 
     @Json(name = "union_artifact_point")
-    val characterUnionArtifactPoint: Int = 0,
+    val characterUnionArtifactPoint: Int? = null,
 )

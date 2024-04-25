@@ -9,12 +9,12 @@ import java.util.Calendar
 object CalendarUtils {
 
     const val DAYS_PER_WEEK = 7
-    const val WEEKS_PER_MONTH = 7
+    const val WEEKS_PER_MONTH = 6 + 1
 
     private val dateFormatConverter = DateFormatConverter()
 
     fun getDaysOfMonth(year: Int, month: Int): List<Int> {
-        val result = MutableList(7 * 7) { -1 }
+        val result = MutableList(42) { -1 }
         val newCalendar = Calendar.getInstance()
 
         var nowDate = 1
@@ -22,7 +22,7 @@ object CalendarUtils {
         while (true) {
             val nowWeek = newCalendar.get(Calendar.WEEK_OF_MONTH)
             val nowDay = newCalendar.get(Calendar.DAY_OF_WEEK)
-            result[(nowWeek * 7) + nowDay - 1] = newCalendar.get(Calendar.DATE)
+            result[((nowWeek - 1) * 7) + nowDay - 1] = newCalendar.get(Calendar.DATE)
 
             nowDate++
             if (nowDate > newCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)) break
@@ -57,6 +57,32 @@ object CalendarUtils {
             }
 
             7 -> {
+                MainApplication.myContext().resources.getColor(
+                    R.color.submit,
+                    MainApplication.myContext().theme
+                )
+            }
+
+            else -> {
+                MainApplication.myContext().resources.getColor(
+                    R.color.black,
+                    MainApplication.myContext().theme
+                )
+            }
+        }
+    }
+
+    @ColorInt
+    fun getDayOfWeekColor(dayOfWeek: String): Int {
+        return when (dayOfWeek) {
+            MainApplication.myContext().getString(R.string.text_sunday) -> {
+                MainApplication.myContext().resources.getColor(
+                    R.color.alert,
+                    MainApplication.myContext().theme
+                )
+            }
+
+            MainApplication.myContext().getString(R.string.text_saturday) -> {
                 MainApplication.myContext().resources.getColor(
                     R.color.submit,
                     MainApplication.myContext().theme

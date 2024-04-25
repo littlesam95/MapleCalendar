@@ -79,6 +79,7 @@
                     android:background="@null"
                     android:clickable="true"
                     android:onClick="@{() -> vm.goToSelectSearchDate()}"
+                    android:scaleType="fitCenter"
                     android:src="@drawable/ic_select_search_date"
                     android:visibility="@{vm.isDateNow ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="@id/tv_character_search_date"
@@ -100,6 +101,7 @@
                     android:id="@+id/tv_character_search_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@{(vm.searchDate == null) ? @string/text_search_date_now : vm.searchDate}"
                     android:textSize="@dimen/title_font_size_mini"
@@ -114,9 +116,13 @@
                     android:layout_marginEnd="@dimen/title_end"
                     android:checked="@{vm.isDateNow}"
                     android:onCheckedChanged="@{(_, isChecked) -> vm.setDateNow(isChecked)}"
+                    android:thumb="@drawable/switch_thumb_lobby"
                     app:layout_constraintBottom_toBottomOf="@id/tv_character_search_date"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tv_character_search_date" />
+                    app:layout_constraintTop_toTopOf="@id/tv_character_search_date"
+                    app:thumbTint="@null"
+                    app:track="@drawable/switch_track_lobby"
+                    app:trackTint="@null" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/mcv_information_lobby"
@@ -193,7 +199,7 @@
                     android:layout_height="@dimen/image_height"
                     android:layout_marginStart="@dimen/image_start"
                     android:layout_marginTop="@dimen/image_top"
-                    android:layout_marginBottom="@dimen/image_bottom"
+                    android:layout_marginBottom="24dp"
                     android:background="@drawable/shape_dialog"
                     android:contentDescription="@string/description_character_profile"
                     android:elevation="10dp"
