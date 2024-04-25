@@ -66,6 +66,12 @@
  - AlarmManager의 setAlarmClock()과 PendingIntent를 정의해서 매일 00시에 BroadcastReceiver를 호출하고, BroadcastReceiver에서 NotificationManager를 정의하고 notify()로 알림을 보낼 수 있도록 하였음.
  - 하지만 setAlarmClock()은 반복이 불가능했고, 반복 알람을 구현하기 위해 onReceive()에서 다시 다음 날 00시에 알림을 예약하는 방식을 사용하였음.
 
+#### 2. Calendar with Custom View
+ - 좌우 스와이프가 되는 달력 View를 만들기 위하여 ViewPager2를 사용하였음.
+ - ViewPager2에 사용할 Fragment는 연월을 나타내는 TextView와, 달력 UI를 나타내는 Custom ViewGroup으로 구성되어 있음.
+ - ViewGroup은 요일이나 날짜를 나타내는 View들로 구성되어 있고, ViewGroup에서 요일 및 날짜를 나타내는 View의 layout을 구성함.
+ - 요일 View는 회색 배경으로 이루어져 있고, 날짜 View는 터치가 가능하고 터치 시 해당 날짜를 캐릭터 조회 날짜로 초기화함.
+   - View를 터치할 때 MotionEvent를 관찰하며, 터치 시작 시 해당 View의 배경색이 바뀌며 손가락을 떼거나 부모 View가 터치 이벤트를 가져가기 전까지 유지됨.
 
 ### References
 <a href="https://www.notion.so/MapleCalendar-93f45dc10b384d749e5ab00950324035?pvs=4">

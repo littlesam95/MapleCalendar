@@ -17,12 +17,6 @@ class SearchDateFragment :
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var customCalendarAdapter: CustomCalendarAdapter
 
-    override fun onResume() {
-        super.onResume()
-
-        requireContext().dialogFragmentResize(this, 0.8F, 0.5F)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
