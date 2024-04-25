@@ -116,9 +116,13 @@
                     android:layout_marginEnd="@dimen/title_end"
                     android:checked="@{vm.isDateNow}"
                     android:onCheckedChanged="@{(_, isChecked) -> vm.setDateNow(isChecked)}"
+                    android:thumb="@drawable/switch_thumb_lobby"
                     app:layout_constraintBottom_toBottomOf="@id/tv_character_search_date"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/tv_character_search_date" />
+                    app:layout_constraintTop_toTopOf="@id/tv_character_search_date"
+                    app:thumbTint="@null"
+                    app:track="@drawable/switch_track_lobby"
+                    app:trackTint="@null" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/mcv_information_lobby"
