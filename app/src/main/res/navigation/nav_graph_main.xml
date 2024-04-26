@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_lobby"
-        android:name="com.bodan.maplecalendar.presentation.lobby.LobbyFragment"
+        android:name="com.bodan.maplecalendar.presentation.views.lobby.LobbyFragment"
         android:label="@string/name_menu_home"
         tools:layout="@layout/fragment_lobby">
 
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/fragment_calendar"
-        android:name="com.bodan.maplecalendar.presentation.calendar.CalendarFragment"
+        android:name="com.bodan.maplecalendar.presentation.views.calendar.CalendarFragment"
         android:label="@string/name_menu_calendar"
         tools:layout="@layout/fragment_calendar">
 
@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/fragment_setting"
-        android:name="com.bodan.maplecalendar.presentation.setting.SettingFragment"
+        android:name="com.bodan.maplecalendar.presentation.views.setting.SettingFragment"
         android:label="@string/name_menu_setting"
         tools:layout="@layout/fragment_setting">
 
@@ -47,22 +47,22 @@
 
     <dialog
         android:id="@+id/fragment_search_date"
-        android:name="com.bodan.maplecalendar.presentation.lobby.SearchDateFragment"
+        android:name="com.bodan.maplecalendar.presentation.views.lobby.SearchDateFragment"
         android:label="@string/name_search_date" />
 
     <dialog
         android:id="@+id/fragment_day_event"
-        android:name="com.bodan.maplecalendar.presentation.calendar.DayEventFragment"
+        android:name="com.bodan.maplecalendar.presentation.views.calendar.DayEventFragment"
         android:label="@string/name_menu_day_event" />
 
     <dialog
         android:id="@+id/fragment_change_character_name"
-        android:name="com.bodan.maplecalendar.presentation.setting.ChangeCharacterNameFragment"
+        android:name="com.bodan.maplecalendar.presentation.views.setting.ChangeCharacterNameFragment"
         android:label="@string/name_menu_change_character_name" />
 
     <dialog
         android:id="@+id/fragment_push_notification"
-        android:name="com.bodan.maplecalendar.presentation.setting.PushNotificationFragment"
+        android:name="com.bodan.maplecalendar.presentation.views.setting.PushNotificationFragment"
         android:label="@string/name_menu_set_push_notification" />
 
 </navigation>

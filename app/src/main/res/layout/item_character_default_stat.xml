@@ -6,7 +6,7 @@
 
         <variable
             name="stat"
-            type="com.bodan.maplecalendar.presentation.character.CharacterUiState.CharacterDefaultStat" />
+            type="com.bodan.maplecalendar.presentation.views.character.CharacterUiState.CharacterDefaultStat" />
 
     </data>
 

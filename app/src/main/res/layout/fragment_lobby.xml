@@ -9,11 +9,11 @@
 
         <variable
             name="listAdapter"
-            type="com.bodan.maplecalendar.presentation.lobby.EventListAdapter" />
+            type="com.bodan.maplecalendar.presentation.views.lobby.EventListAdapter" />
 
         <variable
             name="vm"
-            type="com.bodan.maplecalendar.presentation.MainViewModel" />
+            type="com.bodan.maplecalendar.presentation.views.MainViewModel" />
 
     </data>
 
@@ -30,7 +30,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".presentation.lobby.LobbyFragment">
+                tools:context=".presentation.views.lobby.LobbyFragment">
 
                 <TextView
                     android:id="@+id/tv_today_lobby"

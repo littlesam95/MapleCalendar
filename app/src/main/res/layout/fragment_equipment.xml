@@ -8,11 +8,11 @@
 
         <variable
             name="vm"
-            type="com.bodan.maplecalendar.presentation.CharacterViewModel" />
+            type="com.bodan.maplecalendar.presentation.views.CharacterViewModel" />
 
         <variable
             name="listAdapter"
-            type="com.bodan.maplecalendar.presentation.equipment.EquipmentListAdapter" />
+            type="com.bodan.maplecalendar.presentation.views.equipment.EquipmentListAdapter" />
 
     </data>
 
@@ -27,7 +27,7 @@
             android:layout_marginStart="@dimen/title_start"
             android:layout_marginEnd="@dimen/title_end"
             android:background="@drawable/shape_equipment"
-            tools:context=".presentation.equipment.EquipmentFragment">
+            tools:context=".presentation.views.equipment.EquipmentFragment">
 
             <TextView
                 android:id="@+id/tv_title_equipment"

@@ -6,11 +6,11 @@
 
         <variable
             name="eventItem"
-            type="com.bodan.maplecalendar.presentation.lobby.EventItem" />
+            type="com.bodan.maplecalendar.presentation.views.lobby.EventItem" />
 
         <variable
             name="clickListener"
-            type="com.bodan.maplecalendar.presentation.lobby.OnEventClickListener" />
+            type="com.bodan.maplecalendar.presentation.views.lobby.OnEventClickListener" />
 
     </data>
 

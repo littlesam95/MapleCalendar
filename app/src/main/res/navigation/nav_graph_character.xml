@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_character"
-        android:name="com.bodan.maplecalendar.presentation.character.CharacterFragment"
+        android:name="com.bodan.maplecalendar.presentation.views.character.CharacterFragment"
         android:label="@string/name_menu_character"
         tools:layout="@layout/fragment_character">
 
@@ -15,7 +15,7 @@
 
     <fragment
         android:id="@+id/fragment_equipment"
-        android:name="com.bodan.maplecalendar.presentation.equipment.EquipmentFragment"
+        android:name="com.bodan.maplecalendar.presentation.views.equipment.EquipmentFragment"
         android:label="@string/name_menu_equipment"
         tools:layout="@layout/fragment_equipment">
 
@@ -27,7 +27,7 @@
 
     <dialog
         android:id="@+id/fragment_item_equipment_detail"
-        android:name="com.bodan.maplecalendar.presentation.equipment.ItemEquipmentDetailFragment"
+        android:name="com.bodan.maplecalendar.presentation.views.equipment.ItemEquipmentDetailFragment"
         android:label="@string/name_menu_item_equipment_detail" />
 
 </navigation>

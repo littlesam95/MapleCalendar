@@ -55,7 +55,7 @@
         </receiver>
 
         <activity
-            android:name=".presentation.SplashActivity"
+            android:name=".presentation.views.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -71,7 +71,7 @@
         </activity>
 
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.views.MainActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|keyboardHidden|orientation|colorMode"
             android:exported="true"
             android:screenOrientation="portrait">
@@ -79,7 +79,7 @@
         </activity>
 
         <activity
-            android:name=".presentation.CharacterActivity"
+            android:name=".presentation.views.CharacterActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|keyboardHidden|orientation|colorMode"
             android:exported="false"
             android:screenOrientation="portrait">

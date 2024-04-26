@@ -6,11 +6,11 @@
 
         <variable
             name="date"
-            type="com.bodan.maplecalendar.presentation.calendar.CalendarUiState.CalendarDate" />
+            type="com.bodan.maplecalendar.presentation.views.calendar.CalendarUiState.CalendarDate" />
 
         <variable
             name="clickListener"
-            type="com.bodan.maplecalendar.presentation.calendar.OnDateClickListener" />
+            type="com.bodan.maplecalendar.presentation.views.calendar.OnDateClickListener" />
 
     </data>
 

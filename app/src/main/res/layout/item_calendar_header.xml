@@ -6,7 +6,7 @@
 
         <variable
             name="header"
-            type="com.bodan.maplecalendar.presentation.calendar.CalendarUiState.CalendarHeader" />
+            type="com.bodan.maplecalendar.presentation.views.calendar.CalendarUiState.CalendarHeader" />
 
     </data>
 

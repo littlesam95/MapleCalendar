@@ -8,7 +8,7 @@
 
         <variable
             name="vm"
-            type="com.bodan.maplecalendar.presentation.MainViewModel" />
+            type="com.bodan.maplecalendar.presentation.views.MainViewModel" />
 
     </data>
 
@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            tools:context=".presentation.setting.SettingFragment">
+            tools:context=".presentation.views.setting.SettingFragment">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_nickname_change_setting"

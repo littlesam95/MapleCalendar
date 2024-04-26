@@ -8,19 +8,19 @@
 
         <variable
             name="vm"
-            type="com.bodan.maplecalendar.presentation.CharacterViewModel" />
+            type="com.bodan.maplecalendar.presentation.views.CharacterViewModel" />
 
         <variable
             name="defaultStatListAdapter"
-            type="com.bodan.maplecalendar.presentation.character.CharacterDefaultStatListAdapter" />
+            type="com.bodan.maplecalendar.presentation.views.character.CharacterDefaultStatListAdapter" />
 
         <variable
             name="mainStatListAdapter"
-            type="com.bodan.maplecalendar.presentation.character.CharacterMainStatListAdapter" />
+            type="com.bodan.maplecalendar.presentation.views.character.CharacterMainStatListAdapter" />
 
         <variable
             name="etcStatListAdapter"
-            type="com.bodan.maplecalendar.presentation.character.CharacterEtcStatListAdapter" />
+            type="com.bodan.maplecalendar.presentation.views.character.CharacterEtcStatListAdapter" />
 
     </data>
 
@@ -34,7 +34,7 @@
             android:layout_marginStart="@dimen/title_start"
             android:layout_marginEnd="@dimen/title_end"
             android:background="@drawable/shape_character"
-            tools:context=".presentation.character.CharacterFragment">
+            tools:context=".presentation.views.character.CharacterFragment">
 
             <TextView
                 android:id="@+id/tv_title_character_info_character"
