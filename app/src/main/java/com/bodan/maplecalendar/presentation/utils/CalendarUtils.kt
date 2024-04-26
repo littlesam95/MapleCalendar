@@ -3,7 +3,6 @@ package com.bodan.maplecalendar.presentation.utils
 import androidx.annotation.ColorInt
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.app.MainApplication
-import com.bodan.maplecalendar.presentation.DateFormatConverter
 import java.util.Calendar
 
 object CalendarUtils {
