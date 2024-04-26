@@ -1,8 +1,8 @@
 package com.bodan.maplecalendar.data
 
 import android.annotation.SuppressLint
-import com.bodan.maplecalendar.presentation.lobby.EventItem
-import com.bodan.maplecalendar.presentation.lobby.EventType
+import com.bodan.maplecalendar.presentation.views.lobby.EventItem
+import com.bodan.maplecalendar.presentation.views.lobby.EventType
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore

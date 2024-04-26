@@ -8,11 +8,11 @@
 
         <variable
             name="vm"
-            type="com.bodan.maplecalendar.presentation.MainViewModel" />
+            type="com.bodan.maplecalendar.presentation.views.MainViewModel" />
 
         <variable
             name="listAdapter"
-            type="com.bodan.maplecalendar.presentation.calendar.CalendarListAdapter" />
+            type="com.bodan.maplecalendar.presentation.views.calendar.CalendarListAdapter" />
 
     </data>
 
@@ -23,7 +23,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".presentation.calendar.CalendarFragment">
+            tools:context=".presentation.views.calendar.CalendarFragment">
 
             <androidx.appcompat.widget.AppCompatImageButton
                 android:id="@+id/btn_prev_calendar"

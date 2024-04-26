@@ -7,11 +7,11 @@
 
         <variable
             name="item"
-            type="com.bodan.maplecalendar.presentation.equipment.EquipmentUiState.EquipmentOption" />
+            type="com.bodan.maplecalendar.presentation.views.equipment.EquipmentUiState.EquipmentOption" />
 
         <variable
             name="onItemEquipmentClickListener"
-            type="com.bodan.maplecalendar.presentation.equipment.OnItemEquipmentClickListener" />
+            type="com.bodan.maplecalendar.presentation.views.equipment.OnItemEquipmentClickListener" />
 
     </data>
 

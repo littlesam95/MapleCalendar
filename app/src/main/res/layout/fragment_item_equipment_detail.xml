@@ -9,11 +9,11 @@
 
         <variable
             name="vm"
-            type="com.bodan.maplecalendar.presentation.CharacterViewModel" />
+            type="com.bodan.maplecalendar.presentation.views.CharacterViewModel" />
 
         <variable
             name="listAdapter"
-            type="com.bodan.maplecalendar.presentation.equipment.ItemEquipmentDetailOptionListAdapter" />
+            type="com.bodan.maplecalendar.presentation.views.equipment.ItemEquipmentDetailOptionListAdapter" />
 
     </data>
 

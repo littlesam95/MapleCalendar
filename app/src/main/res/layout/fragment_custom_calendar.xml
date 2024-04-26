@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.bodan.maplecalendar.presentation.MainViewModel" />
+            type="com.bodan.maplecalendar.presentation.views.MainViewModel" />
 
     </data>
 
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="20dp"
-        tools:context=".presentation.lobby.CustomCalendarFragment">
+        tools:context=".presentation.views.lobby.CustomCalendarFragment">
 
         <TextView
             android:id="@+id/tv_date_info_custom_calendar"
@@ -32,7 +32,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.bodan.maplecalendar.presentation.lobby.CalendarView
+        <com.bodan.maplecalendar.presentation.views.lobby.CalendarView
             android:id="@+id/calendar_view_custom_calendar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

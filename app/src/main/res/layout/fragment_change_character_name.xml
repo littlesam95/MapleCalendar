@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="com.bodan.maplecalendar.presentation.MainViewModel" />
+            type="com.bodan.maplecalendar.presentation.views.MainViewModel" />
 
     </data>
 
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/shape_dialog"
             android:elevation="2dp"
-            tools:context=".presentation.setting.ChangeCharacterNameFragment">
+            tools:context=".presentation.views.setting.ChangeCharacterNameFragment">
 
             <TextView
                 android:id="@+id/tv_title_change_character_name"

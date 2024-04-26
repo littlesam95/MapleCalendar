@@ -17,7 +17,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.data.EventListReader
-import com.bodan.maplecalendar.presentation.SplashActivity
+import com.bodan.maplecalendar.presentation.views.SplashActivity
 import com.google.android.material.internal.ManufacturerUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

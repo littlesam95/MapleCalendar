@@ -7,11 +7,11 @@
 
         <variable
             name="listAdapter"
-            type="com.bodan.maplecalendar.presentation.lobby.EventListAdapter" />
+            type="com.bodan.maplecalendar.presentation.views.lobby.EventListAdapter" />
 
         <variable
             name="vm"
-            type="com.bodan.maplecalendar.presentation.MainViewModel" />
+            type="com.bodan.maplecalendar.presentation.views.MainViewModel" />
 
     </data>
 
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/shape_dialog"
             android:elevation="2dp"
-            tools:context=".presentation.calendar.DayEventFragment">
+            tools:context=".presentation.views.calendar.DayEventFragment">
 
             <TextView
                 android:id="@+id/tv_date_day_event"
