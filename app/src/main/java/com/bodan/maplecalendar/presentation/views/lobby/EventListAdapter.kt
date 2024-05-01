@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bodan.maplecalendar.databinding.ItemRecyclerViewLobbyBinding
+import com.bodan.maplecalendar.domain.entity.EventItem
 
 class EventListAdapter(private val onEventClickListener: OnEventClickListener) :
     ListAdapter<EventItem, RecyclerView.ViewHolder>(eventItemDiffUtil) {
