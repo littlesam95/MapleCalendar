@@ -1,6 +1,6 @@
 package com.bodan.maplecalendar.presentation.utils
 
-import com.bodan.maplecalendar.data.dto.ItemEquipment
+import com.bodan.maplecalendar.domain.entity.ItemEquipment
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentUiState
 
 object ItemEquipmentDataGenerator {

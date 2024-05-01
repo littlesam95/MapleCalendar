@@ -1,4 +1,4 @@
-package com.bodan.maplecalendar.data
+package com.bodan.maplecalendar.data.util
 
 import android.annotation.SuppressLint
 import com.bodan.maplecalendar.presentation.views.lobby.EventItem

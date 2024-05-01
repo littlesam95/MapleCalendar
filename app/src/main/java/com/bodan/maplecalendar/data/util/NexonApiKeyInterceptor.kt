@@ -1,4 +1,4 @@
-package com.bodan.maplecalendar.data
+package com.bodan.maplecalendar.data.util
 
 import com.bodan.maplecalendar.BuildConfig
 import okhttp3.Interceptor
