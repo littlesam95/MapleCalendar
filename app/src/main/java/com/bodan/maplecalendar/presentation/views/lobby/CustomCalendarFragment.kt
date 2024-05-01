@@ -9,7 +9,9 @@ import androidx.fragment.app.activityViewModels
 import com.bodan.maplecalendar.databinding.FragmentCustomCalendarBinding
 import com.bodan.maplecalendar.presentation.views.MainViewModel
 import com.bodan.maplecalendar.presentation.utils.CalendarUtils.getDaysOfMonth
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CustomCalendarFragment : Fragment() {
 
     private val viewModel: MainViewModel by activityViewModels()

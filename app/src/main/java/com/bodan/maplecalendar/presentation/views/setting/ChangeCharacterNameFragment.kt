@@ -8,9 +8,11 @@ import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentChangeCharacterNameBinding
 import com.bodan.maplecalendar.presentation.config.BaseDialogFragment
 import com.bodan.maplecalendar.presentation.views.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ChangeCharacterNameFragment :
     BaseDialogFragment<FragmentChangeCharacterNameBinding>(R.layout.fragment_change_character_name) {
 

@@ -7,7 +7,9 @@ import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentCharacterBinding
 import com.bodan.maplecalendar.presentation.config.BaseFragment
 import com.bodan.maplecalendar.presentation.views.CharacterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CharacterFragment : BaseFragment<FragmentCharacterBinding>(R.layout.fragment_character) {
 
     private val viewModel: CharacterViewModel by activityViewModels()

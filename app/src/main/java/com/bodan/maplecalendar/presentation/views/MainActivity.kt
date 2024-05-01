@@ -13,7 +13,9 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()

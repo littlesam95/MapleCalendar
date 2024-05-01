@@ -21,10 +21,12 @@ import com.bodan.maplecalendar.presentation.broadcastreceiver.MyAlarmManagerRest
 import com.bodan.maplecalendar.presentation.broadcastreceiver.MyAlarmProvider
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
+@AndroidEntryPoint
 class PushNotificationFragment :
     BaseDialogFragment<FragmentPushNotificationBinding>(R.layout.fragment_push_notification) {
 
