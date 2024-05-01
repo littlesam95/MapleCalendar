@@ -3,12 +3,12 @@ package com.bodan.maplecalendar.presentation.views
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bodan.maplecalendar.app.MainApplication
-import com.bodan.maplecalendar.data.EventListReader
-import com.bodan.maplecalendar.data.ResponseStatus
-import com.bodan.maplecalendar.data.repository.MaplestoryRepository
-import com.bodan.maplecalendar.data.repository.MaplestoryRepositoryImpl
+import com.bodan.maplecalendar.data.util.EventListReader
+import com.bodan.maplecalendar.domain.usecase.GetCharacterBasicUseCase
+import com.bodan.maplecalendar.domain.usecase.GetCharacterOcidUseCase
 import com.bodan.maplecalendar.presentation.utils.DateFormatConverter
 import com.bodan.maplecalendar.presentation.utils.NicknameValidator.validateNickname
+import com.bodan.maplecalendar.presentation.utils.Status
 import com.bodan.maplecalendar.presentation.views.calendar.CalendarUiEvent
 import com.bodan.maplecalendar.presentation.views.calendar.CalendarUiState
 import com.bodan.maplecalendar.presentation.views.calendar.DayType
@@ -19,6 +19,7 @@ import com.bodan.maplecalendar.presentation.views.lobby.OnEventClickListener
 import com.bodan.maplecalendar.presentation.views.setting.CharacterNameValidState
 import com.bodan.maplecalendar.presentation.views.setting.SettingUiEvent
 import com.bodan.maplecalendar.presentation.views.setting.SettingUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -29,10 +30,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.Calendar
+import javax.inject.Inject
 
-class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
-
-    private val maplestoryRepository: MaplestoryRepository = MaplestoryRepositoryImpl()
+@HiltViewModel
+class MainViewModel @Inject constructor(
+    private val getCharacterOcidUseCase: GetCharacterOcidUseCase,
+    private val getCharacterBasicUseCase: GetCharacterBasicUseCase
+) : ViewModel(), OnDateClickListener, OnEventClickListener {
 
     private val dateFormatConverter = DateFormatConverter()
 
@@ -180,32 +184,17 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
     private fun getCharacterOcid() {
         viewModelScope.launch {
             val characterOcidResponse =
-                maplestoryRepository.getCharacterOcid(characterName = _characterName.value)
+                getCharacterOcidUseCase.getCharacterOcid(characterName.value)
+
             when (characterOcidResponse.status) {
-                ResponseStatus.SUCCESS -> {
-                    characterOcidResponse.characterOcid?.let { characterOcid ->
+                Status.SUCCESS -> {
+                    characterOcidResponse.data?.let { characterOcid ->
                         this@MainViewModel.characterOcid.value = characterOcid.ocid
                     }
                     getCharacterBasic()
                 }
 
-                ResponseStatus.BAD_REQUEST -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.BadRequest)
-                }
-
-                ResponseStatus.UNAUTHORIZED_STATUS -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.UnauthorizedStatus)
-                }
-
-                ResponseStatus.FORBIDDEN -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.Forbidden)
-                }
-
-                ResponseStatus.TOO_MANY_REQUESTS -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.TooManyRequests)
-                }
-
-                ResponseStatus.INTERNAL_SERVER_ERROR -> {
+                else -> {
                     _lobbyUiEvent.emit(LobbyUiEvent.InternalServerError)
                 }
             }
@@ -214,17 +203,13 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
 
     private fun getCharacterBasic() {
         viewModelScope.launch {
-            val characterBasicResponse =
-                characterOcid.value?.let {
-                    maplestoryRepository.getCharacterBasic(
-                        ocid = it,
-                        date = _searchDate.value
-                    )
-                } ?: return@launch
+            val characterBasicResponse = characterOcid.value?.let { ocid ->
+                getCharacterBasicUseCase.getCharacterBasic(ocid, _searchDate.value)
+            } ?: return@launch
 
             when (characterBasicResponse.status) {
-                ResponseStatus.SUCCESS -> {
-                    characterBasicResponse.characterBasic?.let { characterBasic ->
+                Status.SUCCESS -> {
+                    characterBasicResponse.data?.let { characterBasic ->
                         _characterLevel.value = characterBasic.characterLevel
                         _characterClass.value = characterBasic.characterClass
                         _characterWorld.value = characterBasic.worldName
@@ -234,23 +219,7 @@ class MainViewModel : ViewModel(), OnDateClickListener, OnEventClickListener {
                     }
                 }
 
-                ResponseStatus.BAD_REQUEST -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.BadRequest)
-                }
-
-                ResponseStatus.UNAUTHORIZED_STATUS -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.UnauthorizedStatus)
-                }
-
-                ResponseStatus.FORBIDDEN -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.Forbidden)
-                }
-
-                ResponseStatus.TOO_MANY_REQUESTS -> {
-                    _lobbyUiEvent.emit(LobbyUiEvent.TooManyRequests)
-                }
-
-                ResponseStatus.INTERNAL_SERVER_ERROR -> {
+                else -> {
                     _lobbyUiEvent.emit(LobbyUiEvent.InternalServerError)
                 }
             }
