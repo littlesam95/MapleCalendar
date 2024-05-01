@@ -7,7 +7,9 @@ import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentItemEquipmentDetailBinding
 import com.bodan.maplecalendar.presentation.config.BaseDialogFragment
 import com.bodan.maplecalendar.presentation.views.CharacterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ItemEquipmentDetailFragment : BaseDialogFragment<FragmentItemEquipmentDetailBinding>(R.layout.fragment_item_equipment_detail) {
 
     private val viewModel: CharacterViewModel by activityViewModels()

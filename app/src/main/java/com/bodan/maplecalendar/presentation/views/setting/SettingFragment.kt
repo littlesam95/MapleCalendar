@@ -8,7 +8,9 @@ import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentSettingBinding
 import com.bodan.maplecalendar.presentation.config.BaseFragment
 import com.bodan.maplecalendar.presentation.views.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
 
     private val viewModel: MainViewModel by activityViewModels()

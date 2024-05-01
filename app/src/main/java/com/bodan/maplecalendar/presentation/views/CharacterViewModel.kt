@@ -3,14 +3,18 @@ package com.bodan.maplecalendar.presentation.views
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bodan.maplecalendar.app.MainApplication
-import com.bodan.maplecalendar.data.ResponseStatus
-import com.bodan.maplecalendar.data.dto.CharacterBasic
-import com.bodan.maplecalendar.data.dto.CharacterDojang
-import com.bodan.maplecalendar.data.dto.CharacterItemEquipment
-import com.bodan.maplecalendar.data.dto.CharacterPopularity
-import com.bodan.maplecalendar.data.dto.CharacterUnion
-import com.bodan.maplecalendar.data.repository.MaplestoryRepository
-import com.bodan.maplecalendar.data.repository.MaplestoryRepositoryImpl
+import com.bodan.maplecalendar.domain.entity.CharacterDojang
+import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
+import com.bodan.maplecalendar.domain.entity.CharacterPopularity
+import com.bodan.maplecalendar.domain.entity.CharacterUnion
+import com.bodan.maplecalendar.domain.entity.CharacterBasic
+import com.bodan.maplecalendar.domain.usecase.GetCharacterBasicUseCase
+import com.bodan.maplecalendar.domain.usecase.GetCharacterDojangUseCase
+import com.bodan.maplecalendar.domain.usecase.GetCharacterItemEquipmentUseCase
+import com.bodan.maplecalendar.domain.usecase.GetCharacterOcidUseCase
+import com.bodan.maplecalendar.domain.usecase.GetCharacterPopularityUseCase
+import com.bodan.maplecalendar.domain.usecase.GetCharacterStatUseCase
+import com.bodan.maplecalendar.domain.usecase.GetCharacterUnionUseCase
 import com.bodan.maplecalendar.presentation.utils.DateFormatConverter
 import com.bodan.maplecalendar.presentation.utils.ItemEquipmentDataGenerator.itemEquipmentDataSet
 import com.bodan.maplecalendar.presentation.utils.ItemEquipmentDetailOptionGenerator.itemEquipmentDetailOptionSet
@@ -19,12 +23,14 @@ import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertCo
 import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertDojangFormat
 import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertPercentFormat
 import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertPowerFormat
+import com.bodan.maplecalendar.presentation.utils.Status
 import com.bodan.maplecalendar.presentation.views.character.CharacterUiEvent
 import com.bodan.maplecalendar.presentation.views.character.CharacterUiState
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentDetailUiState
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentUiEvent
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentUiState
 import com.bodan.maplecalendar.presentation.views.equipment.OnItemEquipmentClickListener
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -33,10 +39,18 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
-class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
-
-    private val maplestoryRepository: MaplestoryRepository = MaplestoryRepositoryImpl()
+@HiltViewModel
+class CharacterViewModel @Inject constructor(
+    private val getCharacterOcidUseCase: GetCharacterOcidUseCase,
+    private val getCharacterBasicUseCase: GetCharacterBasicUseCase,
+    private val getCharacterStatUseCase: GetCharacterStatUseCase,
+    private val getCharacterItemEquipmentUseCase: GetCharacterItemEquipmentUseCase,
+    private val getCharacterUnionUseCase: GetCharacterUnionUseCase,
+    private val getCharacterPopularityUseCase: GetCharacterPopularityUseCase,
+    private val getCharacterDojangUseCase: GetCharacterDojangUseCase
+) : ViewModel(), OnItemEquipmentClickListener {
 
     private val dateFormatConverter = DateFormatConverter()
 
@@ -158,10 +172,11 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
     private fun getCharacterOcid() {
         viewModelScope.launch {
             val characterOcidResponse =
-                maplestoryRepository.getCharacterOcid(characterName = _characterName.value)
+                getCharacterOcidUseCase.getCharacterOcid(characterName.value)
+
             when (characterOcidResponse.status) {
-                ResponseStatus.SUCCESS -> {
-                    characterOcidResponse.characterOcid?.let { characterOcid ->
+                Status.SUCCESS -> {
+                    characterOcidResponse.data?.let { characterOcid ->
                         this@CharacterViewModel.characterOcid.value = characterOcid.ocid
                     }
                     getCharacterBasic()
@@ -172,23 +187,7 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
                     getCharacterDojang()
                 }
 
-                ResponseStatus.BAD_REQUEST -> {
-                    _characterUiEvent.emit(CharacterUiEvent.BadRequest)
-                }
-
-                ResponseStatus.UNAUTHORIZED_STATUS -> {
-                    _characterUiEvent.emit(CharacterUiEvent.UnauthorizedStatus)
-                }
-
-                ResponseStatus.FORBIDDEN -> {
-                    _characterUiEvent.emit(CharacterUiEvent.Forbidden)
-                }
-
-                ResponseStatus.TOO_MANY_REQUESTS -> {
-                    _characterUiEvent.emit(CharacterUiEvent.TooManyRequests)
-                }
-
-                ResponseStatus.INTERNAL_SERVER_ERROR -> {
+                else -> {
                     _characterUiEvent.emit(CharacterUiEvent.InternalServerError)
                 }
             }
@@ -197,17 +196,13 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
 
     private fun getCharacterBasic() {
         viewModelScope.launch {
-            val characterBasicResponse =
-                characterOcid.value?.let {
-                    maplestoryRepository.getCharacterBasic(
-                        ocid = it,
-                        date = searchDate.value
-                    )
-                } ?: return@launch
+            val characterBasicResponse = characterOcid.value?.let { ocid ->
+                getCharacterBasicUseCase.getCharacterBasic(ocid, searchDate.value)
+            } ?: return@launch
 
             when (characterBasicResponse.status) {
-                ResponseStatus.SUCCESS -> {
-                    characterBasicResponse.characterBasic?.let { characterBasic ->
+                Status.SUCCESS -> {
+                    characterBasicResponse.data?.let { characterBasic ->
                         _characterBasic.value = CharacterBasic(
                             characterLevel = characterBasic.characterLevel,
                             characterClass = characterBasic.characterClass,
@@ -220,23 +215,7 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
                     }
                 }
 
-                ResponseStatus.BAD_REQUEST -> {
-                    _characterUiEvent.emit(CharacterUiEvent.BadRequest)
-                }
-
-                ResponseStatus.UNAUTHORIZED_STATUS -> {
-                    _characterUiEvent.emit(CharacterUiEvent.UnauthorizedStatus)
-                }
-
-                ResponseStatus.FORBIDDEN -> {
-                    _characterUiEvent.emit(CharacterUiEvent.Forbidden)
-                }
-
-                ResponseStatus.TOO_MANY_REQUESTS -> {
-                    _characterUiEvent.emit(CharacterUiEvent.TooManyRequests)
-                }
-
-                ResponseStatus.INTERNAL_SERVER_ERROR -> {
+                else -> {
                     _characterUiEvent.emit(CharacterUiEvent.InternalServerError)
                 }
             }
@@ -246,16 +225,13 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
     private fun getCharacterStat() {
         viewModelScope.launch {
             val characterStatResponse =
-                characterOcid.value?.let {
-                    maplestoryRepository.getCharacterPower(
-                        ocid = it,
-                        date = searchDate.value
-                    )
+                characterOcid.value?.let { ocid ->
+                    getCharacterStatUseCase.getCharacterStat(ocid, searchDate.value)
                 } ?: return@launch
 
             when (characterStatResponse.status) {
-                ResponseStatus.SUCCESS -> {
-                    characterStatResponse.characterStat?.let { characterStat ->
+                Status.SUCCESS -> {
+                    characterStatResponse.data?.let { finalStats ->
                         val newCharacterDefaultStatData =
                             MutableList(3 * 2) { CharacterUiState.CharacterDefaultStat("", "") }
                         val newCharacterMainStatData =
@@ -263,7 +239,7 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
                         val newCharacterEtcStatData =
                             MutableList(6 * 2) { CharacterUiState.CharacterEtcStat("", "") }
 
-                        characterStat.finalStats.forEach { finalStat ->
+                        finalStats.forEach { finalStat ->
                             when (finalStat.statName) {
                                 "전투력" -> {
                                     _characterPower.value = convertPowerFormat(finalStat.statValue)
@@ -541,23 +517,7 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
                     }
                 }
 
-                ResponseStatus.BAD_REQUEST -> {
-                    _characterUiEvent.emit(CharacterUiEvent.BadRequest)
-                }
-
-                ResponseStatus.UNAUTHORIZED_STATUS -> {
-                    _characterUiEvent.emit(CharacterUiEvent.UnauthorizedStatus)
-                }
-
-                ResponseStatus.FORBIDDEN -> {
-                    _characterUiEvent.emit(CharacterUiEvent.Forbidden)
-                }
-
-                ResponseStatus.TOO_MANY_REQUESTS -> {
-                    _characterUiEvent.emit(CharacterUiEvent.TooManyRequests)
-                }
-
-                ResponseStatus.INTERNAL_SERVER_ERROR -> {
+                else -> {
                     _characterUiEvent.emit(CharacterUiEvent.InternalServerError)
                 }
             }
@@ -566,16 +526,13 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
 
     private fun getCharacterEquipment() {
         viewModelScope.launch {
-            val characterItemEquipmentResponse = characterOcid.value?.let {
-                maplestoryRepository.getCharacterItemEquipment(
-                    ocid = it,
-                    date = searchDate.value
-                )
+            val characterItemEquipmentResponse = characterOcid.value?.let { ocid ->
+                getCharacterItemEquipmentUseCase.getCharacterItemEquipment(ocid, searchDate.value)
             } ?: return@launch
 
             when (characterItemEquipmentResponse.status) {
-                ResponseStatus.SUCCESS -> {
-                    characterItemEquipmentResponse.characterItemEquipment?.let { characterItemEquipment ->
+                Status.SUCCESS -> {
+                    characterItemEquipmentResponse.data?.let { characterItemEquipment ->
                         this@CharacterViewModel.characterItemEquipment.value =
                             characterItemEquipment
                         _characterItemEquipmentData.value =
@@ -583,23 +540,7 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
                     }
                 }
 
-                ResponseStatus.BAD_REQUEST -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.BadRequest)
-                }
-
-                ResponseStatus.UNAUTHORIZED_STATUS -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.UnauthorizedStatus)
-                }
-
-                ResponseStatus.FORBIDDEN -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.Forbidden)
-                }
-
-                ResponseStatus.TOO_MANY_REQUESTS -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.TooManyRequests)
-                }
-
-                ResponseStatus.INTERNAL_SERVER_ERROR -> {
+                else -> {
                     _equipmentUiEvent.emit(EquipmentUiEvent.InternalServerError)
                 }
             }
@@ -608,39 +549,20 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
 
     private fun getCharacterUnion() {
         viewModelScope.launch {
-            val characterUnionResponse = characterOcid.value?.let {
-                maplestoryRepository.getCharacterUnion(
-                    ocid = it,
-                    date = searchDate.value
-                )
+            val characterUnionResponse = characterOcid.value?.let { ocid ->
+                getCharacterUnionUseCase.getCharacterUnion(ocid, searchDate.value)
             } ?: return@launch
 
             when (characterUnionResponse.status) {
-                ResponseStatus.SUCCESS -> {
-                    characterUnionResponse.characterUnion?.let { characterUnion ->
+                Status.SUCCESS -> {
+                    characterUnionResponse.data?.let { characterUnion ->
                         this@CharacterViewModel.characterUnion.value = characterUnion
                         _characterUnionLevel.value = characterUnion.characterUnionLevel.toString()
                     }
                 }
 
-                ResponseStatus.BAD_REQUEST -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.BadRequest)
-                }
-
-                ResponseStatus.UNAUTHORIZED_STATUS -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.UnauthorizedStatus)
-                }
-
-                ResponseStatus.FORBIDDEN -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.Forbidden)
-                }
-
-                ResponseStatus.TOO_MANY_REQUESTS -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.TooManyRequests)
-                }
-
-                ResponseStatus.INTERNAL_SERVER_ERROR -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.InternalServerError)
+                else -> {
+                    _characterUiEvent.emit(CharacterUiEvent.InternalServerError)
                 }
             }
         }
@@ -648,39 +570,20 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
 
     private fun getCharacterPopularity() {
         viewModelScope.launch {
-            val characterPopularityResponse = characterOcid.value?.let {
-                maplestoryRepository.getCharacterPopularity(
-                    ocid = it,
-                    date = searchDate.value
-                )
+            val characterPopularityResponse = characterOcid.value?.let { ocid ->
+                getCharacterPopularityUseCase.getCharacterPopularity(ocid, searchDate.value)
             } ?: return@launch
 
             when (characterPopularityResponse.status) {
-                ResponseStatus.SUCCESS -> {
-                    characterPopularityResponse.characterPopularity?.let { characterPopularity ->
+                Status.SUCCESS -> {
+                    characterPopularityResponse.data?.let { characterPopularity ->
                         this@CharacterViewModel.characterPopularity.value = characterPopularity
                         _characterPopularityPoint.value =
                             characterPopularity.characterPopularity.toString()
                     }
                 }
 
-                ResponseStatus.BAD_REQUEST -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.BadRequest)
-                }
-
-                ResponseStatus.UNAUTHORIZED_STATUS -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.UnauthorizedStatus)
-                }
-
-                ResponseStatus.FORBIDDEN -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.Forbidden)
-                }
-
-                ResponseStatus.TOO_MANY_REQUESTS -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.TooManyRequests)
-                }
-
-                ResponseStatus.INTERNAL_SERVER_ERROR -> {
+                else -> {
                     _equipmentUiEvent.emit(EquipmentUiEvent.InternalServerError)
                 }
             }
@@ -689,39 +592,20 @@ class CharacterViewModel : ViewModel(), OnItemEquipmentClickListener {
 
     private fun getCharacterDojang() {
         viewModelScope.launch {
-            val characterDojangResponse = characterOcid.value?.let {
-                maplestoryRepository.getCharacterDojang(
-                    ocid = it,
-                    date = searchDate.value
-                )
+            val characterDojangResponse = characterOcid.value?.let { ocid ->
+                getCharacterDojangUseCase.getCharacterDojang(ocid, searchDate.value)
             } ?: return@launch
 
             when (characterDojangResponse.status) {
-                ResponseStatus.SUCCESS -> {
-                    characterDojangResponse.characterDojang?.let { characterDojang ->
+                Status.SUCCESS -> {
+                    characterDojangResponse.data?.let { characterDojang ->
                         this@CharacterViewModel.characterDojang.value = characterDojang
                         _characterDojangBestFloor.value =
                             convertDojangFormat(characterDojang.characterDojangBestFloor)
                     }
                 }
 
-                ResponseStatus.BAD_REQUEST -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.BadRequest)
-                }
-
-                ResponseStatus.UNAUTHORIZED_STATUS -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.UnauthorizedStatus)
-                }
-
-                ResponseStatus.FORBIDDEN -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.Forbidden)
-                }
-
-                ResponseStatus.TOO_MANY_REQUESTS -> {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.TooManyRequests)
-                }
-
-                ResponseStatus.INTERNAL_SERVER_ERROR -> {
+                else -> {
                     _equipmentUiEvent.emit(EquipmentUiEvent.InternalServerError)
                 }
             }

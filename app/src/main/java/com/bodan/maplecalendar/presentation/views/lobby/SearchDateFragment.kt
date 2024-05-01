@@ -8,9 +8,11 @@ import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentSearchDateBinding
 import com.bodan.maplecalendar.presentation.config.BaseDialogFragment
 import com.bodan.maplecalendar.presentation.views.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SearchDateFragment :
     BaseDialogFragment<FragmentSearchDateBinding>(R.layout.fragment_search_date) {
 

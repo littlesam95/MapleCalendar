@@ -2,12 +2,12 @@ package com.bodan.maplecalendar.presentation.utils
 
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.app.MainApplication
-import com.bodan.maplecalendar.data.dto.ItemAddOption
-import com.bodan.maplecalendar.data.dto.ItemBaseOption
-import com.bodan.maplecalendar.data.dto.ItemEtcOption
-import com.bodan.maplecalendar.data.dto.ItemExceptionalOption
-import com.bodan.maplecalendar.data.dto.ItemStarforceOption
-import com.bodan.maplecalendar.data.dto.ItemTotalOption
+import com.bodan.maplecalendar.domain.entity.ItemAddOption
+import com.bodan.maplecalendar.domain.entity.ItemBaseOption
+import com.bodan.maplecalendar.domain.entity.ItemEtcOption
+import com.bodan.maplecalendar.domain.entity.ItemExceptionalOption
+import com.bodan.maplecalendar.domain.entity.ItemStarforceOption
+import com.bodan.maplecalendar.domain.entity.ItemTotalOption
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentDetailUiState
 
 object ItemEquipmentDetailOptionGenerator {
