@@ -1,4 +1,4 @@
-package com.bodan.maplecalendar.data
+package com.bodan.maplecalendar.data.util
 
 enum class ResponseStatus {
     SUCCESS,
