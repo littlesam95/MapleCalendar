@@ -3,9 +3,17 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-android")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
     id("com.google.dagger.hilt.android")
+    id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
+    kotlin("plugin.serialization") version "1.5.0"
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 android {
@@ -16,8 +24,8 @@ android {
         applicationId = "com.bodan.maplecalendar"
         minSdk = 28
         targetSdk = 34
-        versionCode = 16
-        versionName = "0.3.8"
+        versionCode = 17
+        versionName = "0.4.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -60,25 +68,33 @@ fun getApiKey(key: String): String {
 
 dependencies {
 
-    implementation("androidx.core:core:1.12.0")
-    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("com.google.android.material:material:1.10.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
 
-    implementation("androidx.activity:activity:1.8.0")
     implementation("androidx.activity:activity-ktx:1.8.0")
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
-
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
 
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-database-ktx")
     implementation("com.google.firebase:firebase-messaging-ktx")
-    implementation("androidx.work:work-runtime-ktx:2.9.0")
 
+    // FireStore
+    implementation("com.google.firebase:firebase-firestore:24.10.0")
+    implementation("com.google.firebase:firebase-messaging:23.4.0")
+
+    // Coil
     implementation("io.coil-kt:coil:2.0.0-rc03")
 
     // ViewPager2
@@ -100,23 +116,17 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
 
+    // Paging
+    implementation("androidx.paging:paging-runtime-ktx:3.1.0")
+
     // Swipe Refresh Layout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
-
-    implementation("androidx.work:work-runtime-ktx:2.9.0")
-
-    implementation("com.google.firebase:firebase-firestore:24.10.0")
-    implementation("com.google.firebase:firebase-messaging:23.4.0")
 
     // Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
 
     // Ted Permission
     implementation("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
-
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }
 
 kapt {
