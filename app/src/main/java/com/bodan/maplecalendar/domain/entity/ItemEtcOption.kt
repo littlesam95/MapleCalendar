@@ -1,4 +1,4 @@
-package com.bodan.maplecalendar.data.dto
+package com.bodan.maplecalendar.domain.entity
 
 import androidx.annotation.Keep
 import com.squareup.moshi.Json
