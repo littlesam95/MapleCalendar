@@ -1,8 +1,8 @@
 package com.bodan.maplecalendar.data.util
 
 import android.annotation.SuppressLint
-import com.bodan.maplecalendar.presentation.views.lobby.EventItem
-import com.bodan.maplecalendar.presentation.views.lobby.EventType
+import com.bodan.maplecalendar.domain.entity.EventItem
+import com.bodan.maplecalendar.domain.entity.EventType
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
@@ -34,43 +34,7 @@ class EventListReader {
                                 eventName = element.data["eventName"].toString(),
                                 eventIat = element.data["eventIat"].toString(),
                                 eventExp = element.data["eventExp"].toString(),
-                                eventType = when (element.data["eventType"].toString()) {
-                                    "BURNING" -> {
-                                        EventType.BURNING
-                                    }
-
-                                    "COORDINATE" -> {
-                                        EventType.COORDINATE
-                                    }
-
-                                    "PCROOM" -> {
-                                        EventType.PCROOM
-                                    }
-
-                                    "COINSHOP" -> {
-                                        EventType.COINSHOP
-                                    }
-
-                                    "CASH" -> {
-                                        EventType.CASH
-                                    }
-
-                                    "WORLDLEAP" -> {
-                                        EventType.WORLDLEAP
-                                    }
-
-                                    "EVENTWORLD" -> {
-                                        EventType.EVENTWORLD
-                                    }
-
-                                    "HUNTING" -> {
-                                        EventType.HUNTING
-                                    }
-
-                                    else -> {
-                                        EventType.DEFAULT
-                                    }
-                                },
+                                eventType = getEventTypes(element.data["eventType"].toString()),
                                 eventUrl = element.data["eventUrl"].toString(),
                                 eventImage = element.data["eventImage"].toString()
                             )
@@ -104,5 +68,75 @@ class EventListReader {
             }.await()
 
         return if (flag) countPendingEvents else 0
+    }
+
+    private fun getEventTypes(eventType: String): List<EventType> {
+        val result = mutableListOf<EventType>()
+        val eventTypes = eventType.split(',')
+        for (element in eventTypes) {
+            when (element) {
+                "DAYCHECK" -> {
+                    result.add(EventType.DAYCHECK)
+                }
+
+                "MINIGAME" -> {
+                    result.add(EventType.MINIGAME)
+                }
+
+                "BURNING" -> {
+                    result.add(EventType.BURNING)
+                }
+
+                "BOSS" -> {
+                    result.add(EventType.BOSS)
+                }
+
+                "PUNCHKING" -> {
+                    result.add(EventType.PUNCHKING)
+                }
+
+                "SPECIALSTAT" -> {
+                    result.add(EventType.SPECIALSTAT)
+                }
+
+                "COORDINATE" -> {
+                    result.add(EventType.COORDINATE)
+                }
+
+                "PCROOM" -> {
+                    result.add(EventType.PCROOM)
+                }
+
+                "COINSHOP" -> {
+                    result.add(EventType.COINSHOP)
+                }
+
+                "CASH" -> {
+                    result.add(EventType.CASH)
+                }
+
+                "WORLDLEAP" -> {
+                    result.add(EventType.WORLDLEAP)
+                }
+
+                "EVENTWORLD" -> {
+                    result.add(EventType.EVENTWORLD)
+                }
+
+                "HUNTING" -> {
+                    result.add(EventType.HUNTING)
+                }
+
+                "SPECIALSUNDAY" -> {
+                    result.add(EventType.SPECIALSUNDAY)
+                }
+
+                else -> {
+                    result.add(EventType.DEFAULT)
+                }
+            }
+        }
+
+        return result.toList()
     }
 }
