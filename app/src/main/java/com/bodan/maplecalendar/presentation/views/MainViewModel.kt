@@ -13,7 +13,7 @@ import com.bodan.maplecalendar.presentation.views.calendar.CalendarUiEvent
 import com.bodan.maplecalendar.presentation.views.calendar.CalendarUiState
 import com.bodan.maplecalendar.presentation.views.calendar.DayType
 import com.bodan.maplecalendar.presentation.views.calendar.OnDateClickListener
-import com.bodan.maplecalendar.presentation.views.lobby.EventItem
+import com.bodan.maplecalendar.domain.entity.EventItem
 import com.bodan.maplecalendar.presentation.views.lobby.LobbyUiEvent
 import com.bodan.maplecalendar.presentation.views.lobby.OnEventClickListener
 import com.bodan.maplecalendar.presentation.views.setting.CharacterNameValidState
