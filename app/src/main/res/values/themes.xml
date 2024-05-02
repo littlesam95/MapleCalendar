@@ -9,19 +9,35 @@
 
     <style name="Theme.MapleCalendar" parent="Base.Theme.MapleCalendar" />
 
+    <!-- Splash Screen -->
     <style name="SplashTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
         <item name="windowActionBar">false</item>
+
         <item name="windowNoTitle">true</item>
+
         <!--        <item name="android:windowLightStatusBar">true</item> -->
+
         <item name="android:windowBackground">@drawable/splash_background</item>
+
     </style>
 
-    <style name="EventTypeChipGroup" parent="@style/Widget.MaterialComponents.Chip.Entry">
+    <!-- Material Chip -->
+    <style name="AppTheme.EventTypeChip" parent="Widget.MaterialComponents.Chip.Entry">
+
+        <item name="android:padding">-5dp</item>
+
+    </style>
+
+    <style name="AppTheme.EventTypeChipText" parent="TextAppearance.MaterialComponents.Chip">
 
         <item name="android:textSize">12sp</item>
 
+        <item name="fontFamily">@font/pretendardregular</item>
+
     </style>
 
+    <!-- Calendar Custom View -->
     <style name="Calendar" />
 
     <style name="Calendar.HeaderDateStyle">
