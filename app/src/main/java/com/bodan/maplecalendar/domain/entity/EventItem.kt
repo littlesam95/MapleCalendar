@@ -23,7 +23,7 @@ enum class EventType(val backgroundColor: Int, val textColor: Int, val tag: Stri
     DAYCHECK(
         R.color.submit,
         R.color.white,
-        MainApplication.myContext().resources.getString(R.string.text_tag_world_leap)
+        MainApplication.myContext().resources.getString(R.string.text_tag_day_check)
     ),
     MINIGAME(
         R.color.power_title,
@@ -61,8 +61,8 @@ enum class EventType(val backgroundColor: Int, val textColor: Int, val tag: Stri
         MainApplication.myContext().resources.getString(R.string.text_tag_event_world)
     ),
     HUNTING(
-        R.color.sub,
-        R.color.white,
+        R.color.power_color,
+        R.color.black,
         MainApplication.myContext().resources.getString(R.string.text_tag_hunting)
     ),
     PUNCHKING(
