@@ -13,7 +13,6 @@ import com.bodan.maplecalendar.domain.entity.EventType
 import com.bodan.maplecalendar.presentation.views.calendar.DayType
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import com.google.android.material.shape.CornerSize
 
 @BindingAdapter("app:calendar_background")
 fun ConstraintLayout.bindBackground(backgroundResId: Int) {
@@ -50,18 +49,19 @@ fun ChipGroup.bindChipGroup(eventTypes: List<EventType>) {
             val layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                setMargins(5, 5, 5, 5)
-                setPadding(-5, -5, -5, -5)
-            }
+            )
             setLayoutParams(layoutParams)
+
             setChipBackgroundColorResource(eventType.backgroundColor)
             setChipStrokeColorResource(eventType.backgroundColor)
-            setTextColor(resources.getColorStateList(eventType.textColor, context.theme))
+
             text = eventType.tag
+            maxLines = 1
+            setTextAppearanceResource(R.style.AppTheme_EventTypeChipText)
+            setTextColor(resources.getColorStateList(eventType.textColor, context.theme))
+
             isCheckable = false
             isClickable = false
-            maxLines = 1
 
         }
         addView(chipView)

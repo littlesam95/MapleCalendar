@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -103,20 +104,19 @@
             android:id="@+id/hsv_rv_lobby"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/rv_item_event_start"
-            android:layout_marginEnd="@dimen/rv_item_event_end"
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/iv_event_rv_lobby"
             app:layout_constraintTop_toBottomOf="@id/tv_event_iat_rv_lobby">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/cg_rv_lobby"
-                style="@style/EventTypeChipGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="false"
                 app:chipSpacingHorizontal="12dp"
-                app:set_chip="@{eventItem.eventType}" />
+                app:set_chip="@{eventItem.eventType}"
+                app:singleLine="true" />
 
         </HorizontalScrollView>
 

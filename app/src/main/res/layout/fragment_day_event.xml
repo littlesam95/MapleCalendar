@@ -16,12 +16,13 @@
     </data>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="320dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/shape_dialog"
             android:elevation="2dp"
             tools:context=".presentation.views.calendar.DayEventFragment">
@@ -56,11 +57,11 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_day_event"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_margin="16dp"
                 android:adapter="@{listAdapter}"
                 android:background="@drawable/shape_background"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="16dp"
