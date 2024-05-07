@@ -24,8 +24,8 @@ android {
         applicationId = "com.bodan.maplecalendar"
         minSdk = 28
         targetSdk = 34
-        versionCode = 17
-        versionName = "0.4.1"
+        versionCode = 19
+        versionName = "0.4.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -116,8 +116,9 @@ dependencies {
     implementation("com.google.dagger:hilt-android:2.48")
     kapt("com.google.dagger:hilt-android-compiler:2.48")
 
-    // Paging
-    implementation("androidx.paging:paging-runtime-ktx:3.1.0")
+    // Paging3
+    implementation("androidx.room:room-paging:2.6.1")
+    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
 
     // Swipe Refresh Layout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
