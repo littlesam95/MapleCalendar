@@ -38,8 +38,7 @@
     <color name="equipment_slot3">#FFADADAD</color>
     <color name="equipment_slot4">#FFC3C3C3</color>
     <color name="equipment_slot5">#FFB1B6BB</color>
-    <color name="equipment_detail">#CC000000</color>
-    <color name="equipment_detail_dot">#1A000000</color>
+    <color name="equipment_detail">#BB000000</color>
     <color name="equipment_rare">#FF6EB7BA</color>
     <color name="equipment_epic">#FF8F67ED</color>
     <color name="equipment_unique">#FFDCB83E</color>
