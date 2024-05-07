@@ -62,7 +62,8 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
         }
         val itemClassified: String =
             "${MainApplication.myContext().resources.getString(R.string.text_equipment_classified)} $itemEquipmentPart"
-        val isAbleToUpgrade: Boolean = ((itemScrollUpgrade != "0") || (itemScrollUpgradableCount != "0"))
+        val isAbleToUpgrade: Boolean =
+            ((itemScrollUpgrade != "0") || (itemScrollUpgradableCount != "0"))
         val itemUpgradeable: String =
             "${MainApplication.myContext().resources.getString(R.string.text_equipment_scroll_upgradeable_count)} $itemScrollUpgradableCount"
         val itemResilience: String =
@@ -71,6 +72,17 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
         val itemCuttable: String =
             "${MainApplication.myContext().resources.getString(R.string.text_cuttable_count)} ${itemCuttableCount}회"
         val isItemCuttable: Boolean = (itemCuttableCount != "255")
+        val potentialIcon: Int = when (potentialOptionGrade) {
+            "레어" -> R.drawable.ic_potential_rare
+
+            "에픽" -> R.drawable.ic_potential_epic
+
+            "유니크" -> R.drawable.ic_potential_unique
+
+            "레전드리" -> R.drawable.ic_potential_legendary
+
+            else -> 0
+        }
         val potentialOptionGradeColor: Int = when (potentialOptionGrade) {
             "레어" -> R.color.equipment_rare
 
@@ -81,6 +93,17 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
             "레전드리" -> R.color.equipment_legendary
 
             else -> R.color.white
+        }
+        val additionalPotentialIcon: Int = when (additionalPotentialOptionGrade) {
+            "레어" -> R.drawable.ic_potential_rare
+
+            "에픽" -> R.drawable.ic_potential_epic
+
+            "유니크" -> R.drawable.ic_potential_unique
+
+            "레전드리" -> R.drawable.ic_potential_legendary
+
+            else -> 0
         }
         val additionalPotentialOptionGradeColor: Int = when (additionalPotentialOptionGrade) {
             "레어" -> R.color.equipment_rare
@@ -108,6 +131,21 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
 
             else -> " + $additionalPotentialOptionThird"
         }
+        val maxStarforceValue: Int = when (equipmentSlot) {
+            "보조무기", "훈장", "뱃지", "엠블렘", "포켓 아이템" -> {
+                0
+            }
+
+            else -> {
+                if (equipmentSlot.contains("반지")) {
+                    if (itemSpecialRingLevel == "0") getItemMaxStarforce() else 0
+                } else {
+                    getItemMaxStarforce()
+                }
+            }
+        }
+        val isFirstStarforceVisible: Boolean = (maxStarforceValue >= 1)
+        val isSecondStarforceVisible: Boolean = (maxStarforceValue >= 16)
         val seedringDescription: String? = when (itemSpecialRingLevel) {
             "0" -> null
 
@@ -156,6 +194,60 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
 
             else -> {
                 R.drawable.shape_equipment_slot4
+            }
+        }
+
+        private fun getItemMaxStarforce(): Int {
+            when (itemName) {
+                null -> return 0
+
+                else -> {
+                    when {
+                        itemName.contains("오닉스 링") -> return 0
+
+                        itemName.contains("벤전스 링") -> return 0
+
+                        itemName.contains("코스모스 링") -> return 0
+
+                        itemName.contains("SS급 마스터 쥬얼링") -> return 0
+
+                        itemName.contains("결속의 반지") -> return 0
+
+                        itemName.contains("카오스 링") -> return 0
+
+                        itemName.contains("테네브리스 원정대 반지") -> return 0
+
+                        itemName.contains("글로리온 링") -> return 0
+
+                        itemName.contains("어웨이크 링") -> return 0
+
+                        itemName.contains("이터널 플레임 링") -> return 0
+
+                        itemName.contains("어비스 헌터스 링") -> return 0
+
+                        itemName.contains("제로 그라테스링") -> return 0
+
+                        itemName.contains("크리티컬링") -> return 0
+
+                        itemName.contains("정령의 펜던트") -> return 0
+
+                        else -> {
+                            return when (itemBaseOption.itemBaseBaseEquipmentLevel.toInt()) {
+                                in 0..95 -> 5
+
+                                in 95..107 -> 8
+
+                                in 108..117 -> 10
+
+                                in 118..127 -> 15
+
+                                in 128..137 -> 20
+
+                                else -> 25
+                            }
+                        }
+                    }
+                }
             }
         }
     }

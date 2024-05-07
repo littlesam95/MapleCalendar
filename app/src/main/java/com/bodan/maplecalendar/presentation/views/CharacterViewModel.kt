@@ -23,7 +23,7 @@ import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertCo
 import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertDojangFormat
 import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertPercentFormat
 import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertPowerFormat
-import com.bodan.maplecalendar.presentation.utils.Status
+import com.bodan.maplecalendar.domain.entity.Status
 import com.bodan.maplecalendar.presentation.views.character.CharacterUiEvent
 import com.bodan.maplecalendar.presentation.views.character.CharacterUiState
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentDetailUiState

@@ -40,6 +40,11 @@ fun ImageView.bindUrl(url: String?) {
     load(url)
 }
 
+@BindingAdapter("app:image_background")
+fun ImageView.bindBackground(backgroundResId: Int) {
+    setBackgroundResource(backgroundResId)
+}
+
 @BindingAdapter("app:set_chip")
 fun ChipGroup.bindChipGroup(eventTypes: List<EventType>) {
     removeAllViews()

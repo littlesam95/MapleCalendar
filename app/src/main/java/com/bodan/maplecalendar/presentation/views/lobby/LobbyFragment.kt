@@ -11,7 +11,9 @@ import com.bodan.maplecalendar.databinding.FragmentLobbyBinding
 import com.bodan.maplecalendar.presentation.config.BaseFragment
 import com.bodan.maplecalendar.presentation.views.CharacterActivity
 import com.bodan.maplecalendar.presentation.views.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby) {
 
     private val viewModel: MainViewModel by activityViewModels()

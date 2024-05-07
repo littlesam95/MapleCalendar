@@ -36,6 +36,41 @@ class MyAlarmReceiver : BroadcastReceiver() {
     private lateinit var notificationCompatBuilder: NotificationCompat.Builder
 
     override fun onReceive(context: Context, intent: Intent) {
+        val alarmManager =
+            context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
+
+        pendingIntent = when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            true -> {
+                PendingIntent.getBroadcast(
+                    context,
+                    REQUEST_CODE,
+                    intent,
+                    PendingIntent.FLAG_IMMUTABLE
+                )
+            }
+
+            false -> {
+                PendingIntent.getBroadcast(
+                    context,
+                    REQUEST_CODE,
+                    intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT
+                )
+            }
+        }
+
+        val calendar = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+            add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        val alarmClock = AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent)
+        alarmManager.setAlarmClock(alarmClock, pendingIntent)
+
         notificationManager =
             context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -121,41 +156,6 @@ class MyAlarmReceiver : BroadcastReceiver() {
                     notificationManager.notify(REQUEST_CODE, eventNotification)
                 }
             }
-
-            val alarmManager =
-                context.getSystemService(AppCompatActivity.ALARM_SERVICE) as AlarmManager
-
-            pendingIntent = when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                true -> {
-                    PendingIntent.getBroadcast(
-                        context,
-                        REQUEST_CODE,
-                        intent,
-                        PendingIntent.FLAG_IMMUTABLE
-                    )
-                }
-
-                false -> {
-                    PendingIntent.getBroadcast(
-                        context,
-                        REQUEST_CODE,
-                        intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                    )
-                }
-            }
-
-            val calendar = Calendar.getInstance().apply {
-                timeInMillis = System.currentTimeMillis()
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-                add(Calendar.DAY_OF_MONTH, 1)
-            }
-
-            val alarmClock = AlarmManager.AlarmClockInfo(calendar.timeInMillis, pendingIntent)
-            alarmManager.setAlarmClock(alarmClock, pendingIntent)
         }
     }
 

@@ -17,4 +17,22 @@
 
     </declare-styleable>
 
+    <declare-styleable name="StarforceView">
+
+        <attr name="starforceViewStyle" format="reference" />
+
+        <attr name="starforceItemViewStyle" format="reference" />
+
+        <attr name="starWidth" format="dimension" />
+
+        <attr name="starHeight" format="dimension" />
+
+        <attr name="starOnColor" format="reference|integer" />
+
+        <attr name="starOffColor" format="reference|integer" />
+
+        <attr name="starBlueColor" format="reference|integer" />
+
+    </declare-styleable>
+
 </resources>

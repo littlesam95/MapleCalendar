@@ -7,7 +7,7 @@ import com.bodan.maplecalendar.domain.entity.CharacterOcid
 import com.bodan.maplecalendar.domain.entity.CharacterPopularity
 import com.bodan.maplecalendar.domain.entity.CharacterUnion
 import com.bodan.maplecalendar.domain.entity.FinalStat
-import com.bodan.maplecalendar.presentation.utils.Result
+import com.bodan.maplecalendar.domain.entity.Result
 
 interface MaplestoryRepository {
 
