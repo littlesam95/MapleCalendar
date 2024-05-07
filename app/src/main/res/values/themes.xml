@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Base application theme. -->
     <style name="Base.Theme.MapleCalendar" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
 
         <item name="colorPrimary">@color/main</item>
 
@@ -59,6 +59,27 @@
         <item name="calendarItemTextSize">14sp</item>
 
         <item name="calendarItemFontFamily">@font/pretendardregular</item>
+
+    </style>
+
+    <!-- Starforce Custom View -->
+    <style name="Starforce" />
+
+    <style name="Starforce.StarforceViewStyle">
+
+        <item name="starWidth">14dp</item>
+
+        <item name="starHeight">14dp</item>
+
+    </style>
+
+    <style name="Starforce.StarforceItemViewStyle">
+
+        <item name="starOnColor">@drawable/ic_starforce_yellow</item>
+
+        <item name="starOffColor">@drawable/ic_starforce_none</item>
+
+        <item name="starBlueColor">@drawable/ic_starforce_blue</item>
 
     </style>
 

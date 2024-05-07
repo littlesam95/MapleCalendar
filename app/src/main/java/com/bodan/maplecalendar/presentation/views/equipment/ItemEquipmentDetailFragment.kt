@@ -10,7 +10,8 @@ import com.bodan.maplecalendar.presentation.views.CharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ItemEquipmentDetailFragment : BaseDialogFragment<FragmentItemEquipmentDetailBinding>(R.layout.fragment_item_equipment_detail) {
+class ItemEquipmentDetailFragment :
+    BaseDialogFragment<FragmentItemEquipmentDetailBinding>(R.layout.fragment_item_equipment_detail) {
 
     private val viewModel: CharacterViewModel by activityViewModels()
     private lateinit var itemEquipmentDetailOptionListAdapter: ItemEquipmentDetailOptionListAdapter
@@ -23,6 +24,20 @@ class ItemEquipmentDetailFragment : BaseDialogFragment<FragmentItemEquipmentDeta
 
         binding.vm = viewModel
         binding.listAdapter = itemEquipmentDetailOptionListAdapter
+        viewModel.characterLastItemEquipment.value?.let { itemEquipment ->
+            if (itemEquipment.maxStarforceValue >= 1) {
+                binding.starforceFirstItemEquipmentDetail.initStarforceView(
+                    itemEquipment.itemStarforce.toInt(),
+                    itemEquipment.maxStarforceValue
+                )
+            }
+            if (itemEquipment.maxStarforceValue >= 16) {
+                binding.starforceSecondItemEquipmentDetail.initStarforceView(
+                    itemEquipment.itemStarforce.toInt(),
+                    itemEquipment.maxStarforceValue
+                )
+            }
+        }
     }
 
     private fun initListAdapter() {
