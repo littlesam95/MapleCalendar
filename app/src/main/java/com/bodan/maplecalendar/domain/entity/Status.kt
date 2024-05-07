@@ -1,4 +1,4 @@
-package com.bodan.maplecalendar.presentation.utils
+package com.bodan.maplecalendar.domain.entity
 
 enum class Status {
     SUCCESS, ERROR, FAIL, LOADING

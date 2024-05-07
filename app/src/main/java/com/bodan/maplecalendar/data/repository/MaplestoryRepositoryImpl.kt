@@ -1,7 +1,6 @@
 package com.bodan.maplecalendar.data.repository
 
 import com.bodan.maplecalendar.domain.entity.CharacterDojang
-import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
 import com.bodan.maplecalendar.domain.entity.CharacterPopularity
 import com.bodan.maplecalendar.domain.entity.CharacterUnion
 import com.bodan.maplecalendar.data.mapper.CharacterBasicMapper
@@ -12,10 +11,11 @@ import com.bodan.maplecalendar.data.mapper.CharacterPopularityMapper
 import com.bodan.maplecalendar.data.mapper.CharacterStatMapper
 import com.bodan.maplecalendar.data.mapper.CharacterUnionMapper
 import com.bodan.maplecalendar.domain.entity.CharacterBasic
+import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
 import com.bodan.maplecalendar.domain.entity.CharacterOcid
 import com.bodan.maplecalendar.domain.entity.FinalStat
 import com.bodan.maplecalendar.domain.repository.MaplestoryRepository
-import com.bodan.maplecalendar.presentation.utils.Result
+import com.bodan.maplecalendar.domain.entity.Result
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -106,7 +106,10 @@ class MaplestoryRepositoryImpl @Inject constructor(
             Result.fail()
         }
 
-    override suspend fun getCharacterPopularity(ocid: String, date: String?): Result<CharacterPopularity> =
+    override suspend fun getCharacterPopularity(
+        ocid: String,
+        date: String?
+    ): Result<CharacterPopularity> =
         try {
             val response = withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
                 maplestoryRemoteDataSource.getCharacterPopularity(ocid, date)

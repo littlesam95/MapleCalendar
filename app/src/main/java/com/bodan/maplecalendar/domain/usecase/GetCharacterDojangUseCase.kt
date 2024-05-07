@@ -2,7 +2,7 @@ package com.bodan.maplecalendar.domain.usecase
 
 import com.bodan.maplecalendar.domain.entity.CharacterDojang
 import com.bodan.maplecalendar.domain.repository.MaplestoryRepository
-import com.bodan.maplecalendar.presentation.utils.Result
+import com.bodan.maplecalendar.domain.entity.Result
 import javax.inject.Inject
 
 class GetCharacterDojangUseCase @Inject constructor(

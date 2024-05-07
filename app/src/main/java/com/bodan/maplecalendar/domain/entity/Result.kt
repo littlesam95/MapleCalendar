@@ -1,4 +1,4 @@
-package com.bodan.maplecalendar.presentation.utils
+package com.bodan.maplecalendar.domain.entity
 
 data class Result<out T>(
     val status: Status,

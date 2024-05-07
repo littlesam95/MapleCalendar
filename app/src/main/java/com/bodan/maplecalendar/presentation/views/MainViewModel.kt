@@ -8,7 +8,7 @@ import com.bodan.maplecalendar.domain.usecase.GetCharacterBasicUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterOcidUseCase
 import com.bodan.maplecalendar.presentation.utils.DateFormatConverter
 import com.bodan.maplecalendar.presentation.utils.NicknameValidator.validateNickname
-import com.bodan.maplecalendar.presentation.utils.Status
+import com.bodan.maplecalendar.domain.entity.Status
 import com.bodan.maplecalendar.presentation.views.calendar.CalendarUiEvent
 import com.bodan.maplecalendar.presentation.views.calendar.CalendarUiState
 import com.bodan.maplecalendar.presentation.views.calendar.DayType
