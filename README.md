@@ -98,9 +98,9 @@
  - Hilt는 Dagger보다도 사용하기 쉽게 간소화되어있으며, Android 클래스에 최적화되어있다는 특징이 있다.
  - Hilt는 다음과 같은 방식으로 작동한다.
    - 가장 먼저 MainApplication에 @HiltAndroidApp 어노테이션을 지정한다. 해당 App은 의존성을 제공하는 Component의 역할을 하게 된다.
-   - @Installin(SingletonComponent::class) 어노테이션을 지정함으로써 App 전역에서 하나의 인스턴스 형태로 사용할 것임을 나타내고, @Module 어노테이션을 지정함으로써 모듈을 생성하여 Component 역할을 하는 Android App에 저장할 수 있게 되고, Android App에 저장한 만큼 Android의 생명주기 동안 사용할 수 있게 된다.
+   - @InstallIn(SingletonComponent::class) 어노테이션을 지정함으로써 App 전역에서 하나의 인스턴스 형태로 사용할 것임을 나타내고, @Module 어노테이션을 지정함으로써 모듈을 생성하여 Component 역할을 하는 Android App에 저장할 수 있게 되고, Android App에 저장한 만큼 Android의 생명주기 동안 사용할 수 있게 된다.
    - @Provides 어노테이션을 지정한 모듈 내 메소드는 종속성을 제공하고 Hilt에 의해 주입될 수 있도록 한다.
-   - Android의 Component에는 @Androidentrypoint 어노테이션을 지정하여 Hilt가 해당 클래스의 종속성을 주입할 수 있도록 한다.
+   - Android의 Component에는 @AndroidEntryPoint 어노테이션을 지정하여 Hilt가 해당 클래스의 종속성을 주입할 수 있도록 한다.
    - @Inject 어노테이션을 지정한 생성자에 대한 인스턴스를 Hilt가 자동으로 주입하게 된다.
 
 ### Document
