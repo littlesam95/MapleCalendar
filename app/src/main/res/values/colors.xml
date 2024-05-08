@@ -32,6 +32,7 @@
     <color name="stat_background2">#FF6D7784</color>
 
     <color name="equipment_background">#FFEBEBEB</color>
+    <color name="equipment_class_background">#FF222222</color>
     <color name="equipment_title">#FFD1A841</color>
     <color name="equipment_slot1">#FFC0BCB5</color>
     <color name="equipment_slot2">#FFB9C3C7</color>
