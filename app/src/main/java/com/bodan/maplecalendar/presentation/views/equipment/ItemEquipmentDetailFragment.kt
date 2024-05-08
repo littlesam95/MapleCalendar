@@ -28,7 +28,8 @@ class ItemEquipmentDetailFragment :
             if (itemEquipment.maxStarforceValue >= 1) {
                 binding.starforceFirstItemEquipmentDetail.initStarforceView(
                     itemEquipment.itemStarforce.toInt(),
-                    itemEquipment.maxStarforceValue
+                    itemEquipment.maxStarforceValue,
+                    itemEquipment.isStarforceScrollUsed
                 )
             }
             if (itemEquipment.maxStarforceValue >= 16) {

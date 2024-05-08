@@ -1,0 +1,9 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="20dp"
+    android:height="7dp"
+    android:viewportWidth="20"
+    android:viewportHeight="7">
+    <path
+        android:pathData="M0.705,0.041L19.729,0.002L15.717,3.015L19.715,6.01L0.691,6.048C0.137,6.049 -0.328,5.465 -0.308,5.05L-0.298,1.044C-0.317,0.356 0.151,0.042 0.705,0.041Z"
+        android:fillColor="@color/equipment_epic"/>
+</vector>

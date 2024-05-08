@@ -9,6 +9,7 @@ import com.bodan.maplecalendar.domain.entity.ItemExceptionalOption
 import com.bodan.maplecalendar.domain.entity.ItemStarforceOption
 import com.bodan.maplecalendar.domain.entity.ItemTotalOption
 import java.util.UUID
+import kotlin.math.max
 
 sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
 
@@ -50,6 +51,10 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
         val itemSpecialRingLevel: String? = null,
         val itemDateExpire: String? = null
     ) : EquipmentUiState() {
+
+        private val potentialGradeMap =
+            mapOf("null" to 0, "레어" to 1, "에픽" to 2, "유니크" to 3, "레전드리" to 4)
+
         val itemSoul: String? = when (itemSoulName) {
             null -> null
 
@@ -58,7 +63,16 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
         val itemFinalName: String? = when (itemScrollUpgrade) {
             "0" -> itemName
 
-            else -> "$itemName (+${itemScrollUpgrade})"
+            else -> when (itemGender) {
+                null -> "$itemName (+${itemScrollUpgrade})"
+
+                else -> "$itemName (${itemGender}) (+${itemScrollUpgrade})"
+            }
+        }
+        val isReqLevZero: Boolean = when (itemBaseOption.itemBaseBaseEquipmentLevel) {
+            "0" -> true
+
+            else -> false
         }
         val itemClassified: String =
             "${MainApplication.myContext().resources.getString(R.string.text_equipment_classified)} $itemEquipmentPart"
@@ -131,9 +145,45 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
 
             else -> " + $additionalPotentialOptionThird"
         }
+        val isSuperior: Boolean = when {
+            itemName.isNullOrEmpty() -> false
+
+            itemName.contains("헬리시움 정예") -> true
+
+            itemName.contains("노바 히아데스") -> true
+
+            itemName.contains("노바 헤르메스") -> true
+
+            itemName.contains("노바 케이론") -> true
+
+            itemName.contains("노바 리카온") -> true
+
+            itemName.contains("노바 알테어") -> true
+
+            itemName.contains("타일런트 히아데스") -> true
+
+            itemName.contains("타일런트 헤르메스") -> true
+
+            itemName.contains("타일런트 케이론") -> true
+
+            itemName.contains("타일런트 리카온") -> true
+
+            itemName.contains("타일런트 알테어") -> true
+
+            else -> false
+        }
+        val isStarforceScrollUsed: Boolean = when (itemStarforceScrollFlag) {
+            "사용" -> true
+
+            else -> false
+        }
         val maxStarforceValue: Int = when (equipmentSlot) {
-            "보조무기", "훈장", "뱃지", "엠블렘", "포켓 아이템" -> {
+            "훈장", "뱃지", "엠블렘", "포켓 아이템" -> {
                 0
+            }
+
+            "보조무기" -> {
+                if (itemEquipmentPart == "방패") getItemMaxStarforce() else 0
             }
 
             else -> {
@@ -144,6 +194,9 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
                 }
             }
         }
+        val maxPotentialGrade: String? = getMaxPotential()
+        val itemIcon: Int = getItemIconBackground()
+        val itemIconTag: Int = getItemIconTagBackground()
         val isFirstStarforceVisible: Boolean = (maxStarforceValue >= 1)
         val isSecondStarforceVisible: Boolean = (maxStarforceValue >= 16)
         val seedringDescription: String? = when (itemSpecialRingLevel) {
@@ -197,53 +250,139 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
             }
         }
 
+        private fun getMaxPotential(): String? {
+            val potential = potentialGradeMap.getValue(potentialOptionGrade.toString())
+            val additionalPotential =
+                potentialGradeMap.getValue(additionalPotentialOptionGrade.toString())
+
+            return when (max(potential, additionalPotential)) {
+                1 -> "(레어 아이템)"
+
+                2 -> "(에픽 아이템)"
+
+                3 -> "(유니크 아이템)"
+
+                4 -> "(레전드리 아이템)"
+
+                else -> null
+            }
+        }
+
+        private fun getItemIconBackground(): Int {
+            val potential = potentialGradeMap.getValue(potentialOptionGrade.toString())
+            val additionalPotential =
+                potentialGradeMap.getValue(additionalPotentialOptionGrade.toString())
+
+            return when (max(potential, additionalPotential)) {
+                1 -> R.drawable.shape_equipment_slot_rare
+
+                2 -> R.drawable.shape_equipment_slot_epic
+
+                3 -> R.drawable.shape_equipment_slot_unique
+
+                4 -> R.drawable.shape_equipment_slot_legendary
+
+                else -> R.drawable.shape_equipment_slot5
+            }
+        }
+
+        private fun getItemIconTagBackground(): Int {
+            val potential = potentialGradeMap.getValue(potentialOptionGrade.toString())
+            val additionalPotential =
+                potentialGradeMap.getValue(additionalPotentialOptionGrade.toString())
+
+            return when (max(potential, additionalPotential)) {
+                1 -> R.drawable.shape_grade_rare_tag
+
+                2 -> R.drawable.shape_grade_epic_tag
+
+                3 -> R.drawable.shape_grade_unique_tag
+
+                4 -> R.drawable.shape_grade_legendary_tag
+
+                else -> 0
+            }
+        }
+
         private fun getItemMaxStarforce(): Int {
-            when (itemName) {
-                null -> return 0
-
-                else -> {
-                    when {
-                        itemName.contains("오닉스 링") -> return 0
-
-                        itemName.contains("벤전스 링") -> return 0
-
-                        itemName.contains("코스모스 링") -> return 0
-
-                        itemName.contains("SS급 마스터 쥬얼링") -> return 0
-
-                        itemName.contains("결속의 반지") -> return 0
-
-                        itemName.contains("카오스 링") -> return 0
-
-                        itemName.contains("테네브리스 원정대 반지") -> return 0
-
-                        itemName.contains("글로리온 링") -> return 0
-
-                        itemName.contains("어웨이크 링") -> return 0
-
-                        itemName.contains("이터널 플레임 링") -> return 0
-
-                        itemName.contains("어비스 헌터스 링") -> return 0
-
-                        itemName.contains("제로 그라테스링") -> return 0
-
-                        itemName.contains("크리티컬링") -> return 0
-
-                        itemName.contains("정령의 펜던트") -> return 0
+            when (isSuperior) {
+                true -> {
+                    when (itemName) {
+                        null -> return 0
 
                         else -> {
                             return when (itemBaseOption.itemBaseBaseEquipmentLevel.toInt()) {
-                                in 0..95 -> 5
+                                in 0..95 -> 3
 
-                                in 95..107 -> 8
+                                in 95..107 -> 5
 
-                                in 108..117 -> 10
+                                in 108..117 -> 8
 
-                                in 118..127 -> 15
+                                in 118..127 -> 10
 
-                                in 128..137 -> 20
+                                in 128..137 -> 12
 
-                                else -> 25
+                                else -> 15
+                            }
+                        }
+                    }
+                }
+
+                false -> {
+                    when (itemName) {
+                        null -> return 0
+
+                        else -> {
+                            when (isStarforceScrollUsed) {
+                                true -> return 15
+
+                                false -> {
+                                    when {
+                                        itemName.contains("오닉스 링") -> return 0
+
+                                        itemName.contains("벤전스 링") -> return 0
+
+                                        itemName.contains("코스모스 링") -> return 0
+
+                                        itemName.contains("SS급 마스터 쥬얼링") -> return 0
+
+                                        itemName.contains("결속의 반지") -> return 0
+
+                                        itemName.contains("카오스 링") -> return 0
+
+                                        itemName.contains("테네브리스 원정대 반지") -> return 0
+
+                                        itemName.contains("글로리온 링") -> return 0
+
+                                        itemName.contains("어웨이크 링") -> return 0
+
+                                        itemName.contains("이터널 플레임 링") -> return 0
+
+                                        itemName.contains("어비스 헌터스 링") -> return 0
+
+                                        itemName.contains("제로 그라테스링") -> return 0
+
+                                        itemName.contains("크리티컬링") -> return 0
+
+                                        itemName.contains("정령의 펜던트") -> return 0
+
+                                        else -> {
+                                            return when (itemBaseOption.itemBaseBaseEquipmentLevel.toInt()) {
+                                                in 0..95 -> 5
+
+                                                in 95..107 -> 8
+
+                                                in 108..117 -> 10
+
+                                                in 118..127 -> 15
+
+                                                in 128..137 -> 20
+
+                                                else -> 25
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }

@@ -13,20 +13,19 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_detail_option"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="@{detailOption.isZero ? View.GONE : View.VISIBLE}">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/tv_option_type_detail_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:fontFamily="@font/kopubworlddotummedium"
+            android:fontFamily="@font/pretendardregular"
             android:text="@{detailOption.optionType}"
             android:textColor="@{detailOption.isForced ? @color/equipment_total_option : @color/white1}"
             android:textSize="12sp"
-            android:visibility="@{detailOption.isZero ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,11 +34,10 @@
             android:id="@+id/tv_total_option_detail_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/kopubworlddotummedium"
+            android:fontFamily="@font/pretendardregular"
             android:text="@{detailOption.totalOption}"
             android:textColor="@{detailOption.isForced ? @color/equipment_total_option : @color/white1}"
             android:textSize="12sp"
-            android:visibility="@{detailOption.isZero ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_option_type_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />
@@ -49,11 +47,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:fontFamily="@font/kopubworlddotummedium"
+            android:fontFamily="@font/pretendardregular"
             android:text="@string/text_left_bracket"
             android:textColor="@color/white1"
             android:textSize="12sp"
-            android:visibility="@{!detailOption.isForced ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_total_option_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />
@@ -62,11 +59,10 @@
             android:id="@+id/tv_base_option_detail_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/kopubworlddotummedium"
+            android:fontFamily="@font/pretendardregular"
             android:text="@{detailOption.baseOption}"
             android:textColor="@color/white1"
             android:textSize="12sp"
-            android:visibility="@{detailOption.isForced ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_left_bracket_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />
@@ -76,11 +72,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:fontFamily="@font/kopubworlddotummedium"
+            android:fontFamily="@font/pretendardregular"
             android:text="@{detailOption.addOption}"
             android:textColor="@color/equipment_add_option"
             android:textSize="12sp"
-            android:visibility="@{(detailOption.addOption.isBlank()) ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_base_option_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />
@@ -90,11 +85,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:fontFamily="@font/kopubworlddotummedium"
+            android:fontFamily="@font/pretendardregular"
             android:text="@{detailOption.etcOption}"
             android:textColor="@{detailOption.isMinus ? @color/equipment_etc_option_minus : @color/equipment_etc_option}"
             android:textSize="12sp"
-            android:visibility="@{(detailOption.etcOption.isBlank()) ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_add_option_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />
@@ -104,11 +98,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:fontFamily="@font/kopubworlddotummedium"
+            android:fontFamily="@font/pretendardregular"
             android:text="@{detailOption.starforceOption}"
             android:textColor="@color/equipment_starforce_option"
             android:textSize="12sp"
-            android:visibility="@{(detailOption.starforceOption.isBlank()) ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_etc_option_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />
@@ -117,11 +110,10 @@
             android:id="@+id/tv_right_bracket_detail_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/kopubworlddotummedium"
+            android:fontFamily="@font/pretendardregular"
             android:text="@string/text_right_bracket"
             android:textColor="@color/white1"
             android:textSize="12sp"
-            android:visibility="@{!detailOption.isForced ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_starforce_option_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />

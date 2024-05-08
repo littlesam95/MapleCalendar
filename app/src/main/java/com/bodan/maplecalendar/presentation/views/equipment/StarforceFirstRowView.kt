@@ -68,8 +68,12 @@ class StarforceFirstRowView @JvmOverloads constructor(
         _childCount += firstMaxStarforceValue.toFloat()
     }
 
-    fun initStarforceView(starforceValue: Int, maxStarforceValue: Int) {
-        val firstMaxStarforceValue = min(15, maxStarforceValue)
+    fun initStarforceView(
+        starforceValue: Int,
+        maxStarforceValue: Int,
+        isStarforceScrollUsed: Boolean
+    ) {
+        val firstMaxStarforceValue = if (isStarforceScrollUsed) 15 else min(15, maxStarforceValue)
         setChildCount(firstMaxStarforceValue)
         val firstStarforceValue = min(15, starforceValue)
 
@@ -79,7 +83,7 @@ class StarforceFirstRowView @JvmOverloads constructor(
             addView(
                 StarforceItemView(
                     context = context,
-                    starType = 1
+                    starType = if (isStarforceScrollUsed) 2 else 1
                 )
             )
         }

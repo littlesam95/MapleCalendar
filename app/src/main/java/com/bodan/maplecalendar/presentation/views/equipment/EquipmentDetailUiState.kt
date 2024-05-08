@@ -19,6 +19,16 @@ sealed class EquipmentDetailUiState(val id: String = UUID.randomUUID().toString(
             else -> (etcOption.first() == '-')
         }
         val isZero: Boolean = (totalOption.first() == '0')
-        val isForced: Boolean = (totalOption != baseOption)
+        val isForced: Boolean = when (optionType) {
+            "최대 HP : +" -> {
+                if (totalOption.contains("%")) false else (totalOption != baseOption)
+            }
+
+            "최대 MP : +" -> {
+                if (totalOption.contains("%")) false else (totalOption != baseOption)
+            }
+
+            else -> (totalOption != baseOption)
+        }
     }
 }
