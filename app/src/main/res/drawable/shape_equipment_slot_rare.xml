@@ -5,4 +5,6 @@
 
     <solid android:color="@color/equipment_slot5" />
 
+    <stroke android:color="@color/equipment_rare" android:width="2dp" />
+
 </shape>
