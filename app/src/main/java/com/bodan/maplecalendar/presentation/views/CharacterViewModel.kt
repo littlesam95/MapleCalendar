@@ -132,22 +132,22 @@ class CharacterViewModel @Inject constructor(
     val equipmentUiEvent = _equipmentUiEvent.asSharedFlow()
 
     override fun onItemEquipmentClicked(item: EquipmentUiState.EquipmentOption) {
+        item.itemName?.let {
+            _characterLastItemEquipment.value = null
+            _characterLastItemEquipmentOptions.value = null
+            _characterLastItemEquipment.value = item
+            _characterLastItemEquipmentOptions.value = itemEquipmentDetailOptionSet(
+                item.itemTotalOption,
+                item.itemBaseOption,
+                item.itemAddOption,
+                item.itemEtcOption,
+                item.itemStarforceOption,
+                item.itemExceptionalOption
+            )
+            Timber.d("${_characterLastItemEquipmentOptions.value}")
+        }
         viewModelScope.launch {
-            item.itemName?.let {
-                _characterLastItemEquipment.value = null
-                _characterLastItemEquipmentOptions.value = null
-                _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentOption)
-                _characterLastItemEquipment.value = item
-                _characterLastItemEquipmentOptions.value = itemEquipmentDetailOptionSet(
-                    item.itemTotalOption,
-                    item.itemBaseOption,
-                    item.itemAddOption,
-                    item.itemEtcOption,
-                    item.itemStarforceOption,
-                    item.itemExceptionalOption
-                )
-                Timber.d("${_characterLastItemEquipmentOptions.value}")
-            }
+            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentOption)
         }
     }
 
