@@ -28,7 +28,7 @@ data class ItemEquipment(
     @Json(name = "item_shape_icon")
     val itemShapeIcon: String,
 
-    @Json(name = "gender")
+    @Json(name = "item_gender")
     val itemGender: String?,
 
     @Json(name = "item_total_option")
