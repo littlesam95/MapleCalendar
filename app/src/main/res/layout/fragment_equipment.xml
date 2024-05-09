@@ -52,13 +52,79 @@
                 android:nestedScrollingEnabled="false"
                 android:padding="12dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/mcv_equipment"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_title_equipment"
                 app:spanCount="5"
                 app:submitData="@{vm.characterItemEquipmentData}"
                 tools:listitem="@layout/item_equipment_option" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_equipment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="1dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_equipment"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/equipment_background"
+                    android:padding="2dp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/ib_preset_first_equipment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:background="@{(vm.characterItemEquipmentPreset == 1) ? @color/equipment_legendary : @color/level}"
+                        android:fontFamily="@font/pretendardregular"
+                        android:onClick="@{() -> vm.getCharacterEquipmentFirstPreset()}"
+                        android:text="@string/text_preset_1"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ib_preset_second_equipment"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/ib_preset_second_equipment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:background="@{(vm.characterItemEquipmentPreset == 2) ? @color/equipment_legendary : @color/level}"
+                        android:fontFamily="@font/pretendardregular"
+                        android:onClick="@{() -> vm.getCharacterEquipmentSecondPreset()}"
+                        android:text="@string/text_preset_2"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/ib_preset_third_equipment"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/ib_preset_third_equipment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp"
+                        android:background="@{(vm.characterItemEquipmentPreset == 3) ? @color/equipment_legendary : @color/level}"
+                        android:fontFamily="@font/pretendardregular"
+                        android:onClick="@{() -> vm.getCharacterEquipmentThirdPreset()}"
+                        android:text="@string/text_preset_3"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
