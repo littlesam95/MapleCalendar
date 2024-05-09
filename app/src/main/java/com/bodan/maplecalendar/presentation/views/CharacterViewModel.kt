@@ -38,7 +38,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -117,6 +116,9 @@ class CharacterViewModel @Inject constructor(
         MutableStateFlow<List<EquipmentUiState.EquipmentOption>>(listOf())
     val characterItemEquipmentData = _characterItemEquipmentData.asStateFlow()
 
+    private val _characterItemEquipmentPreset = MutableStateFlow<Int>(0)
+    val characterItemEquipmentPreset = _characterItemEquipmentPreset.asStateFlow()
+
     private val _characterLastItemEquipment =
         MutableStateFlow<EquipmentUiState.EquipmentOption?>(null)
     val characterLastItemEquipment = _characterLastItemEquipment.asStateFlow()
@@ -125,6 +127,8 @@ class CharacterViewModel @Inject constructor(
         MutableStateFlow<List<EquipmentDetailUiState?>?>(null)
     val characterListItemEquipmentOptions = _characterLastItemEquipmentOptions.asStateFlow()
 
+    private val isCharacterItemEquipmentSelected = MutableStateFlow<Boolean>(false)
+
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
     val characterUiEvent = _characterUiEvent.asSharedFlow()
 
@@ -132,22 +136,31 @@ class CharacterViewModel @Inject constructor(
     val equipmentUiEvent = _equipmentUiEvent.asSharedFlow()
 
     override fun onItemEquipmentClicked(item: EquipmentUiState.EquipmentOption) {
-        item.itemName?.let {
-            _characterLastItemEquipment.value = null
-            _characterLastItemEquipmentOptions.value = null
-            _characterLastItemEquipment.value = item
-            _characterLastItemEquipmentOptions.value = itemEquipmentDetailOptionSet(
-                item.itemTotalOption,
-                item.itemBaseOption,
-                item.itemAddOption,
-                item.itemEtcOption,
-                item.itemStarforceOption,
-                item.itemExceptionalOption
-            )
-            Timber.d("${_characterLastItemEquipmentOptions.value}")
+        if ((!isCharacterItemEquipmentSelected.value) && (item.itemName != null)) {
+            viewModelScope.launch {
+                async {
+                    isCharacterItemEquipmentSelected.value = true
+                }.await()
+                _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentOption)
+                _characterLastItemEquipment.value = null
+                _characterLastItemEquipmentOptions.value = null
+                _characterLastItemEquipment.value = item
+                _characterLastItemEquipmentOptions.value = itemEquipmentDetailOptionSet(
+                    item.itemTotalOption,
+                    item.itemBaseOption,
+                    item.itemAddOption,
+                    item.itemEtcOption,
+                    item.itemStarforceOption,
+                    item.itemExceptionalOption
+                )
+            }
         }
+    }
+
+    override fun onItemEquipmentDetailClicked() {
         viewModelScope.launch {
-            _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentOption)
+            _equipmentUiEvent.emit(EquipmentUiEvent.CloseItemEquipmentDetail)
+            isCharacterItemEquipmentSelected.value = false
         }
     }
 
@@ -536,7 +549,8 @@ class CharacterViewModel @Inject constructor(
                         this@CharacterViewModel.characterItemEquipment.value =
                             characterItemEquipment
                         _characterItemEquipmentData.value =
-                            itemEquipmentDataSet(characterItemEquipment.itemEquipments)
+                            itemEquipmentDataSet(characterItemEquipment.itemEquipmentsFirstPreset)
+                        _characterItemEquipmentPreset.value = 1
                     }
                 }
 
@@ -617,6 +631,30 @@ class CharacterViewModel @Inject constructor(
             setToday().await()
             setCharacterName()
             getCharacterOcid()
+        }
+    }
+
+    fun getCharacterEquipmentFirstPreset() {
+        characterItemEquipment.value?.let { characterItemEquipment ->
+            _characterItemEquipmentData.value =
+                itemEquipmentDataSet(characterItemEquipment.itemEquipmentsFirstPreset)
+            _characterItemEquipmentPreset.value = 1
+        }
+    }
+
+    fun getCharacterEquipmentSecondPreset() {
+        characterItemEquipment.value?.let { characterItemEquipment ->
+            _characterItemEquipmentData.value =
+                itemEquipmentDataSet(characterItemEquipment.itemEquipmentsSecondPreset)
+            _characterItemEquipmentPreset.value = 2
+        }
+    }
+
+    fun getCharacterEquipmentThirdPreset() {
+        characterItemEquipment.value?.let { characterItemEquipment ->
+            _characterItemEquipmentData.value =
+                itemEquipmentDataSet(characterItemEquipment.itemEquipmentsThirdPreset)
+            _characterItemEquipmentPreset.value = 3
         }
     }
 }
