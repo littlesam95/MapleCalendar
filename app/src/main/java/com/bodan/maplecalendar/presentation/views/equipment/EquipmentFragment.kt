@@ -64,5 +64,7 @@ class EquipmentFragment : BaseFragment<FragmentEquipmentBinding>(R.layout.fragme
         is EquipmentUiEvent.SetDarkMode -> {
             setDarkMode()
         }
+
+        else -> {}
     }
 }

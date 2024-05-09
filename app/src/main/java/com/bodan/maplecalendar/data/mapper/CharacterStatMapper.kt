@@ -6,6 +6,12 @@ import com.bodan.maplecalendar.data.model.StatEntity
 object CharacterStatMapper {
 
     operator fun invoke(statEntity: StatEntity): List<FinalStat> {
-        return statEntity.finalStats
+        val result = mutableListOf<FinalStat>()
+
+        statEntity.finalStats.forEach { stat ->
+            result.add(FinalStat(statName = stat.statName, statValue = stat.statValue))
+        }
+
+        return result
     }
 }

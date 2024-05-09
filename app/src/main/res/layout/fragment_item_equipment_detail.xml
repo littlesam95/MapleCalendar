@@ -15,6 +15,10 @@
             name="listAdapter"
             type="com.bodan.maplecalendar.presentation.views.equipment.ItemEquipmentDetailOptionListAdapter" />
 
+        <variable
+            name="onItemEquipmentClickListener"
+            type="com.bodan.maplecalendar.presentation.views.equipment.OnItemEquipmentClickListener" />
+
     </data>
 
     <LinearLayout
@@ -29,7 +33,8 @@
                 android:layout_width="330dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/shape_equipment_detail"
-                android:paddingBottom="16dp"
+                android:onClick="@{() -> vm.onItemEquipmentDetailClicked()}"
+                android:paddingBottom="24dp"
                 android:visibility="@{(vm.characterLastItemEquipment == null) ? View.GONE : View.VISIBLE}"
                 tools:context=".presentation.equipment.ItemEquipmentDetailFragment">
 
@@ -229,7 +234,7 @@
                     android:textColor="@color/level"
                     android:textSize="11sp"
                     app:layout_constraintBottom_toBottomOf="@id/tv_req_str_item_equipment_detail"
-                    app:layout_constraintStart_toEndOf="@id/tv_req_str_item_equipment_detail"
+                    app:layout_constraintEnd_toEndOf="@id/tv_req_dex_stat_item_equipment_detail"
                     app:layout_constraintTop_toTopOf="@id/tv_req_str_item_equipment_detail" />
 
                 <TextView
@@ -443,6 +448,7 @@
                     android:layout_height="wrap_content"
                     android:adapter="@{listAdapter}"
                     android:nestedScrollingEnabled="false"
+                    android:onClick="@{() -> vm.onItemEquipmentDetailClicked()}"
                     android:orientation="vertical"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintBottom_toTopOf="@id/tv_upgrade_count_item_equipment_detail"
