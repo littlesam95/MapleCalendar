@@ -106,6 +106,9 @@
     <string name="text_character_stance">스탠스</string>
     <string name="text_character_attack_speed">공격 속도</string>
     <string name="text_title_equipment">EQUIPMENT INVENTORY</string>
+    <string name="text_preset_1">PRESET 1</string>
+    <string name="text_preset_2">PRESET 2</string>
+    <string name="text_preset_3">PRESET 3</string>
     <string name="text_rare_item">레어 아이템</string>
     <string name="text_epic_item">에픽 아이템</string>
     <string name="text_unique_item">유니크 아이템</string>
