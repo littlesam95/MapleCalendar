@@ -338,6 +338,18 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
 
                                 false -> {
                                     when {
+                                        itemName.contains("크로스 링") -> return 0
+
+                                        itemName.contains("엔젤릭 블레스") -> return 0
+
+                                        itemName.contains("시그너스의 코히누르") -> return 0
+
+                                        itemName.contains("앱솔루트 링") -> return 0
+
+                                        itemName.contains("퍼스트 링") -> return 0
+
+                                        itemName.contains("오로라 링") -> return 0
+
                                         itemName.contains("오닉스 링") -> return 0
 
                                         itemName.contains("벤전스 링") -> return 0
@@ -364,7 +376,9 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
 
                                         itemName.contains("크리티컬링") -> return 0
 
-                                        itemName.contains("정령의 펜던트") -> return 0
+                                        itemName.contains("오닉스 펜던트") -> return 0
+
+                                        !isAbleToUpgrade -> return 0
 
                                         else -> {
                                             return when (itemBaseOption.itemBaseBaseEquipmentLevel.toInt()) {
