@@ -4,6 +4,8 @@ sealed class EquipmentUiEvent {
 
     data object GetItemEquipmentOption : EquipmentUiEvent()
 
+    data object CloseItemEquipmentDetail : EquipmentUiEvent()
+
     data object BadRequest : EquipmentUiEvent()
 
     data object UnauthorizedStatus : EquipmentUiEvent()
