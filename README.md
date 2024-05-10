@@ -25,13 +25,13 @@
 #### 오늘 진행중인 이벤트 확인
  - 이벤트를 클릭하면 공식 홈페이지로 이동된다.
   <p>
-     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/22d951b7-1c25-435d-a578-8c6fce326291">
+     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/b21b093c-6897-4941-8562-e56f3e28b57c">
   </p>
 
 #### 특정 날짜에 진행할 이벤트 확인
  - 달력의 특정 날짜를 클릭해 진행하는 이벤트를 확인하자.
   <p>
-     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/6eff9a08-95e7-44a6-ae18-9c3a14aa6946">
+     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/53957d88-d8dc-4811-8292-0bb5547df9c5">
   </p>
 
 #### 이벤트 알리미로 당일 종료되는 이벤트 확인
@@ -45,6 +45,7 @@
   <p>
      <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/634f896a-ac54-4ad9-baf4-829b984a9bf5">
      <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/130258a6-979f-4079-8492-7e1b8c10c805">
+     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/f7dd12f9-bf66-4e22-b6f1-6cf0eb324e7b">
   </p>
 
 
@@ -102,6 +103,14 @@
    - @Provides 어노테이션을 지정한 모듈 내 메소드는 종속성을 제공하고 Hilt에 의해 주입될 수 있도록 한다.
    - Android의 Component에는 @AndroidEntryPoint 어노테이션을 지정하여 Hilt가 해당 클래스의 종속성을 주입할 수 있도록 한다.
    - @Inject 어노테이션을 지정한 생성자에 대한 인스턴스를 Hilt가 자동으로 주입하게 된다.
+
+#### 5. Custom View로 스타포스 달아주기
+ - 스타포스 View를 RecyclerView로 구현할 방법을 찾지 못 해서 Custom View를 사용하게 되었다.
+   - 일단 스타포스는 별 간의 위치가 일정하지 않으며 간격도 다르다.
+   - 따라서 RecyclerView로 구현하기에는 무리가 있다고 판단하였다.
+ - 스타포스를 나타내는 별의 ViewGroup을 먼저 정의하고, 미리 정의한 속성을 바탕으로 ViewGroup에 추가해야 할 View의 최대 개수를 바탕으로 width와 height를 측정한다.
+   - 여기서 5번째 View와 6번째 View 간의 간격이 조금 존재하기 때문에 View의 width의 절반만큼 ViewGroup의 width를 늘린다.
+ - 아이템의 스타포스를 바탕으로 추가해야 할 노란 별과 회색 별의 개수를 정한다.
 
 ### Document
 <a href="https://www.notion.so/MapleCalendar-93f45dc10b384d749e5ab00950324035?pvs=4">
