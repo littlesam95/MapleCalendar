@@ -145,11 +145,11 @@
                     android:layout_marginTop="12dp"
                     android:padding="12dp"
                     android:scaleType="fitCenter"
-                    app:image_background="@{vm.characterLastItemEquipment.itemIcon}"
+                    app:image_background="@{vm.characterLastItemEquipment.itemIconBackground}"
                     app:layout_constraintBottom_toTopOf="@id/mcv_class_item_equipment_detail"
                     app:layout_constraintStart_toEndOf="@id/gl_left_item_equipment_detail"
                     app:layout_constraintTop_toBottomOf="@id/iv_dotted_first_item_equipment_default"
-                    app:profileImage="@{vm.characterLastItemEquipment.itemShapeIcon}" />
+                    app:profileImage="@{vm.characterLastItemEquipment.itemIcon}" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_grade_tag_item_equipment_detail"
@@ -298,7 +298,7 @@
                     android:textSize="11sp"
                     android:visibility="@{vm.characterLastItemEquipment.isReqLevZero ? View.GONE : View.VISIBLE}"
                     app:layout_constraintBottom_toBottomOf="@id/tv_req_lev_item_equipment_detail"
-                    app:layout_constraintStart_toEndOf="@id/tv_req_lev_item_equipment_detail"
+                    app:layout_constraintEnd_toEndOf="@id/tv_req_str_stat_item_equipment_detail"
                     app:layout_constraintTop_toTopOf="@id/tv_req_lev_item_equipment_detail" />
 
                 <com.google.android.material.card.MaterialCardView
@@ -704,10 +704,168 @@
                     android:layout_marginBottom="8dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_dotted"
-                    android:visibility="@{(vm.characterLastItemEquipment.itemSoulName == null) ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToExceptionalForce ? View.VISIBLE : View.GONE}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_third_additional_potential_item_equipment_default" />
+
+                <TextView
+                    android:id="@+id/tv_exceptional_none_item_equipment_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@string/text_exceptional_able"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToExceptionalForce ? (vm.characterLastItemEquipment.isExceptionalForced ? View.GONE : View.VISIBLE) : View.GONE}"
+                    app:layout_constraintEnd_toStartOf="@id/gl_right_item_equipment_detail"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_item_equipment_detail"
+                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_fifth_item_equipment_default" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_exceptional_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/ic_exceptional"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToExceptionalForce ? (vm.characterLastItemEquipment.isExceptionalForced ? View.VISIBLE : View.GONE) : View.GONE}"
+                    app:layout_constraintBottom_toTopOf="@id/tv_exceptional_all_stat_item_equipment_default"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_item_equipment_detail"
+                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_fifth_item_equipment_default" />
+
+                <TextView
+                    android:id="@+id/tv_exceptional_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@string/text_exceptional"
+                    android:textColor="@color/equipment_etc_option_minus"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToExceptionalForce ? (vm.characterLastItemEquipment.isExceptionalForced ? View.VISIBLE : View.GONE) : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_exceptional_item_equipment_default"
+                    app:layout_constraintStart_toEndOf="@id/iv_exceptional_item_equipment_default"
+                    app:layout_constraintTop_toTopOf="@id/iv_exceptional_item_equipment_default" />
+
+                <TextView
+                    android:id="@+id/tv_exceptional_all_stat_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@string/text_equipment_all_stat"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToExceptionalForce ? (vm.characterLastItemEquipment.isExceptionalForced ? View.VISIBLE : View.GONE) : View.GONE}"
+                    app:layout_constraintBottom_toTopOf="@id/tv_exceptional_hp_mp_item_equipment_default"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_item_equipment_detail"
+                    app:layout_constraintTop_toBottomOf="@id/iv_exceptional_item_equipment_default" />
+
+                <TextView
+                    android:id="@+id/tv_exceptional_all_stat_value_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.itemExceptionalOption.itemExceptionalStr}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToExceptionalForce ? (vm.characterLastItemEquipment.isExceptionalForced ? View.VISIBLE : View.GONE) : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_exceptional_all_stat_item_equipment_default"
+                    app:layout_constraintStart_toEndOf="@id/tv_exceptional_all_stat_item_equipment_default"
+                    app:layout_constraintTop_toTopOf="@id/tv_exceptional_all_stat_item_equipment_default" />
+
+
+                <TextView
+                    android:id="@+id/tv_exceptional_hp_mp_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@string/text_exceptional_hp_mp"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToExceptionalForce ? (vm.characterLastItemEquipment.isExceptionalForced ? View.VISIBLE : View.GONE) : View.GONE}"
+                    app:layout_constraintBottom_toTopOf="@id/tv_exceptional_attack_magic_item_equipment_default"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_item_equipment_detail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_exceptional_all_stat_item_equipment_default" />
+
+                <TextView
+                    android:id="@+id/tv_exceptional_hp_mp_value_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.itemExceptionalOption.itemExceptionalMaxHp}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToExceptionalForce ? (vm.characterLastItemEquipment.isExceptionalForced ? View.VISIBLE : View.GONE) : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_exceptional_hp_mp_item_equipment_default"
+                    app:layout_constraintStart_toEndOf="@id/tv_exceptional_hp_mp_item_equipment_default"
+                    app:layout_constraintTop_toTopOf="@id/tv_exceptional_hp_mp_item_equipment_default" />
+
+                <TextView
+                    android:id="@+id/tv_exceptional_attack_magic_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@string/text_exceptional_attack_magic_power"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToExceptionalForce ? (vm.characterLastItemEquipment.isExceptionalForced ? View.VISIBLE : View.GONE) : View.GONE}"
+                    app:layout_constraintBottom_toTopOf="@id/tv_exceptional_used_item_equipment_detail"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_item_equipment_detail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_exceptional_hp_mp_item_equipment_default" />
+
+                <TextView
+                    android:id="@+id/tv_exceptional_attack_magic_value_item_equipment_default"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterLastItemEquipment.itemExceptionalOption.itemExceptionalAttackPower}"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToExceptionalForce ? (vm.characterLastItemEquipment.isExceptionalForced ? View.VISIBLE : View.GONE) : View.GONE}"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_exceptional_attack_magic_item_equipment_default"
+                    app:layout_constraintStart_toEndOf="@id/tv_exceptional_attack_magic_item_equipment_default"
+                    app:layout_constraintTop_toTopOf="@id/tv_exceptional_attack_magic_item_equipment_default" />
+
+                <TextView
+                    android:id="@+id/tv_exceptional_used_item_equipment_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@string/text_exceptional_used"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white1"
+                    android:textSize="12sp"
+                    android:visibility="@{vm.characterLastItemEquipment.isAbleToExceptionalForce ? (vm.characterLastItemEquipment.isExceptionalForced ? View.VISIBLE : View.GONE) : View.GONE}"
+                    app:layout_constraintEnd_toStartOf="@id/gl_right_item_equipment_detail"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_item_equipment_detail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_exceptional_attack_magic_value_item_equipment_default" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier_exceptional_used_item_equipment_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierAllowsGoneWidgets="true"
+                    app:barrierDirection="bottom"
+                    app:barrierMargin="4dp"
+                    app:constraint_referenced_ids="tv_exceptional_used_item_equipment_detail"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_exceptional_used_item_equipment_detail" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_dotted_sixth_item_equipment_default"
+                    android:layout_width="0dp"
+                    android:layout_height="3dp"
+                    android:layout_marginBottom="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_dotted"
+                    android:visibility="@{(vm.characterLastItemEquipment.itemSoulName == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/barrier_exceptional_used_item_equipment_detail" />
 
                 <TextView
                     android:id="@+id/tv_soul_name_item_equipment_detail"
@@ -722,7 +880,7 @@
                     android:visibility="@{(vm.characterLastItemEquipment.itemSoulName == null) ? View.GONE : View.VISIBLE}"
                     app:layout_constraintEnd_toStartOf="@id/gl_right_item_equipment_detail"
                     app:layout_constraintStart_toEndOf="@id/gl_left_item_equipment_detail"
-                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_fifth_item_equipment_default" />
+                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_sixth_item_equipment_default" />
 
                 <TextView
                     android:id="@+id/tv_soul_option_description_item_equipment_detail"
@@ -739,7 +897,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_soul_name_item_equipment_detail" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_dotted_sixth_item_equipment_default"
+                    android:id="@+id/iv_dotted_seventh_item_equipment_default"
                     android:layout_width="0dp"
                     android:layout_height="3dp"
                     android:layout_marginTop="8dp"
@@ -764,7 +922,7 @@
                     android:visibility="@{(vm.characterLastItemEquipment.itemDescription == null) ? View.GONE : View.VISIBLE}"
                     app:layout_constraintEnd_toStartOf="@id/gl_right_item_equipment_detail"
                     app:layout_constraintStart_toEndOf="@id/gl_left_item_equipment_detail"
-                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_sixth_item_equipment_default" />
+                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_seventh_item_equipment_default" />
 
                 <TextView
                     android:id="@+id/tv_seedring_description_item_equipment_detail"
@@ -785,7 +943,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    app:layout_constraintGuide_end="16dp" />
+                    app:layout_constraintGuide_end="16dp"
+                    tools:ignore="TooManyViews" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

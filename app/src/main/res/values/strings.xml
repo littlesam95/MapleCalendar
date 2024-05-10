@@ -154,6 +154,11 @@
     <string name="text_cuttable_count">가위 사용 가능 횟수 : </string>
     <string name="text_potential">잠재옵션</string>
     <string name="text_additional_potential">에디셔널 잠재옵션</string>
+    <string name="text_exceptional">익셉셔널 강화</string>
+    <string name="text_exceptional_able">익셉셔널 강화가 가능합니다. (최대 : 1회)</string>
+    <string name="text_exceptional_used">익셉셔널 강화 1회 적용 (최대 1회 강화 가능)</string>
+    <string name="text_exceptional_hp_mp">최대 HP / 최대 MP : +</string>
+    <string name="text_exceptional_attack_magic_power">공격력 / 마력 : +</string>
 
     <string name="message_network_error">네트워크에 오류가 있어요!</string>
     <string name="message_bad_request">잘못된 요청이에요!</string>

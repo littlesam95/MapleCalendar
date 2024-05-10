@@ -14,6 +14,7 @@ object ItemEquipmentDataGenerator {
             itemEquipmentPart = itemEquipment.itemEquipmentPart,
             equipmentSlot = itemEquipment.equipmentSlot,
             itemName = itemEquipment.itemName,
+            itemIcon = itemEquipment.itemIcon,
             itemDescription = itemEquipment.itemDescription,
             itemShapeName = itemEquipment.itemShapeName,
             itemShapeIcon = itemEquipment.itemShapeIcon,

@@ -18,6 +18,7 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
         val itemEquipmentPart: String = "",
         val equipmentSlot: String = "",
         val itemName: String? = null,
+        val itemIcon: String? = null,
         val itemDescription: String? = null,
         val itemShapeName: String = "",
         val itemShapeIcon: String? = null,
@@ -195,8 +196,24 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
             }
         }
         val maxPotentialGrade: String? = getMaxPotential()
-        val itemIcon: Int = getItemIconBackground()
-        val itemIconTag: Int = getItemIconTagBackground()
+        val itemIconBackground: Int = getItemIconBackgroundId()
+        val itemIconTag: Int = getItemIconTagId()
+        val isAbleToExceptionalForce: Boolean = when (itemName) {
+            "몽환의 벨트", "루즈 컨트롤 머신 마크", "마력이 깃든 안대", "커맨더 포스 이어링" -> true
+
+            else -> false
+        }
+        val isExceptionalForced: Boolean = when (isAbleToExceptionalForce) {
+            true -> {
+                when (itemExceptionalOption.itemExceptionalStr) {
+                    "0" -> false
+
+                    else -> true
+                }
+            }
+
+            false -> false
+        }
         val isFirstStarforceVisible: Boolean = (maxStarforceValue >= 1)
         val isSecondStarforceVisible: Boolean = (maxStarforceValue >= 16)
         val seedringDescription: String? = when (itemSpecialRingLevel) {
@@ -268,7 +285,7 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
             }
         }
 
-        private fun getItemIconBackground(): Int {
+        private fun getItemIconBackgroundId(): Int {
             val potential = potentialGradeMap.getValue(potentialOptionGrade.toString())
             val additionalPotential =
                 potentialGradeMap.getValue(additionalPotentialOptionGrade.toString())
@@ -286,7 +303,7 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
             }
         }
 
-        private fun getItemIconTagBackground(): Int {
+        private fun getItemIconTagId(): Int {
             val potential = potentialGradeMap.getValue(potentialOptionGrade.toString())
             val additionalPotential =
                 potentialGradeMap.getValue(additionalPotentialOptionGrade.toString())
