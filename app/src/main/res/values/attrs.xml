@@ -35,4 +35,18 @@
 
     </declare-styleable>
 
+    <declare-styleable name="HyperStatView">
+
+        <attr name="hyperStatViewStyle" format="reference" />
+
+        <attr name="hyperStatItemViewStyle" format="reference" />
+
+        <attr name="hyperStatItemHeight" format="dimension" />
+
+        <attr name="hyperStatItemTextSize" format="dimension" />
+
+        <attr name="hyperStatItemFontFamily" format="reference|integer" />
+
+    </declare-styleable>
+
 </resources>

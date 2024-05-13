@@ -83,4 +83,21 @@
 
     </style>
 
+    <!-- HyperStat Custom View -->
+    <style name="HyperStat" />
+
+    <style name="HyperStat.HyperStatViewStyle">
+
+        <item name="hyperStatItemHeight">14dp</item>
+
+    </style>
+
+    <style name="HyperStat.HyperStatItemViewStyle">
+
+        <item name="hyperStatItemTextSize">14sp</item>
+
+        <item name="hyperStatItemFontFamily">@font/pretendardbold</item>
+
+    </style>
+
 </resources>
