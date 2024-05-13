@@ -1,8 +1,10 @@
 package com.bodan.maplecalendar.domain.repository
 
+import com.bodan.maplecalendar.domain.entity.CharacterAbility
 import com.bodan.maplecalendar.domain.entity.CharacterDojang
 import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
 import com.bodan.maplecalendar.domain.entity.CharacterBasic
+import com.bodan.maplecalendar.domain.entity.CharacterHyperStat
 import com.bodan.maplecalendar.domain.entity.CharacterOcid
 import com.bodan.maplecalendar.domain.entity.CharacterPopularity
 import com.bodan.maplecalendar.domain.entity.CharacterUnion
@@ -24,4 +26,8 @@ interface MaplestoryRepository {
     suspend fun getCharacterPopularity(ocid: String, date: String?): Result<CharacterPopularity>
 
     suspend fun getCharacterDojang(ocid: String, date: String?): Result<CharacterDojang>
+
+    suspend fun getCharacterHyperStat(ocid: String, date: String?): Result<CharacterHyperStat>
+
+    suspend fun getCharacterAbility(ocid: String, date: String?): Result<CharacterAbility>
 }
