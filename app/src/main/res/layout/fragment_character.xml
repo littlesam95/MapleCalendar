@@ -480,13 +480,51 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/ib_hyper_stat_character"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rv_main_stat_character"
                 app:spanCount="2"
                 app:submitData="@{vm.characterEtcStatData}"
                 tools:listitem="@layout/item_character_etc_stat" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ib_hyper_stat_character"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/shape_hyper_stat_button"
+                android:fontFamily="@font/pretendardbold"
+                android:onClick="@{() -> vm.onHyperStatClicked()}"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="@string/text_hyper_stat"
+                android:textColor="@color/white1"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_etc_stat_character" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/ib_ability_character"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/shape_hyper_stat_button"
+                android:fontFamily="@font/pretendardbold"
+                android:onClick="@{() -> vm.onAbilityClicked()}"
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp"
+                android:text="@string/text_ability"
+                android:textColor="@color/white1"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/ib_hyper_stat_character"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ib_hyper_stat_character" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
