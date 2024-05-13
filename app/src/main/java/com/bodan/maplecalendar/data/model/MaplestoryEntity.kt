@@ -499,3 +499,80 @@ data class DojangEntity(
     @Json(name = "dojang_best_floor")
     val characterDojangBestFloor: Int = 0
 )
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class HyperStatEntity(
+    @Json(name = "hyper_stat_preset_1")
+    val hyperStatFirstPreset: List<HyperStatInfoEntity>,
+
+    @Json(name = "hyper_stat_preset_1_remain_point")
+    val hyperStatFirstPresetRemainPoint: Int,
+
+    @Json(name = "hyper_stat_preset_2")
+    val hyperStatSecondPreset: List<HyperStatInfoEntity>,
+
+    @Json(name = "hyper_stat_preset_2_remain_point")
+    val hyperStatSecondPresetRemainPoint: Int,
+
+    @Json(name = "hyper_stat_preset_3")
+    val hyperStatThirdPreset: List<HyperStatInfoEntity>,
+
+    @Json(name = "hyper_stat_preset_3_remain_point")
+    val hyperStatThirdPresetRemainPoint: Int
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class HyperStatInfoEntity(
+    @Json(name = "stat_type")
+    val statType: String,
+
+    @Json(name = "stat_point")
+    val statPoint: Int,
+
+    @Json(name = "stat_level")
+    val statLevel: Int,
+
+    @Json(name = "stat_increase")
+    val statIncrease: String
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class AbilityEntity(
+    @Json(name = "remain_fame")
+    val remainFame: Int,
+
+    @Json(name = "ability_preset_1")
+    val abilityFirstPreset: AbilityPresetEntity,
+
+    @Json(name = "ability_preset_2")
+    val abilitySecondPreset: AbilityPresetEntity,
+
+    @Json(name = "ability_preset_3")
+    val abilityThirdPreset: AbilityPresetEntity
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class AbilityPresetEntity(
+    @Json(name = "ability_preset_grade")
+    val abilityPresetGrade: String,
+
+    @Json(name = "ability_info")
+    val abilityInfo: AbilityInfoEntity
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class AbilityInfoEntity(
+    @Json(name = "ability_no")
+    val abilityNo: String,
+
+    @Json(name = "ability_grade")
+    val abilityGrade: String,
+
+    @Json(name = "ability_value")
+    val abilityValue: String
+)

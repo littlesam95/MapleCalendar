@@ -1,7 +1,9 @@
 package com.bodan.maplecalendar.data.api
 
+import com.bodan.maplecalendar.data.model.AbilityEntity
 import com.bodan.maplecalendar.data.model.BasicEntity
 import com.bodan.maplecalendar.data.model.DojangEntity
+import com.bodan.maplecalendar.data.model.HyperStatEntity
 import com.bodan.maplecalendar.data.model.ItemEquipmentEntity
 import com.bodan.maplecalendar.data.model.OcidEntity
 import com.bodan.maplecalendar.data.model.PopularityEntity
@@ -53,4 +55,16 @@ interface MaplestoryApi {
         @Query("ocid") ocid: String,
         @Query("date") date: String?
     ): Response<DojangEntity>
+
+    @GET("v1/character/hyper-stat")
+    suspend fun fetchCharacterHyperStat(
+        @Query("ocid") ocid: String,
+        @Query("date") date: String?
+    ): Response<HyperStatEntity>
+
+    @GET("v1/character/ability")
+    suspend fun fetchCharacterAbility(
+        @Query("ocid") ocid: String,
+        @Query("date") date: String?
+    ): Response<AbilityEntity>
 }

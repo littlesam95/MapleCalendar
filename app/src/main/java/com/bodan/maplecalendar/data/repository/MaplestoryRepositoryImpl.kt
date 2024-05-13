@@ -1,16 +1,20 @@
 package com.bodan.maplecalendar.data.repository
 
+import com.bodan.maplecalendar.data.mapper.CharacterAbilityMapper
 import com.bodan.maplecalendar.domain.entity.CharacterDojang
 import com.bodan.maplecalendar.domain.entity.CharacterPopularity
 import com.bodan.maplecalendar.domain.entity.CharacterUnion
 import com.bodan.maplecalendar.data.mapper.CharacterBasicMapper
 import com.bodan.maplecalendar.data.mapper.CharacterDojangMapper
+import com.bodan.maplecalendar.data.mapper.CharacterHyperStatMapper
 import com.bodan.maplecalendar.data.mapper.CharacterItemEquipmentMapper
 import com.bodan.maplecalendar.data.mapper.CharacterOcidMapper
 import com.bodan.maplecalendar.data.mapper.CharacterPopularityMapper
 import com.bodan.maplecalendar.data.mapper.CharacterStatMapper
 import com.bodan.maplecalendar.data.mapper.CharacterUnionMapper
+import com.bodan.maplecalendar.domain.entity.CharacterAbility
 import com.bodan.maplecalendar.domain.entity.CharacterBasic
+import com.bodan.maplecalendar.domain.entity.CharacterHyperStat
 import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
 import com.bodan.maplecalendar.domain.entity.CharacterOcid
 import com.bodan.maplecalendar.domain.entity.FinalStat
@@ -134,6 +138,44 @@ class MaplestoryRepositoryImpl @Inject constructor(
             val body = response.body()
             if (response.isSuccessful && (body != null)) {
                 Result.success(CharacterDojangMapper(body))
+            } else {
+                Result.error(response.errorBody().toString(), null)
+            }
+        } catch (e: Exception) {
+            Result.fail()
+        }
+
+    override suspend fun getCharacterHyperStat(
+        ocid: String,
+        date: String?
+    ): Result<CharacterHyperStat> =
+        try {
+            val response = withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                maplestoryRemoteDataSource.getCharacterHyperStat(ocid, date)
+            }
+
+            val body = response.body()
+            if (response.isSuccessful && (body != null)) {
+                Result.success(CharacterHyperStatMapper(body))
+            } else {
+                Result.error(response.errorBody().toString(), null)
+            }
+        } catch (e: Exception) {
+            Result.fail()
+        }
+
+    override suspend fun getCharacterAbility(
+        ocid: String,
+        date: String?
+    ): Result<CharacterAbility> =
+        try {
+            val response = withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                maplestoryRemoteDataSource.getCharacterAbility(ocid, date)
+            }
+
+            val body = response.body()
+            if (response.isSuccessful && (body != null)) {
+                Result.success(CharacterAbilityMapper(body))
             } else {
                 Result.error(response.errorBody().toString(), null)
             }
