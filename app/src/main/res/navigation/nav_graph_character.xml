@@ -11,6 +11,14 @@
         android:label="@string/name_menu_character"
         tools:layout="@layout/fragment_character">
 
+        <action
+            android:id="@+id/action_character_to_hyper_stat"
+            app:destination="@id/fragment_hyper_stat" />
+
+        <action
+            android:id="@+id/action_character_to_ability"
+            app:destination="@id/fragment_ability" />
+
     </fragment>
 
     <fragment
@@ -29,5 +37,15 @@
         android:id="@+id/fragment_item_equipment_detail"
         android:name="com.bodan.maplecalendar.presentation.views.equipment.ItemEquipmentDetailFragment"
         android:label="@string/name_menu_item_equipment_detail" />
+
+    <dialog
+        android:id="@+id/fragment_hyper_stat"
+        android:name="com.bodan.maplecalendar.presentation.views.hyperstat.HyperStatFragment"
+        android:label="@string/name_hyper_stat" />
+
+    <dialog
+        android:id="@+id/fragment_ability"
+        android:name="com.bodan.maplecalendar.presentation.views.ability.AbilityFragment"
+        android:label="@string/name_ability" />
 
 </navigation>

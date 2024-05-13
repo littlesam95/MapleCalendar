@@ -3,6 +3,7 @@ package com.bodan.maplecalendar.presentation.views.character
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentCharacterBinding
 import com.bodan.maplecalendar.presentation.config.BaseFragment
@@ -68,5 +69,15 @@ class CharacterFragment : BaseFragment<FragmentCharacterBinding>(R.layout.fragme
         is CharacterUiEvent.SetDarkMode -> {
             setDarkMode()
         }
+
+        is CharacterUiEvent.GetHyperStat -> {
+            findNavController().navigate(R.id.action_character_to_hyper_stat)
+        }
+
+        is CharacterUiEvent.GetAbility -> {
+            findNavController().navigate(R.id.action_character_to_ability)
+        }
+
+        else -> {}
     }
 }

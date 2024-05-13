@@ -1,6 +1,9 @@
 <resources>
+
+    <!-- App Name -->
     <string name="app_name">메이플 캘린더</string>
 
+    <!-- Component Name -->
     <string name="name_menu_home">Home</string>
     <string name="name_menu_calendar">Calendar</string>
     <string name="name_menu_setting">Setting</string>
@@ -11,7 +14,10 @@
     <string name="name_menu_day_event">Events of Date</string>
     <string name="name_menu_item_equipment_detail">Item Equipment Detail</string>
     <string name="name_search_date">Search Date</string>
+    <string name="name_hyper_stat">Hyper Stat</string>
+    <string name="name_ability">Ability</string>
 
+    <!-- Calendar -->
     <string name="text_nothing">-</string>
     <string name="text_year">년</string>
     <string name="text_sunday">일</string>
@@ -21,6 +27,8 @@
     <string name="text_thursday">목</string>
     <string name="text_friday">금</string>
     <string name="text_saturday">토</string>
+
+    <!-- Lobby -->
     <string name="text_today_event">오늘 진행중인 이벤트는…</string>
     <string name="text_specific_date_event">에 진행중인 이벤트는…</string>
     <string name="text_character_info">에 대한 정보</string>
@@ -67,6 +75,8 @@
     <string name="text_today_todo_list_finish">완료한 메할일</string>
     <string name="text_light_mode">Light Mode</string>
     <string name="text_dark_mode">Dark Mode</string>
+
+    <!-- Character Info -->
     <string name="text_title_character_info">CHARACTER INFO</string>
     <string name="text_title_character_stat">STAT</string>
     <string name="text_character_stat">스탯</string>
@@ -105,6 +115,8 @@
     <string name="text_character_jump">점프력</string>
     <string name="text_character_stance">스탠스</string>
     <string name="text_character_attack_speed">공격 속도</string>
+
+    <!-- Equipment -->
     <string name="text_title_equipment">EQUIPMENT INVENTORY</string>
     <string name="text_preset_1">PRESET 1</string>
     <string name="text_preset_2">PRESET 2</string>
@@ -160,6 +172,17 @@
     <string name="text_exceptional_hp_mp">최대 HP / 최대 MP : +</string>
     <string name="text_exceptional_attack_magic_power">공격력 / 마력 : +</string>
 
+    <!-- Hyper Stat -->
+    <string name="text_hyper_stat">하이퍼 스탯</string>
+    <string name="text_title_hyper_stat">HYPER STAT</string>
+    <string name="text_hyper_stat_remain_point">POINT</string>
+
+    <!-- Ability -->
+    <string name="text_ability">어빌리티</string>
+    <string name="text_title_ability">ABILITY</string>
+    <string name="text_ability_remain_point">명성치</string>
+
+    <!-- Message -->
     <string name="message_network_error">네트워크에 오류가 있어요!</string>
     <string name="message_bad_request">잘못된 요청이에요!</string>
     <string name="message_forbidden">접근이 거부되었어요!</string>
@@ -173,6 +196,7 @@
     <string name="message_alarm_call">매일 0시에 이벤트 종료 현황을 알려드려요!</string>
     <string name="message_alarm_cancel">이벤트 알리미를 취소했어요!</string>
 
+    <!-- Content Description -->
     <string name="description_character_profile">캐릭터 프로필 이미지</string>
     <string name="description_fab_dark_mode">다크 모드 전환 버튼</string>
     <string name="description_change_month_prev">달력 이전 월 변경 버튼</string>

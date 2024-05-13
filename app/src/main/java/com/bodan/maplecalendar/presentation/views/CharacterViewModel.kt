@@ -3,11 +3,14 @@ package com.bodan.maplecalendar.presentation.views
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bodan.maplecalendar.app.MainApplication
+import com.bodan.maplecalendar.domain.entity.CharacterAbility
 import com.bodan.maplecalendar.domain.entity.CharacterDojang
 import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
 import com.bodan.maplecalendar.domain.entity.CharacterPopularity
 import com.bodan.maplecalendar.domain.entity.CharacterUnion
 import com.bodan.maplecalendar.domain.entity.CharacterBasic
+import com.bodan.maplecalendar.domain.entity.CharacterHyperStat
+import com.bodan.maplecalendar.domain.entity.CharacterHyperStatInfo
 import com.bodan.maplecalendar.domain.usecase.GetCharacterBasicUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterDojangUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterItemEquipmentUseCase
@@ -24,12 +27,16 @@ import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertDo
 import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertPercentFormat
 import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertPowerFormat
 import com.bodan.maplecalendar.domain.entity.Status
+import com.bodan.maplecalendar.domain.usecase.GetCharacterAbilityUseCase
+import com.bodan.maplecalendar.domain.usecase.GetCharacterHyperStatUseCase
 import com.bodan.maplecalendar.presentation.views.character.CharacterUiEvent
 import com.bodan.maplecalendar.presentation.views.character.CharacterUiState
+import com.bodan.maplecalendar.presentation.views.character.OnCharacterClickListener
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentDetailUiState
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentUiEvent
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentUiState
 import com.bodan.maplecalendar.presentation.views.equipment.OnItemEquipmentClickListener
+import com.bodan.maplecalendar.presentation.views.hyperstat.HyperStatUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
@@ -48,8 +55,10 @@ class CharacterViewModel @Inject constructor(
     private val getCharacterItemEquipmentUseCase: GetCharacterItemEquipmentUseCase,
     private val getCharacterUnionUseCase: GetCharacterUnionUseCase,
     private val getCharacterPopularityUseCase: GetCharacterPopularityUseCase,
-    private val getCharacterDojangUseCase: GetCharacterDojangUseCase
-) : ViewModel(), OnItemEquipmentClickListener {
+    private val getCharacterDojangUseCase: GetCharacterDojangUseCase,
+    private val getCharacterHyperStatUseCase: GetCharacterHyperStatUseCase,
+    private val getCharacterAbilityUseCase: GetCharacterAbilityUseCase
+) : ViewModel(), OnItemEquipmentClickListener, OnCharacterClickListener {
 
     private val dateFormatConverter = DateFormatConverter()
 
@@ -129,6 +138,18 @@ class CharacterViewModel @Inject constructor(
 
     private val isCharacterItemEquipmentSelected = MutableStateFlow<Boolean>(false)
 
+    private val _characterHyperStat = MutableStateFlow<CharacterHyperStat?>(null)
+    val characterHyperStat = _characterHyperStat.asStateFlow()
+
+    private val _characterHyperStatData = MutableStateFlow<List<List<CharacterHyperStatInfo>>>(listOf())
+    val characterHyperStatData = _characterHyperStatData.asStateFlow()
+
+    private val _characterHyperStatPreset = MutableStateFlow<Int>(0)
+    val characterHyperStatPreset = _characterHyperStatPreset.asStateFlow()
+
+    private val _characterAbility = MutableStateFlow<CharacterAbility?>(null)
+    val characterAbility = _characterAbility.asStateFlow()
+
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
     val characterUiEvent = _characterUiEvent.asSharedFlow()
 
@@ -164,6 +185,26 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
+    override fun onHyperStatClicked() {
+        viewModelScope.launch {
+            _characterUiEvent.emit(CharacterUiEvent.GetHyperStat)
+            _characterHyperStatPreset.value = 1
+            val newCharacterHyperStatData = mutableListOf<List<CharacterHyperStatInfo>>()
+            _characterHyperStat.value?.let { hyperStat ->
+                newCharacterHyperStatData.add(hyperStat.hyperStatFirstPreset)
+                newCharacterHyperStatData.add(hyperStat.hyperStatSecondPreset)
+                newCharacterHyperStatData.add(hyperStat.hyperStatThirdPreset)
+            }
+            _characterHyperStatData.value = newCharacterHyperStatData
+        }
+    }
+
+    override fun onAbilityClicked() {
+        viewModelScope.launch {
+            _characterUiEvent.emit(CharacterUiEvent.GetAbility)
+        }
+    }
+
     private fun setToday(): Deferred<Unit> {
         val deferred = viewModelScope.async {
             todayFormatted.value = dateFormatConverter.todayFormatted()
@@ -182,7 +223,7 @@ class CharacterViewModel @Inject constructor(
         _characterName.value = MainApplication.mySharedPreferences.getNickname("characterName", "")
     }
 
-    private fun getCharacterOcid() {
+    private fun setCharacterOcid() {
         viewModelScope.launch {
             val characterOcidResponse =
                 getCharacterOcidUseCase.getCharacterOcid(characterName.value)
@@ -192,12 +233,14 @@ class CharacterViewModel @Inject constructor(
                     characterOcidResponse.data?.let { characterOcid ->
                         this@CharacterViewModel.characterOcid.value = characterOcid.ocid
                     }
-                    getCharacterBasic()
-                    getCharacterStat()
-                    getCharacterEquipment()
-                    getCharacterUnion()
-                    getCharacterPopularity()
-                    getCharacterDojang()
+                    setCharacterBasic()
+                    setCharacterStat()
+                    setCharacterEquipment()
+                    setCharacterUnion()
+                    setCharacterPopularity()
+                    setCharacterDojang()
+                    setCharacterHyperStat()
+                    setCharacterAbility()
                 }
 
                 else -> {
@@ -207,7 +250,7 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun getCharacterBasic() {
+    private fun setCharacterBasic() {
         viewModelScope.launch {
             val characterBasicResponse = characterOcid.value?.let { ocid ->
                 getCharacterBasicUseCase.getCharacterBasic(ocid, searchDate.value)
@@ -235,7 +278,7 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun getCharacterStat() {
+    private fun setCharacterStat() {
         viewModelScope.launch {
             val characterStatResponse =
                 characterOcid.value?.let { ocid ->
@@ -537,7 +580,7 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun getCharacterEquipment() {
+    private fun setCharacterEquipment() {
         viewModelScope.launch {
             val characterItemEquipmentResponse = characterOcid.value?.let { ocid ->
                 getCharacterItemEquipmentUseCase.getCharacterItemEquipment(ocid, searchDate.value)
@@ -561,7 +604,7 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun getCharacterUnion() {
+    private fun setCharacterUnion() {
         viewModelScope.launch {
             val characterUnionResponse = characterOcid.value?.let { ocid ->
                 getCharacterUnionUseCase.getCharacterUnion(ocid, searchDate.value)
@@ -582,7 +625,7 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun getCharacterPopularity() {
+    private fun setCharacterPopularity() {
         viewModelScope.launch {
             val characterPopularityResponse = characterOcid.value?.let { ocid ->
                 getCharacterPopularityUseCase.getCharacterPopularity(ocid, searchDate.value)
@@ -604,7 +647,7 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun getCharacterDojang() {
+    private fun setCharacterDojang() {
         viewModelScope.launch {
             val characterDojangResponse = characterOcid.value?.let { ocid ->
                 getCharacterDojangUseCase.getCharacterDojang(ocid, searchDate.value)
@@ -626,11 +669,51 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
+    private fun setCharacterHyperStat() {
+        viewModelScope.launch {
+            val characterHyperStatResponse = characterOcid.value?.let { ocid ->
+                getCharacterHyperStatUseCase.getCharacterHyperStat(ocid, searchDate.value)
+            } ?: return@launch
+
+            when (characterHyperStatResponse.status) {
+                Status.SUCCESS -> {
+                    characterHyperStatResponse.data?.let { characterHyperStat ->
+                        _characterHyperStat.value = characterHyperStat
+                    }
+                }
+
+                else -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.InternalServerError)
+                }
+            }
+        }
+    }
+
+    private fun setCharacterAbility() {
+        viewModelScope.launch {
+            val characterAbilityResponse = characterOcid.value?.let { ocid ->
+                getCharacterAbilityUseCase.getCharacterAbility(ocid, searchDate.value)
+            } ?: return@launch
+
+            when (characterAbilityResponse.status) {
+                Status.SUCCESS -> {
+                    characterAbilityResponse.data?.let { characterAbility ->
+                        _characterAbility.value = characterAbility
+                    }
+                }
+
+                else -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.InternalServerError)
+                }
+            }
+        }
+    }
+
     fun initState() {
         viewModelScope.launch {
             setToday().await()
             setCharacterName()
-            getCharacterOcid()
+            setCharacterOcid()
         }
     }
 

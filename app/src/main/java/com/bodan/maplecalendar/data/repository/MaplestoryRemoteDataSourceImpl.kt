@@ -1,8 +1,10 @@
 package com.bodan.maplecalendar.data.repository
 
 import com.bodan.maplecalendar.data.api.MaplestoryApi
+import com.bodan.maplecalendar.data.model.AbilityEntity
 import com.bodan.maplecalendar.data.model.BasicEntity
 import com.bodan.maplecalendar.data.model.DojangEntity
+import com.bodan.maplecalendar.data.model.HyperStatEntity
 import com.bodan.maplecalendar.data.model.ItemEquipmentEntity
 import com.bodan.maplecalendar.data.model.OcidEntity
 import com.bodan.maplecalendar.data.model.PopularityEntity
@@ -41,4 +43,13 @@ class MaplestoryRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getCharacterDojang(ocid: String, date: String?): Response<DojangEntity> =
         maplestoryApi.fetchCharacterDojang(ocid, date)
+
+    override suspend fun getCharacterHyperStat(
+        ocid: String,
+        date: String?
+    ): Response<HyperStatEntity> =
+        maplestoryApi.fetchCharacterHyperStat(ocid, date)
+
+    override suspend fun getCharacterAbility(ocid: String, date: String?): Response<AbilityEntity> =
+        maplestoryApi.fetchCharacterAbility(ocid, date)
 }
