@@ -529,13 +529,13 @@ data class HyperStatInfoEntity(
     val statType: String,
 
     @Json(name = "stat_point")
-    val statPoint: Int,
+    val statPoint: Int?,
 
     @Json(name = "stat_level")
     val statLevel: Int,
 
     @Json(name = "stat_increase")
-    val statIncrease: String
+    val statIncrease: String?
 )
 
 @Keep
