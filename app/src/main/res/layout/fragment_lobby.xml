@@ -349,6 +349,7 @@
                     android:adapter="@{listAdapter}"
                     android:elevation="10dp"
                     android:orientation="vertical"
+                    android:overScrollMode="never"
                     android:paddingTop="@dimen/rv_pd_top"
                     android:paddingBottom="@dimen/rv_pd_bottom"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
