@@ -16,10 +16,10 @@ class HyperStatAdapter(fm: FragmentActivity) : FragmentStateAdapter(fm) {
     override fun getItemId(position: Int): Long = (position - START_POSITION).toLong()
 
     override fun containsItem(itemId: Long): Boolean =
-        ((itemId >= START_POSITION) && (itemId <= TOTAL_PRESET_COUNT))
+        ((itemId >= START_POSITION) && (itemId < TOTAL_PRESET_COUNT))
 
     companion object {
         private const val TOTAL_PRESET_COUNT = 3
-        const val START_POSITION = 1
+        const val START_POSITION = 0
     }
 }

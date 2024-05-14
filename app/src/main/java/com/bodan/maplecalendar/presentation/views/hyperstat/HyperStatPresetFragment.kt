@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bodan.maplecalendar.databinding.FragmentHyperStatPresetBinding
 import com.bodan.maplecalendar.presentation.views.CharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class HyperStatPresetFragment : Fragment() {
@@ -21,20 +23,23 @@ class HyperStatPresetFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentHyperStatPresetBinding.inflate(inflater, container, false)
+        binding = FragmentHyperStatPresetBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = viewLifecycleOwner
+            vm = viewModel
+
+            arguments?.let { argument ->
+                val pos = argument.getInt("preset")
+
+                with(rvHyperStatPreset) {
+                    layoutManager = LinearLayoutManager(requireActivity())
+                    Timber.d("${viewModel.characterHyperStatData.value[pos]}")
+                    adapter = HyperStatInfoListAdapter(viewModel.characterHyperStatData.value[pos])
+                    setHasFixedSize(false)
+                }
+            }
+        }
 
         return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.vm = viewModel
-
-        arguments?.let { argument ->
-            val pos = argument.getInt("preset")
-            binding.hyperStatCustomView.initHyperStatView(viewModel.characterHyperStatData.value[pos])
-        }
     }
 
     companion object {

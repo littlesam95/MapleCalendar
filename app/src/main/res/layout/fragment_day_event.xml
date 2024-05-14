@@ -16,9 +16,9 @@
     </data>
 
     <LinearLayout
-        android:gravity="center"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="320dp"
@@ -62,6 +62,7 @@
                 android:adapter="@{listAdapter}"
                 android:background="@drawable/shape_background"
                 android:orientation="vertical"
+                android:overScrollMode="never"
                 android:paddingStart="16dp"
                 android:paddingTop="8dp"
                 android:paddingEnd="16dp"

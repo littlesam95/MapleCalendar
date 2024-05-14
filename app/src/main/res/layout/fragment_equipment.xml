@@ -19,7 +19,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="12dp"
+        android:overScrollMode="never">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -87,7 +88,7 @@
                         android:layout_margin="4dp"
                         android:background="@{(vm.characterItemEquipmentPreset == 1) ? @color/equipment_legendary : @color/level}"
                         android:fontFamily="@font/pretendardregular"
-                        android:onClick="@{() -> vm.getCharacterEquipmentFirstPreset()}"
+                        android:onClick="@{() -> vm.setCharacterEquipmentFirstPreset()}"
                         android:text="@string/text_preset_1"
                         android:textSize="11sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -101,7 +102,7 @@
                         android:layout_margin="4dp"
                         android:background="@{(vm.characterItemEquipmentPreset == 2) ? @color/equipment_legendary : @color/level}"
                         android:fontFamily="@font/pretendardregular"
-                        android:onClick="@{() -> vm.getCharacterEquipmentSecondPreset()}"
+                        android:onClick="@{() -> vm.setCharacterEquipmentSecondPreset()}"
                         android:text="@string/text_preset_2"
                         android:textSize="11sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -115,7 +116,7 @@
                         android:layout_margin="4dp"
                         android:background="@{(vm.characterItemEquipmentPreset == 3) ? @color/equipment_legendary : @color/level}"
                         android:fontFamily="@font/pretendardregular"
-                        android:onClick="@{() -> vm.getCharacterEquipmentThirdPreset()}"
+                        android:onClick="@{() -> vm.setCharacterEquipmentThirdPreset()}"
                         android:text="@string/text_preset_3"
                         android:textSize="11sp"
                         app:layout_constraintBottom_toBottomOf="parent"
