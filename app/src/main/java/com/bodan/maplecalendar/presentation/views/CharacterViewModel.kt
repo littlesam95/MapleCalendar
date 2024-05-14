@@ -10,7 +10,6 @@ import com.bodan.maplecalendar.domain.entity.CharacterPopularity
 import com.bodan.maplecalendar.domain.entity.CharacterUnion
 import com.bodan.maplecalendar.domain.entity.CharacterBasic
 import com.bodan.maplecalendar.domain.entity.CharacterHyperStat
-import com.bodan.maplecalendar.domain.entity.CharacterHyperStatInfo
 import com.bodan.maplecalendar.domain.usecase.GetCharacterBasicUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterDojangUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterItemEquipmentUseCase
@@ -45,6 +44,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -138,17 +138,16 @@ class CharacterViewModel @Inject constructor(
 
     private val isCharacterItemEquipmentSelected = MutableStateFlow<Boolean>(false)
 
-    private val _characterHyperStat = MutableStateFlow<CharacterHyperStat?>(null)
-    val characterHyperStat = _characterHyperStat.asStateFlow()
+    private val characterHyperStat = MutableStateFlow<CharacterHyperStat?>(null)
 
-    private val _characterHyperStatData = MutableStateFlow<List<List<CharacterHyperStatInfo>>>(listOf())
+    private val _characterHyperStatData =
+        MutableStateFlow<List<List<HyperStatUiState>>>(listOf())
     val characterHyperStatData = _characterHyperStatData.asStateFlow()
 
-    private val _characterHyperStatPreset = MutableStateFlow<Int>(0)
-    val characterHyperStatPreset = _characterHyperStatPreset.asStateFlow()
+    private val _characterHyperStatRemainPoint = MutableStateFlow<String>("0")
+    val characterHyperStatRemainPoint = _characterHyperStatRemainPoint.asStateFlow()
 
-    private val _characterAbility = MutableStateFlow<CharacterAbility?>(null)
-    val characterAbility = _characterAbility.asStateFlow()
+    private val characterAbility = MutableStateFlow<CharacterAbility?>(null)
 
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
     val characterUiEvent = _characterUiEvent.asSharedFlow()
@@ -188,14 +187,6 @@ class CharacterViewModel @Inject constructor(
     override fun onHyperStatClicked() {
         viewModelScope.launch {
             _characterUiEvent.emit(CharacterUiEvent.GetHyperStat)
-            _characterHyperStatPreset.value = 1
-            val newCharacterHyperStatData = mutableListOf<List<CharacterHyperStatInfo>>()
-            _characterHyperStat.value?.let { hyperStat ->
-                newCharacterHyperStatData.add(hyperStat.hyperStatFirstPreset)
-                newCharacterHyperStatData.add(hyperStat.hyperStatSecondPreset)
-                newCharacterHyperStatData.add(hyperStat.hyperStatThirdPreset)
-            }
-            _characterHyperStatData.value = newCharacterHyperStatData
         }
     }
 
@@ -678,7 +669,8 @@ class CharacterViewModel @Inject constructor(
             when (characterHyperStatResponse.status) {
                 Status.SUCCESS -> {
                     characterHyperStatResponse.data?.let { characterHyperStat ->
-                        _characterHyperStat.value = characterHyperStat
+                        this@CharacterViewModel.characterHyperStat.value = characterHyperStat
+                        setHyperStatData()
                     }
                 }
 
@@ -687,6 +679,50 @@ class CharacterViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    private fun setHyperStatData() {
+        val newCharacterHyperStatData = mutableListOf<List<HyperStatUiState>>()
+        val hyperStatsFirstPreset = mutableListOf<HyperStatUiState>()
+        val hyperStatsSecondPreset = mutableListOf<HyperStatUiState>()
+        val hyperStatsThirdPreset = mutableListOf<HyperStatUiState>()
+
+        characterHyperStat.value?.let { hyperStat ->
+            hyperStat.hyperStatFirstPreset.forEach { hyperStatInfo ->
+                Timber.d("$hyperStatInfo")
+                hyperStatsFirstPreset.add(
+                    HyperStatUiState.HyperStatInfo(
+                        hyperStatInfo.statType,
+                        hyperStatInfo.statLevel.toString()
+                    )
+                )
+            }
+            newCharacterHyperStatData.add(hyperStatsFirstPreset.toList())
+            Timber.d("$newCharacterHyperStatData")
+
+            hyperStat.hyperStatSecondPreset.forEach { hyperStatInfo ->
+                hyperStatsSecondPreset.add(
+                    HyperStatUiState.HyperStatInfo(
+                        hyperStatInfo.statType,
+                        hyperStatInfo.statLevel.toString()
+                    )
+                )
+            }
+            newCharacterHyperStatData.add(hyperStatsSecondPreset.toList())
+
+            hyperStat.hyperStatThirdPreset.forEach { hyperStatInfo ->
+                hyperStatsThirdPreset.add(
+                    HyperStatUiState.HyperStatInfo(
+                        hyperStatInfo.statType,
+                        hyperStatInfo.statLevel.toString()
+                    )
+                )
+            }
+            newCharacterHyperStatData.add(hyperStatsThirdPreset.toList())
+        }
+
+        _characterHyperStatData.value = newCharacterHyperStatData.toList()
+        Timber.d("${_characterHyperStatData.value}")
     }
 
     private fun setCharacterAbility() {
@@ -698,7 +734,7 @@ class CharacterViewModel @Inject constructor(
             when (characterAbilityResponse.status) {
                 Status.SUCCESS -> {
                     characterAbilityResponse.data?.let { characterAbility ->
-                        _characterAbility.value = characterAbility
+                        this@CharacterViewModel.characterAbility.value = characterAbility
                     }
                 }
 
@@ -717,7 +753,7 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    fun getCharacterEquipmentFirstPreset() {
+    fun setCharacterEquipmentFirstPreset() {
         characterItemEquipment.value?.let { characterItemEquipment ->
             _characterItemEquipmentData.value =
                 itemEquipmentDataSet(characterItemEquipment.itemEquipmentsFirstPreset)
@@ -725,7 +761,7 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    fun getCharacterEquipmentSecondPreset() {
+    fun setCharacterEquipmentSecondPreset() {
         characterItemEquipment.value?.let { characterItemEquipment ->
             _characterItemEquipmentData.value =
                 itemEquipmentDataSet(characterItemEquipment.itemEquipmentsSecondPreset)
@@ -733,11 +769,32 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    fun getCharacterEquipmentThirdPreset() {
+    fun setCharacterEquipmentThirdPreset() {
         characterItemEquipment.value?.let { characterItemEquipment ->
             _characterItemEquipmentData.value =
                 itemEquipmentDataSet(characterItemEquipment.itemEquipmentsThirdPreset)
             _characterItemEquipmentPreset.value = 3
+        }
+    }
+
+    fun setCharacterHyperStatRemainPoint(preset: Int) {
+        characterHyperStat.value?.let { hyperStat ->
+            when (preset) {
+                1 -> {
+                    _characterHyperStatRemainPoint.value =
+                        hyperStat.hyperStatFirstPresetRemainPoint.toString()
+                }
+
+                2 -> {
+                    _characterHyperStatRemainPoint.value =
+                        hyperStat.hyperStatSecondPresetRemainPoint.toString()
+                }
+
+                3 -> {
+                    _characterHyperStatRemainPoint.value =
+                        hyperStat.hyperStatThirdPresetRemainPoint.toString()
+                }
+            }
         }
     }
 }
