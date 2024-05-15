@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -12,12 +13,162 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_character">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_left_ability"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top_ability"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <TextView
+                android:id="@+id/tv_title_ability"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendardbold"
+                android:text="@string/text_title_ability"
+                android:textColor="@color/character_info"
+                android:textSize="@dimen/title_font_size_big"
+                app:layout_constraintBottom_toTopOf="@id/mcv_first_ability"
+                app:layout_constraintStart_toEndOf="@id/gl_left_ability"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_ability" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/ib_ability"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/shape_close"
+                android:onClick="@{() -> vm.closeAbility()}"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_ability"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_ability"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_ability" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_first_ability"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/character"
+                app:cardCornerRadius="1dp"
+                app:layout_constraintBottom_toTopOf="@id/mcv_second_ability"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_ability"
+                app:layout_constraintStart_toEndOf="@id/gl_left_ability"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_ability"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/vp_ability"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/shape_default_stat"
+                        app:layout_constraintBottom_toTopOf="@id/tl_ability"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tl_ability"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/character"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/vp_ability"
+                        app:tabBackground="@drawable/shape_hyper_stat_tab"
+                        app:tabGravity="center"
+                        app:tabIndicatorHeight="0dp"
+                        app:tabTextAppearance="@style/HyperStatTabLayoutTextSize"
+                        app:tabTextColor="@color/white1" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_second_ability"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                app:cardBackgroundColor="@color/character"
+                app:cardCornerRadius="1dp"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_ability"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_ability"
+                app:layout_constraintStart_toEndOf="@id/gl_left_ability"
+                app:layout_constraintTop_toBottomOf="@id/mcv_first_ability"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tv_remain_point_ability"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendardbold"
+                        android:text="@string/text_ability_remain_point"
+                        android:textColor="@color/white1"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_remain_point_value_ability"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="36dp"
+                        android:background="@drawable/shape_default_stat"
+                        android:fontFamily="@font/pretendardregular"
+                        android:padding="8dp"
+                        android:textAlignment="viewEnd"
+                        android:textColor="@color/white1"
+                        android:textSize="14sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tv_remain_point_ability"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_bottom_ability"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_right_ability"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
