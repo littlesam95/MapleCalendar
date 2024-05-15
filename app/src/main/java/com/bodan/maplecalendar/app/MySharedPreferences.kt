@@ -31,6 +31,14 @@ class MySharedPreferences {
         preferences.edit().putString(key, defValue).apply()
     }
 
+    fun getOcid(key: String, defValue: String): String {
+        return preferences.getString(key, defValue).toString()
+    }
+
+    fun setOcid(key: String, defValue: String) {
+        preferences.edit().putString(key, defValue).apply()
+    }
+
     fun getThemeMode(key: String, defValue: String): String {
         return preferences.getString(key, defValue).toString()
     }

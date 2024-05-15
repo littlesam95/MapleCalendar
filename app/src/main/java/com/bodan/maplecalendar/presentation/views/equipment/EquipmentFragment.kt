@@ -37,7 +37,11 @@ class EquipmentFragment : BaseFragment<FragmentEquipmentBinding>(R.layout.fragme
     }
 
     private fun handleUiEvent(event: EquipmentUiEvent) = when (event) {
-        is EquipmentUiEvent.GetItemEquipmentOption -> {
+        is EquipmentUiEvent.WaitItemEquipmentDetail -> {
+            showSnackBar(R.string.text_loading_equipment)
+        }
+
+        is EquipmentUiEvent.GetItemEquipmentDetail -> {
             findNavController().navigate(R.id.action_equipment_to_item_equipment_detail)
         }
 

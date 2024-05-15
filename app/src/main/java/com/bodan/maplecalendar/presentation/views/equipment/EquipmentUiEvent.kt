@@ -2,7 +2,9 @@ package com.bodan.maplecalendar.presentation.views.equipment
 
 sealed class EquipmentUiEvent {
 
-    data object GetItemEquipmentOption : EquipmentUiEvent()
+    data object WaitItemEquipmentDetail : EquipmentUiEvent()
+
+    data object GetItemEquipmentDetail : EquipmentUiEvent()
 
     data object CloseItemEquipmentDetail : EquipmentUiEvent()
 

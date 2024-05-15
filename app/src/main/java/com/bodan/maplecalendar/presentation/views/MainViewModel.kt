@@ -190,6 +190,7 @@ class MainViewModel @Inject constructor(
                 Status.SUCCESS -> {
                     characterOcidResponse.data?.let { characterOcid ->
                         this@MainViewModel.characterOcid.value = characterOcid.ocid
+                        MainApplication.mySharedPreferences.setOcid("ocid", characterOcid.ocid)
                     }
                     getCharacterBasic()
                 }

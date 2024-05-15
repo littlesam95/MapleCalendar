@@ -10,13 +10,12 @@ import com.bodan.maplecalendar.databinding.ItemEquipmentOptionBinding
 class EquipmentListAdapter(private val onItemEquipmentClickListener: OnItemEquipmentClickListener) :
     ListAdapter<EquipmentUiState, RecyclerView.ViewHolder>(equipmentUiStateDiffUtil) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return ItemEquipmentOptionViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        ItemEquipmentOptionViewHolder(
             ItemEquipmentOptionBinding.inflate(
                 LayoutInflater.from(parent.context), parent, false
             )
         )
-    }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         (holder as ItemEquipmentOptionViewHolder).bind(
@@ -26,6 +25,7 @@ class EquipmentListAdapter(private val onItemEquipmentClickListener: OnItemEquip
     }
 
     companion object {
+
         val equipmentUiStateDiffUtil = object : DiffUtil.ItemCallback<EquipmentUiState>() {
             override fun areItemsTheSame(oldItem: EquipmentUiState, newItem: EquipmentUiState) =
                 (oldItem.id == newItem.id)
@@ -35,9 +35,13 @@ class EquipmentListAdapter(private val onItemEquipmentClickListener: OnItemEquip
         }
     }
 
-    class ItemEquipmentOptionViewHolder(private val binding: ItemEquipmentOptionBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ItemEquipmentOptionViewHolder(private val binding: ItemEquipmentOptionBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: EquipmentUiState.EquipmentOption, onClickListener: OnItemEquipmentClickListener) {
+        fun bind(
+            item: EquipmentUiState.EquipmentOption,
+            onClickListener: OnItemEquipmentClickListener
+        ) {
             binding.item = item
             binding.onItemEquipmentClickListener = onClickListener
         }
