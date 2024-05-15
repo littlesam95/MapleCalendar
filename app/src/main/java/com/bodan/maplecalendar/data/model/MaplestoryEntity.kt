@@ -561,7 +561,7 @@ data class AbilityPresetEntity(
     val abilityPresetGrade: String,
 
     @Json(name = "ability_info")
-    val abilityInfo: AbilityInfoEntity
+    val abilityInfo: List<AbilityInfoEntity>
 )
 
 @Keep

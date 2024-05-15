@@ -13,21 +13,20 @@ import com.bodan.maplecalendar.domain.entity.CharacterHyperStat
 import com.bodan.maplecalendar.domain.usecase.GetCharacterBasicUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterDojangUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterItemEquipmentUseCase
-import com.bodan.maplecalendar.domain.usecase.GetCharacterOcidUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterPopularityUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterStatUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterUnionUseCase
-import com.bodan.maplecalendar.presentation.utils.DateFormatConverter
 import com.bodan.maplecalendar.presentation.utils.ItemEquipmentDataGenerator.itemEquipmentDataSet
 import com.bodan.maplecalendar.presentation.utils.ItemEquipmentDetailOptionGenerator.itemEquipmentDetailOptionSet
-import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertAttackSpeedFormat
-import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertCommaFormat
 import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertDojangFormat
 import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertPercentFormat
 import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertPowerFormat
 import com.bodan.maplecalendar.domain.entity.Status
 import com.bodan.maplecalendar.domain.usecase.GetCharacterAbilityUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterHyperStatUseCase
+import com.bodan.maplecalendar.presentation.utils.StatGenerator.getDefaultStats
+import com.bodan.maplecalendar.presentation.utils.StatGenerator.getEtcStats
+import com.bodan.maplecalendar.presentation.utils.StatGenerator.getMainStats
 import com.bodan.maplecalendar.presentation.views.character.CharacterUiEvent
 import com.bodan.maplecalendar.presentation.views.character.CharacterUiState
 import com.bodan.maplecalendar.presentation.views.character.OnCharacterClickListener
@@ -35,21 +34,17 @@ import com.bodan.maplecalendar.presentation.views.equipment.EquipmentDetailUiSta
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentUiEvent
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentUiState
 import com.bodan.maplecalendar.presentation.views.equipment.OnItemEquipmentClickListener
-import com.bodan.maplecalendar.presentation.views.hyperstat.HyperStatUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class CharacterViewModel @Inject constructor(
-    private val getCharacterOcidUseCase: GetCharacterOcidUseCase,
     private val getCharacterBasicUseCase: GetCharacterBasicUseCase,
     private val getCharacterStatUseCase: GetCharacterStatUseCase,
     private val getCharacterItemEquipmentUseCase: GetCharacterItemEquipmentUseCase,
@@ -60,24 +55,8 @@ class CharacterViewModel @Inject constructor(
     private val getCharacterAbilityUseCase: GetCharacterAbilityUseCase
 ) : ViewModel(), OnItemEquipmentClickListener, OnCharacterClickListener {
 
-    private val dateFormatConverter = DateFormatConverter()
-
-    private val todayFormatted = MutableStateFlow<String>("")
-
-    private val currentYear = MutableStateFlow<Int>(0)
-
-    private val currentMonth = MutableStateFlow<Int>(0)
-
-    private val today = MutableStateFlow<String>("")
-
-    private val currentMinute = MutableStateFlow<Int>(-1)
-
-    private val searchDate = MutableStateFlow<String?>(null)
-
     private val _characterName = MutableStateFlow<String>("")
     val characterName = _characterName.asStateFlow()
-
-    private val characterOcid = MutableStateFlow<String?>(null)
 
     private val _characterBasic = MutableStateFlow<CharacterBasic?>(null)
     val characterBasic = _characterBasic.asStateFlow()
@@ -138,16 +117,14 @@ class CharacterViewModel @Inject constructor(
 
     private val isCharacterItemEquipmentSelected = MutableStateFlow<Boolean>(false)
 
-    private val characterHyperStat = MutableStateFlow<CharacterHyperStat?>(null)
-
-    private val _characterHyperStatData =
-        MutableStateFlow<List<List<HyperStatUiState>>>(listOf())
-    val characterHyperStatData = _characterHyperStatData.asStateFlow()
+    private val _characterHyperStat = MutableStateFlow<CharacterHyperStat?>(null)
+    val characterHyperStat = _characterHyperStat.asStateFlow()
 
     private val _characterHyperStatRemainPoint = MutableStateFlow<String>("0")
     val characterHyperStatRemainPoint = _characterHyperStatRemainPoint.asStateFlow()
 
-    private val characterAbility = MutableStateFlow<CharacterAbility?>(null)
+    private val _characterAbility = MutableStateFlow<CharacterAbility?>(null)
+    val characterAbility = _characterAbility.asStateFlow()
 
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
     val characterUiEvent = _characterUiEvent.asSharedFlow()
@@ -159,20 +136,25 @@ class CharacterViewModel @Inject constructor(
         if ((!isCharacterItemEquipmentSelected.value) && (item.itemName != null)) {
             viewModelScope.launch {
                 async {
-                    isCharacterItemEquipmentSelected.value = true
+                    _equipmentUiEvent.emit(EquipmentUiEvent.WaitItemEquipmentDetail)
                 }.await()
-                _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentOption)
-                _characterLastItemEquipment.value = null
-                _characterLastItemEquipmentOptions.value = null
-                _characterLastItemEquipment.value = item
-                _characterLastItemEquipmentOptions.value = itemEquipmentDetailOptionSet(
-                    item.itemTotalOption,
-                    item.itemBaseOption,
-                    item.itemAddOption,
-                    item.itemEtcOption,
-                    item.itemStarforceOption,
-                    item.itemExceptionalOption
-                )
+                async {
+                    isCharacterItemEquipmentSelected.value = true
+                    _characterLastItemEquipment.value = null
+                    _characterLastItemEquipmentOptions.value = null
+                    _characterLastItemEquipment.value = item
+                    _characterLastItemEquipmentOptions.value = itemEquipmentDetailOptionSet(
+                        item.itemTotalOption,
+                        item.itemBaseOption,
+                        item.itemAddOption,
+                        item.itemEtcOption,
+                        item.itemStarforceOption,
+                        item.itemExceptionalOption
+                    )
+                }.await()
+                async {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentDetail)
+                }.await()
             }
         }
     }
@@ -196,68 +178,14 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun setToday(): Deferred<Unit> {
-        val deferred = viewModelScope.async {
-            todayFormatted.value = dateFormatConverter.todayFormatted()
-            currentYear.value = dateFormatConverter.todayYear()
-            currentMonth.value = dateFormatConverter.todayMonth()
-            today.value = dateFormatConverter.todayOtherFormatted()
-            currentMinute.value =
-                ((dateFormatConverter.todayHour()) * 60 + dateFormatConverter.todayMinute())
-            searchDate.value = MainApplication.mySharedPreferences.getSearchDate("searchDate", null)
-        }
-
-        return deferred
-    }
-
-    private fun setCharacterName() {
-        _characterName.value = MainApplication.mySharedPreferences.getNickname("characterName", "")
-    }
-
-    private fun setCharacterOcid() {
+    private fun setCharacterBasic(ocid: String, searchDate: String?) {
         viewModelScope.launch {
-            val characterOcidResponse =
-                getCharacterOcidUseCase.getCharacterOcid(characterName.value)
-
-            when (characterOcidResponse.status) {
-                Status.SUCCESS -> {
-                    characterOcidResponse.data?.let { characterOcid ->
-                        this@CharacterViewModel.characterOcid.value = characterOcid.ocid
-                    }
-                    setCharacterBasic()
-                    setCharacterStat()
-                    setCharacterEquipment()
-                    setCharacterUnion()
-                    setCharacterPopularity()
-                    setCharacterDojang()
-                    setCharacterHyperStat()
-                    setCharacterAbility()
-                }
-
-                else -> {
-                    _characterUiEvent.emit(CharacterUiEvent.InternalServerError)
-                }
-            }
-        }
-    }
-
-    private fun setCharacterBasic() {
-        viewModelScope.launch {
-            val characterBasicResponse = characterOcid.value?.let { ocid ->
-                getCharacterBasicUseCase.getCharacterBasic(ocid, searchDate.value)
-            } ?: return@launch
-
+            val characterBasicResponse =
+                getCharacterBasicUseCase.getCharacterBasic(ocid, searchDate)
             when (characterBasicResponse.status) {
                 Status.SUCCESS -> {
                     characterBasicResponse.data?.let { characterBasic ->
-                        _characterBasic.value = CharacterBasic(
-                            characterLevel = characterBasic.characterLevel,
-                            characterClass = characterBasic.characterClass,
-                            worldName = characterBasic.worldName,
-                            characterGuildName = characterBasic.characterGuildName,
-                            characterImage = characterBasic.characterImage,
-                            characterGender = characterBasic.characterGender
-                        )
+                        _characterBasic.value = characterBasic
                         _characterLevel.value = characterBasic.characterLevel.toString()
                     }
                 }
@@ -269,155 +197,20 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun setCharacterStat() {
+    private fun setCharacterStat(ocid: String, searchDate: String?) {
         viewModelScope.launch {
-            val characterStatResponse =
-                characterOcid.value?.let { ocid ->
-                    getCharacterStatUseCase.getCharacterStat(ocid, searchDate.value)
-                } ?: return@launch
-
+            val characterStatResponse = getCharacterStatUseCase.getCharacterStat(ocid, searchDate)
             when (characterStatResponse.status) {
                 Status.SUCCESS -> {
                     characterStatResponse.data?.let { finalStats ->
-                        val newCharacterDefaultStatData =
-                            MutableList(3 * 2) { CharacterUiState.CharacterDefaultStat("", "") }
-                        val newCharacterMainStatData =
-                            MutableList(8 * 2) { CharacterUiState.CharacterMainStat("", "") }
-                        val newCharacterEtcStatData =
-                            MutableList(6 * 2) { CharacterUiState.CharacterEtcStat("", "") }
+                        val newCharacterDefaultStatData = getDefaultStats(finalStats)
+                        val newCharacterMainStatData = getMainStats(finalStats)
+                        val newCharacterEtcStatData = getEtcStats(finalStats)
 
                         finalStats.forEach { finalStat ->
                             when (finalStat.statName) {
                                 "전투력" -> {
                                     _characterPower.value = convertPowerFormat(finalStat.statValue)
-                                }
-
-                                "STR" -> {
-                                    newCharacterDefaultStatData[2] =
-                                        CharacterUiState.CharacterDefaultStat(
-                                            "STR",
-                                            convertCommaFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "DEX" -> {
-                                    newCharacterDefaultStatData[3] =
-                                        CharacterUiState.CharacterDefaultStat(
-                                            "DEX",
-                                            convertCommaFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "INT" -> {
-                                    newCharacterDefaultStatData[4] =
-                                        CharacterUiState.CharacterDefaultStat(
-                                            "INT",
-                                            convertCommaFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "LUK" -> {
-                                    newCharacterDefaultStatData[5] =
-                                        CharacterUiState.CharacterDefaultStat(
-                                            "LUK",
-                                            convertCommaFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "HP" -> {
-                                    newCharacterDefaultStatData[0] =
-                                        CharacterUiState.CharacterDefaultStat(
-                                            "HP",
-                                            convertCommaFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "MP" -> {
-                                    newCharacterDefaultStatData[1] =
-                                        CharacterUiState.CharacterDefaultStat(
-                                            "MP",
-                                            convertCommaFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "최대 스탯공격력" -> {
-                                    newCharacterMainStatData[0] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "스탯 공격력",
-                                            convertPowerFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "데미지" -> {
-                                    newCharacterMainStatData[1] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "데미지",
-                                            convertPercentFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "최종 데미지" -> {
-                                    newCharacterMainStatData[2] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "최종 데미지",
-                                            convertPercentFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "보스 몬스터 데미지" -> {
-                                    newCharacterMainStatData[3] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "보스 몬스터 데미지",
-                                            convertPercentFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "방어율 무시" -> {
-                                    newCharacterMainStatData[4] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "방어율 무시",
-                                            convertPercentFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "일반 몬스터 데미지" -> {
-                                    newCharacterMainStatData[5] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "일반 몬스터 데미지",
-                                            convertPercentFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "공격력" -> {
-                                    newCharacterMainStatData[6] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "공격력",
-                                            convertCommaFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "크리티컬 확률" -> {
-                                    newCharacterMainStatData[7] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "크리티컬 확률",
-                                            convertPercentFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "마력" -> {
-                                    newCharacterMainStatData[8] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "마력",
-                                            convertCommaFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "크리티컬 데미지" -> {
-                                    newCharacterMainStatData[9] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "크리티컬 데미지",
-                                            convertPercentFormat(finalStat.statValue)
-                                        )
                                 }
 
                                 "재사용 대기시간 감소 (초)" -> {
@@ -427,130 +220,6 @@ class CharacterViewModel @Inject constructor(
                                 "재사용 대기시간 감소 (%)" -> {
                                     characterCooltimeReducePercent.value =
                                         convertPercentFormat(finalStat.statValue)
-                                }
-
-                                "버프 지속시간" -> {
-                                    newCharacterMainStatData[11] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "버프 지속시간",
-                                            convertPercentFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "재사용 대기시간 미적용" -> {
-                                    newCharacterMainStatData[12] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "재사용 대기시간 미적용",
-                                            convertPercentFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "속성 내성 무시" -> {
-                                    newCharacterMainStatData[13] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "속성 내성 무시",
-                                            convertPercentFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "상태이상 추가 데미지" -> {
-                                    newCharacterMainStatData[14] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "상태이상 추가 데미지",
-                                            convertPercentFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "소환수 지속시간 증가" -> {
-                                    newCharacterMainStatData[15] =
-                                        CharacterUiState.CharacterMainStat(
-                                            "소환수 지속시간 증가",
-                                            convertPercentFormat(finalStat.statValue)
-                                        )
-                                }
-
-                                "메소 획득량" -> {
-                                    newCharacterEtcStatData[0] = CharacterUiState.CharacterEtcStat(
-                                        "메소 획득량",
-                                        convertPercentFormat(finalStat.statValue)
-                                    )
-                                }
-
-                                "스타포스" -> {
-                                    newCharacterEtcStatData[1] = CharacterUiState.CharacterEtcStat(
-                                        "스타포스",
-                                        convertCommaFormat(finalStat.statValue)
-                                    )
-                                }
-
-                                "아이템 드롭률" -> {
-                                    newCharacterEtcStatData[2] = CharacterUiState.CharacterEtcStat(
-                                        "아이템 드롭률",
-                                        convertPercentFormat(finalStat.statValue)
-                                    )
-                                }
-
-                                "아케인포스" -> {
-                                    newCharacterEtcStatData[3] = CharacterUiState.CharacterEtcStat(
-                                        "아케인포스",
-                                        convertCommaFormat(finalStat.statValue)
-                                    )
-                                }
-
-                                "추가 경험치 획득" -> {
-                                    newCharacterEtcStatData[4] = CharacterUiState.CharacterEtcStat(
-                                        "추가 경험치 획득",
-                                        convertPercentFormat(finalStat.statValue)
-                                    )
-                                }
-
-                                "어센틱포스" -> {
-                                    newCharacterEtcStatData[5] = CharacterUiState.CharacterEtcStat(
-                                        "어센틱포스",
-                                        convertCommaFormat(finalStat.statValue)
-                                    )
-                                }
-
-                                "방어력" -> {
-                                    newCharacterEtcStatData[6] = CharacterUiState.CharacterEtcStat(
-                                        "방어력",
-                                        convertCommaFormat(finalStat.statValue)
-                                    )
-                                }
-
-                                "상태이상 내성" -> {
-                                    newCharacterEtcStatData[7] = CharacterUiState.CharacterEtcStat(
-                                        "상태이상 내성",
-                                        convertPercentFormat(finalStat.statValue)
-                                    )
-                                }
-
-                                "이동속도" -> {
-                                    newCharacterEtcStatData[8] = CharacterUiState.CharacterEtcStat(
-                                        "이동속도",
-                                        convertPercentFormat(finalStat.statValue)
-                                    )
-                                }
-
-                                "점프력" -> {
-                                    newCharacterEtcStatData[9] = CharacterUiState.CharacterEtcStat(
-                                        "점프력",
-                                        convertPercentFormat(finalStat.statValue)
-                                    )
-                                }
-
-                                "스탠스" -> {
-                                    newCharacterEtcStatData[10] = CharacterUiState.CharacterEtcStat(
-                                        "스탠스",
-                                        convertPercentFormat(finalStat.statValue)
-                                    )
-                                }
-
-                                "공격 속도" -> {
-                                    newCharacterEtcStatData[11] = CharacterUiState.CharacterEtcStat(
-                                        "공격 속도",
-                                        convertAttackSpeedFormat(finalStat.statValue)
-                                    )
                                 }
                             }
                         }
@@ -571,12 +240,10 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun setCharacterEquipment() {
+    private fun setCharacterEquipment(ocid: String, searchDate: String?) {
         viewModelScope.launch {
-            val characterItemEquipmentResponse = characterOcid.value?.let { ocid ->
-                getCharacterItemEquipmentUseCase.getCharacterItemEquipment(ocid, searchDate.value)
-            } ?: return@launch
-
+            val characterItemEquipmentResponse =
+                getCharacterItemEquipmentUseCase.getCharacterItemEquipment(ocid, searchDate)
             when (characterItemEquipmentResponse.status) {
                 Status.SUCCESS -> {
                     characterItemEquipmentResponse.data?.let { characterItemEquipment ->
@@ -595,12 +262,10 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun setCharacterUnion() {
+    private fun setCharacterUnion(ocid: String, searchDate: String?) {
         viewModelScope.launch {
-            val characterUnionResponse = characterOcid.value?.let { ocid ->
-                getCharacterUnionUseCase.getCharacterUnion(ocid, searchDate.value)
-            } ?: return@launch
-
+            val characterUnionResponse =
+                getCharacterUnionUseCase.getCharacterUnion(ocid, searchDate)
             when (characterUnionResponse.status) {
                 Status.SUCCESS -> {
                     characterUnionResponse.data?.let { characterUnion ->
@@ -616,12 +281,10 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun setCharacterPopularity() {
+    private fun setCharacterPopularity(ocid: String, searchDate: String?) {
         viewModelScope.launch {
-            val characterPopularityResponse = characterOcid.value?.let { ocid ->
-                getCharacterPopularityUseCase.getCharacterPopularity(ocid, searchDate.value)
-            } ?: return@launch
-
+            val characterPopularityResponse =
+                getCharacterPopularityUseCase.getCharacterPopularity(ocid, searchDate)
             when (characterPopularityResponse.status) {
                 Status.SUCCESS -> {
                     characterPopularityResponse.data?.let { characterPopularity ->
@@ -638,12 +301,10 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun setCharacterDojang() {
+    private fun setCharacterDojang(ocid: String, searchDate: String?) {
         viewModelScope.launch {
-            val characterDojangResponse = characterOcid.value?.let { ocid ->
-                getCharacterDojangUseCase.getCharacterDojang(ocid, searchDate.value)
-            } ?: return@launch
-
+            val characterDojangResponse =
+                getCharacterDojangUseCase.getCharacterDojang(ocid, searchDate)
             when (characterDojangResponse.status) {
                 Status.SUCCESS -> {
                     characterDojangResponse.data?.let { characterDojang ->
@@ -660,17 +321,14 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun setCharacterHyperStat() {
+    private fun setCharacterHyperStat(ocid: String, searchDate: String?) {
         viewModelScope.launch {
-            val characterHyperStatResponse = characterOcid.value?.let { ocid ->
-                getCharacterHyperStatUseCase.getCharacterHyperStat(ocid, searchDate.value)
-            } ?: return@launch
-
+            val characterHyperStatResponse =
+                getCharacterHyperStatUseCase.getCharacterHyperStat(ocid, searchDate)
             when (characterHyperStatResponse.status) {
                 Status.SUCCESS -> {
                     characterHyperStatResponse.data?.let { characterHyperStat ->
-                        this@CharacterViewModel.characterHyperStat.value = characterHyperStat
-                        setHyperStatData()
+                        this@CharacterViewModel._characterHyperStat.value = characterHyperStat
                     }
                 }
 
@@ -681,60 +339,14 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
-    private fun setHyperStatData() {
-        val newCharacterHyperStatData = mutableListOf<List<HyperStatUiState>>()
-        val hyperStatsFirstPreset = mutableListOf<HyperStatUiState>()
-        val hyperStatsSecondPreset = mutableListOf<HyperStatUiState>()
-        val hyperStatsThirdPreset = mutableListOf<HyperStatUiState>()
-
-        characterHyperStat.value?.let { hyperStat ->
-            hyperStat.hyperStatFirstPreset.forEach { hyperStatInfo ->
-                Timber.d("$hyperStatInfo")
-                hyperStatsFirstPreset.add(
-                    HyperStatUiState.HyperStatInfo(
-                        hyperStatInfo.statType,
-                        hyperStatInfo.statLevel.toString()
-                    )
-                )
-            }
-            newCharacterHyperStatData.add(hyperStatsFirstPreset.toList())
-            Timber.d("$newCharacterHyperStatData")
-
-            hyperStat.hyperStatSecondPreset.forEach { hyperStatInfo ->
-                hyperStatsSecondPreset.add(
-                    HyperStatUiState.HyperStatInfo(
-                        hyperStatInfo.statType,
-                        hyperStatInfo.statLevel.toString()
-                    )
-                )
-            }
-            newCharacterHyperStatData.add(hyperStatsSecondPreset.toList())
-
-            hyperStat.hyperStatThirdPreset.forEach { hyperStatInfo ->
-                hyperStatsThirdPreset.add(
-                    HyperStatUiState.HyperStatInfo(
-                        hyperStatInfo.statType,
-                        hyperStatInfo.statLevel.toString()
-                    )
-                )
-            }
-            newCharacterHyperStatData.add(hyperStatsThirdPreset.toList())
-        }
-
-        _characterHyperStatData.value = newCharacterHyperStatData.toList()
-        Timber.d("${_characterHyperStatData.value}")
-    }
-
-    private fun setCharacterAbility() {
+    private fun setCharacterAbility(ocid: String, searchDate: String?) {
         viewModelScope.launch {
-            val characterAbilityResponse = characterOcid.value?.let { ocid ->
-                getCharacterAbilityUseCase.getCharacterAbility(ocid, searchDate.value)
-            } ?: return@launch
-
+            val characterAbilityResponse =
+                getCharacterAbilityUseCase.getCharacterAbility(ocid, searchDate)
             when (characterAbilityResponse.status) {
                 Status.SUCCESS -> {
                     characterAbilityResponse.data?.let { characterAbility ->
-                        this@CharacterViewModel.characterAbility.value = characterAbility
+                        this@CharacterViewModel._characterAbility.value = characterAbility
                     }
                 }
 
@@ -747,9 +359,18 @@ class CharacterViewModel @Inject constructor(
 
     fun initState() {
         viewModelScope.launch {
-            setToday().await()
-            setCharacterName()
-            setCharacterOcid()
+            _characterName.value =
+                MainApplication.mySharedPreferences.getNickname("characterName", "")
+            val ocid = MainApplication.mySharedPreferences.getOcid("ocid", "")
+            val searchDate = MainApplication.mySharedPreferences.getSearchDate("searchDate", null)
+            setCharacterBasic(ocid, searchDate)
+            setCharacterStat(ocid, searchDate)
+            setCharacterEquipment(ocid, searchDate)
+            setCharacterUnion(ocid, searchDate)
+            setCharacterPopularity(ocid, searchDate)
+            setCharacterDojang(ocid, searchDate)
+            setCharacterHyperStat(ocid, searchDate)
+            setCharacterAbility(ocid, searchDate)
         }
     }
 
@@ -778,23 +399,21 @@ class CharacterViewModel @Inject constructor(
     }
 
     fun setCharacterHyperStatRemainPoint(preset: Int) {
-        characterHyperStat.value?.let { hyperStat ->
-            when (preset) {
-                1 -> {
-                    _characterHyperStatRemainPoint.value =
-                        hyperStat.hyperStatFirstPresetRemainPoint.toString()
-                }
+        _characterHyperStat.value?.let { hyperStat ->
+            _characterHyperStatRemainPoint.value =
+                hyperStat.hyperStatRemainPoints[preset].toString()
+        }
+    }
 
-                2 -> {
-                    _characterHyperStatRemainPoint.value =
-                        hyperStat.hyperStatSecondPresetRemainPoint.toString()
-                }
+    fun closeHyperStat() {
+        viewModelScope.launch {
+            _characterUiEvent.emit(CharacterUiEvent.CloseHyperStat)
+        }
+    }
 
-                3 -> {
-                    _characterHyperStatRemainPoint.value =
-                        hyperStat.hyperStatThirdPresetRemainPoint.toString()
-                }
-            }
+    fun closeAbility() {
+        viewModelScope.launch {
+            _characterUiEvent.emit(CharacterUiEvent.CloseAbility)
         }
     }
 }

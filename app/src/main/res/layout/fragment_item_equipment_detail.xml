@@ -132,6 +132,8 @@
                     android:layout_height="3dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_dotted"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -405,6 +407,8 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
                     android:id="@+id/iv_dotted_second_item_equipment_default"
                     android:layout_width="0dp"
                     android:layout_height="3dp"
@@ -528,18 +532,18 @@
                     android:layout_height="wrap_content"
                     app:barrierAllowsGoneWidgets="false"
                     app:barrierDirection="bottom"
-                    app:barrierMargin="4dp"
                     app:constraint_referenced_ids="tv_upgrade_count_item_equipment_detail, tv_resilience_count_item_equipment_detail, tv_golden_hammer_item_equipment_detail, tv_cuttable_count_item_equipment_detail"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rv_option_item_equipment_detail" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
                     android:id="@+id/iv_dotted_third_item_equipment_default"
                     android:layout_width="0dp"
                     android:layout_height="3dp"
                     android:layout_marginTop="4dp"
-                    android:layout_marginBottom="8dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_dotted"
                     android:visibility="@{(vm.characterLastItemEquipment.potentialOptionGrade == null) ? View.GONE : View.VISIBLE}"
@@ -616,6 +620,8 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_second_potential_item_equipment_default" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
                     android:id="@+id/iv_dotted_fourth_item_equipment_default"
                     android:layout_width="0dp"
                     android:layout_height="3dp"
@@ -697,6 +703,8 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_second_additional_potential_item_equipment_default" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
                     android:id="@+id/iv_dotted_fifth_item_equipment_default"
                     android:layout_width="0dp"
                     android:layout_height="3dp"
@@ -856,6 +864,8 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_exceptional_used_item_equipment_detail" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
                     android:id="@+id/iv_dotted_sixth_item_equipment_default"
                     android:layout_width="0dp"
                     android:layout_height="3dp"
@@ -897,10 +907,11 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_soul_name_item_equipment_detail" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_marginStart="1dp"
+                    android:layout_marginEnd="1dp"
                     android:id="@+id/iv_dotted_seventh_item_equipment_default"
                     android:layout_width="0dp"
                     android:layout_height="3dp"
-                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/ic_dotted"

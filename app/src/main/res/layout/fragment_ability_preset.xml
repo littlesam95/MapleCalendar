@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.bodan.maplecalendar.presentation.views.CharacterViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_left_ability_preset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top_ability_preset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="16dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_ability_preset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="1dp"
+                app:layout_constraintBottom_toTopOf="@id/rv_ability_preset"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_ability_preset"
+                app:layout_constraintStart_toEndOf="@id/gl_left_ability_preset"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_ability_preset"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/gl_left_mcv_ability_preset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="16dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/gl_top_mcv_ability_preset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_begin="8dp" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_ability_preset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:src="@drawable/shape_tag"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_ability_grade_ability_preset"
+                        app:layout_constraintEnd_toStartOf="@id/tv_ability_grade_ability_preset"
+                        app:layout_constraintStart_toEndOf="@id/gl_left_mcv_ability_preset"
+                        app:layout_constraintTop_toTopOf="@id/tv_ability_grade_ability_preset" />
+
+                    <TextView
+                        android:id="@+id/tv_ability_grade_ability_preset"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:fontFamily="@font/pretendardbold"
+                        android:padding="16dp"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/white1"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toTopOf="@id/gl_bottom_mcv_ability_preset"
+                        app:layout_constraintEnd_toStartOf="@id/gl_right_mcv_ability_preset"
+                        app:layout_constraintStart_toEndOf="@id/iv_ability_preset"
+                        app:layout_constraintTop_toBottomOf="@id/gl_top_mcv_ability_preset" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/gl_bottom_mcv_ability_preset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_end="8dp" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/gl_right_mcv_ability_preset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_end="16dp" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_ability_preset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_ability_preset"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_ability_preset"
+                app:layout_constraintStart_toEndOf="@id/gl_left_ability_preset"
+                app:layout_constraintTop_toBottomOf="@id/mcv_ability_preset"
+                tools:listitem="@layout/item_ability_preset" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_bottom_ability_preset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="16dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_right_ability_preset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="16dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>
