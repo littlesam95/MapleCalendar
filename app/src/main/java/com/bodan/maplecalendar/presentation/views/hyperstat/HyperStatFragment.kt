@@ -40,6 +40,8 @@ class HyperStatFragment :
 
         binding.vm = viewModel
 
+        isCancelable = false
+
         lifecycleScope.launch {
             viewModel.characterUiEvent.collectLatest { uiEvent ->
                 if (uiEvent == CharacterUiEvent.CloseHyperStat) dismiss()
@@ -59,7 +61,7 @@ class HyperStatFragment :
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
 
-                    viewModel.setCharacterHyperStatRemainPoint(position + 1)
+                    viewModel.setCharacterHyperStatRemainPoint(position)
                 }
             })
         }

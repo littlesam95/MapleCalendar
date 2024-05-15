@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bodan.maplecalendar.databinding.FragmentHyperStatPresetBinding
 import com.bodan.maplecalendar.presentation.views.CharacterViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class HyperStatPresetFragment : Fragment() {
@@ -32,8 +31,9 @@ class HyperStatPresetFragment : Fragment() {
 
                 with(rvHyperStatPreset) {
                     layoutManager = LinearLayoutManager(requireActivity())
-                    Timber.d("${viewModel.characterHyperStatData.value[pos]}")
-                    adapter = HyperStatInfoListAdapter(viewModel.characterHyperStatData.value[pos])
+                    viewModel.characterHyperStat.value?.let { hyperStat ->
+                        adapter = HyperStatInfoAdapter(hyperStat.hyperStats[pos])
+                    }
                     setHasFixedSize(false)
                 }
             }

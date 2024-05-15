@@ -11,6 +11,9 @@ object CharacterHyperStatMapper {
         val secondPreset = mutableListOf<CharacterHyperStatInfo>()
         val thirdPreset = mutableListOf<CharacterHyperStatInfo>()
 
+        val hyperStats = mutableListOf<List<CharacterHyperStatInfo>>()
+        val hyperStatRemainPoints = mutableListOf<Int>()
+
         with(hyperStatEntity) {
             hyperStatFirstPreset.forEach { hyperStatInfo ->
                 firstPreset.add(
@@ -22,6 +25,8 @@ object CharacterHyperStatMapper {
                     )
                 )
             }
+            hyperStats.add(firstPreset)
+
             hyperStatSecondPreset.forEach { hyperStatInfo ->
                 secondPreset.add(
                     CharacterHyperStatInfo(
@@ -32,6 +37,8 @@ object CharacterHyperStatMapper {
                     )
                 )
             }
+            hyperStats.add(secondPreset)
+
             hyperStatThirdPreset.forEach { hyperStatInfo ->
                 thirdPreset.add(
                     CharacterHyperStatInfo(
@@ -42,15 +49,16 @@ object CharacterHyperStatMapper {
                     )
                 )
             }
+            hyperStats.add(thirdPreset)
+
+            hyperStatRemainPoints.add(hyperStatFirstPresetRemainPoint)
+            hyperStatRemainPoints.add(hyperStatSecondPresetRemainPoint)
+            hyperStatRemainPoints.add(hyperStatThirdPresetRemainPoint)
         }
 
         return CharacterHyperStat(
-            hyperStatFirstPreset = firstPreset.toList(),
-            hyperStatFirstPresetRemainPoint = hyperStatEntity.hyperStatFirstPresetRemainPoint,
-            hyperStatSecondPreset = secondPreset.toList(),
-            hyperStatSecondPresetRemainPoint = hyperStatEntity.hyperStatSecondPresetRemainPoint,
-            hyperStatThirdPreset = thirdPreset.toList(),
-            hyperStatThirdPresetRemainPoint = hyperStatEntity.hyperStatThirdPresetRemainPoint
+            hyperStats = hyperStats.toList(),
+            hyperStatRemainPoints = hyperStatRemainPoints.toList()
         )
     }
 }
