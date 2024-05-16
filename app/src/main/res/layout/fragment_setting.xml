@@ -23,42 +23,58 @@
             android:background="@color/white"
             tools:context=".presentation.views.setting.SettingFragment">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_left_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/guideline_larger" />
+
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_nickname_change_setting"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/btn_setting_height"
-                android:layout_marginStart="@dimen/btn_setting_start"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/btn_setting_top"
-                android:layout_marginEnd="@dimen/btn_setting_end"
-                android:background="@drawable/shape_dialog"
+                android:background="@drawable/shape_character"
                 android:elevation="10dp"
-                android:fontFamily="@font/pretendardregular"
+                android:fontFamily="@font/pretendardbold"
                 android:onClick="@{() -> vm.changeCharacterName()}"
-                android:text="@string/text_nickname_change"
-                android:textColor="@color/white"
-                android:textSize="@dimen/title_font_size_large"
+                android:paddingTop="@dimen/padding_larger"
+                android:paddingBottom="@dimen/padding_larger"
+                android:text="@string/text_title_nickname_change"
+                android:textColor="@color/character_info"
+                android:textSize="@dimen/font_size_largest"
                 app:layout_constraintBottom_toTopOf="@id/btn_push_notification_setting"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_setting"
+                app:layout_constraintStart_toEndOf="@id/gl_left_setting"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_push_notification_setting"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/btn_setting_height"
-                android:layout_marginTop="@dimen/btn_setting_bottom"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/guideline_largest"
                 android:layout_marginBottom="@dimen/btn_setting_top"
-                android:background="@drawable/shape_dialog"
+                android:background="@drawable/shape_character"
                 android:elevation="10dp"
-                android:fontFamily="@font/pretendardregular"
+                android:fontFamily="@font/pretendardbold"
                 android:onClick="@{() -> vm.setPushNotification()}"
-                android:text="@string/text_push_notification"
-                android:textColor="@color/white"
-                android:textSize="@dimen/title_font_size_large"
+                android:paddingTop="@dimen/padding_larger"
+                android:paddingBottom="@dimen/padding_larger"
+                android:text="@string/text_title_push_notification"
+                android:textColor="@color/character_info"
+                android:textSize="@dimen/font_size_largest"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/btn_nickname_change_setting"
                 app:layout_constraintStart_toStartOf="@id/btn_nickname_change_setting"
                 app:layout_constraintTop_toBottomOf="@id/btn_nickname_change_setting" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_right_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/guideline_larger" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

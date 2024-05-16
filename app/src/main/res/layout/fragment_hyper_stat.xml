@@ -25,14 +25,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="16dp" />
+                app:layout_constraintGuide_begin="@dimen/guideline_medium" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gl_top_hyper_stat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="16dp" />
+                app:layout_constraintGuide_begin="@dimen/guideline_medium" />
 
             <TextView
                 android:id="@+id/tv_title_hyper_stat"
@@ -61,8 +61,8 @@
                 android:id="@+id/mcv_first_hyper_stat"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="@dimen/guideline_small"
+                android:layout_marginBottom="@dimen/guideline_small"
                 app:cardBackgroundColor="@color/character"
                 app:cardCornerRadius="1dp"
                 app:layout_constraintBottom_toTopOf="@id/mcv_second_hyper_stat"
@@ -80,7 +80,7 @@
                         android:id="@+id/vp_hyper_stat"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginBottom="@dimen/guideline_small"
                         android:background="@drawable/shape_default_stat"
                         app:layout_constraintBottom_toTopOf="@id/tl_hyper_stat"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -109,8 +109,8 @@
                 android:id="@+id/mcv_second_hyper_stat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="@dimen/guideline_small"
+                android:layout_marginBottom="@dimen/guideline_small"
                 app:cardBackgroundColor="@color/character"
                 app:cardCornerRadius="1dp"
                 app:layout_constraintBottom_toTopOf="@id/gl_bottom_hyper_stat"
@@ -130,7 +130,7 @@
                         android:fontFamily="@font/pretendardbold"
                         android:text="@string/text_hyper_stat_remain_point"
                         android:textColor="@color/white1"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_size_medium"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -139,14 +139,14 @@
                         android:id="@+id/tv_remain_point_value_hyper_stat"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="36dp"
+                        android:layout_marginStart="@dimen/guideline_largest"
                         android:background="@drawable/shape_default_stat"
                         android:fontFamily="@font/pretendardregular"
-                        android:padding="8dp"
+                        android:padding="@dimen/guideline_smaller"
                         android:text="@{vm.characterHyperStatRemainPoint}"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/white1"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/font_size_little_small"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_remain_point_hyper_stat"
@@ -161,14 +161,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_end="16dp" />
+                app:layout_constraintGuide_end="@dimen/guideline_medium" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gl_right_hyper_stat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="16dp" />
+                app:layout_constraintGuide_end="@dimen/guideline_medium" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

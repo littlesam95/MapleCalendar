@@ -24,14 +24,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="16dp" />
+                app:layout_constraintGuide_begin="@dimen/guideline_medium" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gl_top_ability_preset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="16dp" />
+                app:layout_constraintGuide_begin="@dimen/guideline_medium" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/mcv_ability_preset"
@@ -53,14 +53,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_begin="16dp" />
+                        app:layout_constraintGuide_begin="@dimen/guideline_medium" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/gl_top_mcv_ability_preset"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_begin="8dp" />
+                        app:layout_constraintGuide_begin="@dimen/guideline_smaller" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/iv_ability_preset"
@@ -76,12 +76,12 @@
                         android:id="@+id/tv_ability_grade_ability_preset"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="@dimen/guideline_medium"
                         android:fontFamily="@font/pretendardbold"
-                        android:padding="16dp"
+                        android:padding="@dimen/padding_medium"
                         android:textAlignment="viewStart"
                         android:textColor="@color/white1"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_size_medium"
                         app:layout_constraintBottom_toTopOf="@id/gl_bottom_mcv_ability_preset"
                         app:layout_constraintEnd_toStartOf="@id/gl_right_mcv_ability_preset"
                         app:layout_constraintStart_toEndOf="@id/iv_ability_preset"
@@ -92,14 +92,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        app:layout_constraintGuide_end="8dp" />
+                        app:layout_constraintGuide_end="@dimen/guideline_smaller" />
 
                     <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/gl_right_mcv_ability_preset"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        app:layout_constraintGuide_end="16dp" />
+                        app:layout_constraintGuide_end="@dimen/guideline_medium" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -109,7 +109,7 @@
                 android:id="@+id/rv_ability_preset"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/guideline_smaller"
                 android:nestedScrollingEnabled="false"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toTopOf="@id/gl_bottom_ability_preset"
@@ -123,14 +123,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_end="16dp" />
+                app:layout_constraintGuide_end="@dimen/guideline_medium" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gl_right_ability_preset"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="16dp" />
+                app:layout_constraintGuide_end="@dimen/guideline_medium" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
