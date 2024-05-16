@@ -43,34 +43,50 @@ class PushNotificationFragment :
         }
     private lateinit var myAlarmManagerRestarter: MyAlarmManagerRestarter
 
+    override fun onResume() {
+        super.onResume()
+
+        requireContext().dialogFragmentResize(this, 0.8F, 0.9F)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.vm = viewModel
+        isCancelable = false
 
         myAlarmManagerRestarter = MyAlarmManagerRestarter()
 
         lifecycleScope.launch {
             viewModel.settingUiEvent.collectLatest { uiEvent ->
-                if (uiEvent == SettingUiEvent.AllowPushNotification) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        TedPermission.create()
-                            .setPermissionListener(object : PermissionListener {
-                                override fun onPermissionGranted() {
-                                    setEventAlarm()
-                                }
+                when (uiEvent) {
+                    SettingUiEvent.AllowPushNotification -> {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            TedPermission.create()
+                                .setPermissionListener(object : PermissionListener {
+                                    override fun onPermissionGranted() {
+                                        setEventAlarm()
+                                    }
 
-                                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                                    Timber.d("$deniedPermissions 거절함")
-                                    goSettingActivityAlertDialog()
-                                }
-                            })
-                            .setPermissions(Manifest.permission.POST_NOTIFICATIONS)
-                            .check()
-                    } else {
-                        setEventAlarm()
+                                    override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                                        Timber.d("$deniedPermissions 거절함")
+                                        goSettingActivityAlertDialog()
+                                    }
+                                })
+                                .setPermissions(Manifest.permission.POST_NOTIFICATIONS)
+                                .check()
+                        } else {
+                            setEventAlarm()
+                        }
                     }
-                } else if (uiEvent == SettingUiEvent.CancelPushNotification) {
-                    cancelEventAlarm()
+
+                    SettingUiEvent.CancelPushNotification -> {
+                        cancelEventAlarm()
+                    }
+
+                    SettingUiEvent.ClosePushNotification -> dismiss()
+
+                    else -> {}
                 }
             }
         }

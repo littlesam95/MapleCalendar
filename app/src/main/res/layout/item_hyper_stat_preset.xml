@@ -5,14 +5,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="@dimen/padding_smaller">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_left_item_hyper_stat_preset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="16dp" />
+            app:layout_constraintGuide_begin="@dimen/guideline_medium" />
 
         <TextView
             android:id="@+id/tv_stat_type_item_hyper_stat_preset"
@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendardbold"
             android:textColor="@color/white1"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_size_medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/gl_left_item_hyper_stat_preset"
             app:layout_constraintTop_toTopOf="parent" />
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendardbold"
             android:textColor="@color/white1"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_size_medium"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/gl_right_item_hyper_stat_preset"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_end="16dp" />
+            app:layout_constraintGuide_end="@dimen/guideline_medium" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

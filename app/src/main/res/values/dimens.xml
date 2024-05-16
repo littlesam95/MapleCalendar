@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Normal Margin -->
+    <dimen name="guideline_minimum">4dp</dimen>
+    <dimen name="guideline_smallest">6dp</dimen>
+    <dimen name="guideline_smaller">8dp</dimen>
+    <dimen name="guideline_small">12dp</dimen>
+    <dimen name="guideline_medium">16dp</dimen>
+    <dimen name="guideline_large">24dp</dimen>
+    <dimen name="guideline_larger">32dp</dimen>
+    <dimen name="guideline_largest">36dp</dimen>
+
+    <!-- Font Size -->
+    <dimen name="font_size_smaller">11sp</dimen>
+    <dimen name="font_size_small">12sp</dimen>
+    <dimen name="font_size_little_small">14sp</dimen>
+    <dimen name="font_size_medium">16sp</dimen>
+    <dimen name="font_size_large">18sp</dimen>
+    <dimen name="font_size_larger">20sp</dimen>
+    <dimen name="font_size_largest">24sp</dimen>
+    <dimen name="font_size_too_largest">28sp</dimen>
+
+    <!-- Padding -->
+    <dimen name="padding_minimum">4dp</dimen>
+    <dimen name="padding_smaller">8dp</dimen>
+    <dimen name="padding_little_smaller">10dp</dimen>
+    <dimen name="padding_small">12dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+    <dimen name="padding_larger">32dp</dimen>
+    <dimen name="padding_largest">36dp</dimen>
+
+    <!-- Equipment Dot Line -->
+    <dimen name="dot_height">3dp</dimen>
+    <dimen name="dot_margin_vertical">1dp</dimen>
+
     <!-- Floating Action Button -->
     <dimen name="fab_bottom">32dp</dimen>
     <dimen name="fab_end">32dp</dimen>

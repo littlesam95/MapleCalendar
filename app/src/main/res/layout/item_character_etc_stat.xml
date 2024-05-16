@@ -14,36 +14,46 @@
         android:id="@+id/item_character_etc_stat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp">
+        android:paddingStart="@dimen/padding_small"
+        android:paddingEnd="@dimen/padding_small">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_top_etc_stat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="2dp" />
 
         <TextView
             android:id="@+id/tv_title_etc_stat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
             android:fontFamily="@font/pretendardregular"
             android:text="@{stat.statTitle}"
             android:textColor="@color/white1"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="@dimen/font_size_smaller"
+            app:layout_constraintBottom_toTopOf="@id/gl_bottom_etc_stat"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/gl_top_etc_stat" />
 
         <TextView
             android:id="@+id/tv_value_etc_stat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
             android:fontFamily="@font/pretendardregular"
             android:text="@{stat.statValue}"
             android:textColor="@color/white1"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="@dimen/font_size_smaller"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title_etc_stat"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@id/tv_title_etc_stat" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_bottom_etc_stat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_end="2dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

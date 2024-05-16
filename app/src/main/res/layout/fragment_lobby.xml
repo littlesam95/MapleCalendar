@@ -32,32 +32,43 @@
                 android:layout_height="match_parent"
                 tools:context=".presentation.views.lobby.LobbyFragment">
 
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_left_lobby"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_begin="@dimen/guideline_medium" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_top_lobby"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="@dimen/guideline_medium" />
+
                 <TextView
                     android:id="@+id/tv_today_lobby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/title_start"
-                    android:layout_marginTop="@dimen/title_top"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@{vm.today}"
-                    android:textSize="@dimen/title_font_size_big"
+                    android:textSize="@dimen/font_size_larger"
                     app:layout_constraintBottom_toTopOf="@id/tv_character_name_lobby"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@id/gl_left_lobby"
+                    app:layout_constraintTop_toBottomOf="@id/gl_top_lobby" />
 
                 <TextView
                     android:id="@+id/tv_character_name_lobby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/title_start"
-                    android:layout_marginTop="@dimen/title_top"
+                    android:layout_marginTop="@dimen/guideline_larger"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@{vm.characterName}"
                     android:textColor="@color/main"
-                    android:textSize="@dimen/title_font_size_small"
+                    android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toTopOf="@id/mcv_information_lobby"
                     app:layout_constraintEnd_toStartOf="@id/tv_character_info_lobby"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_lobby"
                     app:layout_constraintTop_toBottomOf="@id/tv_today_lobby" />
 
                 <TextView
@@ -66,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@string/text_character_info"
-                    android:textSize="@dimen/title_font_size_small"
+                    android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="@id/tv_character_name_lobby"
                     app:layout_constraintStart_toEndOf="@id/tv_character_name_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_character_name_lobby" />
@@ -75,7 +86,7 @@
                     android:id="@+id/ib_select_search_date_lobby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="@dimen/guideline_smaller"
                     android:background="@null"
                     android:clickable="true"
                     android:onClick="@{() -> vm.goToSelectSearchDate()}"
@@ -92,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@string/text_search_date"
-                    android:textSize="@dimen/title_font_size_mini"
+                    android:textSize="@dimen/font_size_small"
                     app:layout_constraintBottom_toBottomOf="@id/tv_character_search_date"
                     app:layout_constraintEnd_toStartOf="@id/tv_character_search_date"
                     app:layout_constraintTop_toTopOf="@id/tv_character_search_date" />
@@ -101,10 +112,10 @@
                     android:id="@+id/tv_character_search_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="12dp"
+                    android:layout_marginEnd="@dimen/guideline_small"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@{(vm.searchDate == null) ? @string/text_search_date_now : vm.searchDate}"
-                    android:textSize="@dimen/title_font_size_mini"
+                    android:textSize="@dimen/font_size_small"
                     app:layout_constraintBottom_toBottomOf="@id/tv_character_name_lobby"
                     app:layout_constraintEnd_toStartOf="@id/switch_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_character_name_lobby" />
@@ -113,12 +124,11 @@
                     android:id="@+id/switch_lobby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/title_end"
                     android:checked="@{vm.isDateNow}"
                     android:onCheckedChanged="@{(_, isChecked) -> vm.setDateNow(isChecked)}"
                     android:thumb="@drawable/switch_thumb_lobby"
                     app:layout_constraintBottom_toBottomOf="@id/tv_character_search_date"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/gl_right_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_character_search_date"
                     app:thumbTint="@null"
                     app:track="@drawable/switch_track_lobby"
@@ -128,7 +138,7 @@
                     android:id="@+id/mcv_information_lobby"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/guideline_small"
                     app:layout_constraintBottom_toTopOf="@id/iv_character_lobby"
                     app:layout_constraintEnd_toEndOf="@id/switch_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_character_name_lobby"
@@ -139,14 +149,14 @@
                         android:layout_height="match_parent"
                         android:background="@drawable/shape_information"
                         android:backgroundTint="@null"
-                        android:padding="12dp">
+                        android:padding="@dimen/padding_small">
 
                         <androidx.appcompat.widget.AppCompatImageView
                             android:id="@+id/iv_information_lobby"
                             android:layout_width="50dp"
                             android:layout_height="0dp"
                             android:background="@drawable/shape_information_icon"
-                            android:padding="10dp"
+                            android:padding="@dimen/padding_little_smaller"
                             android:scaleType="fitCenter"
                             android:src="@drawable/maple_calendar_logo"
                             app:layout_constraintBottom_toBottomOf="@id/tv_information_profile_lobby"
@@ -159,9 +169,10 @@
                             android:id="@+id/tv_information_date_lobby"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="12dp"
+                            android:layout_marginStart="@dimen/guideline_small"
                             android:fontFamily="@font/pretendardregular"
                             android:text="@string/text_information_date"
+                            android:textSize="@dimen/font_size_small"
                             app:layout_constraintBottom_toTopOf="@id/tv_information_time_lobby"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/iv_information_lobby"
@@ -173,6 +184,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/pretendardregular"
                             android:text="@string/text_information_time"
+                            android:textSize="@dimen/font_size_small"
                             app:layout_constraintBottom_toTopOf="@id/tv_information_profile_lobby"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/tv_information_date_lobby"
@@ -184,6 +196,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/pretendardregular"
                             android:text="@string/text_information_profile"
+                            android:textSize="@dimen/font_size_small"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/tv_information_date_lobby"
@@ -197,7 +210,6 @@
                     android:id="@+id/iv_character_lobby"
                     android:layout_width="@dimen/image_width"
                     android:layout_height="@dimen/image_height"
-                    android:layout_marginStart="@dimen/image_start"
                     android:layout_marginTop="@dimen/image_top"
                     android:layout_marginBottom="24dp"
                     android:background="@drawable/shape_dialog"
@@ -205,7 +217,7 @@
                     android:elevation="10dp"
                     android:onClick="@{() -> vm.goToCharacter()}"
                     app:layout_constraintBottom_toBottomOf="@id/tv_today_event_lobby"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_lobby"
                     app:layout_constraintTop_toBottomOf="@id/mcv_information_lobby"
                     app:profileImage="@{vm.characterImage}" />
 
@@ -213,10 +225,10 @@
                     android:id="@+id/tv_level_lobby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/title_start"
+                    android:layout_marginStart="@dimen/guideline_medium"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@string/text_level"
-                    android:textSize="@dimen/title_font_size_small"
+                    android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toTopOf="@id/tv_class_lobby"
                     app:layout_constraintStart_toEndOf="@id/iv_character_lobby"
                     app:layout_constraintTop_toTopOf="@id/iv_character_lobby" />
@@ -227,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@string/text_class"
-                    android:textSize="@dimen/title_font_size_small"
+                    android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toTopOf="@id/tv_world_lobby"
                     app:layout_constraintEnd_toEndOf="@id/tv_level_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_level_lobby"
@@ -239,7 +251,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@string/text_world"
-                    android:textSize="@dimen/title_font_size_small"
+                    android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toTopOf="@id/tv_guild_lobby"
                     app:layout_constraintEnd_toEndOf="@id/tv_level_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_level_lobby"
@@ -251,7 +263,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@string/text_guild"
-                    android:textSize="@dimen/title_font_size_small"
+                    android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toTopOf="@id/tv_gender_lobby"
                     app:layout_constraintEnd_toEndOf="@id/tv_level_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_level_lobby"
@@ -263,7 +275,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@string/text_gender"
-                    android:textSize="@dimen/title_font_size_small"
+                    android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="@id/iv_character_lobby"
                     app:layout_constraintEnd_toStartOf="@id/tv_character_gender_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_level_lobby"
@@ -273,10 +285,10 @@
                     android:id="@+id/tv_character_gender_lobby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/title_start"
+                    android:layout_marginStart="@dimen/guideline_large"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@{(vm.characterGender == null) ? @string/text_nothing : vm.characterGender}"
-                    android:textSize="@dimen/title_font_size_small"
+                    android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="@id/tv_gender_lobby"
                     app:layout_constraintStart_toEndOf="@id/tv_gender_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_gender_lobby" />
@@ -287,7 +299,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@{(vm.characterGuild == null) ? @string/text_nothing : vm.characterGuild}"
-                    android:textSize="@dimen/title_font_size_small"
+                    android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="@id/tv_guild_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_character_gender_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_guild_lobby" />
@@ -298,7 +310,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@{(vm.characterWorld == null) ? @string/text_nothing : vm.characterWorld}"
-                    android:textSize="@dimen/title_font_size_small"
+                    android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="@id/tv_world_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_character_gender_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_world_lobby" />
@@ -309,7 +321,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@{(vm.characterClass == null) ? @string/text_nothing : vm.characterClass}"
-                    android:textSize="@dimen/title_font_size_small"
+                    android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="@id/tv_class_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_character_gender_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_class_lobby" />
@@ -320,7 +332,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@{(vm.characterLevel == null) ? @string/text_nothing : vm.characterLevel.toString()}"
-                    android:textSize="@dimen/title_font_size_small"
+                    android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="@id/tv_level_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_character_gender_lobby"
                     app:layout_constraintTop_toTopOf="@id/tv_level_lobby" />
@@ -329,37 +341,46 @@
                     android:id="@+id/tv_today_event_lobby"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/title_start"
-                    android:layout_marginTop="@dimen/title_top"
+                    android:layout_marginTop="@dimen/guideline_large"
                     android:fontFamily="@font/pretendardregular"
                     android:text="@string/text_today_event"
-                    android:textSize="@dimen/title_font_size_medium"
+                    android:textSize="@dimen/font_size_large"
                     app:layout_constraintBottom_toTopOf="@id/rv_lobby"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_lobby"
                     app:layout_constraintTop_toBottomOf="@id/iv_character_lobby" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_lobby"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/rv_start"
-                    android:layout_marginTop="@dimen/rv_top"
-                    android:layout_marginEnd="@dimen/rv_end"
+                    android:layout_marginTop="@dimen/guideline_medium"
                     android:layout_marginBottom="@dimen/image_bottom"
                     android:adapter="@{listAdapter}"
                     android:elevation="10dp"
                     android:orientation="vertical"
                     android:overScrollMode="never"
-                    android:paddingTop="@dimen/rv_pd_top"
-                    android:paddingBottom="@dimen/rv_pd_bottom"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/gl_right_lobby"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_lobby"
                     app:layout_constraintTop_toBottomOf="@id/tv_today_event_lobby"
                     app:spanCount="2"
                     app:submitData="@{vm.eventItems}"
                     tools:listitem="@layout/item_recycler_view_lobby" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_right_lobby"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintGuide_end="@dimen/guideline_medium" />
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/gl_bottom_lobby"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_end="@dimen/guideline_medium" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

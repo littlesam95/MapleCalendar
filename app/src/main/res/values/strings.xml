@@ -31,7 +31,7 @@
 
     <!-- Lobby -->
     <string name="text_today_event">오늘 진행중인 이벤트는…</string>
-    <string name="text_specific_date_event">에 진행중인 이벤트는…</string>
+    <string name="text_specific_date_event">에 진행중인 이벤트</string>
     <string name="text_character_info">에 대한 정보</string>
     <string name="text_search_date">기준일 : &#160;</string>
     <string name="text_search_date_now">실시간</string>
@@ -65,9 +65,11 @@
     <string name="text_world">월드</string>
     <string name="text_guild">길드</string>
     <string name="text_gender">성별</string>
-    <string name="text_nickname_change">닉네임 변경</string>
+    <string name="text_nickname_change">CHANGE NICKNAME</string>
+    <string name="text_title_nickname_change">닉네임 변경</string>
     <string name="text_change">변경</string>
-    <string name="text_push_notification">이벤트 알리미 설정</string>
+    <string name="text_push_notification">EVENT NOTIFY</string>
+    <string name="text_title_push_notification">이벤트 알림 설정</string>
     <string name="text_ask_push_notification">이벤트 알림을 받으시겠어요?</string>
     <string name="text_allow">허용</string>
     <string name="text_not_allow">취소</string>
@@ -203,7 +205,8 @@
     <string name="description_fab_dark_mode">다크 모드 전환 버튼</string>
     <string name="description_change_month_prev">달력 이전 월 변경 버튼</string>
     <string name="description_change_month_next">달력 다음 월 변경 버튼</string>
-    <string name="description_character_nickname_edittext_hint">닉네임을 입력해주세요!</string>
+    <string name="description_character_nickname_edittext_hint">특수 문자나 공백을 제외하고 6자 이내로 입력해주세요.</string>
+    <string name="description_close">닫기</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

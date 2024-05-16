@@ -24,7 +24,7 @@ class DayEventFragment : BaseDialogFragment<FragmentDayEventBinding>(R.layout.fr
     override fun onResume() {
         super.onResume()
 
-        requireContext().dialogFragmentResize(this, 1F, 0.7F)
+        requireContext().dialogFragmentResize(this, 0.9F, 0.9F)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

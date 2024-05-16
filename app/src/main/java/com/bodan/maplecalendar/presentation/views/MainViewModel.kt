@@ -416,6 +416,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun closeChangeCharacterName() {
+        viewModelScope.launch {
+            _settingUiEvent.emit(SettingUiEvent.CloseChangeCharacterName)
+        }
+    }
+
     fun submitChangeCharacterName() {
         viewModelScope.launch {
             _characterName.value = _newCharacterName.value
@@ -435,6 +441,12 @@ class MainViewModel @Inject constructor(
     fun setPushNotification() {
         viewModelScope.launch {
             _settingUiEvent.emit(SettingUiEvent.SetPushNotification)
+        }
+    }
+
+    fun closePushNotification() {
+        viewModelScope.launch {
+            _settingUiEvent.emit(SettingUiEvent.ClosePushNotification)
         }
     }
 

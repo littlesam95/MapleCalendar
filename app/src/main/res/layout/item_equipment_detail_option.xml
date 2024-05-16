@@ -25,7 +25,7 @@
             android:fontFamily="@font/pretendardregular"
             android:text="@{detailOption.optionType}"
             android:textColor="@{detailOption.isForced ? @color/equipment_total_option : @color/white1}"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +37,7 @@
             android:fontFamily="@font/pretendardregular"
             android:text="@{detailOption.totalOption}"
             android:textColor="@{detailOption.isForced ? @color/equipment_total_option : @color/white1}"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size_small"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_option_type_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />
@@ -50,7 +50,7 @@
             android:fontFamily="@font/pretendardregular"
             android:text="@string/text_left_bracket"
             android:textColor="@color/white1"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size_small"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_total_option_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />
@@ -62,7 +62,7 @@
             android:fontFamily="@font/pretendardregular"
             android:text="@{detailOption.baseOption}"
             android:textColor="@color/white1"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size_small"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_left_bracket_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />
@@ -75,7 +75,7 @@
             android:fontFamily="@font/pretendardregular"
             android:text="@{detailOption.addOption}"
             android:textColor="@color/equipment_add_option"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size_small"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_base_option_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />
@@ -88,7 +88,7 @@
             android:fontFamily="@font/pretendardregular"
             android:text="@{detailOption.etcOption}"
             android:textColor="@{detailOption.isMinus ? @color/equipment_etc_option_minus : @color/equipment_etc_option}"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size_small"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_add_option_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />
@@ -101,7 +101,7 @@
             android:fontFamily="@font/pretendardregular"
             android:text="@{detailOption.starforceOption}"
             android:textColor="@color/equipment_starforce_option"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size_small"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_etc_option_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />
@@ -113,7 +113,7 @@
             android:fontFamily="@font/pretendardregular"
             android:text="@string/text_right_bracket"
             android:textColor="@color/white1"
-            android:textSize="12sp"
+            android:textSize="@dimen/font_size_small"
             app:layout_constraintBottom_toBottomOf="@id/tv_option_type_detail_option"
             app:layout_constraintStart_toEndOf="@id/tv_starforce_option_detail_option"
             app:layout_constraintTop_toTopOf="@id/tv_option_type_detail_option" />

@@ -19,68 +19,72 @@
         android:id="@+id/item_recycler_view_lobby"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/rv_item_event_top"
-        android:layout_marginBottom="@dimen/rv_item_event_bottom"
+        android:layout_marginTop="@dimen/guideline_smaller"
+        android:layout_marginBottom="@dimen/guideline_smaller"
         android:onClick="@{() -> clickListener.onEventClicked(eventItem.eventUrl)}"
         android:orientation="vertical"
-        android:paddingTop="@dimen/rv_item_event_pd_top"
-        android:paddingBottom="@dimen/rv_item_event_pd_bottom">
+        android:paddingTop="@dimen/padding_smaller"
+        android:paddingBottom="@dimen/padding_smaller">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_left_event_rv_lobby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guideline_smaller" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_event_rv_lobby"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/rv_item_event_start"
-            android:layout_marginEnd="@dimen/rv_item_event_end"
             android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/gl_right_event_rv_lobby"
+            app:layout_constraintStart_toEndOf="@id/gl_left_event_rv_lobby"
             app:layout_constraintTop_toTopOf="parent"
             app:profileImage="@{eventItem.eventImage}" />
 
         <TextView
             android:id="@+id/tv_event_rv_lobby"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/rv_item_event_start"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="@dimen/rv_item_event_end"
+            android:layout_marginTop="@dimen/guideline_smaller"
             android:ellipsize="marquee"
             android:fontFamily="@font/pretendardregular"
             android:maxLines="1"
             android:text="@{eventItem.eventName}"
+            android:textAlignment="viewStart"
             android:textColor="@color/black"
-            android:textSize="@dimen/title_font_size_small"
+            android:textSize="@dimen/font_size_medium"
             app:layout_constraintBottom_toTopOf="@id/tv_event_iat_rv_lobby"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/gl_right_event_rv_lobby"
+            app:layout_constraintStart_toEndOf="@id/gl_left_event_rv_lobby"
             app:layout_constraintTop_toBottomOf="@id/iv_event_rv_lobby" />
 
         <TextView
             android:id="@+id/tv_event_iat_rv_lobby"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/rv_item_event_start"
-            android:layout_marginEnd="@dimen/rv_item_event_end"
+            android:layout_marginEnd="@dimen/guideline_small"
             android:ellipsize="marquee"
             android:fontFamily="@font/pretendardregular"
             android:maxLines="1"
             android:text="@{eventItem.eventIat}"
             android:textColor="@color/main"
-            android:textSize="@dimen/title_font_size_mini"
+            android:textSize="@dimen/font_size_small"
             app:layout_constraintBottom_toTopOf="@id/hsv_rv_lobby"
             app:layout_constraintEnd_toStartOf="@id/tv_event_date_rv_lobby"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/gl_left_event_rv_lobby"
             app:layout_constraintTop_toBottomOf="@id/tv_event_rv_lobby" />
 
         <TextView
             android:id="@+id/tv_event_date_rv_lobby"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/guideline_minimum"
             android:fontFamily="@font/pretendardregular"
             android:text="@string/text_event_scope"
             android:textColor="@color/main"
-            android:textSize="@dimen/title_font_size_mini"
+            android:textSize="@dimen/font_size_small"
             app:layout_constraintBottom_toBottomOf="@id/tv_event_iat_rv_lobby"
             app:layout_constraintStart_toEndOf="@id/tv_event_iat_rv_lobby"
             app:layout_constraintTop_toTopOf="@id/tv_event_iat_rv_lobby" />
@@ -89,13 +93,13 @@
             android:id="@+id/tv_event_exp_rv_lobby"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="@dimen/guideline_minimum"
             android:ellipsize="marquee"
             android:fontFamily="@font/pretendardregular"
             android:maxLines="1"
             android:text="@{eventItem.eventExp}"
             android:textColor="@color/main"
-            android:textSize="@dimen/title_font_size_mini"
+            android:textSize="@dimen/font_size_small"
             app:layout_constraintBottom_toBottomOf="@id/tv_event_iat_rv_lobby"
             app:layout_constraintStart_toEndOf="@id/tv_event_date_rv_lobby"
             app:layout_constraintTop_toTopOf="@id/tv_event_iat_rv_lobby" />
@@ -114,11 +118,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
-                app:chipSpacingHorizontal="12dp"
+                app:chipSpacingHorizontal="@dimen/guideline_small"
                 app:set_chip="@{eventItem.eventType}"
                 app:singleLine="true" />
 
         </HorizontalScrollView>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_right_event_rv_lobby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/guideline_smaller" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

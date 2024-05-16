@@ -26,14 +26,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="16dp" />
+                app:layout_constraintGuide_begin="@dimen/guideline_medium" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gl_top_ability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_begin="16dp" />
+                app:layout_constraintGuide_begin="@dimen/guideline_medium" />
 
             <TextView
                 android:id="@+id/tv_title_ability"
@@ -52,6 +52,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/shape_close"
+                android:contentDescription="@string/description_close"
                 android:onClick="@{() -> vm.closeAbility()}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_title_ability"
                 app:layout_constraintDimensionRatio="1:1"
@@ -62,8 +63,8 @@
                 android:id="@+id/mcv_first_ability"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="@dimen/guideline_small"
+                android:layout_marginBottom="@dimen/guideline_small"
                 app:cardBackgroundColor="@color/character"
                 app:cardCornerRadius="1dp"
                 app:layout_constraintBottom_toTopOf="@id/mcv_second_ability"
@@ -80,7 +81,7 @@
                         android:id="@+id/vp_ability"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="12dp"
+                        android:layout_marginBottom="@dimen/guideline_small"
                         android:background="@drawable/shape_default_stat"
                         app:layout_constraintBottom_toTopOf="@id/tl_ability"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -110,8 +111,8 @@
                 android:id="@+id/mcv_second_ability"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginTop="@dimen/guideline_small"
+                android:layout_marginBottom="@dimen/guideline_small"
                 app:cardBackgroundColor="@color/character"
                 app:cardCornerRadius="1dp"
                 app:layout_constraintBottom_toTopOf="@id/gl_bottom_ability"
@@ -131,7 +132,7 @@
                         android:fontFamily="@font/pretendardbold"
                         android:text="@string/text_ability_remain_point"
                         android:textColor="@color/white1"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/font_size_medium"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -140,13 +141,13 @@
                         android:id="@+id/tv_remain_point_value_ability"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="36dp"
+                        android:layout_marginStart="@dimen/guideline_largest"
                         android:background="@drawable/shape_default_stat"
                         android:fontFamily="@font/pretendardregular"
-                        android:padding="8dp"
+                        android:padding="@dimen/padding_smaller"
                         android:textAlignment="viewEnd"
                         android:textColor="@color/white1"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/font_size_little_small"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_remain_point_ability"
@@ -161,14 +162,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                app:layout_constraintGuide_end="16dp" />
+                app:layout_constraintGuide_end="@dimen/guideline_medium" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gl_right_ability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_end="16dp" />
+                app:layout_constraintGuide_end="@dimen/guideline_medium" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

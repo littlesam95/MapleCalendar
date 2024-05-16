@@ -17,6 +17,13 @@
         android:background="@color/white"
         tools:context=".presentation.views.CharacterActivity">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_left_character"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/guideline_medium" />
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fcv_character"
             android:name="androidx.navigation.fragment.NavHostFragment"
@@ -34,8 +41,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="@dimen/bnv_start"
-            android:layout_marginEnd="@dimen/bnv_end"
             android:background="@drawable/rounded"
             app:elevation="0dp"
             app:itemActiveIndicatorStyle="@null"
@@ -44,10 +49,17 @@
             app:itemTextColor="@drawable/selector_text"
             app:labelVisibilityMode="selected"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/gl_right_character"
+            app:layout_constraintStart_toEndOf="@id/gl_left_character"
             app:layout_constraintTop_toBottomOf="@id/fcv_character"
             app:menu="@menu/bottom_nav_menu_character" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_right_character"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/guideline_medium" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

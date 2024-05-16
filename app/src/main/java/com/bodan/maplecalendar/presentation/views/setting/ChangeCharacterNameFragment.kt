@@ -18,9 +18,17 @@ class ChangeCharacterNameFragment :
 
     private val viewModel: MainViewModel by activityViewModels()
 
+    override fun onResume() {
+        super.onResume()
+
+        requireContext().dialogFragmentResize(this, 0.8F, 0.9F)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.vm = viewModel
+        isCancelable = false
 
         lifecycleScope.launch {
             viewModel.settingUiEvent.collectLatest { uiEvent ->
