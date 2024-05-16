@@ -31,19 +31,19 @@
 #### 특정 날짜에 진행할 이벤트 확인
  - 달력의 특정 날짜를 클릭해 진행하는 이벤트를 확인하자.
   <p>
-     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/53957d88-d8dc-4811-8292-0bb5547df9c5">
+     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/94d22044-c8cf-4379-af7c-44c24338f615">
   </p>
 
 #### 이벤트 알리미로 당일 종료되는 이벤트 확인
  - 매일 00시마다 당일 종료되는 이벤트의 개수를 알림받자.
   <p>
-     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/95702161-c9c1-4845-b2b7-d9d216f4cf47">
+     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/f370d34f-da7b-436c-b634-0029396df5bf">
   </p>
 
 #### 특정 캐릭터의 상세 정보(종합 능력치 및 장비) 확인
  - 정보가 궁금한 캐릭터의 종합 능력치와 장비를 확인해보자.
   <p>
-     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/634f896a-ac54-4ad9-baf4-829b984a9bf5">
+     <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/575efbbb-6687-4c3a-b7c9-e227e633e203">
      <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/130258a6-979f-4079-8492-7e1b8c10c805">
      <img style="width: 150px; margin: 8px" src="https://github.com/littlesam95/MapleCalendar/assets/55424662/f7dd12f9-bf66-4e22-b6f1-6cf0eb324e7b">
   </p>
@@ -111,6 +111,11 @@
  - 스타포스를 나타내는 별의 ViewGroup을 먼저 정의하고, 미리 정의한 속성을 바탕으로 ViewGroup에 추가해야 할 View의 최대 개수를 바탕으로 width와 height를 측정한다.
    - 여기서 5번째 View와 6번째 View 간의 간격이 조금 존재하기 때문에 View의 width의 절반만큼 ViewGroup의 width를 늘린다.
  - 아이템의 스타포스를 바탕으로 추가해야 할 노란 별과 회색 별의 개수를 정한다.
+
+#### 6. ViewPager2와 TabLayout으로 프리셋을 좌우 스와이프로 확인하기
+ - 하이퍼 스탯, 어빌리티 UI를 포함한 DialogFragment 내부에 ViewPager2와 TabLayout을 배치하였다.
+ - ViewPager2에 사용할 Fragment 내부에 RecyclerView를 배치하여, List 형태의 프리셋 데이터를 RecyclerView Adapter로 보여준다.
+ - ViewPager2와 TabLayout을 TabLayoutMediator로 연결하여 좌우 스와이프를 하면 프리셋 버튼의 상태도 바뀌고, 프리셋 버튼을 터치하면 좌우 스와이프 애니메이션으로 프리셋 화면을 바꾸도록 구현하였다.
 
 ### Document
 <a href="https://www.notion.so/MapleCalendar-93f45dc10b384d749e5ab00950324035?pvs=4">
