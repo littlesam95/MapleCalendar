@@ -7,6 +7,7 @@ import com.bodan.maplecalendar.data.model.HyperStatEntity
 import com.bodan.maplecalendar.data.model.ItemEquipmentEntity
 import com.bodan.maplecalendar.data.model.OcidEntity
 import com.bodan.maplecalendar.data.model.PopularityEntity
+import com.bodan.maplecalendar.data.model.SkillEntity
 import com.bodan.maplecalendar.data.model.StatEntity
 import com.bodan.maplecalendar.data.model.UnionEntity
 import retrofit2.Response
@@ -19,7 +20,10 @@ interface MaplestoryRemoteDataSource {
 
     suspend fun getCharacterStat(ocid: String, date: String?): Response<StatEntity>
 
-    suspend fun getCharacterItemEquipment(ocid: String, date: String?): Response<ItemEquipmentEntity>
+    suspend fun getCharacterItemEquipment(
+        ocid: String,
+        date: String?
+    ): Response<ItemEquipmentEntity>
 
     suspend fun getCharacterUnion(ocid: String, date: String?): Response<UnionEntity>
 
@@ -30,4 +34,10 @@ interface MaplestoryRemoteDataSource {
     suspend fun getCharacterHyperStat(ocid: String, date: String?): Response<HyperStatEntity>
 
     suspend fun getCharacterAbility(ocid: String, date: String?): Response<AbilityEntity>
+
+    suspend fun getCharacterSkill(
+        ocid: String,
+        date: String?,
+        characterSkillGrade: String
+    ): Response<SkillEntity>
 }

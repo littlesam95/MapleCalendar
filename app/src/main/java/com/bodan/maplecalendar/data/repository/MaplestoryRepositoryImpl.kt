@@ -10,6 +10,7 @@ import com.bodan.maplecalendar.data.mapper.CharacterHyperStatMapper
 import com.bodan.maplecalendar.data.mapper.CharacterItemEquipmentMapper
 import com.bodan.maplecalendar.data.mapper.CharacterOcidMapper
 import com.bodan.maplecalendar.data.mapper.CharacterPopularityMapper
+import com.bodan.maplecalendar.data.mapper.CharacterSkillMapper
 import com.bodan.maplecalendar.data.mapper.CharacterStatMapper
 import com.bodan.maplecalendar.data.mapper.CharacterUnionMapper
 import com.bodan.maplecalendar.domain.entity.CharacterAbility
@@ -17,6 +18,7 @@ import com.bodan.maplecalendar.domain.entity.CharacterBasic
 import com.bodan.maplecalendar.domain.entity.CharacterHyperStat
 import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
 import com.bodan.maplecalendar.domain.entity.CharacterOcid
+import com.bodan.maplecalendar.domain.entity.CharacterSkill
 import com.bodan.maplecalendar.domain.entity.FinalStat
 import com.bodan.maplecalendar.domain.repository.MaplestoryRepository
 import com.bodan.maplecalendar.domain.entity.Result
@@ -176,6 +178,26 @@ class MaplestoryRepositoryImpl @Inject constructor(
             val body = response.body()
             if (response.isSuccessful && (body != null)) {
                 Result.success(CharacterAbilityMapper(body))
+            } else {
+                Result.error(response.errorBody().toString(), null)
+            }
+        } catch (e: Exception) {
+            Result.fail()
+        }
+
+    override suspend fun getCharacterSkill(
+        ocid: String,
+        date: String?,
+        characterSkillGrade: String
+    ): Result<CharacterSkill> =
+        try {
+            val response = withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                maplestoryRemoteDataSource.getCharacterSkill(ocid, date, characterSkillGrade)
+            }
+
+            val body = response.body()
+            if (response.isSuccessful && (body != null)) {
+                Result.success(CharacterSkillMapper(body))
             } else {
                 Result.error(response.errorBody().toString(), null)
             }

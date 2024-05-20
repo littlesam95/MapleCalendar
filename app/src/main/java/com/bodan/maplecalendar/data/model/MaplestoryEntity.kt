@@ -576,3 +576,35 @@ data class AbilityInfoEntity(
     @Json(name = "ability_value")
     val abilityValue: String
 )
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class SkillEntity(
+    @Json(name = "character_class")
+    val characterClass: String,
+
+    @Json(name = "character_skill_grade")
+    val characterSkillGrade: String,
+
+    @Json(name = "character_skill")
+    val characterSkill: List<SkillInfoEntity>
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class SkillInfoEntity(
+    @Json(name = "skill_name")
+    val skillName: String,
+
+    @Json(name = "skill_description")
+    val skillDescription: String,
+
+    @Json(name = "skill_level")
+    val skillLevel: Int,
+
+    @Json(name = "skill_effect")
+    val skillEffect: String,
+
+    @Json(name = "skill_icon")
+    val skillIcon: String
+)

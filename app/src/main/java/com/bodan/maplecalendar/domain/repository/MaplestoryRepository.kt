@@ -7,6 +7,7 @@ import com.bodan.maplecalendar.domain.entity.CharacterBasic
 import com.bodan.maplecalendar.domain.entity.CharacterHyperStat
 import com.bodan.maplecalendar.domain.entity.CharacterOcid
 import com.bodan.maplecalendar.domain.entity.CharacterPopularity
+import com.bodan.maplecalendar.domain.entity.CharacterSkill
 import com.bodan.maplecalendar.domain.entity.CharacterUnion
 import com.bodan.maplecalendar.domain.entity.FinalStat
 import com.bodan.maplecalendar.domain.entity.Result
@@ -19,7 +20,10 @@ interface MaplestoryRepository {
 
     suspend fun getCharacterPower(ocid: String, date: String?): Result<List<FinalStat>>
 
-    suspend fun getCharacterItemEquipment(ocid: String, date: String?): Result<CharacterItemEquipment>
+    suspend fun getCharacterItemEquipment(
+        ocid: String,
+        date: String?
+    ): Result<CharacterItemEquipment>
 
     suspend fun getCharacterUnion(ocid: String, date: String?): Result<CharacterUnion>
 
@@ -30,4 +34,10 @@ interface MaplestoryRepository {
     suspend fun getCharacterHyperStat(ocid: String, date: String?): Result<CharacterHyperStat>
 
     suspend fun getCharacterAbility(ocid: String, date: String?): Result<CharacterAbility>
+
+    suspend fun getCharacterSkill(
+        ocid: String,
+        date: String?,
+        characterSkillGrade: String
+    ): Result<CharacterSkill>
 }

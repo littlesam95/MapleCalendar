@@ -8,6 +8,7 @@ import com.bodan.maplecalendar.data.model.HyperStatEntity
 import com.bodan.maplecalendar.data.model.ItemEquipmentEntity
 import com.bodan.maplecalendar.data.model.OcidEntity
 import com.bodan.maplecalendar.data.model.PopularityEntity
+import com.bodan.maplecalendar.data.model.SkillEntity
 import com.bodan.maplecalendar.data.model.StatEntity
 import com.bodan.maplecalendar.data.model.UnionEntity
 import retrofit2.Response
@@ -29,8 +30,7 @@ class MaplestoryRemoteDataSourceImpl @Inject constructor(
     override suspend fun getCharacterItemEquipment(
         ocid: String,
         date: String?
-    ): Response<ItemEquipmentEntity> =
-        maplestoryApi.fetchCharacterItemEquipment(ocid, date)
+    ): Response<ItemEquipmentEntity> = maplestoryApi.fetchCharacterItemEquipment(ocid, date)
 
     override suspend fun getCharacterUnion(ocid: String, date: String?): Response<UnionEntity> =
         maplestoryApi.fetchCharacterUnion(ocid, date)
@@ -38,8 +38,7 @@ class MaplestoryRemoteDataSourceImpl @Inject constructor(
     override suspend fun getCharacterPopularity(
         ocid: String,
         date: String?
-    ): Response<PopularityEntity> =
-        maplestoryApi.fetchCharacterPopularity(ocid, date)
+    ): Response<PopularityEntity> = maplestoryApi.fetchCharacterPopularity(ocid, date)
 
     override suspend fun getCharacterDojang(ocid: String, date: String?): Response<DojangEntity> =
         maplestoryApi.fetchCharacterDojang(ocid, date)
@@ -47,9 +46,14 @@ class MaplestoryRemoteDataSourceImpl @Inject constructor(
     override suspend fun getCharacterHyperStat(
         ocid: String,
         date: String?
-    ): Response<HyperStatEntity> =
-        maplestoryApi.fetchCharacterHyperStat(ocid, date)
+    ): Response<HyperStatEntity> = maplestoryApi.fetchCharacterHyperStat(ocid, date)
 
     override suspend fun getCharacterAbility(ocid: String, date: String?): Response<AbilityEntity> =
         maplestoryApi.fetchCharacterAbility(ocid, date)
+
+    override suspend fun getCharacterSkill(
+        ocid: String,
+        date: String?,
+        characterSkillGrade: String
+    ): Response<SkillEntity> = maplestoryApi.fetchCharacterSkill(ocid, date, characterSkillGrade)
 }

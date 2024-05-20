@@ -7,6 +7,7 @@ import com.bodan.maplecalendar.data.model.HyperStatEntity
 import com.bodan.maplecalendar.data.model.ItemEquipmentEntity
 import com.bodan.maplecalendar.data.model.OcidEntity
 import com.bodan.maplecalendar.data.model.PopularityEntity
+import com.bodan.maplecalendar.data.model.SkillEntity
 import com.bodan.maplecalendar.data.model.StatEntity
 import com.bodan.maplecalendar.data.model.UnionEntity
 import retrofit2.Response
@@ -67,4 +68,11 @@ interface MaplestoryApi {
         @Query("ocid") ocid: String,
         @Query("date") date: String?
     ): Response<AbilityEntity>
+
+    @GET("v1/character/skill")
+    suspend fun fetchCharacterSkill(
+        @Query("ocid") ocid: String,
+        @Query("date") date: String?,
+        @Query("character_skill_grade") characterSkillGrade: String
+    ): Response<SkillEntity>
 }
