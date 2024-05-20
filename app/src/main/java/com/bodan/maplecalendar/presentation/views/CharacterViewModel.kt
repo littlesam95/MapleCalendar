@@ -10,6 +10,7 @@ import com.bodan.maplecalendar.domain.entity.CharacterPopularity
 import com.bodan.maplecalendar.domain.entity.CharacterUnion
 import com.bodan.maplecalendar.domain.entity.CharacterBasic
 import com.bodan.maplecalendar.domain.entity.CharacterHyperStat
+import com.bodan.maplecalendar.domain.entity.CharacterSkill
 import com.bodan.maplecalendar.domain.usecase.GetCharacterBasicUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterDojangUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterItemEquipmentUseCase
@@ -24,6 +25,8 @@ import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertPo
 import com.bodan.maplecalendar.domain.entity.Status
 import com.bodan.maplecalendar.domain.usecase.GetCharacterAbilityUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterHyperStatUseCase
+import com.bodan.maplecalendar.domain.usecase.GetCharacterSkillUseCase
+import com.bodan.maplecalendar.presentation.utils.SkillGenerator.skillGrades
 import com.bodan.maplecalendar.presentation.utils.StatGenerator.getDefaultStats
 import com.bodan.maplecalendar.presentation.utils.StatGenerator.getEtcStats
 import com.bodan.maplecalendar.presentation.utils.StatGenerator.getMainStats
@@ -41,6 +44,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,7 +56,8 @@ class CharacterViewModel @Inject constructor(
     private val getCharacterPopularityUseCase: GetCharacterPopularityUseCase,
     private val getCharacterDojangUseCase: GetCharacterDojangUseCase,
     private val getCharacterHyperStatUseCase: GetCharacterHyperStatUseCase,
-    private val getCharacterAbilityUseCase: GetCharacterAbilityUseCase
+    private val getCharacterAbilityUseCase: GetCharacterAbilityUseCase,
+    private val getCharacterSkillUseCase: GetCharacterSkillUseCase
 ) : ViewModel(), OnItemEquipmentClickListener, OnCharacterClickListener {
 
     private val _characterName = MutableStateFlow<String>("")
@@ -125,6 +130,9 @@ class CharacterViewModel @Inject constructor(
 
     private val _characterAbility = MutableStateFlow<CharacterAbility?>(null)
     val characterAbility = _characterAbility.asStateFlow()
+
+    private val _characterSkills = MutableStateFlow<List<CharacterSkill>>(listOf())
+    val characterSkills = _characterSkills.asStateFlow()
 
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
     val characterUiEvent = _characterUiEvent.asSharedFlow()
@@ -357,6 +365,30 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
+    private fun setCharacterSkill(ocid: String, searchDate: String?) {
+        viewModelScope.launch {
+            val newCharacterSkills = mutableListOf<CharacterSkill>()
+            for (grade in skillGrades) {
+                val characterSkillResponse =
+                    getCharacterSkillUseCase.getCharacterSkill(ocid, searchDate, grade)
+                when (characterSkillResponse.status) {
+                    Status.SUCCESS -> {
+                        characterSkillResponse.data?.let { characterSkill ->
+                            newCharacterSkills.add(characterSkill)
+                        }
+                    }
+
+                    else -> {
+                        _equipmentUiEvent.emit(EquipmentUiEvent.InternalServerError)
+                    }
+                }
+            }
+
+            _characterSkills.value = newCharacterSkills
+            Timber.d("${_characterSkills.value}")
+        }
+    }
+
     fun initState() {
         viewModelScope.launch {
             _characterName.value =
@@ -371,6 +403,7 @@ class CharacterViewModel @Inject constructor(
             setCharacterDojang(ocid, searchDate)
             setCharacterHyperStat(ocid, searchDate)
             setCharacterAbility(ocid, searchDate)
+            setCharacterSkill(ocid, searchDate)
         }
     }
 
