@@ -10,9 +10,9 @@ object SkillGenerator {
         "2.5",
         "3",
         "4",
-        "hyperpassive",
-        "hyperactive",
         "5",
         "6"
     )
+
+    val hyperSkillGrades = listOf<String>("hyperpassive", "hyperactive")
 }
