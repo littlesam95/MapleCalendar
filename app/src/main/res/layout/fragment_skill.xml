@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_skill">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.bodan.maplecalendar.presentation.views.CharacterViewModel" />
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/guideline_small"
+        android:overScrollMode="never">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/title_start"
+            android:layout_marginEnd="@dimen/title_end"
+            android:background="@drawable/shape_equipment"
+            tools:context=".presentation.views.skill.SkillFragment">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_left_skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/guideline_small" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top_skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/guideline_small" />
+
+            <TextView
+                android:id="@+id/tv_title_skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendardbold"
+                android:text="@string/text_title_skill"
+                android:textColor="@color/equipment_title"
+                android:textSize="@dimen/title_font_size_big"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_skill"
+                app:layout_constraintStart_toEndOf="@id/gl_left_skill"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_skill" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tl_skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/vp_skill"
+                app:layout_constraintStart_toEndOf="@id/gl_left_skill"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_skill"
+                app:tabBackground="@drawable/shape_skill_tab"
+                app:tabGravity="start"
+                app:tabIndicatorHeight="0dp"
+                app:tabTextAppearance="@style/SkillTabLayoutText"
+                app:tabTextColor="@color/white1" />
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_skill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_equipment"
+                app:layout_constraintBottom_toTopOf="@id/btn_hyper_skill"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_skill"
+                app:layout_constraintStart_toEndOf="@id/gl_left_skill"
+                app:layout_constraintTop_toBottomOf="@id/tl_skill" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_hyper_skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_hyper_skill"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_skill"
+                app:layout_constraintStart_toEndOf="@id/gl_left_skill"
+                app:layout_constraintTop_toBottomOf="@id/vp_skill" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_right_skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/guideline_small" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_bottom_skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="@dimen/guideline_small" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</layout>
