@@ -13,4 +13,10 @@
         android:icon="@drawable/selector_equipment"
         android:title="@string/name_menu_equipment" />
 
+    <item
+        android:id="@+id/fragment_skill"
+        android:enabled="true"
+        android:icon="@drawable/selector_skill"
+        android:title="@string/name_menu_skill" />
+
 </menu>
