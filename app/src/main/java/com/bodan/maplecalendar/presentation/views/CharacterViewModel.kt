@@ -11,6 +11,7 @@ import com.bodan.maplecalendar.domain.entity.CharacterUnion
 import com.bodan.maplecalendar.domain.entity.CharacterBasic
 import com.bodan.maplecalendar.domain.entity.CharacterHyperStat
 import com.bodan.maplecalendar.domain.entity.CharacterSkill
+import com.bodan.maplecalendar.domain.entity.CharacterSkillInfo
 import com.bodan.maplecalendar.domain.usecase.GetCharacterBasicUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterDojangUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterItemEquipmentUseCase
@@ -26,6 +27,7 @@ import com.bodan.maplecalendar.domain.entity.Status
 import com.bodan.maplecalendar.domain.usecase.GetCharacterAbilityUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterHyperStatUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterSkillUseCase
+import com.bodan.maplecalendar.presentation.utils.SkillGenerator.hyperSkillGrades
 import com.bodan.maplecalendar.presentation.utils.SkillGenerator.skillGrades
 import com.bodan.maplecalendar.presentation.utils.StatGenerator.getDefaultStats
 import com.bodan.maplecalendar.presentation.utils.StatGenerator.getEtcStats
@@ -37,6 +39,8 @@ import com.bodan.maplecalendar.presentation.views.equipment.EquipmentDetailUiSta
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentUiEvent
 import com.bodan.maplecalendar.presentation.views.equipment.EquipmentUiState
 import com.bodan.maplecalendar.presentation.views.equipment.OnItemEquipmentClickListener
+import com.bodan.maplecalendar.presentation.views.skill.OnSkillClickListener
+import com.bodan.maplecalendar.presentation.views.skill.SkillUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -44,7 +48,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -58,7 +61,7 @@ class CharacterViewModel @Inject constructor(
     private val getCharacterHyperStatUseCase: GetCharacterHyperStatUseCase,
     private val getCharacterAbilityUseCase: GetCharacterAbilityUseCase,
     private val getCharacterSkillUseCase: GetCharacterSkillUseCase
-) : ViewModel(), OnItemEquipmentClickListener, OnCharacterClickListener {
+) : ViewModel(), OnItemEquipmentClickListener, OnCharacterClickListener, OnSkillClickListener {
 
     private val _characterName = MutableStateFlow<String>("")
     val characterName = _characterName.asStateFlow()
@@ -134,11 +137,20 @@ class CharacterViewModel @Inject constructor(
     private val _characterSkills = MutableStateFlow<List<CharacterSkill>>(listOf())
     val characterSkills = _characterSkills.asStateFlow()
 
+    private val _characterSelectedSkill = MutableStateFlow<CharacterSkillInfo?>(null)
+    val characterSelectedSkill = _characterSelectedSkill.asStateFlow()
+
+    private val _characterHyperSkills = MutableStateFlow<List<CharacterSkill>>(listOf())
+    val characterHyperSkills = _characterSkills.asStateFlow()
+
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
     val characterUiEvent = _characterUiEvent.asSharedFlow()
 
     private val _equipmentUiEvent = MutableSharedFlow<EquipmentUiEvent>()
     val equipmentUiEvent = _equipmentUiEvent.asSharedFlow()
+
+    private val _skillUiEvent = MutableSharedFlow<SkillUiEvent>()
+    val skillUiEvent = _skillUiEvent.asSharedFlow()
 
     override fun onItemEquipmentClicked(item: EquipmentUiState.EquipmentOption) {
         if ((!isCharacterItemEquipmentSelected.value) && (item.itemName != null)) {
@@ -183,6 +195,13 @@ class CharacterViewModel @Inject constructor(
     override fun onAbilityClicked() {
         viewModelScope.launch {
             _characterUiEvent.emit(CharacterUiEvent.GetAbility)
+        }
+    }
+
+    override fun onSkillClicked(skillInfo: CharacterSkillInfo) {
+        viewModelScope.launch {
+            _characterSelectedSkill.value = skillInfo
+            _skillUiEvent.emit(SkillUiEvent.GetSkillDetail)
         }
     }
 
@@ -379,13 +398,31 @@ class CharacterViewModel @Inject constructor(
                     }
 
                     else -> {
-                        _equipmentUiEvent.emit(EquipmentUiEvent.InternalServerError)
+                        _skillUiEvent.emit(SkillUiEvent.InternalServerError)
                     }
                 }
             }
 
             _characterSkills.value = newCharacterSkills
-            Timber.d("${_characterSkills.value}")
+
+            val newCharacterHyperSkills = mutableListOf<CharacterSkill>()
+            for (grade in hyperSkillGrades) {
+                val characterSkillResponse =
+                    getCharacterSkillUseCase.getCharacterSkill(ocid, searchDate, grade)
+                when (characterSkillResponse.status) {
+                    Status.SUCCESS -> {
+                        characterSkillResponse.data?.let { characterSkill ->
+                            newCharacterHyperSkills.add(characterSkill)
+                        }
+                    }
+
+                    else -> {
+                        _skillUiEvent.emit(SkillUiEvent.InternalServerError)
+                    }
+                }
+            }
+
+            _characterHyperSkills.value = newCharacterHyperSkills
         }
     }
 
@@ -403,7 +440,9 @@ class CharacterViewModel @Inject constructor(
             setCharacterDojang(ocid, searchDate)
             setCharacterHyperStat(ocid, searchDate)
             setCharacterAbility(ocid, searchDate)
-            setCharacterSkill(ocid, searchDate)
+            async {
+                setCharacterSkill(ocid, searchDate)
+            }.await()
         }
     }
 
@@ -447,6 +486,12 @@ class CharacterViewModel @Inject constructor(
     fun closeAbility() {
         viewModelScope.launch {
             _characterUiEvent.emit(CharacterUiEvent.CloseAbility)
+        }
+    }
+
+    fun closeSkillDetail() {
+        viewModelScope.launch {
+            _skillUiEvent.emit(SkillUiEvent.CloseSkillDetail)
         }
     }
 }

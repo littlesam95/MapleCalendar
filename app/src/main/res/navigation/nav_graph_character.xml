@@ -33,6 +33,18 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/fragment_skill"
+        android:name="com.bodan.maplecalendar.presentation.views.skill.SkillFragment"
+        android:label="@string/name_menu_skill"
+        tools:layout="@layout/fragment_skill">
+
+        <action
+            android:id="@+id/action_skill_to_skill_detail"
+            app:destination="@id/fragment_skill_detail" />
+
+    </fragment>
+
     <dialog
         android:id="@+id/fragment_item_equipment_detail"
         android:name="com.bodan.maplecalendar.presentation.views.equipment.ItemEquipmentDetailFragment"
@@ -47,5 +59,10 @@
         android:id="@+id/fragment_ability"
         android:name="com.bodan.maplecalendar.presentation.views.ability.AbilityFragment"
         android:label="@string/name_ability" />
+
+    <dialog
+        android:id="@+id/fragment_skill_detail"
+        android:name="com.bodan.maplecalendar.presentation.views.skill.SkillDetailFragment"
+        android:label="@string/name_skill_detail" />
 
 </navigation>
