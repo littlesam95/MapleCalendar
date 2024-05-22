@@ -603,7 +603,7 @@ data class SkillInfoEntity(
     val skillLevel: Int,
 
     @Json(name = "skill_effect")
-    val skillEffect: String,
+    val skillEffect: String?,
 
     @Json(name = "skill_icon")
     val skillIcon: String
