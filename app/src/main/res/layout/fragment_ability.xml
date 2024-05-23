@@ -100,7 +100,7 @@
                         app:tabBackground="@drawable/shape_hyper_stat_tab"
                         app:tabGravity="center"
                         app:tabIndicatorHeight="0dp"
-                        app:tabTextAppearance="@style/HyperStatTabLayoutTextSize"
+                        app:tabTextAppearance="@style/HyperStatTabLayoutText"
                         app:tabTextColor="@color/white1" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

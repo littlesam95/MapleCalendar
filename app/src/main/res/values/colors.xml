@@ -7,6 +7,7 @@
     <color name="gray">#22000000</color>
 
     <color name="main">#FFF09636</color>
+    <color name="main_line">#FFED810E</color>
     <color name="sub">#FFF6D08A</color>
     <color name="alert">#FFB24739</color>
     <color name="submit">#FF576AAD</color>

@@ -17,67 +17,92 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/shape_skill_info"
+        android:layout_marginStart="@dimen/guideline_mini"
+        android:layout_marginEnd="@dimen/guideline_mini"
         android:onClick="@{() -> clickListener.onSkillClicked(skillInfo)}"
-        android:padding="@dimen/padding_smaller">
+        android:paddingTop="@dimen/padding_minimum">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iv_skill_info"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@drawable/shape_skill_icon"
             android:contentDescription="@string/description_skill_icon"
-            app:layout_constraintBottom_toBottomOf="@id/tv_skill_level_skill_info"
+            app:layout_constraintBottom_toBottomOf="@id/mcv_skill_info"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_skill_name_skill_info"
+            app:layout_constraintTop_toTopOf="@id/mcv_skill_info"
             app:profileImage="@{skillInfo.skillIcon}" />
 
-        <TextView
-            android:id="@+id/tv_skill_name_skill_info"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/mcv_skill_info"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/guideline_minimum"
-            android:ellipsize="marquee"
-            android:fontFamily="@font/pretendardregular"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:singleLine="true"
-            android:text="@{skillInfo.skillName}"
-            android:textAlignment="viewStart"
-            android:textColor="@color/white1"
-            android:textSize="@dimen/font_size_medium"
-            app:layout_constraintBottom_toTopOf="@id/iv_dotted_line_skill_info"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_skill_info"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_dotted_line_skill_info"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/dot_height"
-            android:layout_marginStart="@dimen/guideline_minimum"
-            android:layout_marginTop="@dimen/guideline_smaller"
-            android:layout_marginBottom="@dimen/guideline_minimum"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_dotted"
-            app:layout_constraintBottom_toTopOf="@id/tv_skill_level_skill_info"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_skill_info"
-            app:layout_constraintTop_toBottomOf="@id/tv_skill_name_skill_info" />
-
-        <TextView
-            android:id="@+id/tv_skill_level_skill_info"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/guideline_minimum"
-            android:fontFamily="@font/pretendardregular"
-            android:text="@{skillInfo.skillLevel}"
-            android:textAlignment="viewStart"
-            android:textColor="@color/white1"
-            android:textSize="@dimen/font_size_medium"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_skill_info"
-            app:layout_constraintTop_toBottomOf="@id/iv_dotted_line_skill_info" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:strokeWidth="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_skill_info">
+
+                <TextView
+                    android:id="@+id/tv_skill_name_skill_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/guideline_minimum"
+                    android:layout_marginTop="@dimen/guideline_minimum"
+                    android:layout_marginEnd="@dimen/guideline_minimum"
+                    android:ellipsize="marquee"
+                    android:fontFamily="@font/pretendardregular"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:text="@{skillInfo.skillName}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white1"
+                    android:textSize="@dimen/font_size_small"
+                    app:layout_constraintBottom_toTopOf="@id/iv_dotted_line_skill_info"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_dotted_line_skill_info"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dot_height"
+                    android:layout_marginTop="@dimen/guideline_minimum"
+                    android:layout_marginBottom="@dimen/guideline_minimum"
+                    android:src="@drawable/ic_dotted"
+                    app:layout_constraintBottom_toTopOf="@id/tv_skill_level_skill_info"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_skill_name_skill_info" />
+
+                <TextView
+                    android:id="@+id/tv_skill_level_skill_info"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/guideline_minimum"
+                    android:layout_marginBottom="@dimen/guideline_minimum"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{skillInfo.skillLevel}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white1"
+                    android:textSize="@dimen/font_size_small"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_dotted_line_skill_info" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

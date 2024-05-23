@@ -2,14 +2,16 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/listview_background_shape">
 
-    <padding android:left="2dp"
+    <padding android:left="20dp"
         android:top="2dp"
-        android:right="2dp"
+        android:right="20dp"
         android:bottom="2dp" />
 
-    <corners android:topLeftRadius="30dp"
-        android:topRightRadius="30dp"/>
+    <corners android:topLeftRadius="10dp"
+        android:topRightRadius="10dp"/>
 
-    <solid android:color="@color/gray" />
+    <solid android:color="@color/selector_skill_tab" />
+
+    <stroke android:width="2dp" android:color="@color/selector_skill_tab_stroke" />
 
 </shape>
