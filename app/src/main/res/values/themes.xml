@@ -84,9 +84,9 @@
     </style>
 
     <!-- Hyper Stat -->
-    <style name="HyperStatTabLayoutTextSize" parent="TextAppearance.Design.Tab">
+    <style name="HyperStatTabLayoutText" parent="TextAppearance.Design.Tab">
         
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/font_size_small</item>
 
         <item name="fontFamily">@font/pretendardregular</item>
         
@@ -95,7 +95,7 @@
     <!-- Skill -->
     <style name="SkillTabLayoutText" parent="TextAppearance.Design.Tab">
 
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">@dimen/font_size_medium</item>
 
         <item name="fontFamily">@font/pretendardbold</item>
 
