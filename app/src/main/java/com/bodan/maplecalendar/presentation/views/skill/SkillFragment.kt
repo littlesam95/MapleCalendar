@@ -3,6 +3,7 @@ package com.bodan.maplecalendar.presentation.views.skill
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentSkillBinding
@@ -10,6 +11,8 @@ import com.bodan.maplecalendar.presentation.config.BaseFragment
 import com.bodan.maplecalendar.presentation.views.CharacterViewModel
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SkillFragment : BaseFragment<FragmentSkillBinding>(R.layout.fragment_skill) {
@@ -21,22 +24,21 @@ class SkillFragment : BaseFragment<FragmentSkillBinding>(R.layout.fragment_skill
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
-        initSkillInfo()
-        initTabLayout()
-
         binding.vm = viewModel
 
         collectLatestFlow(viewModel.skillUiEvent) { handleUiEvent(it) }
     }
 
     private fun initAdapter() {
-        skillAdapter = SkillAdapter(requireActivity(), viewModel.characterSkills.value.size)
-    }
-
-    private fun initSkillInfo() {
-        with(binding.vpSkill) {
-            adapter = skillAdapter
-            setCurrentItem(SkillAdapter.START_POSITION, true)
+        lifecycleScope.launch {
+            viewModel.characterSkills.collectLatest { skills ->
+                skillAdapter = SkillAdapter(requireActivity(), skills.size)
+                with(binding.vpSkill) {
+                    adapter = skillAdapter
+                    setCurrentItem(SkillAdapter.START_POSITION, true)
+                }
+                initTabLayout()
+            }
         }
     }
 
