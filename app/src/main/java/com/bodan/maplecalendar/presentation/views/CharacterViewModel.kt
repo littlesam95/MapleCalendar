@@ -393,7 +393,9 @@ class CharacterViewModel @Inject constructor(
                 when (characterSkillResponse.status) {
                     Status.SUCCESS -> {
                         characterSkillResponse.data?.let { characterSkill ->
-                            newCharacterSkills.add(characterSkill)
+                            if (characterSkill.characterSkillGrade != null) {
+                                newCharacterSkills.add(characterSkill)
+                            }
                         }
                     }
 
