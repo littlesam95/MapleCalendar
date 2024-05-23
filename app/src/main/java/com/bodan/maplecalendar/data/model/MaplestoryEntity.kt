@@ -584,7 +584,7 @@ data class SkillEntity(
     val characterClass: String,
 
     @Json(name = "character_skill_grade")
-    val characterSkillGrade: String,
+    val characterSkillGrade: String?,
 
     @Json(name = "character_skill")
     val characterSkill: List<SkillInfoEntity>
