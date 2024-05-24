@@ -139,10 +139,13 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/guideline_small"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="1dp"
                     app:layout_constraintBottom_toTopOf="@id/iv_character_lobby"
                     app:layout_constraintEnd_toEndOf="@id/switch_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_character_name_lobby"
-                    app:layout_constraintTop_toBottomOf="@id/tv_character_name_lobby">
+                    app:layout_constraintTop_toBottomOf="@id/tv_character_name_lobby"
+                    app:strokeWidth="0dp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"

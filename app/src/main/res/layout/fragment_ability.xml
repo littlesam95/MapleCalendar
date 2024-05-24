@@ -52,7 +52,6 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:background="@drawable/shape_close"
-                android:contentDescription="@string/description_close"
                 android:onClick="@{() -> vm.closeAbility()}"
                 app:layout_constraintBottom_toBottomOf="@id/tv_title_ability"
                 app:layout_constraintDimensionRatio="1:1"
