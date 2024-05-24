@@ -40,6 +40,10 @@
         tools:layout="@layout/fragment_skill">
 
         <action
+            android:id="@+id/action_skill_to_hyper_skill"
+            app:destination="@id/fragment_hyper_skill" />
+
+        <action
             android:id="@+id/action_skill_to_skill_detail"
             app:destination="@id/fragment_skill_detail" />
 
@@ -64,5 +68,16 @@
         android:id="@+id/fragment_skill_detail"
         android:name="com.bodan.maplecalendar.presentation.views.skill.SkillDetailFragment"
         android:label="@string/name_skill_detail" />
+
+    <dialog
+        android:id="@+id/fragment_hyper_skill"
+        android:name="com.bodan.maplecalendar.presentation.views.skill.HyperSkillFragment"
+        android:label="@string/name_hyper_skill">
+
+        <action
+            android:id="@+id/action_hyper_skill_to_skill_detail"
+            app:destination="@id/fragment_skill_detail" />
+
+    </dialog>
 
 </navigation>

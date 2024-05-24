@@ -71,6 +71,10 @@ class SkillFragment : BaseFragment<FragmentSkillBinding>(R.layout.fragment_skill
             findNavController().navigate(R.id.action_skill_to_skill_detail)
         }
 
+        is SkillUiEvent.GetHyperSkill -> {
+            findNavController().navigate(R.id.action_skill_to_hyper_skill)
+        }
+
         is SkillUiEvent.BadRequest -> {
             showSnackBar(R.string.message_bad_request)
         }
