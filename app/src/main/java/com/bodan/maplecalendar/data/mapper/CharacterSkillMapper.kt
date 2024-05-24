@@ -15,7 +15,9 @@ object CharacterSkillMapper {
                     skillName = skill.skillName,
                     skillDescription = skill.skillDescription,
                     skillLevel = skill.skillLevel.toString(),
+                    skillLevelNext = (skill.skillLevel + 1).toString(),
                     skillEffect = skill.skillEffect,
+                    skillEffectNext = skill.skillEffectNext,
                     skillIcon = skill.skillIcon
                 )
             )

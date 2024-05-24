@@ -141,7 +141,7 @@ class CharacterViewModel @Inject constructor(
     val characterSelectedSkill = _characterSelectedSkill.asStateFlow()
 
     private val _characterHyperSkills = MutableStateFlow<List<CharacterSkill>>(listOf())
-    val characterHyperSkills = _characterSkills.asStateFlow()
+    val characterHyperSkills = _characterHyperSkills.asStateFlow()
 
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
     val characterUiEvent = _characterUiEvent.asSharedFlow()
@@ -200,8 +200,23 @@ class CharacterViewModel @Inject constructor(
 
     override fun onSkillClicked(skillInfo: CharacterSkillInfo) {
         viewModelScope.launch {
-            _characterSelectedSkill.value = skillInfo
-            _skillUiEvent.emit(SkillUiEvent.GetSkillDetail)
+            if (_characterSelectedSkill.value == null) {
+                _characterSelectedSkill.value = skillInfo
+                when (skillInfo.skillName) {
+                    "링크 매니지먼트" -> _skillUiEvent.emit(SkillUiEvent.GetLinkSkill)
+
+                    else -> _skillUiEvent.emit(SkillUiEvent.GetSkillDetail)
+                }
+            }
+        }
+    }
+
+    override fun onHyperSkillClicked(skillInfo: CharacterSkillInfo) {
+        viewModelScope.launch {
+            if (_characterSelectedSkill.value == null) {
+                _characterSelectedSkill.value = skillInfo
+                _skillUiEvent.emit(SkillUiEvent.GetHyperSkillDetail)
+            }
         }
     }
 
@@ -414,7 +429,9 @@ class CharacterViewModel @Inject constructor(
                 when (characterSkillResponse.status) {
                     Status.SUCCESS -> {
                         characterSkillResponse.data?.let { characterSkill ->
-                            newCharacterHyperSkills.add(characterSkill)
+                            if (characterSkill.characterSkillGrade != null) {
+                                newCharacterHyperSkills.add(characterSkill)
+                            }
                         }
                     }
 
@@ -493,7 +510,22 @@ class CharacterViewModel @Inject constructor(
 
     fun closeSkillDetail() {
         viewModelScope.launch {
-            _skillUiEvent.emit(SkillUiEvent.CloseSkillDetail)
+            if (_characterSelectedSkill.value != null) {
+                _characterSelectedSkill.value = null
+                _skillUiEvent.emit(SkillUiEvent.CloseSkillDetail)
+            }
+        }
+    }
+
+    fun goToHyperSkill() {
+        viewModelScope.launch {
+            _skillUiEvent.emit(SkillUiEvent.GetHyperSkill)
+        }
+    }
+
+    fun closeHyperSkill() {
+        viewModelScope.launch {
+            _skillUiEvent.emit(SkillUiEvent.CloseHyperSkill)
         }
     }
 }
