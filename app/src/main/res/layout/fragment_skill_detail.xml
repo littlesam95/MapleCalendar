@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="vm"
             type="com.bodan.maplecalendar.presentation.views.CharacterViewModel" />
@@ -160,10 +162,77 @@
                     android:textAlignment="viewStart"
                     android:textColor="@color/white1"
                     android:textSize="@dimen/font_size_medium"
-                    app:layout_constraintBottom_toTopOf="@id/gl_bottom_skill_detail"
+                    app:layout_constraintBottom_toTopOf="@id/barrier_next_skill_detail"
                     app:layout_constraintEnd_toStartOf="@id/gl_right_skill_detail"
                     app:layout_constraintStart_toEndOf="@id/gl_left_skill_detail"
                     app:layout_constraintTop_toBottomOf="@id/tv_level_left_skill_detail" />
+
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/barrier_next_skill_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:barrierAllowsGoneWidgets="true"
+                    app:barrierDirection="top"
+                    app:constraint_referenced_ids="tv_level_next_left_skill_detail,tv_level_next_skill_detail,tv_level_next_right_skill_detail,tv_effect_next_skill_detail"
+                    app:layout_constraintEnd_toStartOf="@id/gl_right_skill_detail"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_skill_detail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_effect_skill_detail" />
+
+                <TextView
+                    android:id="@+id/tv_level_next_left_skill_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/guideline_smaller"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@string/text_skill_level_next_left"
+                    android:textColor="@color/white1"
+                    android:textSize="@dimen/font_size_medium"
+                    android:visibility="@{(vm.characterSelectedSkill.skillEffectNext == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_skill_detail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_effect_skill_detail" />
+
+                <TextView
+                    android:id="@+id/tv_level_next_skill_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/guideline_minimum"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterSelectedSkill.skillLevelNext}"
+                    android:textColor="@color/white1"
+                    android:textSize="@dimen/font_size_medium"
+                    android:visibility="@{(vm.characterSelectedSkill.skillEffectNext == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_level_next_left_skill_detail"
+                    app:layout_constraintEnd_toStartOf="@id/tv_level_next_right_skill_detail"
+                    app:layout_constraintStart_toEndOf="@id/tv_level_next_left_skill_detail"
+                    app:layout_constraintTop_toTopOf="@id/tv_level_next_left_skill_detail" />
+
+                <TextView
+                    android:id="@+id/tv_level_next_right_skill_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@string/text_skill_level_right"
+                    android:textColor="@color/white1"
+                    android:textSize="@dimen/font_size_medium"
+                    android:visibility="@{(vm.characterSelectedSkill.skillEffectNext == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_level_next_left_skill_detail"
+                    app:layout_constraintStart_toEndOf="@id/tv_level_next_skill_detail"
+                    app:layout_constraintTop_toTopOf="@id/tv_level_next_left_skill_detail" />
+
+                <TextView
+                    android:id="@+id/tv_effect_next_skill_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendardregular"
+                    android:text="@{vm.characterSelectedSkill.skillEffectNext}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white1"
+                    android:textSize="@dimen/font_size_medium"
+                    android:visibility="@{(vm.characterSelectedSkill.skillEffectNext == null) ? View.GONE : View.VISIBLE}"
+                    app:layout_constraintBottom_toTopOf="@id/gl_bottom_skill_detail"
+                    app:layout_constraintEnd_toStartOf="@id/gl_right_skill_detail"
+                    app:layout_constraintStart_toEndOf="@id/gl_left_skill_detail"
+                    app:layout_constraintTop_toBottomOf="@id/tv_level_next_left_skill_detail" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/gl_right_skill_detail"
