@@ -605,6 +605,9 @@ data class SkillInfoEntity(
     @Json(name = "skill_effect")
     val skillEffect: String?,
 
+    @Json(name = "skill_effect_next")
+    val skillEffectNext: String?,
+
     @Json(name = "skill_icon")
     val skillIcon: String
 )
