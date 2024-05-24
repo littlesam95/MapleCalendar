@@ -19,6 +19,7 @@
     <string name="name_hyper_stat">Hyper Stat</string>
     <string name="name_ability">Ability</string>
     <string name="name_skill_detail">Skill Detail</string>
+    <string name="name_hyper_skill">Hyper Skill</string>
 
     <!-- Calendar -->
     <string name="text_nothing">-</string>
@@ -191,6 +192,9 @@
     <!-- Skill -->
     <string name="text_title_skill">SKILL</string>
     <string name="text_hyper_skill">하이퍼</string>
+    <string name="text_title_hyper_skill">HYPER SKILL INVENTORY</string>
+    <string name="text_title_hyper_skill_passive">패시브 스킬</string>
+    <string name="text_title_hyper_skill_active">액티브 스킬</string>
     <string name="text_skill_grade_zero">•</string>
     <string name="text_skill_grade_one">I</string>
     <string name="text_skill_grade_one_plus">I+</string>
@@ -201,6 +205,7 @@
     <string name="text_skill_grade_five">V</string>
     <string name="text_skill_grade_six">VI</string>
     <string name="text_skill_level_left">[현재레벨</string>
+    <string name="text_skill_level_next_left">[다음레벨</string>
     <string name="text_skill_level_right">]</string>
 
     <!-- Message -->
