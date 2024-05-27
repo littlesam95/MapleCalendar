@@ -5,6 +5,7 @@ import com.bodan.maplecalendar.data.model.BasicEntity
 import com.bodan.maplecalendar.data.model.DojangEntity
 import com.bodan.maplecalendar.data.model.HyperStatEntity
 import com.bodan.maplecalendar.data.model.ItemEquipmentEntity
+import com.bodan.maplecalendar.data.model.LinkSkillEntity
 import com.bodan.maplecalendar.data.model.OcidEntity
 import com.bodan.maplecalendar.data.model.PopularityEntity
 import com.bodan.maplecalendar.data.model.SkillEntity
@@ -75,4 +76,10 @@ interface MaplestoryApi {
         @Query("date") date: String?,
         @Query("character_skill_grade") characterSkillGrade: String
     ): Response<SkillEntity>
+
+    @GET("v1/character/link-skill")
+    suspend fun fetchCharacterLinkSkill(
+        @Query("ocid") ocid: String,
+        @Query("date") date: String?,
+    ): Response<LinkSkillEntity>
 }
