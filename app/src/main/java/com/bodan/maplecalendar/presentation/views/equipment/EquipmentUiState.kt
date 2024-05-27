@@ -184,7 +184,17 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
             }
 
             "보조무기" -> {
-                if (itemEquipmentPart == "방패") getItemMaxStarforce() else 0
+                when (itemEquipmentPart) {
+                    "방패" -> getItemMaxStarforce()
+
+                    "블레이드" -> getItemMaxStarforce()
+
+                    "태도" -> getItemMaxStarforce()
+
+                    "대검" -> getItemMaxStarforce()
+
+                    else -> 0
+                }
             }
 
             else -> {
