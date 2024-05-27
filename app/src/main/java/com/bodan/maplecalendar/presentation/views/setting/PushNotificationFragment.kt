@@ -43,17 +43,10 @@ class PushNotificationFragment :
         }
     private lateinit var myAlarmManagerRestarter: MyAlarmManagerRestarter
 
-    override fun onResume() {
-        super.onResume()
-
-        requireContext().dialogFragmentResize(this, 0.8F, 0.9F)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        isCancelable = false
 
         myAlarmManagerRestarter = MyAlarmManagerRestarter()
 

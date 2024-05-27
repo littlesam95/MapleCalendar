@@ -24,12 +24,6 @@ class AbilityFragment : BaseDialogFragment<FragmentAbilityBinding>(R.layout.frag
     private val viewModel: CharacterViewModel by activityViewModels()
     private lateinit var abilityAdapter: AbilityAdapter
 
-    override fun onResume() {
-        super.onResume()
-
-        requireContext().dialogFragmentResize(this, 0.9F, 0.6F)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -40,8 +34,6 @@ class AbilityFragment : BaseDialogFragment<FragmentAbilityBinding>(R.layout.frag
         binding.vm = viewModel
         binding.tvRemainPointValueAbility.text =
             convertCommaFormat(viewModel.characterAbility.value?.remainFame)
-
-        isCancelable = false
 
         lifecycleScope.launch {
             viewModel.characterUiEvent.collectLatest { uiEvent ->

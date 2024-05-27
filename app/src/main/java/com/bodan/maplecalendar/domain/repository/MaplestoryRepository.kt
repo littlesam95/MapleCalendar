@@ -5,6 +5,7 @@ import com.bodan.maplecalendar.domain.entity.CharacterDojang
 import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
 import com.bodan.maplecalendar.domain.entity.CharacterBasic
 import com.bodan.maplecalendar.domain.entity.CharacterHyperStat
+import com.bodan.maplecalendar.domain.entity.CharacterLinkSkill
 import com.bodan.maplecalendar.domain.entity.CharacterOcid
 import com.bodan.maplecalendar.domain.entity.CharacterPopularity
 import com.bodan.maplecalendar.domain.entity.CharacterSkill
@@ -40,4 +41,9 @@ interface MaplestoryRepository {
         date: String?,
         characterSkillGrade: String
     ): Result<CharacterSkill>
+
+    suspend fun getCharacterLinkSkill(
+        ocid: String,
+        date: String?
+    ): Result<CharacterLinkSkill>
 }

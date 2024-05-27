@@ -6,6 +6,7 @@ import com.bodan.maplecalendar.data.model.BasicEntity
 import com.bodan.maplecalendar.data.model.DojangEntity
 import com.bodan.maplecalendar.data.model.HyperStatEntity
 import com.bodan.maplecalendar.data.model.ItemEquipmentEntity
+import com.bodan.maplecalendar.data.model.LinkSkillEntity
 import com.bodan.maplecalendar.data.model.OcidEntity
 import com.bodan.maplecalendar.data.model.PopularityEntity
 import com.bodan.maplecalendar.data.model.SkillEntity
@@ -56,4 +57,9 @@ class MaplestoryRemoteDataSourceImpl @Inject constructor(
         date: String?,
         characterSkillGrade: String
     ): Response<SkillEntity> = maplestoryApi.fetchCharacterSkill(ocid, date, characterSkillGrade)
+
+    override suspend fun getCharacterLinkSkill(
+        ocid: String,
+        date: String?
+    ): Response<LinkSkillEntity> = maplestoryApi.fetchCharacterLinkSkill(ocid, date)
 }

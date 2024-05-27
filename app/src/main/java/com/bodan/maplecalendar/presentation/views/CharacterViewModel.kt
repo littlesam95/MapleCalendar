@@ -26,6 +26,7 @@ import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertPo
 import com.bodan.maplecalendar.domain.entity.Status
 import com.bodan.maplecalendar.domain.usecase.GetCharacterAbilityUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterHyperStatUseCase
+import com.bodan.maplecalendar.domain.usecase.GetCharacterLinkSkillUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterSkillUseCase
 import com.bodan.maplecalendar.presentation.utils.SkillGenerator.hyperSkillGrades
 import com.bodan.maplecalendar.presentation.utils.SkillGenerator.skillGrades
@@ -60,7 +61,8 @@ class CharacterViewModel @Inject constructor(
     private val getCharacterDojangUseCase: GetCharacterDojangUseCase,
     private val getCharacterHyperStatUseCase: GetCharacterHyperStatUseCase,
     private val getCharacterAbilityUseCase: GetCharacterAbilityUseCase,
-    private val getCharacterSkillUseCase: GetCharacterSkillUseCase
+    private val getCharacterSkillUseCase: GetCharacterSkillUseCase,
+    private val getCharacterLinkSkillUseCase: GetCharacterLinkSkillUseCase
 ) : ViewModel(), OnItemEquipmentClickListener, OnCharacterClickListener, OnSkillClickListener {
 
     private val _characterName = MutableStateFlow<String>("")
@@ -143,6 +145,12 @@ class CharacterViewModel @Inject constructor(
     private val _characterHyperSkills = MutableStateFlow<List<CharacterSkill>>(listOf())
     val characterHyperSkills = _characterHyperSkills.asStateFlow()
 
+    private val _characterLinkSkills = MutableStateFlow<List<List<CharacterSkillInfo>>>(listOf())
+    val characterLinkSkills = _characterLinkSkills.asStateFlow()
+
+    private val _characterOwnedLinkSkill = MutableStateFlow<CharacterSkillInfo?>(null)
+    val characterOwnedLinkSkill = _characterOwnedLinkSkill.asStateFlow()
+
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
     val characterUiEvent = _characterUiEvent.asSharedFlow()
 
@@ -201,11 +209,13 @@ class CharacterViewModel @Inject constructor(
     override fun onSkillClicked(skillInfo: CharacterSkillInfo) {
         viewModelScope.launch {
             if (_characterSelectedSkill.value == null) {
-                _characterSelectedSkill.value = skillInfo
                 when (skillInfo.skillName) {
                     "링크 매니지먼트" -> _skillUiEvent.emit(SkillUiEvent.GetLinkSkill)
 
-                    else -> _skillUiEvent.emit(SkillUiEvent.GetSkillDetail)
+                    else -> {
+                        _characterSelectedSkill.value = skillInfo
+                        _skillUiEvent.emit(SkillUiEvent.GetSkillDetail)
+                    }
                 }
             }
         }
@@ -216,6 +226,15 @@ class CharacterViewModel @Inject constructor(
             if (_characterSelectedSkill.value == null) {
                 _characterSelectedSkill.value = skillInfo
                 _skillUiEvent.emit(SkillUiEvent.GetHyperSkillDetail)
+            }
+        }
+    }
+
+    override fun onLinkSkillClicked(skillInfo: CharacterSkillInfo) {
+        viewModelScope.launch {
+            if (_characterSelectedSkill.value == null) {
+                _characterSelectedSkill.value = skillInfo
+                _skillUiEvent.emit(SkillUiEvent.GetLinkSkillDetail)
             }
         }
     }
@@ -445,22 +464,41 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
+    private fun setCharacterLinkSkill(ocid: String, searchDate: String?) {
+        viewModelScope.launch {
+            val characterLinkSkillResponse = getCharacterLinkSkillUseCase.getCharacterLinkSkill(ocid, searchDate)
+            when (characterLinkSkillResponse.status) {
+                Status.SUCCESS -> {
+                    characterLinkSkillResponse.data?.let { characterLinkSkill ->
+                        _characterLinkSkills.value = characterLinkSkill.characterLinkSkills
+                        _characterOwnedLinkSkill.value = characterLinkSkill.characterOwnedLinkSkill
+                    }
+                }
+
+                else -> {
+                    _skillUiEvent.emit(SkillUiEvent.InternalServerError)
+                }
+            }
+        }
+    }
+
     fun initState() {
         viewModelScope.launch {
             _characterName.value =
                 MainApplication.mySharedPreferences.getNickname("characterName", "")
             val ocid = MainApplication.mySharedPreferences.getOcid("ocid", "")
             val searchDate = MainApplication.mySharedPreferences.getSearchDate("searchDate", null)
-            setCharacterBasic(ocid, searchDate)
-            setCharacterStat(ocid, searchDate)
-            setCharacterEquipment(ocid, searchDate)
-            setCharacterUnion(ocid, searchDate)
-            setCharacterPopularity(ocid, searchDate)
-            setCharacterDojang(ocid, searchDate)
-            setCharacterHyperStat(ocid, searchDate)
-            setCharacterAbility(ocid, searchDate)
             async {
+                setCharacterBasic(ocid, searchDate)
+                setCharacterStat(ocid, searchDate)
+                setCharacterEquipment(ocid, searchDate)
+                setCharacterUnion(ocid, searchDate)
+                setCharacterPopularity(ocid, searchDate)
+                setCharacterDojang(ocid, searchDate)
+                setCharacterHyperStat(ocid, searchDate)
+                setCharacterAbility(ocid, searchDate)
                 setCharacterSkill(ocid, searchDate)
+                setCharacterLinkSkill(ocid, searchDate)
             }.await()
         }
     }
@@ -526,6 +564,12 @@ class CharacterViewModel @Inject constructor(
     fun closeHyperSkill() {
         viewModelScope.launch {
             _skillUiEvent.emit(SkillUiEvent.CloseHyperSkill)
+        }
+    }
+
+    fun closeLinkSkill() {
+        viewModelScope.launch {
+            _skillUiEvent.emit(SkillUiEvent.CloseLinkSkill)
         }
     }
 }

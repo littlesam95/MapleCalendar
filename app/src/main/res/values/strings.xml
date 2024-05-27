@@ -20,6 +20,7 @@
     <string name="name_ability">Ability</string>
     <string name="name_skill_detail">Skill Detail</string>
     <string name="name_hyper_skill">Hyper Skill</string>
+    <string name="name_link_skill">Link Skill</string>
 
     <!-- Calendar -->
     <string name="text_nothing">-</string>
@@ -193,6 +194,7 @@
     <string name="text_title_skill">SKILL</string>
     <string name="text_hyper_skill">하이퍼</string>
     <string name="text_title_hyper_skill">HYPER SKILL INVENTORY</string>
+    <string name="text_title_link_skill">LINK SKILL</string>
     <string name="text_title_hyper_skill_passive">패시브 스킬</string>
     <string name="text_title_hyper_skill_active">액티브 스킬</string>
     <string name="text_skill_grade_zero">•</string>
@@ -207,6 +209,7 @@
     <string name="text_skill_level_left">[현재레벨</string>
     <string name="text_skill_level_next_left">[다음레벨</string>
     <string name="text_skill_level_right">]</string>
+    <string name="text_owned_link_skill">내 링크 스킬</string>
 
     <!-- Message -->
     <string name="message_network_error">네트워크에 오류가 있어요!</string>

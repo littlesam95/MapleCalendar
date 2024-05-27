@@ -611,3 +611,38 @@ data class SkillInfoEntity(
     @Json(name = "skill_icon")
     val skillIcon: String
 )
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class LinkSkillEntity(
+    @Json(name = "character_link_skill_preset_1")
+    val characterLinkSkillFirstPreset: List<LinkSkillInfoEntity>,
+
+    @Json(name = "character_link_skill_preset_2")
+    val characterLinkSkillSecondPreset: List<LinkSkillInfoEntity>,
+
+    @Json(name = "character_link_skill_preset_3")
+    val characterLinkSkillThirdPreset: List<LinkSkillInfoEntity>,
+
+    @Json(name = "character_owned_link_skill")
+    val characterOwnedLinkSkill: LinkSkillInfoEntity
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class LinkSkillInfoEntity(
+    @Json(name = "skill_name")
+    val skillName: String,
+
+    @Json(name = "skill_description")
+    val skillDescription: String,
+
+    @Json(name = "skill_level")
+    val skillLevel: Int,
+
+    @Json(name = "skill_effect")
+    val skillEffect: String?,
+
+    @Json(name = "skill_icon")
+    val skillIcon: String
+)

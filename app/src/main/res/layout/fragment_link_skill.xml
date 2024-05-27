@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.bodan.maplecalendar.presentation.views.CharacterViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_equipment"
+            tools:context=".presentation.views.skill.LinkSkillFragment">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_left_link_skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="@dimen/guideline_medium" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top_link_skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_begin="@dimen/guideline_medium" />
+
+            <TextView
+                android:id="@+id/tv_title_link_skill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendardbold"
+                android:text="@string/text_title_link_skill"
+                android:textAlignment="center"
+                android:textColor="@color/equipment_title"
+                android:textSize="@dimen/title_font_size_big"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_link_skill"
+                app:layout_constraintStart_toEndOf="@id/gl_left_link_skill"
+                app:layout_constraintTop_toBottomOf="@id/gl_top_link_skill" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/ib_link_skill"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/shape_close"
+                android:onClick="@{() -> vm.closeLinkSkill()}"
+                app:layout_constraintBottom_toBottomOf="@id/tv_title_link_skill"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_link_skill"
+                app:layout_constraintTop_toTopOf="@id/tv_title_link_skill" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tl_link_skill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:layout_constraintBottom_toTopOf="@id/tv_owned_link_skill"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_link_skill"
+                app:layout_constraintStart_toEndOf="@id/gl_left_link_skill"
+                app:layout_constraintTop_toBottomOf="@id/tv_title_link_skill"
+                app:tabBackground="@drawable/shape_skill_tab"
+                app:tabGravity="fill"
+                app:tabIndicatorHeight="0dp"
+                app:tabMaxWidth="0dp"
+                app:tabMode="scrollable"
+                app:tabTextAppearance="@style/SkillTabLayoutText"
+                app:tabTextColor="@color/white1" />
+
+            <TextView
+                android:id="@+id/tv_owned_link_skill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/guideline_minimum"
+                android:fontFamily="@font/pretendardbold"
+                android:text="@string/text_owned_link_skill"
+                android:textColor="@color/character_info"
+                android:textSize="@dimen/title_font_size_big"
+                app:layout_constraintBottom_toTopOf="@id/mcv_owned_link_skill"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_link_skill"
+                app:layout_constraintStart_toEndOf="@id/gl_left_link_skill"
+                app:layout_constraintTop_toBottomOf="@id/tl_link_skill" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_owned_link_skill"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/shape_skill_icon"
+                android:onClick="@{() -> vm.onLinkSkillClicked(vm.characterOwnedLinkSkill)}"
+                app:layout_constraintBottom_toBottomOf="@id/mcv_owned_link_skill"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toEndOf="@id/gl_left_link_skill"
+                app:layout_constraintTop_toTopOf="@id/mcv_owned_link_skill"
+                app:profileImage="@{vm.characterOwnedLinkSkill.skillIcon}" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/mcv_owned_link_skill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/guideline_minimum"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="1dp"
+                app:layout_constraintBottom_toTopOf="@id/vp_link_skill"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_link_skill"
+                app:layout_constraintStart_toEndOf="@id/iv_owned_link_skill"
+                app:layout_constraintTop_toBottomOf="@id/tv_owned_link_skill"
+                app:strokeWidth="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_skill_info"
+                    android:onClick="@{() -> vm.onLinkSkillClicked(vm.characterOwnedLinkSkill)}">
+
+                    <TextView
+                        android:id="@+id/tv_owned_name_link_skill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/guideline_minimum"
+                        android:layout_marginTop="@dimen/guideline_minimum"
+                        android:layout_marginEnd="@dimen/guideline_minimum"
+                        android:ellipsize="marquee"
+                        android:fontFamily="@font/pretendardregular"
+                        android:marqueeRepeatLimit="marquee_forever"
+                        android:singleLine="true"
+                        android:text="@{vm.characterOwnedLinkSkill.skillName}"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/white1"
+                        android:textSize="@dimen/font_size_small"
+                        app:layout_constraintBottom_toTopOf="@id/iv_dotted_line_owned_link_skill"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_dotted_line_owned_link_skill"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dot_height"
+                        android:layout_marginTop="@dimen/guideline_minimum"
+                        android:layout_marginBottom="@dimen/guideline_minimum"
+                        android:src="@drawable/ic_dotted"
+                        app:layout_constraintBottom_toTopOf="@id/tv_owned_level_link_skill"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tv_owned_name_link_skill" />
+
+                    <TextView
+                        android:id="@+id/tv_owned_level_link_skill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/guideline_minimum"
+                        android:layout_marginBottom="@dimen/guideline_minimum"
+                        android:fontFamily="@font/pretendardregular"
+                        android:text="@{vm.characterOwnedLinkSkill.skillLevel}"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/white1"
+                        android:textSize="@dimen/font_size_small"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/iv_dotted_line_owned_link_skill" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp_link_skill"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/guideline_minimum"
+                app:layout_constraintBottom_toTopOf="@id/gl_bottom_link_skill"
+                app:layout_constraintEnd_toStartOf="@id/gl_right_link_skill"
+                app:layout_constraintStart_toEndOf="@id/gl_left_link_skill"
+                app:layout_constraintTop_toBottomOf="@id/mcv_owned_link_skill" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_right_link_skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="@dimen/guideline_medium" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_bottom_link_skill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_end="@dimen/guideline_medium" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</layout>

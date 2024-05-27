@@ -31,8 +31,6 @@ class ItemEquipmentDetailFragment :
 
         initStarforce()
 
-        isCancelable = false
-
         lifecycleScope.launch {
             viewModel.equipmentUiEvent.collectLatest { uiEvent ->
                 if (uiEvent == EquipmentUiEvent.CloseItemEquipmentDetail) dismiss()

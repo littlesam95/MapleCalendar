@@ -6,7 +6,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bodan.maplecalendar.R
-import com.bodan.maplecalendar.databinding.FragmentHyperSkillBinding
+import com.bodan.maplecalendar.databinding.FragmentLinkSkillBinding
 import com.bodan.maplecalendar.presentation.config.BaseDialogFragment
 import com.bodan.maplecalendar.presentation.views.CharacterViewModel
 import com.google.android.material.tabs.TabLayoutMediator
@@ -15,11 +15,11 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class HyperSkillFragment :
-    BaseDialogFragment<FragmentHyperSkillBinding>(R.layout.fragment_hyper_skill) {
+class LinkSkillFragment :
+    BaseDialogFragment<FragmentLinkSkillBinding>(R.layout.fragment_link_skill) {
 
     private val viewModel: CharacterViewModel by activityViewModels()
-    private lateinit var hyperSkillAdapter: HyperSkillAdapter
+    private lateinit var linkSkillAdapter: LinkSkillAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,11 +31,11 @@ class HyperSkillFragment :
         lifecycleScope.launch {
             viewModel.skillUiEvent.collectLatest { uiEvent ->
                 when (uiEvent) {
-                    is SkillUiEvent.GetHyperSkillDetail -> {
-                        findNavController().navigate(R.id.action_hyper_skill_to_skill_detail)
+                    is SkillUiEvent.GetLinkSkillDetail -> {
+                        findNavController().navigate(R.id.action_link_skill_to_skill_detail)
                     }
 
-                    is SkillUiEvent.CloseHyperSkill -> dismiss()
+                    is SkillUiEvent.CloseLinkSkill -> dismiss()
 
                     else -> {}
                 }
@@ -45,11 +45,11 @@ class HyperSkillFragment :
 
     private fun initAdapter() {
         lifecycleScope.launch {
-            viewModel.characterHyperSkills.collectLatest { skills ->
-                hyperSkillAdapter = HyperSkillAdapter(requireActivity(), skills.size)
-                with(binding.vpHyperSkill) {
-                    adapter = hyperSkillAdapter
-                    setCurrentItem(HyperSkillAdapter.START_POSITION, true)
+            viewModel.characterLinkSkills.collectLatest { linkSkills ->
+                linkSkillAdapter = LinkSkillAdapter(requireActivity(), linkSkills.size)
+                with(binding.vpLinkSkill) {
+                    adapter = linkSkillAdapter
+                    setCurrentItem(LinkSkillAdapter.START_POSITION, true)
                 }
                 initTabLayout()
             }
@@ -57,14 +57,8 @@ class HyperSkillFragment :
     }
 
     private fun initTabLayout() {
-        TabLayoutMediator(binding.tlHyperSkill, binding.vpHyperSkill) { tab, position ->
-            tab.text = when (viewModel.characterHyperSkills.value[position].characterSkillGrade) {
-                "hyperpassive" -> resources.getString(R.string.text_title_hyper_skill_passive)
-
-                "hyperactive" -> resources.getString(R.string.text_title_hyper_skill_active)
-
-                else -> ""
-            }
+        TabLayoutMediator(binding.tlLinkSkill, binding.vpLinkSkill) { tab, position ->
+            tab.text = "Preset ${position + 1}"
         }.attach()
     }
 }

@@ -361,6 +361,12 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun closeSearchDate() {
+        viewModelScope.launch {
+            _lobbyUiEvent.emit(LobbyUiEvent.CloseSearchDate)
+        }
+    }
+
     fun setDarkMode() {
         viewModelScope.launch {
             _lobbyUiEvent.emit(LobbyUiEvent.SetDarkMode)

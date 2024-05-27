@@ -25,12 +25,6 @@ class HyperStatFragment :
     private val viewModel: CharacterViewModel by activityViewModels()
     private lateinit var hyperStatAdapter: HyperStatAdapter
 
-    override fun onResume() {
-        super.onResume()
-
-        requireContext().dialogFragmentResize(this, 0.9F, 0.8F)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -39,8 +33,6 @@ class HyperStatFragment :
         initTabLayout()
 
         binding.vm = viewModel
-
-        isCancelable = false
 
         lifecycleScope.launch {
             viewModel.characterUiEvent.collectLatest { uiEvent ->
