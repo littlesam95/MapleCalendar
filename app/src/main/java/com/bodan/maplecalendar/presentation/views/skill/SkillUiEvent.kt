@@ -16,6 +16,8 @@ sealed class SkillUiEvent {
 
     data object GetHyperSkillDetail : SkillUiEvent()
 
+    data object GetLinkSkillDetail : SkillUiEvent()
+
     data object BadRequest : SkillUiEvent()
 
     data object UnauthorizedStatus : SkillUiEvent()

@@ -7,4 +7,6 @@ interface OnSkillClickListener {
     fun onSkillClicked(skillInfo: CharacterSkillInfo)
 
     fun onHyperSkillClicked(skillInfo: CharacterSkillInfo)
+
+    fun onLinkSkillClicked(skillInfo: CharacterSkillInfo)
 }
