@@ -21,12 +21,6 @@ class DayEventFragment : BaseDialogFragment<FragmentDayEventBinding>(R.layout.fr
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var eventListAdapter: EventListAdapter
 
-    override fun onResume() {
-        super.onResume()
-
-        requireContext().dialogFragmentResize(this, 0.9F, 0.9F)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -35,7 +29,6 @@ class DayEventFragment : BaseDialogFragment<FragmentDayEventBinding>(R.layout.fr
 
         binding.vm = viewModel
         binding.listAdapter = eventListAdapter
-        isCancelable = false
 
         lifecycleScope.launch {
             viewModel.calendarUiEvent.collectLatest { uiEvent ->

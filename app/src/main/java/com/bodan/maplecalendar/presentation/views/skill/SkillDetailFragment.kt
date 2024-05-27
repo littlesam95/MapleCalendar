@@ -17,17 +17,10 @@ class SkillDetailFragment : BaseDialogFragment<FragmentSkillDetailBinding>(R.lay
 
     private val viewModel: CharacterViewModel by activityViewModels()
 
-    override fun onResume() {
-        super.onResume()
-
-        requireContext().dialogFragmentResize(this, 0.9F, 1F)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.vm = viewModel
-        isCancelable = false
 
         lifecycleScope.launch {
             viewModel.skillUiEvent.collectLatest { uiEvent ->

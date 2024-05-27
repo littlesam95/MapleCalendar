@@ -34,7 +34,20 @@ abstract class BaseDialogFragment<T : ViewDataBinding>(private val layoutId: Int
 
         _binding = DataBindingUtil.inflate<T>(inflater, layoutId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        isCancelable = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        requireContext().dialogFragmentResize(this, 0.9F, 1F)
     }
 
     override fun onDestroyView() {
