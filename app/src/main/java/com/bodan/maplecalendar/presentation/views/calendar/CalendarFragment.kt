@@ -58,7 +58,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
         }
 
         is CalendarUiEvent.GetEventsOfDate -> {
-            findNavController().navigate(R.id.action_calendar_to_day_event)
+            findNavController().navigateSafely(R.id.action_calendar_to_day_event)
         }
 
         is CalendarUiEvent.SetDarkMode -> {

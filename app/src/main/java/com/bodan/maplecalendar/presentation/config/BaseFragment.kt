@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -14,6 +15,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigator
+import androidx.navigation.get
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.app.MainApplication
 import com.google.android.material.snackbar.Snackbar
@@ -92,5 +97,18 @@ abstract class BaseFragment<T : ViewDataBinding>(private val layoutId: Int) : Fr
         }
 
         requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    fun NavController.navigateSafely(
+        @IdRes actionId: Int,
+        args: Bundle? = null,
+        navOptions: NavOptions? = null,
+        navExtras: Navigator.Extras? = null
+    ) {
+        val action = currentDestination?.getAction(actionId) ?: graph.getAction(actionId)
+
+        if ((action != null) && (currentDestination?.id != action.destinationId)) {
+            navigate(actionId, args, navOptions, navExtras)
+        }
     }
 }

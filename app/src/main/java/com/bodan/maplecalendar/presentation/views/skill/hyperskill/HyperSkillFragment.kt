@@ -1,4 +1,4 @@
-package com.bodan.maplecalendar.presentation.views.skill
+package com.bodan.maplecalendar.presentation.views.skill.hyperskill
 
 import android.os.Bundle
 import android.view.View
@@ -9,6 +9,7 @@ import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentHyperSkillBinding
 import com.bodan.maplecalendar.presentation.config.BaseDialogFragment
 import com.bodan.maplecalendar.presentation.views.CharacterViewModel
+import com.bodan.maplecalendar.presentation.views.skill.SkillUiEvent
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -32,7 +33,7 @@ class HyperSkillFragment :
             viewModel.skillUiEvent.collectLatest { uiEvent ->
                 when (uiEvent) {
                     is SkillUiEvent.GetHyperSkillDetail -> {
-                        findNavController().navigate(R.id.action_hyper_skill_to_skill_detail)
+                        findNavController().navigateSafely(R.id.action_hyper_skill_to_skill_detail)
                     }
 
                     is SkillUiEvent.CloseHyperSkill -> dismiss()

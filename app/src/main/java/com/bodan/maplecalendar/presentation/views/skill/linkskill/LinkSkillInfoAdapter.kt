@@ -1,10 +1,11 @@
-package com.bodan.maplecalendar.presentation.views.skill
+package com.bodan.maplecalendar.presentation.views.skill.linkskill
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bodan.maplecalendar.databinding.ItemLinkSkillInfoBinding
 import com.bodan.maplecalendar.domain.entity.CharacterSkillInfo
+import com.bodan.maplecalendar.presentation.views.skill.OnSkillClickListener
 
 class LinkSkillInfoAdapter(
     private val linkSkills: List<CharacterSkillInfo>,

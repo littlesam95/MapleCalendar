@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_equipment"
-            tools:context=".presentation.views.skill.LinkSkillFragment">
+            tools:context=".presentation.views.skill.linkskill.LinkSkillFragment">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/gl_left_link_skill"

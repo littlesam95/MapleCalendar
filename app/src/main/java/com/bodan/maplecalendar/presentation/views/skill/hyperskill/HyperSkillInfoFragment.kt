@@ -1,4 +1,4 @@
-package com.bodan.maplecalendar.presentation.views.skill
+package com.bodan.maplecalendar.presentation.views.skill.hyperskill
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

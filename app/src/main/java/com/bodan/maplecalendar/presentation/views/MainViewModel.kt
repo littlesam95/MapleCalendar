@@ -117,20 +117,23 @@ class MainViewModel @Inject constructor(
     override fun onClicked(calendarDate: CalendarUiState.CalendarDate) {
         val date = calendarDate.name
         if (date == "") return
-        _specificDate.value = "${_currentYear.value}년 ${_currentMonth.value}월 ${date}일"
-        val specificDay =
-            _currentYear.value.toString().padStart(4, '0') + "-" + _currentMonth.value.toString()
-                .padStart(2, '0') + "-" + date.padStart(2, '0')
 
-        viewModelScope.launch {
-            _calendarUiEvent.emit(CalendarUiEvent.GetEventsOfDate)
-            val eventListOfDate = async { eventListReader.getEventList(specificDay) }.await()
-            if (eventListOfDate != null) {
-                _eventItemsOfDate.value = eventListOfDate.sortedBy { eventItem ->
-                    eventItem.eventExp
+        if (_specificDate.value == "") {
+            _specificDate.value = "${_currentYear.value}년 ${_currentMonth.value}월 ${date}일"
+            val specificDay =
+                _currentYear.value.toString().padStart(4, '0') + "-" + _currentMonth.value.toString()
+                    .padStart(2, '0') + "-" + date.padStart(2, '0')
+
+            viewModelScope.launch {
+                _calendarUiEvent.emit(CalendarUiEvent.GetEventsOfDate)
+                val eventListOfDate = async { eventListReader.getEventList(specificDay) }.await()
+                if (eventListOfDate != null) {
+                    _eventItemsOfDate.value = eventListOfDate.sortedBy { eventItem ->
+                        eventItem.eventExp
+                    }
+                } else {
+                    _calendarUiEvent.emit(CalendarUiEvent.InternalServerError)
                 }
-            } else {
-                _calendarUiEvent.emit(CalendarUiEvent.InternalServerError)
             }
         }
     }
@@ -395,8 +398,11 @@ class MainViewModel @Inject constructor(
 
     fun closeEventsOfDate() {
         viewModelScope.launch {
-            _calendarUiEvent.emit(CalendarUiEvent.CloseEventsOfDate)
-            _eventItemsOfDate.value = listOf()
+            if (_specificDate.value != "") {
+                _calendarUiEvent.emit(CalendarUiEvent.CloseEventsOfDate)
+                _eventItemsOfDate.value = listOf()
+                _specificDate.value = ""
+            }
         }
     }
 

@@ -68,15 +68,15 @@ class SkillFragment : BaseFragment<FragmentSkillBinding>(R.layout.fragment_skill
 
     private fun handleUiEvent(event: SkillUiEvent) = when (event) {
         is SkillUiEvent.GetSkillDetail -> {
-            findNavController().navigate(R.id.action_skill_to_skill_detail)
+            findNavController().navigateSafely(R.id.action_skill_to_skill_detail)
         }
 
         is SkillUiEvent.GetHyperSkill -> {
-            findNavController().navigate(R.id.action_skill_to_hyper_skill)
+            findNavController().navigateSafely(R.id.action_skill_to_hyper_skill)
         }
 
         is SkillUiEvent.GetLinkSkill -> {
-            findNavController().navigate(R.id.action_skill_to_link_skill)
+            findNavController().navigateSafely(R.id.action_skill_to_link_skill)
         }
 
         is SkillUiEvent.BadRequest -> {

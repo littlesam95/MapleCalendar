@@ -18,7 +18,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".presentation.views.skill.LinkSkillInfoFragment">
+            tools:context=".presentation.views.skill.linkskill.LinkSkillInfoFragment">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_link_skill_info"

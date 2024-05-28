@@ -32,9 +32,12 @@ class DayEventFragment : BaseDialogFragment<FragmentDayEventBinding>(R.layout.fr
 
         lifecycleScope.launch {
             viewModel.calendarUiEvent.collectLatest { uiEvent ->
-                if (uiEvent == CalendarUiEvent.CloseEventsOfDate) dismiss()
-                if (uiEvent == CalendarUiEvent.StartEventUrl) {
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(viewModel.eventUrl.value)))
+                when (uiEvent) {
+                    is CalendarUiEvent.StartEventUrl -> getEventUrl()
+
+                    is CalendarUiEvent.CloseEventsOfDate -> dismiss()
+
+                    else -> {}
                 }
             }
         }
@@ -46,5 +49,14 @@ class DayEventFragment : BaseDialogFragment<FragmentDayEventBinding>(R.layout.fr
 
     private fun initRecyclerView() {
         binding.rvDayEvent.setHasFixedSize(false)
+    }
+
+    private fun getEventUrl() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(viewModel.eventUrl.value)).apply {
+            action = Intent.ACTION_MAIN
+            addCategory(Intent.CATEGORY_LAUNCHER)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        startActivity(intent)
     }
 }
