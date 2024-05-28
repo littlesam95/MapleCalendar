@@ -75,7 +75,7 @@
 
     <dialog
         android:id="@+id/fragment_hyper_skill"
-        android:name="com.bodan.maplecalendar.presentation.views.skill.HyperSkillFragment"
+        android:name="com.bodan.maplecalendar.presentation.views.skill.hyperskill.HyperSkillFragment"
         android:label="@string/name_hyper_skill">
 
         <action
@@ -86,7 +86,7 @@
 
     <dialog
         android:id="@+id/fragment_link_skill"
-        android:name="com.bodan.maplecalendar.presentation.views.skill.LinkSkillFragment"
+        android:name="com.bodan.maplecalendar.presentation.views.skill.linkskill.LinkSkillFragment"
         android:label="@string/name_link_skill">
 
         <action
