@@ -44,11 +44,11 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
         }
 
         is SettingUiEvent.ChangeCharacterName -> {
-            findNavController().navigate(R.id.action_setting_to_change_character_name)
+            findNavController().navigateSafely(R.id.action_setting_to_change_character_name)
         }
 
         is SettingUiEvent.SetPushNotification -> {
-            findNavController().navigate(R.id.action_setting_to_push_notification)
+            findNavController().navigateSafely(R.id.action_setting_to_push_notification)
         }
 
         is SettingUiEvent.SetDarkMode -> {

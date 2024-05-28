@@ -71,11 +71,11 @@ class CharacterFragment : BaseFragment<FragmentCharacterBinding>(R.layout.fragme
         }
 
         is CharacterUiEvent.GetHyperStat -> {
-            findNavController().navigate(R.id.action_character_to_hyper_stat)
+            findNavController().navigateSafely(R.id.action_character_to_hyper_stat)
         }
 
         is CharacterUiEvent.GetAbility -> {
-            findNavController().navigate(R.id.action_character_to_ability)
+            findNavController().navigateSafely(R.id.action_character_to_ability)
         }
 
         else -> {}

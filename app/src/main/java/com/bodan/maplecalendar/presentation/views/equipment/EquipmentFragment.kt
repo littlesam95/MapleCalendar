@@ -42,7 +42,7 @@ class EquipmentFragment : BaseFragment<FragmentEquipmentBinding>(R.layout.fragme
         }
 
         is EquipmentUiEvent.GetItemEquipmentDetail -> {
-            findNavController().navigate(R.id.action_equipment_to_item_equipment_detail)
+            findNavController().navigateSafely(R.id.action_equipment_to_item_equipment_detail)
         }
 
         is EquipmentUiEvent.BadRequest -> {

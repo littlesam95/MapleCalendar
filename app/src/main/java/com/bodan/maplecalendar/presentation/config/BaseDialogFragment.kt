@@ -11,9 +11,13 @@ import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.annotation.IdRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import androidx.navigation.NavController
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigator
 
 abstract class BaseDialogFragment<T : ViewDataBinding>(private val layoutId: Int) :
     DialogFragment() {
@@ -55,11 +59,7 @@ abstract class BaseDialogFragment<T : ViewDataBinding>(private val layoutId: Int
         _binding = null
     }
 
-    protected fun showToastMessage(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
-    }
-
-    protected fun Context.dialogFragmentResize(
+    private fun Context.dialogFragmentResize(
         dialogFragment: DialogFragment,
         width: Float,
         height: Float
@@ -81,6 +81,23 @@ abstract class BaseDialogFragment<T : ViewDataBinding>(private val layoutId: Int
             val y = (rect.height() * height).toInt()
 
             window?.setLayout(x, y)
+        }
+    }
+
+    protected fun showToastMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
+
+    fun NavController.navigateSafely(
+        @IdRes actionId: Int,
+        args: Bundle? = null,
+        navOptions: NavOptions? = null,
+        navExtras: Navigator.Extras? = null
+    ) {
+        val action = currentDestination?.getAction(actionId) ?: graph.getAction(actionId)
+
+        if ((action != null) && (currentDestination?.id != action.destinationId)) {
+            navigate(actionId, args, navOptions, navExtras)
         }
     }
 }

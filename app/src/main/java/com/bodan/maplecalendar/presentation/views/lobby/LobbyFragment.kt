@@ -53,7 +53,11 @@ class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby
 
     private fun handleUiEvent(event: LobbyUiEvent) = when (event) {
         is LobbyUiEvent.GoToCharacter -> {
-            val intent = Intent(requireContext(), CharacterActivity::class.java)
+            val intent = Intent(requireContext(), CharacterActivity::class.java).apply {
+                action = Intent.ACTION_MAIN
+                addCategory(Intent.CATEGORY_LAUNCHER)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
             startActivity(intent)
         }
 
@@ -82,7 +86,7 @@ class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby
         }
 
         is LobbyUiEvent.SelectSearchDate -> {
-            findNavController().navigate(R.id.action_lobby_to_search_date)
+            findNavController().navigateSafely(R.id.action_lobby_to_search_date)
         }
 
         is LobbyUiEvent.StartEventUrl -> {
