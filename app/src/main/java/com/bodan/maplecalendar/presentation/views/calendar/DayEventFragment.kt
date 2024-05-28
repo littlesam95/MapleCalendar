@@ -52,11 +52,7 @@ class DayEventFragment : BaseDialogFragment<FragmentDayEventBinding>(R.layout.fr
     }
 
     private fun getEventUrl() {
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(viewModel.eventUrl.value)).apply {
-            action = Intent.ACTION_MAIN
-            addCategory(Intent.CATEGORY_LAUNCHER)
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(viewModel.eventUrl.value))
         startActivity(intent)
     }
 }
