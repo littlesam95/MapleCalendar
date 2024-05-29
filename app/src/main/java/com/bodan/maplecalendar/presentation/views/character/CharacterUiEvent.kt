@@ -10,6 +10,8 @@ sealed class CharacterUiEvent {
 
     data object CloseAbility : CharacterUiEvent()
 
+    data class GetDarkMode(val isDarkMode: Boolean?) : CharacterUiEvent()
+
     data object BadRequest : CharacterUiEvent()
 
     data object UnauthorizedStatus : CharacterUiEvent()
@@ -19,6 +21,4 @@ sealed class CharacterUiEvent {
     data object TooManyRequests : CharacterUiEvent()
 
     data object InternalServerError : CharacterUiEvent()
-
-    data object SetDarkMode : CharacterUiEvent()
 }

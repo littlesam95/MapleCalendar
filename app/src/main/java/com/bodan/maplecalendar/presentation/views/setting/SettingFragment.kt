@@ -3,12 +3,15 @@ package com.bodan.maplecalendar.presentation.views.setting
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentSettingBinding
 import com.bodan.maplecalendar.presentation.config.BaseFragment
 import com.bodan.maplecalendar.presentation.views.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_setting) {
@@ -17,9 +20,20 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        collectDarkMode()
+
         binding.vm = viewModel
 
         collectLatestFlow(viewModel.settingUiEvent) { handleUiEvent(it) }
+    }
+
+    private fun collectDarkMode() {
+        lifecycleScope.launch {
+            viewModel.getDarkMode().collectLatest { isDarkMode ->
+                setDarkMode(isDarkMode)
+            }
+        }
     }
 
     private fun handleUiEvent(event: SettingUiEvent) = when (event) {
@@ -51,8 +65,8 @@ class SettingFragment : BaseFragment<FragmentSettingBinding>(R.layout.fragment_s
             findNavController().navigateSafely(R.id.action_setting_to_push_notification)
         }
 
-        is SettingUiEvent.SetDarkMode -> {
-            setDarkMode()
+        is SettingUiEvent.GetDarkMode -> {
+            setDarkMode(event.isDarkMode)
         }
 
         else -> {}

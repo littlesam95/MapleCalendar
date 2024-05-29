@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentLobbyBinding
@@ -12,6 +13,8 @@ import com.bodan.maplecalendar.presentation.config.BaseFragment
 import com.bodan.maplecalendar.presentation.views.CharacterActivity
 import com.bodan.maplecalendar.presentation.views.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby) {
@@ -24,6 +27,7 @@ class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby
 
         initListAdapter()
         initRecyclerView()
+        collectDarkMode()
 
         binding.vm = viewModel
         binding.listAdapter = eventListAdapter
@@ -39,6 +43,14 @@ class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby
 
     private fun initRecyclerView() {
         binding.rvLobby.setHasFixedSize(false)
+    }
+
+    private fun collectDarkMode() {
+        lifecycleScope.launch {
+            viewModel.getDarkMode().collectLatest { isDarkMode ->
+                setDarkMode(isDarkMode)
+            }
+        }
     }
 
     private fun setSwipeRefresh() {
@@ -81,8 +93,8 @@ class LobbyFragment : BaseFragment<FragmentLobbyBinding>(R.layout.fragment_lobby
             showSnackBar(R.string.message_network_error)
         }
 
-        is LobbyUiEvent.SetDarkMode -> {
-            setDarkMode()
+        is LobbyUiEvent.GetDarkMode -> {
+            setDarkMode(event.isDarkMode)
         }
 
         is LobbyUiEvent.SelectSearchDate -> {

@@ -66,8 +66,8 @@ class CharacterFragment : BaseFragment<FragmentCharacterBinding>(R.layout.fragme
             showSnackBar(R.string.message_network_error)
         }
 
-        is CharacterUiEvent.SetDarkMode -> {
-            setDarkMode()
+        is CharacterUiEvent.GetDarkMode -> {
+            setDarkMode(event.isDarkMode)
         }
 
         is CharacterUiEvent.GetHyperStat -> {

@@ -18,9 +18,6 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.Navigator
-import androidx.navigation.get
-import com.bodan.maplecalendar.R
-import com.bodan.maplecalendar.app.MainApplication
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -55,15 +52,13 @@ abstract class BaseFragment<T : ViewDataBinding>(private val layoutId: Int) : Fr
         _binding = null
     }
 
-    protected fun setDarkMode() {
-        when (MainApplication.mySharedPreferences.getThemeMode("theme", "")) {
-            getString(R.string.text_light_mode) -> {
-                MainApplication.mySharedPreferences.setThemeMode("theme", getString(R.string.text_dark_mode))
+    protected fun setDarkMode(isDarkMode: Boolean?) {
+        when (isDarkMode) {
+            true -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
             }
 
-            getString(R.string.text_dark_mode) -> {
-                MainApplication.mySharedPreferences.setThemeMode("theme", getString(R.string.text_light_mode))
+            false -> {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
 

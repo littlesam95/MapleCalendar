@@ -8,6 +8,8 @@ sealed class EquipmentUiEvent {
 
     data object CloseItemEquipmentDetail : EquipmentUiEvent()
 
+    data class GetDarkMode(val isDarkMode: Boolean?) : EquipmentUiEvent()
+
     data object BadRequest : EquipmentUiEvent()
 
     data object UnauthorizedStatus : EquipmentUiEvent()
@@ -17,6 +19,4 @@ sealed class EquipmentUiEvent {
     data object TooManyRequests : EquipmentUiEvent()
 
     data object InternalServerError : EquipmentUiEvent()
-
-    data object SetDarkMode : EquipmentUiEvent()
 }
