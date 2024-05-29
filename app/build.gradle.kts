@@ -24,8 +24,8 @@ android {
         applicationId = "com.bodan.maplecalendar"
         minSdk = 28
         targetSdk = 34
-        versionCode = 29
-        versionName = "0.7.0"
+        versionCode = 30
+        versionName = "0.7.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -83,6 +83,9 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    // Preferences DataStore
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
     // Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
