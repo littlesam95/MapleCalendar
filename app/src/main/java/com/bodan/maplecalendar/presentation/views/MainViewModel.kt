@@ -14,6 +14,7 @@ import com.bodan.maplecalendar.presentation.views.calendar.CalendarUiState
 import com.bodan.maplecalendar.presentation.views.calendar.DayType
 import com.bodan.maplecalendar.presentation.views.calendar.OnDateClickListener
 import com.bodan.maplecalendar.domain.entity.EventItem
+import com.bodan.maplecalendar.domain.usecase.SetDarkModeUseCase
 import com.bodan.maplecalendar.presentation.views.lobby.LobbyUiEvent
 import com.bodan.maplecalendar.presentation.views.lobby.OnEventClickListener
 import com.bodan.maplecalendar.presentation.views.setting.CharacterNameValidState
@@ -21,11 +22,15 @@ import com.bodan.maplecalendar.presentation.views.setting.SettingUiEvent
 import com.bodan.maplecalendar.presentation.views.setting.SettingUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -35,7 +40,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getCharacterOcidUseCase: GetCharacterOcidUseCase,
-    private val getCharacterBasicUseCase: GetCharacterBasicUseCase
+    private val getCharacterBasicUseCase: GetCharacterBasicUseCase,
+    private val setDarkModeUseCase: SetDarkModeUseCase
 ) : ViewModel(), OnDateClickListener, OnEventClickListener {
 
     private val dateFormatConverter = DateFormatConverter()
@@ -371,11 +377,18 @@ class MainViewModel @Inject constructor(
     }
 
     fun setDarkMode() {
-        viewModelScope.launch {
-            _lobbyUiEvent.emit(LobbyUiEvent.SetDarkMode)
-            _calendarUiEvent.emit(CalendarUiEvent.SetDarkMode)
-            _settingUiEvent.emit(SettingUiEvent.SetDarkMode)
+        viewModelScope.launch(Dispatchers.IO) {
+            setDarkModeUseCase.setDarkMode()
+            val isDarkMode = setDarkModeUseCase.getDarkMode().firstOrNull()
+            _lobbyUiEvent.emit(LobbyUiEvent.GetDarkMode(isDarkMode))
+            _calendarUiEvent.emit(CalendarUiEvent.GetDarkMode(isDarkMode))
+            _settingUiEvent.emit(SettingUiEvent.GetDarkMode(isDarkMode))
         }
+    }
+
+    suspend fun getDarkMode(): Flow<Boolean?> = flow {
+        val isDarkMode = setDarkModeUseCase.getDarkMode().firstOrNull()
+        emit(isDarkMode)
     }
 
     fun setPrevMonth() {
