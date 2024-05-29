@@ -3,12 +3,15 @@ package com.bodan.maplecalendar.presentation.views.calendar
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bodan.maplecalendar.R
 import com.bodan.maplecalendar.databinding.FragmentCalendarBinding
 import com.bodan.maplecalendar.presentation.config.BaseFragment
 import com.bodan.maplecalendar.presentation.views.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment_calendar) {
@@ -21,6 +24,7 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
         initListAdapter()
         initRecyclerView()
+        collectDarkMode()
 
         binding.vm = viewModel
         binding.listAdapter = calendarListAdapter
@@ -34,6 +38,14 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
 
     private fun initRecyclerView() {
         binding.rvCalendar.setHasFixedSize(false)
+    }
+
+    private fun collectDarkMode() {
+        lifecycleScope.launch {
+            viewModel.getDarkMode().collectLatest { isDarkMode ->
+                setDarkMode(isDarkMode)
+            }
+        }
     }
 
     private fun handleUiEvent(event: CalendarUiEvent) = when (event) {
@@ -61,8 +73,8 @@ class CalendarFragment : BaseFragment<FragmentCalendarBinding>(R.layout.fragment
             findNavController().navigateSafely(R.id.action_calendar_to_day_event)
         }
 
-        is CalendarUiEvent.SetDarkMode -> {
-            setDarkMode()
+        is CalendarUiEvent.GetDarkMode -> {
+            setDarkMode(event.isDarkMode)
         }
 
         else -> {}

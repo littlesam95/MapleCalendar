@@ -65,8 +65,8 @@ class EquipmentFragment : BaseFragment<FragmentEquipmentBinding>(R.layout.fragme
             showSnackBar(R.string.message_network_error)
         }
 
-        is EquipmentUiEvent.SetDarkMode -> {
-            setDarkMode()
+        is EquipmentUiEvent.GetDarkMode -> {
+            setDarkMode(event.isDarkMode)
         }
 
         else -> {}

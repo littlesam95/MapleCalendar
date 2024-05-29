@@ -4,6 +4,14 @@ sealed class LobbyUiEvent {
 
     data object GoToCharacter : LobbyUiEvent()
 
+    data object SelectSearchDate : LobbyUiEvent()
+
+    data object CloseSearchDate : LobbyUiEvent()
+
+    data object StartEventUrl : LobbyUiEvent()
+
+    data class GetDarkMode(val isDarkMode: Boolean?) : LobbyUiEvent()
+
     data object BadRequest : LobbyUiEvent()
 
     data object UnauthorizedStatus : LobbyUiEvent()
@@ -13,12 +21,4 @@ sealed class LobbyUiEvent {
     data object TooManyRequests : LobbyUiEvent()
 
     data object InternalServerError : LobbyUiEvent()
-
-    data object SelectSearchDate : LobbyUiEvent()
-
-    data object CloseSearchDate : LobbyUiEvent()
-
-    data object StartEventUrl : LobbyUiEvent()
-
-    data object SetDarkMode : LobbyUiEvent()
 }
