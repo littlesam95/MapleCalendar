@@ -23,7 +23,6 @@ class SearchDateFragment :
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
-        initCustomCalendar()
 
         binding.vm = viewModel
 
@@ -35,7 +34,14 @@ class SearchDateFragment :
     }
 
     private fun initAdapter() {
-        customCalendarAdapter = CustomCalendarAdapter(requireActivity())
+        lifecycleScope.launch {
+            viewModel.getSearchDate().collectLatest { searchDate ->
+                searchDate?.let {
+                    customCalendarAdapter = CustomCalendarAdapter(requireActivity(), searchDate)
+                    initCustomCalendar()
+                }
+            }
+        }
     }
 
     private fun initCustomCalendar() {

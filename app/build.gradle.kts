@@ -24,8 +24,8 @@ android {
         applicationId = "com.bodan.maplecalendar"
         minSdk = 28
         targetSdk = 34
-        versionCode = 30
-        versionName = "0.7.1"
+        versionCode = 32
+        versionName = "0.7.3"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

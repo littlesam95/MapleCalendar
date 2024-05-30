@@ -222,7 +222,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/tv_today_event_lobby"
                     app:layout_constraintStart_toEndOf="@id/gl_left_lobby"
                     app:layout_constraintTop_toBottomOf="@id/mcv_information_lobby"
-                    app:profileImage="@{vm.characterImage}" />
+                    app:profileImage="@{vm.characterBasic.characterImage}" />
 
                 <TextView
                     android:id="@+id/tv_level_lobby"
@@ -290,7 +290,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/guideline_large"
                     android:fontFamily="@font/pretendardregular"
-                    android:text="@{(vm.characterGender == null) ? @string/text_nothing : vm.characterGender}"
+                    android:text="@{(vm.characterBasic == null) ? @string/text_nothing : vm.characterBasic.characterGender}"
                     android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="@id/tv_gender_lobby"
                     app:layout_constraintStart_toEndOf="@id/tv_gender_lobby"
@@ -301,7 +301,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
-                    android:text="@{(vm.characterGuild == null) ? @string/text_nothing : vm.characterGuild}"
+                    android:text="@{(vm.characterBasic.characterGuildName == null) ? @string/text_nothing : vm.characterBasic.characterGuildName}"
                     android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="@id/tv_guild_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_character_gender_lobby"
@@ -312,7 +312,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
-                    android:text="@{(vm.characterWorld == null) ? @string/text_nothing : vm.characterWorld}"
+                    android:text="@{(vm.characterBasic == null) ? @string/text_nothing : vm.characterBasic.worldName}"
                     android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="@id/tv_world_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_character_gender_lobby"
@@ -323,7 +323,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
-                    android:text="@{(vm.characterClass == null) ? @string/text_nothing : vm.characterClass}"
+                    android:text="@{(vm.characterBasic == null) ? @string/text_nothing : vm.characterBasic.characterClass}"
                     android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="@id/tv_class_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_character_gender_lobby"
@@ -334,7 +334,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendardregular"
-                    android:text="@{(vm.characterLevel == null) ? @string/text_nothing : vm.characterLevel.toString()}"
+                    android:text="@{(vm.characterBasic == null) ? @string/text_nothing : vm.characterBasic.characterLevel}"
                     android:textSize="@dimen/font_size_medium"
                     app:layout_constraintBottom_toBottomOf="@id/tv_level_lobby"
                     app:layout_constraintStart_toStartOf="@id/tv_character_gender_lobby"

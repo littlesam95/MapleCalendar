@@ -7,7 +7,7 @@ object CharacterBasicMapper {
 
     operator fun invoke(basicEntity: BasicEntity): CharacterBasic =
         CharacterBasic(
-            characterLevel = basicEntity.characterLevel,
+            characterLevel = basicEntity.characterLevel.toString(),
             characterClass = basicEntity.characterClass,
             worldName = basicEntity.worldName,
             characterGuildName = basicEntity.characterGuildName,

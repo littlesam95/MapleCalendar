@@ -6,7 +6,8 @@ import com.bodan.maplecalendar.app.MainApplication
 import com.bodan.maplecalendar.presentation.utils.DateFormatConverter
 import kotlin.math.abs
 
-class CustomCalendarAdapter(fm: FragmentActivity) : FragmentStateAdapter(fm) {
+class CustomCalendarAdapter(fm: FragmentActivity, private val searchDate: String) :
+    FragmentStateAdapter(fm) {
 
     private val dateFormatConverter = DateFormatConverter()
 
@@ -19,8 +20,6 @@ class CustomCalendarAdapter(fm: FragmentActivity) : FragmentStateAdapter(fm) {
     }
 
     override fun getItemId(position: Int): Long {
-        val searchDate =
-            MainApplication.mySharedPreferences.getSearchDate("searchDate", null) ?: return 0
         var currentYear = searchDate.substring(0, 4).toInt()
         var currentMonth = searchDate.substring(5, 7).toInt()
 

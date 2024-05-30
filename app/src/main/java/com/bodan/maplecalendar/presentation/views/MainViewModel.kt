@@ -2,8 +2,8 @@ package com.bodan.maplecalendar.presentation.views
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bodan.maplecalendar.app.MainApplication
 import com.bodan.maplecalendar.data.util.EventListReader
+import com.bodan.maplecalendar.domain.entity.CharacterBasic
 import com.bodan.maplecalendar.domain.usecase.GetCharacterBasicUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterOcidUseCase
 import com.bodan.maplecalendar.presentation.utils.DateFormatConverter
@@ -14,7 +14,10 @@ import com.bodan.maplecalendar.presentation.views.calendar.CalendarUiState
 import com.bodan.maplecalendar.presentation.views.calendar.DayType
 import com.bodan.maplecalendar.presentation.views.calendar.OnDateClickListener
 import com.bodan.maplecalendar.domain.entity.EventItem
+import com.bodan.maplecalendar.domain.usecase.SetCharacterNameUseCase
+import com.bodan.maplecalendar.domain.usecase.SetCharacterOcidUseCase
 import com.bodan.maplecalendar.domain.usecase.SetDarkModeUseCase
+import com.bodan.maplecalendar.domain.usecase.SetSearchDateUseCase
 import com.bodan.maplecalendar.presentation.views.lobby.LobbyUiEvent
 import com.bodan.maplecalendar.presentation.views.lobby.OnEventClickListener
 import com.bodan.maplecalendar.presentation.views.setting.CharacterNameValidState
@@ -29,6 +32,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
@@ -41,7 +45,10 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val getCharacterOcidUseCase: GetCharacterOcidUseCase,
     private val getCharacterBasicUseCase: GetCharacterBasicUseCase,
-    private val setDarkModeUseCase: SetDarkModeUseCase
+    private val setDarkModeUseCase: SetDarkModeUseCase,
+    private val setCharacterNameUseCase: SetCharacterNameUseCase,
+    private val setCharacterOcidUseCase: SetCharacterOcidUseCase,
+    private val setSearchDateUseCase: SetSearchDateUseCase
 ) : ViewModel(), OnDateClickListener, OnEventClickListener {
 
     private val dateFormatConverter = DateFormatConverter()
@@ -85,25 +92,8 @@ class MainViewModel @Inject constructor(
     private val _newCharacterName = MutableStateFlow<String>("")
     val newCharacterName = _newCharacterName
 
-    private val characterOcid = MutableStateFlow<String?>(null)
-
-    private val _characterLevel = MutableStateFlow<Int?>(null)
-    val characterLevel = _characterLevel.asStateFlow()
-
-    private val _characterClass = MutableStateFlow<String?>(null)
-    val characterClass = _characterClass.asStateFlow()
-
-    private val _characterWorld = MutableStateFlow<String?>(null)
-    val characterWorld = _characterWorld.asStateFlow()
-
-    private val _characterGuild = MutableStateFlow<String?>(null)
-    val characterGuild = _characterGuild.asStateFlow()
-
-    private val _characterImage = MutableStateFlow<String?>(null)
-    val characterImage = _characterImage.asStateFlow()
-
-    private val _characterGender = MutableStateFlow<String?>(null)
-    val characterGender = _characterGender.asStateFlow()
+    private val _characterBasic = MutableStateFlow<CharacterBasic?>(null)
+    val characterBasic = _characterBasic.asStateFlow()
 
     private val _calendarData = MutableStateFlow<List<CalendarUiState>>(listOf())
     val calendarData = _calendarData.asStateFlow()
@@ -120,6 +110,13 @@ class MainViewModel @Inject constructor(
     private val _settingUiState = MutableStateFlow<SettingUiState>(SettingUiState())
     val settingUiState = _settingUiState.asStateFlow()
 
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (getCharacterOcid().first() == "") setCharacterOcid()
+            setSearchDateUseCase.setSearchDate(null)
+        }
+    }
+
     override fun onClicked(calendarDate: CalendarUiState.CalendarDate) {
         val date = calendarDate.name
         if (date == "") return
@@ -127,7 +124,8 @@ class MainViewModel @Inject constructor(
         if (_specificDate.value == "") {
             _specificDate.value = "${_currentYear.value}년 ${_currentMonth.value}월 ${date}일"
             val specificDay =
-                _currentYear.value.toString().padStart(4, '0') + "-" + _currentMonth.value.toString()
+                _currentYear.value.toString()
+                    .padStart(4, '0') + "-" + _currentMonth.value.toString()
                     .padStart(2, '0') + "-" + date.padStart(2, '0')
 
             viewModelScope.launch {
@@ -164,9 +162,8 @@ class MainViewModel @Inject constructor(
     }
 
     private fun setSearchDate(): Deferred<Unit> {
-        val deferred = viewModelScope.async {
-            _searchDate.value =
-                MainApplication.mySharedPreferences.getSearchDate("searchDate", null)
+        val deferred = viewModelScope.async(Dispatchers.IO) {
+            _searchDate.value = getSearchDate().first()
         }
 
         return deferred
@@ -174,34 +171,26 @@ class MainViewModel @Inject constructor(
 
     private fun initCharacterInfo() {
         _characterName.value = ""
-        characterOcid.value = null
-        _characterLevel.value = null
-        _characterClass.value = null
-        _characterWorld.value = null
-        _characterGuild.value = null
-        _characterImage.value = null
-        _characterGender.value = null
+        _characterBasic.value = null
     }
 
-    private fun setCharacterName() {
-        if (MainApplication.mySharedPreferences.getNickname("characterName", "") == "") {
-            MainApplication.mySharedPreferences.setNickname("characterName", "아델")
-        }
-        _characterName.value = MainApplication.mySharedPreferences.getNickname("characterName", "")
+    private suspend fun getCharacterName(): Flow<String> = flow {
+        val name = setCharacterNameUseCase.getCharacterName().first()
+        emit(name)
     }
 
-    private fun getCharacterOcid() {
-        viewModelScope.launch {
+    private fun setCharacterOcid() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _characterName.value = getCharacterName().first()
             val characterOcidResponse =
-                getCharacterOcidUseCase.getCharacterOcid(characterName.value)
+                getCharacterOcidUseCase.getCharacterOcid(_characterName.value)
 
             when (characterOcidResponse.status) {
                 Status.SUCCESS -> {
                     characterOcidResponse.data?.let { characterOcid ->
-                        this@MainViewModel.characterOcid.value = characterOcid.ocid
-                        MainApplication.mySharedPreferences.setOcid("ocid", characterOcid.ocid)
+                        setCharacterOcidUseCase.setCharacterOcid(characterOcid.ocid)
                     }
-                    getCharacterBasic()
+                    setCharacterBasic()
                 }
 
                 else -> {
@@ -211,21 +200,22 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    private fun getCharacterBasic() {
-        viewModelScope.launch {
-            val characterBasicResponse = characterOcid.value?.let { ocid ->
-                getCharacterBasicUseCase.getCharacterBasic(ocid, _searchDate.value)
-            } ?: return@launch
+    private suspend fun getCharacterOcid(): Flow<String> = flow {
+        val ocid = setCharacterOcidUseCase.getCharacterOcid().first()
+        emit(ocid)
+    }
+
+    private fun setCharacterBasic() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val characterBasicResponse = getCharacterBasicUseCase.getCharacterBasic(
+                getCharacterOcid().first(),
+                getSearchDate().first()
+            )
 
             when (characterBasicResponse.status) {
                 Status.SUCCESS -> {
                     characterBasicResponse.data?.let { characterBasic ->
-                        _characterLevel.value = characterBasic.characterLevel
-                        _characterClass.value = characterBasic.characterClass
-                        _characterWorld.value = characterBasic.worldName
-                        _characterGuild.value = characterBasic.characterGuildName
-                        _characterImage.value = characterBasic.characterImage
-                        _characterGender.value = characterBasic.characterGender
+                        _characterBasic.value = characterBasic
                     }
                 }
 
@@ -311,12 +301,21 @@ class MainViewModel @Inject constructor(
         _calendarData.value = newCalendarData
     }
 
+    suspend fun getDarkMode(): Flow<Boolean?> = flow {
+        val isDarkMode = setDarkModeUseCase.getDarkMode().firstOrNull()
+        emit(isDarkMode)
+    }
+
+    suspend fun getSearchDate(): Flow<String?> = flow {
+        val date = setSearchDateUseCase.getSearchDate().first()
+        emit(date)
+    }
+
     fun initState() {
         viewModelScope.launch {
             setToday().await()
             setSearchDate().await()
-            setCharacterName()
-            getCharacterOcid()
+            setCharacterBasic()
             setEventList()
             setCalendarDate()
         }
@@ -339,12 +338,11 @@ class MainViewModel @Inject constructor(
             val deferred = async {
                 val selectedSearchDate =
                     dateFormatConverter.selectedSearchDateFormatted(year, month, day)
-                MainApplication.mySharedPreferences.setSearchDate("searchDate", selectedSearchDate)
+                setSearchDateUseCase.setSearchDate(selectedSearchDate)
             }
             deferred.await()
             setSearchDate().await()
-            setCharacterName()
-            getCharacterOcid()
+            setCharacterOcid()
             _lobbyUiEvent.emit(LobbyUiEvent.CloseSearchDate)
         }
     }
@@ -353,20 +351,16 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             when (isChecked) {
                 true -> {
-                    MainApplication.mySharedPreferences.setSearchDate("searchDate", null)
+                    setSearchDateUseCase.setSearchDate(null)
                 }
 
                 false -> {
-                    MainApplication.mySharedPreferences.setSearchDate(
-                        "searchDate",
-                        dateFormatConverter.yesterdayFormatted()
-                    )
+                    setSearchDateUseCase.setSearchDate(dateFormatConverter.yesterdayFormatted())
                 }
             }
             _isDateNow.value = isChecked
             setSearchDate().await()
-            setCharacterName()
-            getCharacterOcid()
+            setCharacterOcid()
         }
     }
 
@@ -384,11 +378,6 @@ class MainViewModel @Inject constructor(
             _calendarUiEvent.emit(CalendarUiEvent.GetDarkMode(isDarkMode))
             _settingUiEvent.emit(SettingUiEvent.GetDarkMode(isDarkMode))
         }
-    }
-
-    suspend fun getDarkMode(): Flow<Boolean?> = flow {
-        val isDarkMode = setDarkModeUseCase.getDarkMode().firstOrNull()
-        emit(isDarkMode)
     }
 
     fun setPrevMonth() {
@@ -451,14 +440,13 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             _characterName.value = _newCharacterName.value
             _newCharacterName.value = ""
-            MainApplication.mySharedPreferences.setNickname("characterName", _characterName.value)
+            setCharacterNameUseCase.setCharacterName(_characterName.value)
             _settingUiEvent.emit(SettingUiEvent.CloseChangeCharacterName)
             initCharacterInfo()
             runBlocking {
                 setToday().await()
             }
-            setCharacterName()
-            getCharacterOcid()
+            setCharacterOcid()
             setEventList()
         }
     }

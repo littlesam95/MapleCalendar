@@ -2,7 +2,6 @@ package com.bodan.maplecalendar.presentation.views
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bodan.maplecalendar.app.MainApplication
 import com.bodan.maplecalendar.domain.entity.CharacterAbility
 import com.bodan.maplecalendar.domain.entity.CharacterDojang
 import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
@@ -28,6 +27,9 @@ import com.bodan.maplecalendar.domain.usecase.GetCharacterAbilityUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterHyperStatUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterLinkSkillUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterSkillUseCase
+import com.bodan.maplecalendar.domain.usecase.SetCharacterNameUseCase
+import com.bodan.maplecalendar.domain.usecase.SetCharacterOcidUseCase
+import com.bodan.maplecalendar.domain.usecase.SetSearchDateUseCase
 import com.bodan.maplecalendar.presentation.utils.SkillGenerator.hyperSkillGrades
 import com.bodan.maplecalendar.presentation.utils.SkillGenerator.skillGrades
 import com.bodan.maplecalendar.presentation.utils.StatGenerator.getDefaultStats
@@ -44,10 +46,13 @@ import com.bodan.maplecalendar.presentation.views.skill.OnSkillClickListener
 import com.bodan.maplecalendar.presentation.views.skill.SkillUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -62,7 +67,10 @@ class CharacterViewModel @Inject constructor(
     private val getCharacterHyperStatUseCase: GetCharacterHyperStatUseCase,
     private val getCharacterAbilityUseCase: GetCharacterAbilityUseCase,
     private val getCharacterSkillUseCase: GetCharacterSkillUseCase,
-    private val getCharacterLinkSkillUseCase: GetCharacterLinkSkillUseCase
+    private val getCharacterLinkSkillUseCase: GetCharacterLinkSkillUseCase,
+    private val setCharacterNameUseCase: SetCharacterNameUseCase,
+    private val setCharacterOcidUseCase: SetCharacterOcidUseCase,
+    private val setSearchDateUseCase: SetSearchDateUseCase
 ) : ViewModel(), OnItemEquipmentClickListener, OnCharacterClickListener, OnSkillClickListener {
 
     private val _characterName = MutableStateFlow<String>("")
@@ -239,6 +247,21 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
+    private suspend fun getCharacterName(): Flow<String> = flow {
+        val name = setCharacterNameUseCase.getCharacterName().first()
+        emit(name)
+    }
+
+    private suspend fun getCharacterOcid(): Flow<String> = flow {
+        val ocid = setCharacterOcidUseCase.getCharacterOcid().first()
+        emit(ocid)
+    }
+
+    private suspend fun getSearchDate(): Flow<String?> = flow {
+        val date = setSearchDateUseCase.getSearchDate().first()
+        emit(date)
+    }
+
     private fun setCharacterBasic(ocid: String, searchDate: String?) {
         viewModelScope.launch {
             val characterBasicResponse =
@@ -247,7 +270,7 @@ class CharacterViewModel @Inject constructor(
                 Status.SUCCESS -> {
                     characterBasicResponse.data?.let { characterBasic ->
                         _characterBasic.value = characterBasic
-                        _characterLevel.value = characterBasic.characterLevel.toString()
+                        _characterLevel.value = characterBasic.characterLevel
                     }
                 }
 
@@ -484,21 +507,18 @@ class CharacterViewModel @Inject constructor(
 
     fun initState() {
         viewModelScope.launch {
-            _characterName.value =
-                MainApplication.mySharedPreferences.getNickname("characterName", "")
-            val ocid = MainApplication.mySharedPreferences.getOcid("ocid", "")
-            val searchDate = MainApplication.mySharedPreferences.getSearchDate("searchDate", null)
+            _characterName.value = getCharacterName().first()
             async {
-                setCharacterBasic(ocid, searchDate)
-                setCharacterStat(ocid, searchDate)
-                setCharacterEquipment(ocid, searchDate)
-                setCharacterUnion(ocid, searchDate)
-                setCharacterPopularity(ocid, searchDate)
-                setCharacterDojang(ocid, searchDate)
-                setCharacterHyperStat(ocid, searchDate)
-                setCharacterAbility(ocid, searchDate)
-                setCharacterSkill(ocid, searchDate)
-                setCharacterLinkSkill(ocid, searchDate)
+                setCharacterBasic(getCharacterOcid().first(), getSearchDate().first())
+                setCharacterStat(getCharacterOcid().first(), getSearchDate().first())
+                setCharacterEquipment(getCharacterOcid().first(), getSearchDate().first())
+                setCharacterUnion(getCharacterOcid().first(), getSearchDate().first())
+                setCharacterPopularity(getCharacterOcid().first(), getSearchDate().first())
+                setCharacterDojang(getCharacterOcid().first(), getSearchDate().first())
+                setCharacterHyperStat(getCharacterOcid().first(), getSearchDate().first())
+                setCharacterAbility(getCharacterOcid().first(), getSearchDate().first())
+                setCharacterSkill(getCharacterOcid().first(), getSearchDate().first())
+                setCharacterLinkSkill(getCharacterOcid().first(), getSearchDate().first())
             }.await()
         }
     }
