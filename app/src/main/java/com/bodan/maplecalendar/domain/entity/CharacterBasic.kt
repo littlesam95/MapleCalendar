@@ -8,7 +8,7 @@ data class CharacterBasic(
     val worldName: String = "",
     val characterGender: String = "",
     val characterClass: String = "",
-    val characterLevel: Int = 0,
+    val characterLevel: String = "",
     val characterGuildName: String? = null,
     val characterImage: String = ""
 )
