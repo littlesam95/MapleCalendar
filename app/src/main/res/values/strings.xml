@@ -11,6 +11,7 @@
     <string name="name_menu_equipment">Equipment</string>
     <string name="name_menu_skill">Skill</string>
     <string name="name_menu_change_character_name">Change Character Name</string>
+    <string name="name_menu_character_name_change_dialog">Character Name Change Dialog</string>
     <string name="name_menu_set_push_notification">Set Push Notification</string>
     <string name="name_menu_day_event">Events of Date</string>
     <string name="name_menu_wait_equipment_detail">Wait For Item Equipment Detail</string>
@@ -71,6 +72,9 @@
     <string name="text_gender">성별</string>
     <string name="text_nickname_change">CHANGE NICKNAME</string>
     <string name="text_title_nickname_change">닉네임 변경</string>
+    <string name="text_description_character_name_change">조회할 캐릭터의 닉네임을 입력하고 유효한 캐릭터명인지 확인하세요.</string>
+    <string name="text_character_name_validate">닉네임 검증</string>
+    <string name="text_character_name_change">캐릭터 변경</string>
     <string name="text_change">변경</string>
     <string name="text_push_notification">EVENT NOTIFY</string>
     <string name="text_title_push_notification">이벤트 알림 설정</string>
@@ -210,6 +214,9 @@
     <string name="text_skill_level_next_left">[다음레벨</string>
     <string name="text_skill_level_right">]</string>
     <string name="text_owned_link_skill">내 링크 스킬</string>
+
+    <!-- Setting -->
+    <string name="text_title_character_name_change_dialog">캐릭터 닉네임 설정</string>
 
     <!-- Message -->
     <string name="message_network_error">네트워크에 오류가 있어요!</string>
