@@ -2,6 +2,8 @@ package com.bodan.maplecalendar.presentation.views.setting
 
 sealed class SettingUiEvent {
 
+    data object GetWrongCharacterOcid : SettingUiEvent()
+
     data object ChangeCharacterName : SettingUiEvent()
 
     data object CloseChangeCharacterName : SettingUiEvent()
