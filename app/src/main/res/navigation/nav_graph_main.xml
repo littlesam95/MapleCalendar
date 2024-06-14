@@ -37,7 +37,7 @@
 
         <action
             android:id="@+id/action_setting_to_change_character_name"
-            app:destination="@id/fragment_change_character_name" />
+            app:destination="@id/fragment_character_name_change_dialog" />
 
         <action
             android:id="@+id/action_setting_to_push_notification"
@@ -64,5 +64,10 @@
         android:id="@+id/fragment_push_notification"
         android:name="com.bodan.maplecalendar.presentation.views.setting.PushNotificationFragment"
         android:label="@string/name_menu_set_push_notification" />
+
+    <dialog
+        android:id="@+id/fragment_character_name_change_dialog"
+        android:name="com.bodan.maplecalendar.presentation.views.setting.CharacterNameChangeDialogFragment"
+        android:label="@string/name_menu_character_name_change_dialog" />
 
 </navigation>

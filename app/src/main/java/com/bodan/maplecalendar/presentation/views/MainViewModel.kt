@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bodan.maplecalendar.data.util.EventListReader
 import com.bodan.maplecalendar.domain.entity.CharacterBasic
+import com.bodan.maplecalendar.domain.entity.CharacterOcid
 import com.bodan.maplecalendar.domain.usecase.GetCharacterBasicUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterOcidUseCase
 import com.bodan.maplecalendar.presentation.utils.DateFormatConverter
@@ -38,6 +39,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import timber.log.Timber
 import java.util.Calendar
 import javax.inject.Inject
 
@@ -91,6 +93,12 @@ class MainViewModel @Inject constructor(
 
     private val _newCharacterName = MutableStateFlow<String>("")
     val newCharacterName = _newCharacterName
+
+    private val _characterOcid = MutableStateFlow<String>("")
+    val characterOcid = _characterOcid.asStateFlow()
+
+    private val _newCharacterOcid = MutableStateFlow<CharacterOcid?>(null)
+    val newCharacterOcid = _newCharacterOcid.asStateFlow()
 
     private val _characterBasic = MutableStateFlow<CharacterBasic?>(null)
     val characterBasic = _characterBasic.asStateFlow()
@@ -170,8 +178,10 @@ class MainViewModel @Inject constructor(
     }
 
     private fun initCharacterInfo() {
-        _characterName.value = ""
-        _characterBasic.value = null
+        viewModelScope.launch(Dispatchers.IO) {
+            _characterName.value = setCharacterNameUseCase.getCharacterName().first()
+            _characterBasic.value = null
+        }
     }
 
     private suspend fun getCharacterName(): Flow<String> = flow {
@@ -191,6 +201,7 @@ class MainViewModel @Inject constructor(
                         setCharacterOcidUseCase.setCharacterOcid(characterOcid.ocid)
                     }
                     setCharacterBasic()
+                    Timber.d("Ocid Success")
                 }
 
                 else -> {
@@ -208,7 +219,7 @@ class MainViewModel @Inject constructor(
     private fun setCharacterBasic() {
         viewModelScope.launch(Dispatchers.IO) {
             val characterBasicResponse = getCharacterBasicUseCase.getCharacterBasic(
-                getCharacterOcid().first(),
+                _characterOcid.value,
                 getSearchDate().first()
             )
 
@@ -315,6 +326,8 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             setToday().await()
             setSearchDate().await()
+            _characterName.value = getCharacterName().first()
+            _characterOcid.value = getCharacterOcid().first()
             setCharacterBasic()
             setEventList()
             setCalendarDate()
@@ -342,7 +355,7 @@ class MainViewModel @Inject constructor(
             }
             deferred.await()
             setSearchDate().await()
-            setCharacterOcid()
+            setCharacterBasic()
             _lobbyUiEvent.emit(LobbyUiEvent.CloseSearchDate)
         }
     }
@@ -360,7 +373,7 @@ class MainViewModel @Inject constructor(
             }
             _isDateNow.value = isChecked
             setSearchDate().await()
-            setCharacterOcid()
+            setCharacterBasic()
         }
     }
 
@@ -419,6 +432,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun validateCharacterName(characterName: CharSequence) {
+        _newCharacterOcid.value = null
         if (validateNickname(characterName)) {
             _settingUiState.update { uiState ->
                 uiState.copy(characterNameValidState = CharacterNameValidState.VALID)
@@ -436,18 +450,47 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun submitChangeCharacterName() {
+    fun validateCharacterOcid() {
         viewModelScope.launch {
-            _characterName.value = _newCharacterName.value
-            _newCharacterName.value = ""
-            setCharacterNameUseCase.setCharacterName(_characterName.value)
-            _settingUiEvent.emit(SettingUiEvent.CloseChangeCharacterName)
-            initCharacterInfo()
-            runBlocking {
-                setToday().await()
+            val characterOcidResponse =
+                getCharacterOcidUseCase.getCharacterOcid(_newCharacterName.value)
+
+            when (characterOcidResponse.status) {
+                Status.SUCCESS -> {
+                    characterOcidResponse.data?.let { characterOcid ->
+                        _newCharacterOcid.value = characterOcid
+                    }
+                }
+
+                else -> {
+                    _newCharacterOcid.value = null
+                    _settingUiEvent.emit(SettingUiEvent.GetWrongCharacterOcid)
+                }
             }
-            setCharacterOcid()
-            setEventList()
+        }
+    }
+
+    fun submitChangeCharacterName() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _settingUiEvent.emit(SettingUiEvent.CloseChangeCharacterName)
+            setToday().await()
+            async {
+                setCharacterNameUseCase.setCharacterName(_newCharacterName.value)
+                _newCharacterName.value = ""
+                _newCharacterOcid.value?.let { characterOcid ->
+                    setCharacterOcidUseCase.setCharacterOcid(characterOcid.ocid)
+                }
+                _newCharacterOcid.value = null
+                initCharacterInfo()
+            }.await()
+            async {
+                _characterName.value = setCharacterNameUseCase.getCharacterName().first()
+                _characterOcid.value = setCharacterOcidUseCase.getCharacterOcid().first()
+            }.await()
+            async {
+                setCharacterBasic()
+                setEventList()
+            }.await()
         }
     }
 
