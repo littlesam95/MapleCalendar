@@ -16,6 +16,7 @@
     <string name="name_menu_day_event">Events of Date</string>
     <string name="name_menu_wait_equipment_detail">Wait For Item Equipment Detail</string>
     <string name="name_menu_item_equipment_detail">Item Equipment Detail</string>
+    <string name="name_menu_android_detail">Android Detail</string>
     <string name="name_search_date">Search Date</string>
     <string name="name_hyper_stat">Hyper Stat</string>
     <string name="name_ability">Ability</string>
@@ -152,6 +153,8 @@
     <string name="text_pirate">해적</string>
     <string name="text_superior">슈페리얼</string>
     <string name="text_equipment_classified">장비분류 : </string>
+    <string name="text_android_shape">외형 : </string>
+    <string name="text_android_grade">등급 : </string>
     <string name="text_left_bracket">(</string>
     <string name="text_right_bracket">)</string>
     <string name="text_equipment_str">STR : +</string>
@@ -183,6 +186,7 @@
     <string name="text_exceptional_used">익셉셔널 강화 1회 적용 (최대 1회 강화 가능)</string>
     <string name="text_exceptional_hp_mp">최대 HP / 최대 MP : +</string>
     <string name="text_exceptional_attack_magic_power">공격력 / 마력 : +</string>
+    <string name="text_not_able_to_set_potential">잠재능력 설정 불가</string>
 
     <!-- Hyper Stat -->
     <string name="text_hyper_stat">하이퍼 스탯</string>
