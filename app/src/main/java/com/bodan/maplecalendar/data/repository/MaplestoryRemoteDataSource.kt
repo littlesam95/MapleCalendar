@@ -1,6 +1,7 @@
 package com.bodan.maplecalendar.data.repository
 
 import com.bodan.maplecalendar.data.model.AbilityEntity
+import com.bodan.maplecalendar.data.model.AndroidEntity
 import com.bodan.maplecalendar.data.model.BasicEntity
 import com.bodan.maplecalendar.data.model.DojangEntity
 import com.bodan.maplecalendar.data.model.HyperStatEntity
@@ -46,4 +47,6 @@ interface MaplestoryRemoteDataSource {
         ocid: String,
         date: String?
     ): Response<LinkSkillEntity>
+
+    suspend fun getCharacterAndroid(ocid: String, date: String?): Response<AndroidEntity>
 }

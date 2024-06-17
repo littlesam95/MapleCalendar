@@ -20,5 +20,5 @@ data class ItemBaseOption(
     val itemBaseAllStat: String = "",
     val itemBaseMaxHpRate: String = "",
     val itemBaseMaxMpRate: String = "",
-    val itemBaseBaseEquipmentLevel: String = "",
+    val itemBaseBaseEquipmentLevel: String = "0",
 )

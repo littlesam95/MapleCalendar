@@ -3,6 +3,7 @@ package com.bodan.maplecalendar.presentation.views
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bodan.maplecalendar.domain.entity.CharacterAbility
+import com.bodan.maplecalendar.domain.entity.CharacterAndroidInfo
 import com.bodan.maplecalendar.domain.entity.CharacterDojang
 import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
 import com.bodan.maplecalendar.domain.entity.CharacterPopularity
@@ -24,6 +25,7 @@ import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertPe
 import com.bodan.maplecalendar.presentation.utils.PowerFormatConverter.convertPowerFormat
 import com.bodan.maplecalendar.domain.entity.Status
 import com.bodan.maplecalendar.domain.usecase.GetCharacterAbilityUseCase
+import com.bodan.maplecalendar.domain.usecase.GetCharacterAndroidUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterHyperStatUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterLinkSkillUseCase
 import com.bodan.maplecalendar.domain.usecase.GetCharacterSkillUseCase
@@ -45,6 +47,7 @@ import com.bodan.maplecalendar.presentation.views.equipment.OnItemEquipmentClick
 import com.bodan.maplecalendar.presentation.views.skill.OnSkillClickListener
 import com.bodan.maplecalendar.presentation.views.skill.SkillUiEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -68,6 +71,7 @@ class CharacterViewModel @Inject constructor(
     private val getCharacterAbilityUseCase: GetCharacterAbilityUseCase,
     private val getCharacterSkillUseCase: GetCharacterSkillUseCase,
     private val getCharacterLinkSkillUseCase: GetCharacterLinkSkillUseCase,
+    private val getCharacterAndroidUseCase: GetCharacterAndroidUseCase,
     private val setCharacterNameUseCase: SetCharacterNameUseCase,
     private val setCharacterOcidUseCase: SetCharacterOcidUseCase,
     private val setSearchDateUseCase: SetSearchDateUseCase
@@ -159,6 +163,8 @@ class CharacterViewModel @Inject constructor(
     private val _characterOwnedLinkSkill = MutableStateFlow<CharacterSkillInfo?>(null)
     val characterOwnedLinkSkill = _characterOwnedLinkSkill.asStateFlow()
 
+    private val characterAndroids = MutableStateFlow<List<CharacterAndroidInfo?>>(listOf())
+
     private val _characterUiEvent = MutableSharedFlow<CharacterUiEvent>()
     val characterUiEvent = _characterUiEvent.asSharedFlow()
 
@@ -179,17 +185,23 @@ class CharacterViewModel @Inject constructor(
                     _characterLastItemEquipment.value = null
                     _characterLastItemEquipmentOptions.value = null
                     _characterLastItemEquipment.value = item
-                    _characterLastItemEquipmentOptions.value = itemEquipmentDetailOptionSet(
-                        item.itemTotalOption,
-                        item.itemBaseOption,
-                        item.itemAddOption,
-                        item.itemEtcOption,
-                        item.itemStarforceOption,
-                        item.itemExceptionalOption
-                    )
+                    if (item.itemTitle != "ANDROID") {
+                        _characterLastItemEquipmentOptions.value = itemEquipmentDetailOptionSet(
+                            item.itemTotalOption,
+                            item.itemBaseOption,
+                            item.itemAddOption,
+                            item.itemEtcOption,
+                            item.itemStarforceOption,
+                            item.itemExceptionalOption
+                        )
+                    }
                 }.await()
                 async {
-                    _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentDetail)
+                    when (item.itemTitle) {
+                        "ANDROID" -> _equipmentUiEvent.emit(EquipmentUiEvent.GetAndroidDetail)
+
+                        else -> _equipmentUiEvent.emit(EquipmentUiEvent.GetItemEquipmentDetail)
+                    }
                 }.await()
             }
         }
@@ -263,7 +275,7 @@ class CharacterViewModel @Inject constructor(
     }
 
     private fun setCharacterBasic(ocid: String, searchDate: String?) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val characterBasicResponse =
                 getCharacterBasicUseCase.getCharacterBasic(ocid, searchDate)
             when (characterBasicResponse.status) {
@@ -282,7 +294,7 @@ class CharacterViewModel @Inject constructor(
     }
 
     private fun setCharacterStat(ocid: String, searchDate: String?) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val characterStatResponse = getCharacterStatUseCase.getCharacterStat(ocid, searchDate)
             when (characterStatResponse.status) {
                 Status.SUCCESS -> {
@@ -325,7 +337,7 @@ class CharacterViewModel @Inject constructor(
     }
 
     private fun setCharacterEquipment(ocid: String, searchDate: String?) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val characterItemEquipmentResponse =
                 getCharacterItemEquipmentUseCase.getCharacterItemEquipment(ocid, searchDate)
             when (characterItemEquipmentResponse.status) {
@@ -347,7 +359,7 @@ class CharacterViewModel @Inject constructor(
     }
 
     private fun setCharacterUnion(ocid: String, searchDate: String?) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val characterUnionResponse =
                 getCharacterUnionUseCase.getCharacterUnion(ocid, searchDate)
             when (characterUnionResponse.status) {
@@ -366,7 +378,7 @@ class CharacterViewModel @Inject constructor(
     }
 
     private fun setCharacterPopularity(ocid: String, searchDate: String?) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val characterPopularityResponse =
                 getCharacterPopularityUseCase.getCharacterPopularity(ocid, searchDate)
             when (characterPopularityResponse.status) {
@@ -386,7 +398,7 @@ class CharacterViewModel @Inject constructor(
     }
 
     private fun setCharacterDojang(ocid: String, searchDate: String?) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val characterDojangResponse =
                 getCharacterDojangUseCase.getCharacterDojang(ocid, searchDate)
             when (characterDojangResponse.status) {
@@ -406,7 +418,7 @@ class CharacterViewModel @Inject constructor(
     }
 
     private fun setCharacterHyperStat(ocid: String, searchDate: String?) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val characterHyperStatResponse =
                 getCharacterHyperStatUseCase.getCharacterHyperStat(ocid, searchDate)
             when (characterHyperStatResponse.status) {
@@ -424,7 +436,7 @@ class CharacterViewModel @Inject constructor(
     }
 
     private fun setCharacterAbility(ocid: String, searchDate: String?) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val characterAbilityResponse =
                 getCharacterAbilityUseCase.getCharacterAbility(ocid, searchDate)
             when (characterAbilityResponse.status) {
@@ -442,7 +454,7 @@ class CharacterViewModel @Inject constructor(
     }
 
     private fun setCharacterSkill(ocid: String, searchDate: String?) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             val newCharacterSkills = mutableListOf<CharacterSkill>()
             for (grade in skillGrades) {
                 val characterSkillResponse =
@@ -488,8 +500,9 @@ class CharacterViewModel @Inject constructor(
     }
 
     private fun setCharacterLinkSkill(ocid: String, searchDate: String?) {
-        viewModelScope.launch {
-            val characterLinkSkillResponse = getCharacterLinkSkillUseCase.getCharacterLinkSkill(ocid, searchDate)
+        viewModelScope.launch(Dispatchers.IO) {
+            val characterLinkSkillResponse =
+                getCharacterLinkSkillUseCase.getCharacterLinkSkill(ocid, searchDate)
             when (characterLinkSkillResponse.status) {
                 Status.SUCCESS -> {
                     characterLinkSkillResponse.data?.let { characterLinkSkill ->
@@ -505,10 +518,45 @@ class CharacterViewModel @Inject constructor(
         }
     }
 
+    private fun setCharacterAndroid(ocid: String, searchDate: String?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val characterAndroidResponse =
+                getCharacterAndroidUseCase.getCharacterAndroid(ocid, searchDate)
+            when (characterAndroidResponse.status) {
+                Status.SUCCESS -> {
+                    characterAndroidResponse.data?.let { characterAndroid ->
+                        characterAndroids.value = characterAndroid.androids
+                        characterAndroids.value[0]?.let { androidInfo ->
+                            val newCharacterItemEquipmentData =
+                                _characterItemEquipmentData.value.toMutableList()
+                            newCharacterItemEquipmentData[28] = EquipmentUiState.EquipmentOption(
+                                itemTitle = "ANDROID",
+                                itemEquipmentPart = "안드로이드",
+                                equipmentSlot = "안드로이드",
+                                itemName = androidInfo.androidName,
+                                itemShapeIcon = androidInfo.androidIcon,
+                                itemDescription = androidInfo.androidDescription,
+                                itemScrollUpgradableCount = androidInfo.androidGrade,
+                                potentialOptionFirst = androidInfo.androidHair.hairName,
+                                potentialOptionSecond = androidInfo.androidFace.faceName,
+                                potentialOptionThird = androidInfo.androidSkinName
+                            )
+                            _characterItemEquipmentData.value = newCharacterItemEquipmentData
+                        }
+                    }
+                }
+
+                else -> {
+                    _equipmentUiEvent.emit(EquipmentUiEvent.InternalServerError)
+                }
+            }
+        }
+    }
+
     fun initState() {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             _characterName.value = getCharacterName().first()
-            async {
+            launch {
                 setCharacterBasic(getCharacterOcid().first(), getSearchDate().first())
                 setCharacterStat(getCharacterOcid().first(), getSearchDate().first())
                 setCharacterEquipment(getCharacterOcid().first(), getSearchDate().first())
@@ -519,7 +567,10 @@ class CharacterViewModel @Inject constructor(
                 setCharacterAbility(getCharacterOcid().first(), getSearchDate().first())
                 setCharacterSkill(getCharacterOcid().first(), getSearchDate().first())
                 setCharacterLinkSkill(getCharacterOcid().first(), getSearchDate().first())
-            }.await()
+            }.join()
+            launch {
+                setCharacterAndroid(getCharacterOcid().first(), getSearchDate().first())
+            }
         }
     }
 
@@ -527,6 +578,23 @@ class CharacterViewModel @Inject constructor(
         characterItemEquipment.value?.let { characterItemEquipment ->
             _characterItemEquipmentData.value =
                 itemEquipmentDataSet(characterItemEquipment.itemEquipmentsFirstPreset)
+            characterAndroids.value[0]?.let { androidInfo ->
+                val newCharacterItemEquipmentData =
+                    _characterItemEquipmentData.value.toMutableList()
+                newCharacterItemEquipmentData[28] = EquipmentUiState.EquipmentOption(
+                    itemTitle = "ANDROID",
+                    itemEquipmentPart = "안드로이드",
+                    equipmentSlot = "안드로이드",
+                    itemName = androidInfo.androidName,
+                    itemShapeIcon = androidInfo.androidIcon,
+                    itemDescription = androidInfo.androidDescription,
+                    itemScrollUpgradableCount = androidInfo.androidGrade,
+                    potentialOptionFirst = androidInfo.androidHair.hairName,
+                    potentialOptionSecond = androidInfo.androidFace.faceName,
+                    potentialOptionThird = androidInfo.androidSkinName
+                )
+                _characterItemEquipmentData.value = newCharacterItemEquipmentData
+            }
             _characterItemEquipmentPreset.value = 1
         }
     }
@@ -535,6 +603,23 @@ class CharacterViewModel @Inject constructor(
         characterItemEquipment.value?.let { characterItemEquipment ->
             _characterItemEquipmentData.value =
                 itemEquipmentDataSet(characterItemEquipment.itemEquipmentsSecondPreset)
+            characterAndroids.value[1]?.let { androidInfo ->
+                val newCharacterItemEquipmentData =
+                    _characterItemEquipmentData.value.toMutableList()
+                newCharacterItemEquipmentData[28] = EquipmentUiState.EquipmentOption(
+                    itemTitle = "ANDROID",
+                    itemEquipmentPart = "안드로이드",
+                    equipmentSlot = "안드로이드",
+                    itemName = androidInfo.androidName,
+                    itemShapeIcon = androidInfo.androidIcon,
+                    itemDescription = androidInfo.androidDescription,
+                    itemScrollUpgradableCount = androidInfo.androidGrade,
+                    potentialOptionFirst = androidInfo.androidHair.hairName,
+                    potentialOptionSecond = androidInfo.androidFace.faceName,
+                    potentialOptionThird = androidInfo.androidSkinName
+                )
+                _characterItemEquipmentData.value = newCharacterItemEquipmentData
+            }
             _characterItemEquipmentPreset.value = 2
         }
     }
@@ -543,6 +628,23 @@ class CharacterViewModel @Inject constructor(
         characterItemEquipment.value?.let { characterItemEquipment ->
             _characterItemEquipmentData.value =
                 itemEquipmentDataSet(characterItemEquipment.itemEquipmentsThirdPreset)
+            characterAndroids.value[2]?.let { androidInfo ->
+                val newCharacterItemEquipmentData =
+                    _characterItemEquipmentData.value.toMutableList()
+                newCharacterItemEquipmentData[28] = EquipmentUiState.EquipmentOption(
+                    itemTitle = "ANDROID",
+                    itemEquipmentPart = "안드로이드",
+                    equipmentSlot = "안드로이드",
+                    itemName = androidInfo.androidName,
+                    itemShapeIcon = androidInfo.androidIcon,
+                    itemDescription = androidInfo.androidDescription,
+                    itemScrollUpgradableCount = androidInfo.androidGrade,
+                    potentialOptionFirst = androidInfo.androidHair.hairName,
+                    potentialOptionSecond = androidInfo.androidFace.faceName,
+                    potentialOptionThird = androidInfo.androidSkinName
+                )
+                _characterItemEquipmentData.value = newCharacterItemEquipmentData
+            }
             _characterItemEquipmentPreset.value = 3
         }
     }

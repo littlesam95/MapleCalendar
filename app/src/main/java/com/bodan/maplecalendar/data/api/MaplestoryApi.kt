@@ -1,6 +1,7 @@
 package com.bodan.maplecalendar.data.api
 
 import com.bodan.maplecalendar.data.model.AbilityEntity
+import com.bodan.maplecalendar.data.model.AndroidEntity
 import com.bodan.maplecalendar.data.model.BasicEntity
 import com.bodan.maplecalendar.data.model.DojangEntity
 import com.bodan.maplecalendar.data.model.HyperStatEntity
@@ -82,4 +83,10 @@ interface MaplestoryApi {
         @Query("ocid") ocid: String,
         @Query("date") date: String?,
     ): Response<LinkSkillEntity>
+
+    @GET("v1/character/android-equipment")
+    suspend fun fetchCharacterAndroid(
+        @Query("ocid") ocid: String,
+        @Query("date") date: String?,
+    ): Response<AndroidEntity>
 }

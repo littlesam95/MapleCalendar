@@ -646,3 +646,88 @@ data class LinkSkillInfoEntity(
     @Json(name = "skill_icon")
     val skillIcon: String
 )
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class AndroidEntity(
+    @Json(name = "android_preset_1")
+    val androidFirstPreset: AndroidInfoEntity?,
+
+    @Json(name = "android_preset_2")
+    val androidSecondPreset: AndroidInfoEntity?,
+
+    @Json(name = "android_preset_3")
+    val androidThirdPreset: AndroidInfoEntity?
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class AndroidInfoEntity(
+    @Json(name = "android_name")
+    val androidName: String,
+
+    @Json(name = "android_nickname")
+    val androidNickname: String,
+
+    @Json(name = "android_icon")
+    val androidIcon: String,
+
+    @Json(name = "android_description")
+    val androidDescription: String,
+
+    @Json(name = "android_gender")
+    val androidGender: String,
+
+    @Json(name = "android_grade")
+    val androidGrade: String,
+
+    @Json(name = "android_skin_name")
+    val androidSkinName: String?,
+
+    @Json(name = "android_hair")
+    val androidHair: AndroidHairEntity,
+
+    @Json(name = "android_face")
+    val androidFace: AndroidFaceEntity,
+
+    @Json(name = "android_ear_sensor_clip_flag")
+    val androidEarSensorClipFlag: String,
+
+    @Json(name = "android_non_humanoid_flag")
+    val androidNonHumanoidFlag: String,
+
+    @Json(name = "android_shop_usable_flag")
+    val androidShopUsableFlag: String
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class AndroidHairEntity(
+    @Json(name = "hair_name")
+    val hairName: String?,
+
+    @Json(name = "base_color")
+    val baseColor: String?,
+
+    @Json(name = "mix_color")
+    val mixColor: String?,
+
+    @Json(name = "mix_rate")
+    val mixRate: String
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class AndroidFaceEntity(
+    @Json(name = "face_name")
+    val faceName: String?,
+
+    @Json(name = "base_color")
+    val baseColor: String?,
+
+    @Json(name = "mix_color")
+    val mixColor: String?,
+
+    @Json(name = "mix_rate")
+    val mixRate: String
+)
