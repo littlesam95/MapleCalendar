@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_bottom_sheet">
+        android:background="@drawable/shape_bottom_sheet">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_left_character_name_change_dialog"
@@ -58,8 +58,10 @@
             android:id="@+id/mcv_character_name_change_dialog"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            app:cardCornerRadius="1dp"
+            android:layout_marginTop="@dimen/guideline_medium"
+            android:layout_marginBottom="@dimen/guideline_medium"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="0dp"
             app:layout_constraintBottom_toTopOf="@id/gl_bottom_character_name_change_dialog"
             app:layout_constraintEnd_toStartOf="@id/gl_right_character_name_change_dialog"
             app:layout_constraintStart_toEndOf="@id/gl_left_character_name_change_dialog"
