@@ -785,7 +785,6 @@
                     app:layout_constraintStart_toEndOf="@id/tv_exceptional_all_stat_item_equipment_default"
                     app:layout_constraintTop_toTopOf="@id/tv_exceptional_all_stat_item_equipment_default" />
 
-
                 <TextView
                     android:id="@+id/tv_exceptional_hp_mp_item_equipment_default"
                     android:layout_width="wrap_content"
@@ -859,7 +858,7 @@
                     app:barrierAllowsGoneWidgets="true"
                     app:barrierDirection="bottom"
                     app:barrierMargin="@dimen/guideline_minimum"
-                    app:constraint_referenced_ids="tv_exceptional_used_item_equipment_detail"
+                    app:constraint_referenced_ids="tv_exceptional_none_item_equipment_detail,tv_exceptional_used_item_equipment_detail"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_exceptional_used_item_equipment_detail" />
