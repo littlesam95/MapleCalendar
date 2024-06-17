@@ -45,6 +45,10 @@ class EquipmentFragment : BaseFragment<FragmentEquipmentBinding>(R.layout.fragme
             findNavController().navigateSafely(R.id.action_equipment_to_item_equipment_detail)
         }
 
+        is EquipmentUiEvent.GetAndroidDetail -> {
+            findNavController().navigateSafely(R.id.action_equipment_to_android_detail)
+        }
+
         is EquipmentUiEvent.BadRequest -> {
             showSnackBar(R.string.message_bad_request)
         }

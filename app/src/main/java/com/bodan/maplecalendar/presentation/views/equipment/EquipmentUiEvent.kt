@@ -8,6 +8,8 @@ sealed class EquipmentUiEvent {
 
     data object CloseItemEquipmentDetail : EquipmentUiEvent()
 
+    data object GetAndroidDetail : EquipmentUiEvent()
+
     data class GetDarkMode(val isDarkMode: Boolean?) : EquipmentUiEvent()
 
     data object BadRequest : EquipmentUiEvent()

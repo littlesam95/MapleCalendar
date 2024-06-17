@@ -79,8 +79,11 @@ sealed class EquipmentUiState(val id: String = UUID.randomUUID().toString()) {
             "${MainApplication.myContext().resources.getString(R.string.text_equipment_classified)} $itemEquipmentPart"
         val isAbleToUpgrade: Boolean =
             ((itemScrollUpgrade != "0") || (itemScrollUpgradableCount != "0"))
-        val itemUpgradeable: String =
-            "${MainApplication.myContext().resources.getString(R.string.text_equipment_scroll_upgradeable_count)} $itemScrollUpgradableCount"
+        val itemUpgradeable: String = when (itemEquipmentPart) {
+            "안드로이드" -> "${MainApplication.myContext().resources.getString(R.string.text_android_grade)} $itemScrollUpgradableCount"
+
+            else -> "${MainApplication.myContext().resources.getString(R.string.text_equipment_scroll_upgradeable_count)} $itemScrollUpgradableCount"
+        }
         val itemResilience: String =
             "(${MainApplication.myContext().resources.getString(R.string.text_equipment_scroll_resilience_count)} ${itemScrollResilienceCount})"
         val isGoldenHammerUsed: Boolean = (itemGoldenHammerFlag == "적용")
