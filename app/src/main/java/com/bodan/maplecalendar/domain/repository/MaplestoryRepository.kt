@@ -1,6 +1,7 @@
 package com.bodan.maplecalendar.domain.repository
 
 import com.bodan.maplecalendar.domain.entity.CharacterAbility
+import com.bodan.maplecalendar.domain.entity.CharacterAndroid
 import com.bodan.maplecalendar.domain.entity.CharacterDojang
 import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
 import com.bodan.maplecalendar.domain.entity.CharacterBasic
@@ -46,4 +47,6 @@ interface MaplestoryRepository {
         ocid: String,
         date: String?
     ): Result<CharacterLinkSkill>
+
+    suspend fun getCharacterAndroid(ocid: String, date: String?): Result<CharacterAndroid>
 }
