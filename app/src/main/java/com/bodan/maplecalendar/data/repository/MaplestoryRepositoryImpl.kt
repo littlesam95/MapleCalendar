@@ -6,6 +6,7 @@ import com.bodan.maplecalendar.domain.entity.CharacterDojang
 import com.bodan.maplecalendar.domain.entity.CharacterPopularity
 import com.bodan.maplecalendar.domain.entity.CharacterUnion
 import com.bodan.maplecalendar.data.mapper.CharacterBasicMapper
+import com.bodan.maplecalendar.data.mapper.CharacterCashItemMapper
 import com.bodan.maplecalendar.data.mapper.CharacterDojangMapper
 import com.bodan.maplecalendar.data.mapper.CharacterHyperStatMapper
 import com.bodan.maplecalendar.data.mapper.CharacterItemEquipmentMapper
@@ -18,6 +19,7 @@ import com.bodan.maplecalendar.data.mapper.CharacterUnionMapper
 import com.bodan.maplecalendar.domain.entity.CharacterAbility
 import com.bodan.maplecalendar.domain.entity.CharacterAndroid
 import com.bodan.maplecalendar.domain.entity.CharacterBasic
+import com.bodan.maplecalendar.domain.entity.CharacterCashItem
 import com.bodan.maplecalendar.domain.entity.CharacterHyperStat
 import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
 import com.bodan.maplecalendar.domain.entity.CharacterLinkSkill
@@ -240,6 +242,25 @@ class MaplestoryRepositoryImpl @Inject constructor(
             val body = response.body()
             if (response.isSuccessful && (body != null)) {
                 Result.success(CharacterAndroidMapper(body))
+            } else {
+                Result.error(response.errorBody().toString(), null)
+            }
+        } catch (e: Exception) {
+            Result.fail()
+        }
+
+    override suspend fun getCharacterCashItem(
+        ocid: String,
+        date: String?
+    ): Result<CharacterCashItem> =
+        try {
+            val response = withContext(CoroutineScope(Dispatchers.IO).coroutineContext) {
+                maplestoryRemoteDataSource.getCharacterCashItem(ocid, date)
+            }
+
+            val body = response.body()
+            if (response.isSuccessful && (body != null)) {
+                Result.success(CharacterCashItemMapper(body))
             } else {
                 Result.error(response.errorBody().toString(), null)
             }

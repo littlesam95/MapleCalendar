@@ -3,6 +3,7 @@ package com.bodan.maplecalendar.data.repository
 import com.bodan.maplecalendar.data.model.AbilityEntity
 import com.bodan.maplecalendar.data.model.AndroidEntity
 import com.bodan.maplecalendar.data.model.BasicEntity
+import com.bodan.maplecalendar.data.model.CashItemEntity
 import com.bodan.maplecalendar.data.model.DojangEntity
 import com.bodan.maplecalendar.data.model.HyperStatEntity
 import com.bodan.maplecalendar.data.model.ItemEquipmentEntity
@@ -49,4 +50,6 @@ interface MaplestoryRemoteDataSource {
     ): Response<LinkSkillEntity>
 
     suspend fun getCharacterAndroid(ocid: String, date: String?): Response<AndroidEntity>
+
+    suspend fun getCharacterCashItem(ocid: String, date: String?): Response<CashItemEntity>
 }
