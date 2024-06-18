@@ -3,6 +3,7 @@ package com.bodan.maplecalendar.data.api
 import com.bodan.maplecalendar.data.model.AbilityEntity
 import com.bodan.maplecalendar.data.model.AndroidEntity
 import com.bodan.maplecalendar.data.model.BasicEntity
+import com.bodan.maplecalendar.data.model.CashItemEntity
 import com.bodan.maplecalendar.data.model.DojangEntity
 import com.bodan.maplecalendar.data.model.HyperStatEntity
 import com.bodan.maplecalendar.data.model.ItemEquipmentEntity
@@ -89,4 +90,10 @@ interface MaplestoryApi {
         @Query("ocid") ocid: String,
         @Query("date") date: String?,
     ): Response<AndroidEntity>
+
+    @GET("v1/character/cashitem-equipment")
+    suspend fun fetchCharacterCashItem(
+        @Query("ocid") ocid: String,
+        @Query("date") date: String?,
+    ): Response<CashItemEntity>
 }

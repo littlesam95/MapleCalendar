@@ -8,11 +8,11 @@ data class CharacterCashItemInfo(
     val cashItemEquipmentSlot: String,
     val cashItemName: String,
     val cashItemIcon: String,
-    val cashItemDescription: String,
+    val cashItemDescription: String?,
     val cashItemOption: List<CharacterCashItemOption>,
-    val dateExpire: String,
-    val dateOptionExpire: String,
-    val cashItemLabel: String,
-    val cashItemColoringPrism: CharacterCashItemColoringPrism,
-    val itemGender: String
+    val dateExpire: String?,
+    val dateOptionExpire: String?,
+    val cashItemLabel: String?,
+    val cashItemColoringPrism: CharacterCashItemColoringPrism?,
+    val itemGender: String?
 )

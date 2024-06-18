@@ -731,3 +731,94 @@ data class AndroidFaceEntity(
     @Json(name = "mix_rate")
     val mixRate: String
 )
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class CashItemEntity(
+    @Json(name = "cash_item_equipment_base")
+    val cashItemEquipmentBase: List<CashItemInfoEntity>,
+
+    @Json(name = "cash_item_equipment_preset_1")
+    val cashItemEquipmentFirstPreset: List<CashItemInfoEntity>,
+
+    @Json(name = "cash_item_equipment_preset_2")
+    val cashItemEquipmentSecondPreset: List<CashItemInfoEntity>,
+
+    @Json(name = "cash_item_equipment_preset_3")
+    val cashItemEquipmentThirdPreset: List<CashItemInfoEntity>,
+
+    @Json(name = "additional_cash_item_equipment_base")
+    val additionalCashItemEquipmentBase: List<CashItemInfoEntity>,
+
+    @Json(name = "additional_cash_item_equipment_preset_1")
+    val additionalCashItemEquipmentFirstPreset: List<CashItemInfoEntity>,
+
+    @Json(name = "additional_cash_item_equipment_preset_2")
+    val additionalCashItemEquipmentSecondPreset: List<CashItemInfoEntity>,
+
+    @Json(name = "additional_cash_item_equipment_preset_3")
+    val additionalCashItemEquipmentThirdPreset: List<CashItemInfoEntity>
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class CashItemInfoEntity(
+    @Json(name = "cash_item_equipment_part")
+    val cashItemEquipmentPart: String,
+
+    @Json(name = "cash_item_equipment_slot")
+    val cashItemEquipmentSlot: String,
+
+    @Json(name = "cash_item_name")
+    val cashItemName: String,
+
+    @Json(name = "cash_item_icon")
+    val cashItemIcon: String,
+
+    @Json(name = "cash_item_description")
+    val cashItemDescription: String?,
+
+    @Json(name = "cash_item_option")
+    val cashItemOption: List<CashItemOptionEntity>,
+
+    @Json(name = "date_expire")
+    val dateExpire: String?,
+
+    @Json(name = "date_option_expire")
+    val dateOptionExpire: String?,
+
+    @Json(name = "cash_item_label")
+    val cashItemLabel: String?,
+
+    @Json(name = "cash_item_coloring_prism")
+    val cashItemColoringPrism: CashItemColoringPrismEntity?,
+
+    @Json(name = "item_gender")
+    val itemGender: String?
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class CashItemOptionEntity(
+    @Json(name = "option_type")
+    val optionType: String,
+
+    @Json(name = "option_value")
+    val optionValue: String
+)
+
+@Keep
+@JsonClass(generateAdapter = true)
+data class CashItemColoringPrismEntity(
+    @Json(name = "color_range")
+    val colorRange: String,
+
+    @Json(name = "hue")
+    val hue: Long,
+
+    @Json(name = "saturation")
+    val saturation: Long,
+
+    @Json(name = "value")
+    val value: Long
+)
