@@ -5,6 +5,7 @@ import com.bodan.maplecalendar.domain.entity.CharacterAndroid
 import com.bodan.maplecalendar.domain.entity.CharacterDojang
 import com.bodan.maplecalendar.domain.entity.CharacterItemEquipment
 import com.bodan.maplecalendar.domain.entity.CharacterBasic
+import com.bodan.maplecalendar.domain.entity.CharacterCashItem
 import com.bodan.maplecalendar.domain.entity.CharacterHyperStat
 import com.bodan.maplecalendar.domain.entity.CharacterLinkSkill
 import com.bodan.maplecalendar.domain.entity.CharacterOcid
@@ -49,4 +50,6 @@ interface MaplestoryRepository {
     ): Result<CharacterLinkSkill>
 
     suspend fun getCharacterAndroid(ocid: String, date: String?): Result<CharacterAndroid>
+
+    suspend fun getCharacterCashItem(ocid: String, date: String?): Result<CharacterCashItem>
 }
